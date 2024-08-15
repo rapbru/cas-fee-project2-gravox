@@ -6,9 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "stylelint": "stylelint \"**/*.css\"",
     "eslint": "eslint \"**/*.js\"",
-    "all": "npm run stylelint && npm run eslint  && node -e \"console.log('npm run all completed')\""
+    "all": "npm run eslint  && npm run start && node -e \"console.log('npm run all completed')\""
   },
   "author": "",
   "license": "ISC",
@@ -21,7 +20,6 @@
   },
   "type": "module",
   "devDependencies": {
-    "globals": "^15.9.0",
     "@babel/core": "^7.25.2",
     "@babel/eslint-parser": "^7.25.1",
     "@babel/preset-env": "^7.25.3",
@@ -33,6 +31,7 @@
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-prettier": "^5.2.1",
-    "eslint-plugin-promise": "^6.6.0"
+    "eslint-plugin-promise": "^6.6.0",
+    "globals": "^15.9.0"
   }
 }

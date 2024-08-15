@@ -40,6 +40,6 @@ export default [...compat.extends("airbnb-base", "prettier"), {
         "linebreak-style": "off",
         "import/no-named-as-default": "off",
         "import/no-named-as-default-member": "off",
-        "import/no-extraneous-dependencies": "on",
+        "import/no-extraneous-dependencies": "off",
     },
 }];
