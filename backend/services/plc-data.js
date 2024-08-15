@@ -1,16 +1,15 @@
-import { plcConnection } from "./plc-connection.js";
+import PLCConnection from "./plc-connection.js";
 
-export class PlcData {
+export default class PlcData {
     constructor() {
+        this.plcConnection = new PLCConnection();    
     }
 
     async all() {
-        return plcConnection.getAllData();
+        return this.plcConnection.getAllData();
     }
 
     async get(aTag) {
-        return plcConnection.getTagData(aTag);
+        return this.plcConnection.getTagData(aTag);
     }
-}
-
-export const plcData = new PlcData();
+};
