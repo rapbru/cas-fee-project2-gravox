@@ -1,7 +1,8 @@
 import express from 'express';
+import { plcController } from '../controller/plc-controller.js';
 
 const router = express.Router();
-import { plcController } from '../controller/plc-controller.js'
+const plcRoutes = router;
 
 router.get("/", plcController.getPlcValues);
 router.get("/:tagName", plcController.getTagValue);
@@ -9,4 +10,4 @@ router.get("/:tagName", plcController.getTagValue);
 // router.put("/:id", plcController.doSomething);
 // router.delete("/:id/", plcController.doSomething);
 
-export const plcRoutes = router;
+export default plcRoutes;

@@ -4,22 +4,33 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "stylelint": "stylelint \"**/*.css\"",
+    "eslint": "eslint \"**/*.js\"",
+    "all": "npm run stylelint && npm run eslint  && node -e \"console.log('npm run all completed')\""
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.20.2",
     "dotenv": "^16.4.5",
+    "eslint-config-airbnb": "^19.0.4",
     "express": "^4.19.2",
     "st-ethernet-ip": "^2.7.3"
   },
   "type": "module",
   "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/eslint-parser": "^7.25.1",
+    "@babel/preset-env": "^7.25.3",
     "@eslint/js": "^9.9.0",
     "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-promise": "^6.6.0",
     "globals": "^15.9.0"
   }
