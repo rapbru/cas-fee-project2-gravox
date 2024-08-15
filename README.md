@@ -8,7 +8,7 @@ Backend Express.js
 | npm run all    |   Führt die Tests für JS aus. |	
 | npm run start  |  Started den Web-Server: http://localhost:3001 |	
 
-
+---
 Frontend Angular
 
 | Befehl  |  Beschreibung |	
