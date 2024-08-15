@@ -6,7 +6,7 @@ Backend Express.js
 |---|---|
 | npm run eslint |  Testet ob die JS Files in Ordnung sind. |	
 | npm run start  |  Started den Web-Server: http://localhost:3001 |	
-| npm run all    |  Führt alle oben genannten scripts aus. |	
+| npm run all    |  Führt alle oben genannten Scripts aus. |	
 
 ---
 Frontend Angular
