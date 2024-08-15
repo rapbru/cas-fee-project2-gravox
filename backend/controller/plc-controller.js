@@ -1,10 +1,13 @@
 import PLCData from '../services/plc-data.js'
+import PLCMockData from '../services/plc-mock-data.js';
+
+
 // import { TagData } from '../services/tag-data.js';
 
 export class PlcController {
 
-    constructor(plcData) {
-        this.plcData = plcData || new PLCData();    
+    constructor(plcData) { 
+        this.plcData = plcData || (process.env.NODE_ENV === "production" ? new PLCData() : new PLCMockData());
     }
 
     getPlcValues = async (req, res) => {
