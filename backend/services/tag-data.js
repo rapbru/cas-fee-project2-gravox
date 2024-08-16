@@ -5,9 +5,9 @@ import path from 'path';
 
 export class TagData {
     constructor() {
-        const __dirname = path.dirname(fileURLToPath(import.meta.url));
-        console.log(__dirname);
-        this.filePath = path.resolve(__dirname, '../data/tags.json');
+        const dirname = path.dirname(fileURLToPath(import.meta.url));
+        console.log(dirname);
+        this.filePath = path.resolve(dirname, '../data/tags.json');
         this.initTagsIfNeeded();
     }
 
@@ -32,8 +32,8 @@ export class TagData {
 
     async initTags() {
         const pos = 50;
-        const fbNbr = 29;
-        const fbArr = 999;
+        // const fbNbr = 29;
+        // const fbArr = 999;
         const data = [];
 
         for (let i = 0; i <= pos; i++) {

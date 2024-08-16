@@ -1,9 +1,9 @@
-//Connection Manager automagically reconnects to controller that have lost connection. Scanner auto initiated.
+// Connection Manager automagically reconnects to controller that have lost connection. Scanner auto initiated.
 
 import { Controller, Tag } from 'st-ethernet-ip';
 import { tagData } from './tag-data.js';
 
-export class PlcConnection {
+export default class PlcConnection {
     constructor() {
         this.PLC = new Controller();
 
@@ -18,24 +18,26 @@ export class PlcConnection {
         this.tags = {};  // Speicher für Tag-Werte
     }
 
-    chunkArray(array, size) {
-        const chunkedArray = [];
-        for (let i = 0; i < array.length; i += size) {
-            chunkedArray.push(array.slice(i, i + size));
-        }
-        return chunkedArray;
-    }
-
     async loadTagsFromTagData() {
+        function chunkArray(array, size) {
+            const chunkedArray = [];
+            for (let i = 0; i < array.length; i += size) {
+                chunkedArray.push(array.slice(i, i + size));
+            }
+            return chunkedArray;
+        }
+
         try {
             const tags = await tagData.getTags();
-            const tagChunks = this.chunkArray(tags, 50); // Hier 50 als maximale Anzahl der Tags pro Chunk
+            const tagChunks = chunkArray(tags, 50); // 50 als maximale Anzahl der Tags pro Chunk
 
-            for (const chunk of tagChunks) {
-                console.log(chunk);
+            await tagChunks.reduce(async (previousPromise, chunk) => {
+                await previousPromise;
+
                 const tagNames = chunk.map(tag => tag.tagName);
-                await this.subscribeTags(tagNames);
-            }
+                return this.subscribeTags(tagNames);
+            }, Promise.resolve());
+
             this.PLC.scan();
             console.log('Alle Tags wurden erfolgreich abonniert.');
         } catch (error) {
@@ -45,31 +47,29 @@ export class PlcConnection {
 
     async subscribeTags(tagNames) {
         const tags = tagNames.map(tagName => new Tag(tagName));
-        const promises = tags.map(async tag => {
-            console.log(`Subscribe Tag: ${tag.name}`);
-            this.PLC.subscribe(tag);
-            tag.on("Changed", (tag, lastValue) => {
+        const promises = tags.map(async currentTag => {
+            console.log(`Subscribe Tag: ${currentTag.name}`);
+            this.PLC.subscribe(currentTag);
+            currentTag.on("Changed", (tag, lastValue) => {
                 console.log(`${tag.name} changed from ${lastValue} -> ${tag.value}`);
                 this.tags[tag.name] = tag.value;
             });
-            await this.PLC.readTag(tag).then(() => {
-                console.log(`${tag.name} initial value: ${tag.value}`);
-                this.tags[tag.name] = tag.value;
+            await this.PLC.readTag(currentTag).then(() => {
+                console.log(`${currentTag.name} initial value: ${currentTag.value}`);
+                this.tags[currentTag.name] = currentTag.value;
             }).catch(err => {
-                console.error(`Error reading tag ${tag.name}:`, err);
+                console.error(`Error reading tag ${currentTag.name}:`, err);
             });
         });
         await Promise.all(promises);
-    }    
+    } 
 
     async getAllData() {
-        return Object.keys(this.tags).map(tagName => {
-            return { "tag": tagName, "value": this.tags[tagName] };
-        });
+        return Object.keys(this.tags).map(tagName => ({ "tag": tagName, "value": this.tags[tagName] }));
     }
 
     isTagSubscribed(tagName) {
-        return !this.tags.hasOwnProperty(tagName);
+        return !Object.prototype.hasOwnProperty.call(this.tags, tagName);
     }
 
     async getTagData(aTag) {
@@ -80,6 +80,4 @@ export class PlcConnection {
         return { "tag": aTag, "value": this.tags[aTag] };
     }
 
-}
-
-export const plcConnection = new PlcConnection();
+};
