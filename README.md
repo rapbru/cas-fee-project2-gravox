@@ -19,3 +19,7 @@ Frontend Angular
 | npm run lint   |  Testet ob die TypeScript Files in Ordnung sind. |	
 | npm run test   |  Führt die Unit Tests aus.                       |	
 | npm run start  |  Started den Web-Server: http://localhost:4200   |	
+
+
+
+by Raphael Brunner and Silvan Weber
