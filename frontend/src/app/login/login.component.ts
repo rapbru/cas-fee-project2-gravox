@@ -14,7 +14,6 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   onLogin() {
-    console.log("login");
     this.authService.login();
     this.router.navigate(['/overview']);
   }
