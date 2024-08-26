@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "start-dev": "SET NODE_ENV=development&& node index.js",
-    "start-prod": "SET NODE_ENV=production&& node index.js",
+    "start-dev": "cross-env NODE_ENV=development node index.js",
+    "start-prod": "cross-env NODE_ENV=production node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslint": "eslint \"**/*.js\"",
     "all": "npm run eslint  && npm run start && node -e \"console.log('npm run all completed')\""
@@ -27,6 +27,7 @@
     "@babel/preset-env": "^7.25.3",
     "@eslint/eslintrc": "^3.1.0",
     "@eslint/js": "^9.9.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard": "^17.1.0",
