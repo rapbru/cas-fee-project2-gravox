@@ -9,7 +9,11 @@ export default class PlcData {
         return this.plcConnection.getAllData();
     }
 
-    async get(aTag) {
-        return this.plcConnection.getTagData(aTag);
+    async get(tagName) {
+        return this.plcConnection.getTagData(tagName);
+    }
+
+    async write(tags) {
+        return this.plcConnection.writeTagData(tags);
     }
 };

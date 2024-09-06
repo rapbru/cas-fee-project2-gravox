@@ -1,10 +1,24 @@
-<h2>Login</h2>
-<form (ngSubmit)="onLogin()">
-  <label for="username">Benutzername:</label>
-  <input id="username" type="text" placeholder="Benutzername" autocomplete="username"required>
-  
-  <label for="password">Passwort:</label>
-  <input id="password" type="password" placeholder="Passwort" autocomplete="current-password" required>
-  
-  <button type="submit">Einloggen</button>
-</form>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Anmelden</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form (ngSubmit)="login()">
+      <mat-form-field appearance="fill">
+        <mat-label>Benutzername</mat-label>
+        <input matInput [(ngModel)]="username" name="username" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Passwort</mat-label>
+        <input matInput [(ngModel)]="password" name="password" type="password" required>
+      </mat-form-field>
+
+      <div class="button-container">
+        <button mat-raised-button color="primary" type="submit">Anmelden</button>
+      </div>
+
+      <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+    </form>
+  </mat-card-content>
+</mat-card>

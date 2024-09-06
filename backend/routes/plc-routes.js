@@ -6,7 +6,7 @@ const plcRoutes = router;
 
 router.get("/", plcController.getPlcValues);
 router.get("/:tagName", plcController.getTagValue);
-// router.post("/", plcController.doSomething);
+router.post("/write", plcController.writeTagValue);
 // router.put("/:id", plcController.doSomething);
 // router.delete("/:id/", plcController.doSomething);
 
