@@ -18,6 +18,23 @@ export class PlcController {
         res.json(await this.plcData.get(req.params.tagName));
     }
 
+    writeTagValue = async (req, res) => {
+        try {
+            const tags = req.body;
+
+            if (!Array.isArray(tags) || tags.length === 0) {
+                return res.status(400).json({ error: "An array of tags with their names and values is required" });
+            }
+            
+            const result = await this.plcData.write(tags);
+
+            return res.json(result);
+        } catch (err) {
+            console.error('Error writing tag values:', err);
+            return res.status(500).json({ error: err.message });
+        }
+    }
+
     // doSomething = async (req, res) => {
     //     res.json(await plcData.add(req.body));
     // };

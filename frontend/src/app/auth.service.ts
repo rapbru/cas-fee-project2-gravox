@@ -1,20 +1,39 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private loggedIn = false;
+  private apiUrl = 'http://127.0.0.1:3001/auth/login';
 
-  login() {
-    this.loggedIn = true;
+  constructor(private http: HttpClient) {
+    window.addEventListener('beforeunload', () => this.logout());
   }
 
-  logout() {
-    this.loggedIn = false;
+  login(username: string, password: string): Observable<{ token: string }> {
+    return this.http.post<{ token: string }>(this.apiUrl, { username, password });
   }
 
-  isLoggedIn() {
-    return this.loggedIn;
+  saveToken(token: string): void {
+    sessionStorage.setItem('token', token);
   }
+
+  getToken(): string | null {
+    return sessionStorage.getItem('token'); 
+  }
+
+  removeToken(): void {
+    sessionStorage.removeItem('token');
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.getToken();
+  }
+
+  logout(): void {
+    this.removeToken();
+  }
+  
 }

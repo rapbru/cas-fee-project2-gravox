@@ -1,0 +1,35 @@
+<div class="positions-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Position</th>
+          <th>Bezeichung</th>
+          <th>Soll [Min]</th>
+          <th>Ist [Min]</th>
+          <th>Soll °C</th>
+          <th>Ist °C</th>
+          <th>Soll V</th>
+          <th>Ist V</th>
+          <th>Soll A</th>
+          <th>Ist A</th>
+          <th>Artikel</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="position" (click)="onSelect()">
+          <td><b>{{ position.positionNumber }}</b></td>
+          <td>{{ position.positionName }}</td>
+          <td>{{ position.preTime}}</td>
+          <td>{{ position.actTime }}</td>
+          <td>{{ position.preTemperature }}</td>
+          <td>{{ position.actTemperature }}</td>
+          <td>{{ position.preVoltage }}</td>
+          <td>{{ position.actVoltage }}</td>
+          <td>{{ position.preCurrent }}</td>
+          <td>{{ position.actCurrent }}</td>
+          <td>{{ position.articleName }}</td>
+        </tr>        
+      </tbody>
+    </table>
+  </div>
+  
