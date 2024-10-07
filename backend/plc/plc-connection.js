@@ -31,6 +31,14 @@ class PLCConnection {
     }
 
     isConnected() {
+        try {
+            console.log(`Connection established: ${this.controller.established}`);
+            this.connected = this.controller.established;
+        } catch (error) {
+            console.log('Error connection to PLC disrupted:', error)
+            this.connected = false;
+        }
+        
         return this.connected;
     }
 }

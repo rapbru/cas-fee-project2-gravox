@@ -23,7 +23,10 @@ export default class PLCService {
 
     async all() {
         try {
-            return await this.tagService.getAllData();
+            if (this.plcConnection.isConnected()) {
+                return await this.tagService.getAllData();
+            }
+            return {};
         } catch (error) {
             console.error('Error retrieving all tag data:', error);
             throw error;
