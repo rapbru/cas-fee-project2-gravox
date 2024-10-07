@@ -7,7 +7,7 @@ export class TagData {
     constructor() {
         const dirname = path.dirname(fileURLToPath(import.meta.url));
         console.log(dirname);
-        this.filePath = path.resolve(dirname, '../data/tags.json');
+        this.filePath = path.resolve(dirname, '../predefined-tags/tags.json');
         this.initTagsIfNeeded();
     }
 

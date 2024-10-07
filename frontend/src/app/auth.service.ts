@@ -9,7 +9,7 @@ export class AuthService {
   private apiUrl = 'http://127.0.0.1:3001/auth/login';
 
   constructor(private http: HttpClient) {
-    window.addEventListener('beforeunload', () => this.logout());
+    // window.addEventListener('beforeunload', () => this.logout());
   }
 
   login(username: string, password: string): Observable<{ token: string }> {
