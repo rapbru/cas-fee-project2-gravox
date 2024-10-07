@@ -1,24 +1,12 @@
-// Connection Manager automagically reconnects to controller that have lost connection. Scanner auto initiated.
+import { Tag, TagGroup } from 'st-ethernet-ip';
 
-import { Controller, Tag, TagGroup } from 'st-ethernet-ip';
-import { tagData } from './tag-data.js';
-
-export default class PlcConnection {
-    constructor() {
-        this.PLC = new Controller();
-
-        this.PLC.connect("10.198.200.82", 0).then(() => {
-            console.log(`\n\nConnected to PLC ${this.PLC.properties.name}...\n`);
-            this.loadTagsFromTagData();
-            this.PLC.scan_rate = 1000;
-        }).catch(err => {
-            console.error("Error connecting to PLC:", err);
-        });
-
-        this.tags = [];  // Speicher für Tag-Werte
+export default class TagService {
+    constructor(plcConnection) {
+        this.plcConnection = plcConnection;
+        this.tags = [];
     }
 
-    async loadTagsFromTagData() {
+    async loadTagsFromTagData(tagData) {
         function chunkArray(array, size) {
             const chunkedArray = [];
             for (let i = 0; i < array.length; i += size) {
@@ -38,7 +26,7 @@ export default class PlcConnection {
                 return this.subscribeTags(tagNames);
             }, Promise.resolve());
 
-            this.PLC.scan();
+            this.plcConnection.controller.scan();
             console.log('Alle Tags wurden erfolgreich abonniert.');
         } catch (error) {
             console.error('Fehler beim Laden und Abonnieren der Tags:', error);
@@ -49,12 +37,12 @@ export default class PlcConnection {
         const tags = tagNames.map(tagName => new Tag(tagName));
         const promises = tags.map(async currentTag => {
             console.log(`Subscribe Tag: ${currentTag.name}`);
-            this.PLC.subscribe(currentTag);
+            this.plcConnection.controller.subscribe(currentTag);
             currentTag.on("Changed", (tag, lastValue) => {
                 console.log(`${tag.name} changed from ${lastValue} -> ${tag.value}`);
                 this.updateTagInArray(tag);
             });
-            await this.PLC.readTag(currentTag).then(() => {
+            await this.plcConnection.controller.readTag(currentTag).then(() => {
                 console.log(`${currentTag.name} initial value: ${currentTag.value}, datatype: ${currentTag.type}`);
                 this.updateTagInArray(currentTag);
             }).catch(err => {
@@ -62,7 +50,7 @@ export default class PlcConnection {
             });
         });
         await Promise.all(promises);
-    } 
+    }
 
     updateTagInArray(tag) {
         const index = this.tags.findIndex(t => t.name === tag.name);
@@ -77,12 +65,7 @@ export default class PlcConnection {
         return this.tags.map(tag => ({ "tag": tag.name, "value": tag.value }));
     }
 
-    isTagSubscribed(tagName) {
-        return this.tags.some(tag => tag.name === tagName);
-    }
-
     async getTagData(tagName) {
-        console.log(tagName);
         if (!this.isTagSubscribed(tagName)) {
             await this.subscribeTags([tagName]);
         }
@@ -90,28 +73,14 @@ export default class PlcConnection {
         return { "tag": tagName, "value": tag ? tag.value : null };
     }
 
-    // async writeTagData(tagName, value) {
-    //     try {
-    //         const tag = this.tags.find(t => t.name === tagName);
-    //         if (!tag) {
-    //             throw new Error(`Tag ${tagName} is not subscribed.`);
-    //         }
-    //         tag.value = value;
-
-    //         await this.PLC.writeTag(tag);
-
-    //         return { success: true, tagName, value };
-    //     } catch (err) {
-    //         console.error(`Error writing tag ${tagName}:`, err);
-    //         throw err;
-    //     }
-    // }
+    isTagSubscribed(tagName) {
+        return this.tags.some(tag => tag.name === tagName);
+    }
 
     async writeTagData(tagDataArray) {
         try {
             const tagGroup = new TagGroup();
-            const tagsToWrite = await Promise.all(tagDataArray.map(async data => {
-                console.log(data.tagName);
+            await Promise.all(tagDataArray.map(async (data) => {
                 if (!this.isTagSubscribed(data.tagName)) {
                     await this.subscribeTags([data.tagName]);
                 }
@@ -120,11 +89,10 @@ export default class PlcConnection {
                     tag.value = data.value;
                     tagGroup.add(tag);
                 }
-                return tag;
             }));
 
-            if (tagsToWrite.length > 0) {
-                await this.PLC.writeTagGroup(tagGroup);
+            if (tagGroup.size > 0) {
+                await this.plcConnection.controller.writeTagGroup(tagGroup);
                 tagGroup.forEach(tag => {
                     console.log(`Tag ${tag.name} successfully written with value: ${tag.value}`);
                 });
@@ -136,5 +104,4 @@ export default class PlcConnection {
             throw err;
         }
     }
-
-};
+}
