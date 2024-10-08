@@ -1,16 +1,14 @@
-<ng-container *ngIf="selectedPosition">
-    <app-position-edit
-        [position]="selectedPosition"
-        (closeEdit)="closeEdit()">
-    </app-position-edit>
-</ng-container>
+<div class="overview-container">
+    <div class="column">
+        <ng-container *ngFor="let position of positions; let i = index">
+            <app-position *ngIf="i < halfLength" [position]="position"></app-position>
+        </ng-container>
+    </div>
+    <div class="column">
+        <ng-container *ngFor="let position of positions; let i = index">
+            <app-position *ngIf="i >= halfLength" [position]="position"></app-position>
+        </ng-container>
+    </div>
+</div>
 
-<ng-container *ngFor="let position of positions">
-    <app-position
-        [position]="position"
-        (selectPosition)="selectPosition($event)">
-    </app-position>
-</ng-container>
-  
-  
   

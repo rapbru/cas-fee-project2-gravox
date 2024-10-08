@@ -1,14 +1,11 @@
 export interface Position {
-  positionNumber: number;
-  positionName: string;
-  preTime: number;
-  actTime: number;
-  preTemperature: number;
-  actTemperature: number;
-  preVoltage: number;
-  actVoltage: number;
-  preCurrent: number;
-  actCurrent: number;
-  flightbarNumber: number;
-  articleName: string;
+  number: number;
+  name: string;
+  flightbar?: number;
+  articleName?: string;
+  customerName?: string;
+  time: { actual: number; preset: number };
+  temperature: { actual: number; preset: number };
+  current?: { actual: number; preset: number };
+  voltage?: { actual: number; preset: number };
 }

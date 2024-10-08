@@ -4,29 +4,29 @@
     <form *ngIf="position">
       <!-- Soll Werte -->
       <label for="preTime">Soll Zeit [Min]:</label>
-      <input id="preTime" [(ngModel)]="position.preTime" name="preTime" type="number" />
+      <input id="preTime" [(ngModel)]="position.time.preset" name="preTime" type="number" />
   
       <label for="preTemperature">Soll Temperatur [°C]:</label>
-      <input id="preTemperature" [(ngModel)]="position.preTemperature" name="preTemperature" type="number" />
+      <input id="preTemperature" [(ngModel)]="position.temperature.preset" name="preTemperature" type="number" />
   
       <label for="preVoltage">Soll Spannung [V]:</label>
-      <input id="preVoltage" [(ngModel)]="position.preVoltage" name="preVoltage" type="number" />
+      <!-- <input id="preVoltage" [(ngModel)]="position.voltage?.preset" name="preVoltage" type="number" /> -->
   
       <label for="preCurrent">Soll Strom [A]:</label>
-      <input id="preCurrent" [(ngModel)]="position.preCurrent" name="preCurrent" type="number" />
+      <!-- <input id="preCurrent" [(ngModel)]="position.current?.preset" name="preCurrent" type="number" /> -->
   
       <!-- Ist Werte -->
       <label for="actTime">Ist Zeit [Min]:</label>
-      <input id="actTime" [(ngModel)]="position.actTime" name="actTime" type="number" />
+      <input id="actTime" [(ngModel)]="position.time.actual" name="actTime" type="number" />
   
       <label for="actTemperature">Ist Temperatur [°C]:</label>
-      <input id="actTemperature" [(ngModel)]="position.actTemperature" name="actTemperature" type="number" />
+      <input id="actTemperature" [(ngModel)]="position.temperature.actual" name="actTemperature" type="number" />
   
       <label for="actVoltage">Ist Spannung [V]:</label>
-      <input id="actVoltage" [(ngModel)]="position.actVoltage" name="actVoltage" type="number" />
+      <!-- <input id="actVoltage" [(ngModel)]="position.voltage?.actual" name="actVoltage" type="number" /> -->
   
       <label for="actCurrent">Ist Strom [A]:</label>
-      <input id="actCurrent" [(ngModel)]="position.actCurrent" name="actCurrent" type="number" />
+      <!-- <input id="actCurrent" [(ngModel)]="position.current?.actual" name="actCurrent" type="number" /> -->
   
       <!-- Speichern und Abbrechen -->
       <button type="button" (click)="saveChanges()">Speichern</button>
