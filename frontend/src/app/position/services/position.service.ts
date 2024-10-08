@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providedIn: 'root'
 })
 export class PositionService {
-  private apiUrl = 'http://127.0.0.1:3001/plc/';
+  private apiUrl = 'http://localhost:3001/plc/';
   public positions: Position[] = [];
   private updateInterval = 1000;
   private intervalSubscription!: Subscription;
@@ -50,18 +50,15 @@ export class PositionService {
         const index = parseInt(indexMatch[1], 10);
         if (!positionsMap.has(index)) {
           positionsMap.set(index, {
-            positionNumber: index,
-            positionName: '',
-            preTime: 0,
-            actTime: 0,
-            preTemperature: 0,
-            actTemperature: 0,
-            preVoltage: 0,
-            actVoltage: 0,
-            preCurrent: 0,
-            actCurrent: 0,
-            flightbarNumber: 0,
-            articleName: ''
+            number: index,
+            name: 'Positionsname', 
+            flightbar: 0,
+            articleName: '',
+            customerName: '',
+            time: { actual: 0, preset: 0 },
+            temperature: { actual: 0, preset: 0 },
+            current: { actual: 0, preset: 0 },
+            voltage: { actual: 0, preset: 0 }
           });
         }
 
@@ -70,13 +67,22 @@ export class PositionService {
 
         if (field) {
           let value = 0;
-          if ((field === 'preTime') || (field === 'actTime')) {
-            value = item.value/60;
+          value = item.value;
+
+          const [property, subProperty] = field.split('.');
+
+          if (subProperty) {
+            if (property === 'time') {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              (position as any)[property][subProperty] = (value / 60).toFixed(2);
+            } else {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              (position as any)[property][subProperty] = value;
+            }
           } else {
-            value = item.value;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (position as any)[field] = value;
           }
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (position as any)[field] = value;
         }
       }
     });
@@ -85,31 +91,29 @@ export class PositionService {
     return Array.from(positionsMap.values());
   }
 
-  private mapTagToPosition(tag: string): keyof Position | null {
-    // const mapping = {
-    //   "FB.B.NBR": "flightbarNumber"
-    // }
-
-
-
-    if (tag.includes('FB.NBR')) return 'flightbarNumber';
-    if (tag.includes('TIME.PRESET')) return 'preTime';
-    if (tag.includes('TIME.ACTUAL')) return 'actTime';
-    if (tag.includes('TEMP.PRESET')) return 'preTemperature';
-    if (tag.includes('TEMP.ACTUAL1')) return 'actTemperature';
+  private mapTagToPosition(tag: string): keyof Position | string | null {
+    if (tag.includes('FB.NBR')) return 'flightbar';
+    if (tag.includes('TIME.PRESET')) return 'time.preset';
+    if (tag.includes('TIME.ACTUAL')) return 'time.actual';
+    if (tag.includes('TEMP.PRESET')) return 'temperature.preset';
+    if (tag.includes('TEMP.ACTUAL1')) return 'temperature.actual';
+    if (tag.includes('VOLT.PRESET')) return 'voltage.preset';
+    if (tag.includes('VOLT.ACTUAL')) return 'voltage.actual';
+    if (tag.includes('CURR.PRESET')) return 'current.preset';
+    if (tag.includes('CURR.ACTUAL')) return 'current.actual';
     return null;
   }
 
   private mapPositionToTags(position: Position): { tagName: string, value: number }[] {
     const tags = [
-      { tagName: `POS[${position.positionNumber}].TIME.PRESET`, value: position.preTime * 60 }, // Assuming preTime is in minutes, converting to seconds
-      { tagName: `POS[${position.positionNumber}].TIME.ACTUAL`, value: position.actTime * 60 },
-      { tagName: `POS[${position.positionNumber}].TEMP.PRESET`, value: position.preTemperature },
-      { tagName: `POS[${position.positionNumber}].TEMP.ACTUAL1`, value: position.actTemperature },
-      // { tagName: `POS[${position.positionNumber}].VOLT.PRESET`, value: position.preVoltage },
-      // { tagName: `POS[${position.positionNumber}].VOLT.ACTUAL`, value: position.actVoltage },
-      // { tagName: `POS[${position.positionNumber}].CURR.PRESET`, value: position.preCurrent },
-      // { tagName: `POS[${position.positionNumber}].CURR.ACTUAL`, value: position.actCurrent }
+        { tagName: `POS[${position.number}].TIME.PRESET`, value: position.time.preset * 60 },
+        { tagName: `POS[${position.number}].TIME.ACTUAL`, value: position.time.actual * 60 },
+        { tagName: `POS[${position.number}].TEMP.PRESET`, value: position.temperature.preset },
+        { tagName: `POS[${position.number}].TEMP.ACTUAL1`, value: position.temperature.actual },
+        { tagName: `POS[${position.number}].VOLT.PRESET`, value: position.voltage?.preset ?? 0 },
+        { tagName: `POS[${position.number}].VOLT.ACTUAL`, value: position.voltage?.actual ?? 0 },
+        { tagName: `POS[${position.number}].CURR.PRESET`, value: position.current?.preset ?? 0 },
+        { tagName: `POS[${position.number}].CURR.ACTUAL`, value: position.current?.actual ?? 0 }
     ];
 
     return tags;

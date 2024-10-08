@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://127.0.0.1:3001/auth/login';
+  private apiUrl = 'http://localhost:3001/auth/login';
 
   constructor(private http: HttpClient) {
     // window.addEventListener('beforeunload', () => this.logout());

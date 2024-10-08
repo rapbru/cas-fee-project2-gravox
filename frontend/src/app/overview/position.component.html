@@ -1,0 +1,48 @@
+<div class="position-container">
+    <div class="flightbar-information">
+        <div class="position-header">
+            <div class="position-number">{{ position.number }}</div>
+            <div class="position-name">{{ position.name }}</div>
+        </div>
+    
+        <div class="position-details" *ngIf="position.flightbar">
+            <div class="detail">
+                <strong>Warenträger:</strong> {{ position.flightbar }}
+            </div>
+            <div class="detail">
+                <strong>Artikelname:</strong> {{ position.articleName }}
+            </div>
+            <div class="detail">
+                <strong>Kundenname:</strong> {{ position.customerName }}
+            </div>
+        </div>
+    </div>
+  
+    <div class="position-metrics">
+        <div class="metric">
+            <mat-icon *ngIf="position.flightbar">timer</mat-icon>
+            <span>min</span>
+            <span *ngIf="position.flightbar">{{ position.time.preset }}</span>
+            <span>{{ position.time.actual }}</span>
+        </div>
+        <div class="metric">
+            <mat-icon *ngIf="position.flightbar">thermostat</mat-icon>
+            <span>°C</span>
+            <span *ngIf="position.flightbar">{{ position.temperature.preset }}</span>
+            <span>{{ position.temperature.actual }}</span>
+        </div>
+        <div class="metric" *ngIf="position.flightbar && position.current">
+            <mat-icon>bolt</mat-icon>
+            <span>A</span>
+            <span>{{ position.current.preset }}</span>
+            <span>{{ position.current.actual }}</span>
+        </div>
+        <div class="metric" *ngIf="position.flightbar && position.voltage">
+            <mat-icon class="mat-icon-dark">bolt</mat-icon>
+            <span>V</span>
+            <span>{{ position.voltage.preset }}</span>
+            <span>{{ position.voltage.actual }}</span>
+        </div>
+    </div>
+</div>
+  
