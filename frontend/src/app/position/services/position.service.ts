@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Position } from '../position.model';
 import { catchError, map, Observable, of } from 'rxjs';
 import { interval, Subscription } from 'rxjs';
@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class PositionService {
   private apiUrl = 'http://localhost:3001/plc/';
-  public positions: Position[] = [];
+  public positions = signal<Position[]>([]);
   private updateInterval = 1000;
   private intervalSubscription!: Subscription;
 
@@ -20,7 +20,7 @@ export class PositionService {
 
   public startFetching() {
     this.intervalSubscription = interval(this.updateInterval).subscribe(() => {
-      this.load().subscribe(loaded => this.positions = loaded);
+      this.load();
     });
   }
 
@@ -30,7 +30,7 @@ export class PositionService {
     }
   }
 
-  public load(): Observable<Position[]> {
+  public load(){
     return this.http.get<{ tag: string, value: number }[]>(this.apiUrl).pipe(
       catchError((error) => {
         this.snackbar.open('Could not load positions', 'Ok');
@@ -38,7 +38,9 @@ export class PositionService {
         return of([]);
       }),
       map(data => this.transformData(data))
-    );
+    ).subscribe(loaded => {
+      this.positions.set(loaded);
+    });
   }
 
   private transformData(data: { tag: string, value: number }[]): Position[] {

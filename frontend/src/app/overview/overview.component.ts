@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, computed, inject, OnDestroy, OnInit } from '@angular/core';
 import { Position } from '../position/position.model';
 import { PositionService } from '../position/services/position.service';
 import { CommonModule } from '@angular/common';
@@ -15,23 +15,38 @@ import { PositionComponent } from './position.component';
 })
 export class OverviewComponent implements OnDestroy, OnInit {
   positions: Position[] = [];
-  halfLength = 0;
   selectedPosition: Position | undefined;
+  positionService = inject(PositionService);
 
-  constructor(private positionService: PositionService) {
-    this.loadPositions();
-  }
+  // constructor(private positionService: PositionService) {
+  //   this.loadPositions();
+  // }
 
   ngOnInit() {
     this.positionService.startFetching();
   }
 
-  loadPositions() {
-    this.positionService.load().subscribe(positions => {
-      this.positions = positions;
-      this.halfLength = Math.ceil(this.positions.length / 2);
-    });
-  }
+  // loadPositions() {
+  //   this.positionService.load().subscribe(positions => {
+  //     this.positions = positions;
+  //     this.halfLength = Math.ceil(this.positions.length / 2);
+  //   });
+  // }
+
+  halfLength = computed(() => {
+    return Math.ceil(this.positionService.positions().length / 2) 
+  })
+
+
+  firstHalf = computed(() => {
+    return this.positionService.positions().slice(0, this.halfLength());
+  })
+
+
+  secondHalf = computed(() => {
+    return this.positionService.positions().slice(this.halfLength());
+  })
+
 
   selectPosition(position: Position) {
     this.selectedPosition = position;
