@@ -1,13 +1,13 @@
 <div class="overview-container">
-    <div class="column">
-        <ng-container *ngFor="let position of positions; let i = index">
-            <app-position *ngIf="i < halfLength" [position]="position"></app-position>
-        </ng-container>
+    <div class="column">          
+      @for (position of firstHalf(); track position.number) {
+        <app-position  [position]="position"></app-position>
+      }
     </div>
     <div class="column">
-        <ng-container *ngFor="let position of positions; let i = index">
-            <app-position *ngIf="i >= halfLength" [position]="position"></app-position>
-        </ng-container>
+      @for (position of secondHalf(); track position.number) {
+        <app-position  [position]="position"></app-position>
+      }            
     </div>
 </div>
 
