@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class PositionService {
   private apiUrl = 'http://localhost:3001/plc/';
   public positions = signal<Position[]>([]);
+  public orderedPositions = signal<Position[]>([]);
   private updateInterval = 1000;
   private intervalSubscription!: Subscription;
 
@@ -22,6 +23,7 @@ export class PositionService {
     this.intervalSubscription = interval(this.updateInterval).subscribe(() => {
       this.load();
     });
+    // this.load();
   }
 
   public stopFetching() {
@@ -40,7 +42,23 @@ export class PositionService {
       map(data => this.transformData(data))
     ).subscribe(loaded => {
       this.positions.set(loaded);
+      this.applyOrder();
     });
+  }
+
+  private applyOrder() {
+    const currentPositions = this.positions();
+    const ordered = this.orderedPositions();
+  
+    const newOrdered = ordered.length > 0 
+    ? ordered.map(pos => currentPositions.find(p => p.number === pos.number)).filter((pos): pos is Position => pos !== undefined)
+    : [...currentPositions]; 
+
+    this.orderedPositions.set(newOrdered);
+  }
+
+  public updateOrderedPositions(newOrder: Position[]) {
+    this.orderedPositions.set(newOrder);
   }
 
   private transformData(data: { tag: string, value: number }[]): Position[] {
