@@ -20,8 +20,9 @@ export class OverviewComponent implements OnDestroy, OnInit {
   // selectedPosition: Position | undefined;
   private positionService = inject(PositionService);
   public enableEdit = signal<boolean>(false);
-  private columnCount = 3;
-  private positionsPerColumn = [25, 21, 5];
+  private columnCount = 2;
+  private maxColumnCount = 0;
+  private positionsPerColumn = [25, 26];
   private columnDistribution: number[] = [];
 
   ngOnInit() {
@@ -37,21 +38,15 @@ export class OverviewComponent implements OnDestroy, OnInit {
 
   private updateColumnDistribution() {
     const windowWidth = window.innerWidth;
-    let maxColumnCount: number;
-    if (windowWidth >= 1200) {
-      maxColumnCount = 5;
-    } else if (windowWidth >= 800) {
-      maxColumnCount = 2;
-    } else {
-      maxColumnCount = 1;
-    }
+
+    this.maxColumnCount = Math.min(Math.floor(windowWidth / 400), 10);
 
     const distribution = []; 
     for (let i = 0; i < this.columnCount; i++) {
-      if (i < maxColumnCount) {
+      if (i < this.maxColumnCount) {
         distribution[i] = this.positionsPerColumn[i];
       } else {
-          distribution[maxColumnCount - 1] += this.positionsPerColumn[i];
+          distribution[this.maxColumnCount - 1] += this.positionsPerColumn[i];
       }
     }
 
@@ -125,9 +120,11 @@ export class OverviewComponent implements OnDestroy, OnInit {
   }
 
   public increaseColumns() {
-    this.columnCount++;
-    this.positionsPerColumn.push(0);
-    this.updateColumnDistribution();
+    if (this.columnCount < this.maxColumnCount) {
+      this.columnCount++;
+      this.positionsPerColumn.push(0);
+      this.updateColumnDistribution();
+    }
   } 
 
   public decreaseColumns() {
