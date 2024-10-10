@@ -31,9 +31,9 @@ export class OverviewComponent implements OnDestroy, OnInit {
   }
   
   columns = computed(() => {
-    const initialColumns = this.positionService.orderedPositions(); 
+    const positions = this.positionService.orderedPositions(); 
     this.updateColumnDistribution();
-    return this.splitPositionsDynamically(initialColumns, this.columnDistribution);
+    return this.splitPositionsDynamically(positions, this.columnDistribution);
   });
 
   private updateColumnDistribution() {
