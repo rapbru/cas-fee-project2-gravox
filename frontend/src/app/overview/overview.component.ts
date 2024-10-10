@@ -39,7 +39,7 @@ export class OverviewComponent implements OnDestroy, OnInit {
   private updateColumnDistribution() {
     const windowWidth = window.innerWidth;
 
-    this.maxColumnCount = Math.min(Math.floor(windowWidth / 400), 10);
+    this.maxColumnCount = Math.min(Math.floor(windowWidth / 500), 10);
 
     const distribution = []; 
     for (let i = 0; i < this.columnCount; i++) {
