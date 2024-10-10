@@ -1,48 +1,20 @@
-<div class="overview-container">
-    <!-- <div class="column">          
-      @for (position of firstHalf(); track position.number) {
-        <app-position  [position]="position"></app-position>
-      }
-    </div> -->
-
-    <!-- <div class="column">
-      @for (position of secondHalf(); track position.number) {
-        <app-position  [position]="position"></app-position>
-      }            
-    </div> -->
-
-</div>
-
-<!-- <div cdkDropList cdkDropListOrientation="mixed" class="overview-list" (cdkDropListDropped)="drop($event)">
-  @for (position of positions(); track position.number) {
-    <div class="list-item" cdkDrag>
-      <app-position  [position]="position"></app-position>
-    </div>
-  }
-</div> -->
 <button mat-icon-button (click)="toggleEdit()">
   <mat-icon>{{ enableEdit() ? 'edit_off' : 'edit' }}</mat-icon>
 </button>
+<button (click)="increaseColumns()">+</button>
+<button (click)="decreaseColumns()">-</button>
 
 <div cdkDropListGroup>
   <div class="overview-container">
-    <div class="list-container">
-      <div cdkDropList [cdkDropListData]="firstHalf()" class="overview-list" (cdkDropListDropped)="drop($event, 'firstHalf')">
-        @for (position of firstHalf(); track position.number) {
+    @for (column of columns(); track $index; let index = $index) {  
+      <div cdkDropList [cdkDropListData]="column" class="overview-list" (cdkDropListDropped)="drop($event, index)">
+        <div>spalte {{index + 1}}</div>
+        @for (position of column; track position.number) {
           <div class="list-item" cdkDrag [cdkDragDisabled]="!enableEdit()" [class.draggable]="enableEdit()">
             <app-position  [position]="position"></app-position>
           </div>
         }
       </div>
-    </div>
-    <div class="list-container">
-      <div cdkDropList [cdkDropListData]="secondHalf()" class="overview-list" (cdkDropListDropped)="drop($event, 'secondHalf')">
-        @for (position of secondHalf(); track position.number) {
-          <div class="list-item" cdkDrag [cdkDragDisabled]="!enableEdit()" [class.draggable]="enableEdit()">
-            <app-position  [position]="position"></app-position>
-          </div>
-        }
-      </div> 
-    </div>
+    }
   </div>
 </div>
