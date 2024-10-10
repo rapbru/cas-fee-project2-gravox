@@ -40,6 +40,7 @@ export class OverviewComponent implements OnDestroy, OnInit {
     const windowWidth = window.innerWidth;
 
     this.maxColumnCount = Math.min(Math.floor(windowWidth / 450), 10);
+    if (this.maxColumnCount === 0) this.maxColumnCount = 1;
 
     const distribution = []; 
     for (let i = 0; i < this.columnCount; i++) {
