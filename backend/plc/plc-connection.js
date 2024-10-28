@@ -1,16 +1,19 @@
-import { Controller } from 'st-ethernet-ip';
+import { ControllerManager } from 'st-ethernet-ip';
 
 class PLCConnection {
     constructor(ipAddress, slot = 0) {
         this.ipAddress = ipAddress;
         this.slot = slot;
-        this.controller = new Controller();
+        this.controllerManager = new ControllerManager();
+        this.controller = this.controllerManager.addController(this.ipAddress, this.slot);
+        // this.controller.setMaxListeners(1000);
         this.connected = false;
     }
 
     async connect() {
         try {
-            await this.controller.connect(this.ipAddress, this.slot);
+            this.setupEventHandlers();
+            await this.controller.connect();
             this.connected = true;
             console.log(`Connected to PLC at ${this.ipAddress}`);
         } catch (error) {
@@ -19,6 +22,26 @@ class PLCConnection {
             throw error;
         }
     }
+
+    setupEventHandlers() {
+        // this.controller.on('TagChanged', (tag, prevValue) => {
+        //   console.log(`${tag.name} changed from ${prevValue} to ${tag.value}`);
+        // });
+    
+        this.controller.on('Connected', () => {
+            this.connected = true;
+            console.log('PLC connection established');
+        });
+    
+        this.controller.on('Disconnected', () => {
+            this.connected = false;
+            console.log('PLC connection lost - automatic reconnection will be attempted');
+        });
+    
+        this.controller.on('Error', (error) => {
+            console.error('PLC error:', error);
+        });
+      }
 
     async disconnect() {
         try {
@@ -30,15 +53,7 @@ class PLCConnection {
         }
     }
 
-    isConnected() {
-        try {
-            console.log(`Connection established: ${this.controller.established}`);
-            this.connected = this.controller.established;
-        } catch (error) {
-            console.log('Error connection to PLC disrupted:', error)
-            this.connected = false;
-        }
-        
+    isConnected() {   
         return this.connected;
     }
 }

@@ -1,9 +1,28 @@
-import { Tag, TagGroup } from 'st-ethernet-ip';
+import { TagGroup } from 'st-ethernet-ip';
 
 export default class TagService {
     constructor(plcConnection) {
         this.plcConnection = plcConnection;
+        this.setupEventHandlers();
         this.tags = [];
+        this.tagInitPromises = {};
+    }
+
+    setupEventHandlers() {
+        this.plcConnection.controller.on("TagInit", (tag) => {
+            console.log(`${tag.name} initial value: ${tag.value}, datatype: ${tag.type}`);
+            this.updateTagInArray(tag);
+
+            if (this.tagInitPromises[tag.name]) {
+                this.tagInitPromises[tag.name].resolve(tag); 
+                delete this.tagInitPromises[tag.name];
+            }
+        });
+        
+        this.plcConnection.controller.on("TagChanged", (tag, lastValue) => {
+            console.log(`${tag.name} changed from ${lastValue} -> ${tag.value}`);
+            this.updateTagInArray(tag);
+        });
     }
 
     async loadTagsFromTagData(tagData) {
@@ -26,29 +45,24 @@ export default class TagService {
                 return this.subscribeTags(tagNames);
             }, Promise.resolve());
 
-            this.plcConnection.controller.scan();
-            console.log('Alle Tags wurden erfolgreich abonniert.');
+            // this.plcConnection.controller.scan();
+            console.log('All tags have been successfully subscribed.');
         } catch (error) {
-            console.error('Fehler beim Laden und Abonnieren der Tags:', error);
+            console.error('Error while loading and subscribing to tags:', error);
         }
     }
 
     async subscribeTags(tagNames) {
-        const tags = tagNames.map(tagName => new Tag(tagName));
-        const promises = tags.map(async currentTag => {
-            console.log(`Subscribe Tag: ${currentTag.name}`);
-            this.plcConnection.controller.subscribe(currentTag);
-            currentTag.on("Changed", (tag, lastValue) => {
-                console.log(`${tag.name} changed from ${lastValue} -> ${tag.value}`);
-                this.updateTagInArray(tag);
-            });
-            await this.plcConnection.controller.readTag(currentTag).then(() => {
-                console.log(`${currentTag.name} initial value: ${currentTag.value}, datatype: ${currentTag.type}`);
-                this.updateTagInArray(currentTag);
-            }).catch(err => {
-                console.error(`Error reading tag ${currentTag.name}:`, err);
-            });
-        });
+        const promises = tagNames.map(async currentTag => new Promise((resolve, reject) => {
+            console.log(`Subscribe Tag: ${currentTag}`);
+            this.plcConnection.controller.addTag(currentTag);
+            this.tagInitPromises[currentTag] = { resolve, reject };
+            
+            setTimeout(() => {
+                reject(new Error(`Tag ${currentTag.name} initialization timed out.`));
+                delete this.tagInitPromises[currentTag];
+            }, 5000); 
+        }));
         await Promise.all(promises);
     }
 
