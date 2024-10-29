@@ -8,7 +8,15 @@
   <div class="overview-container">
     @for (column of columns(); track $index; let index = $index) {  
       <div cdkDropList [cdkDropListData]="column" class="overview-list" (cdkDropListDropped)="drop($event, index)">
-        <div>spalte {{index + 1}}</div>
+        <div class="app-position-header">
+          <div class="column-name">Spalte {{index + 1}}</div>
+          <div class="column-metrics">
+            <div>min</div> 
+            <div>°C</div>
+            <div>A</div>
+            <div>V</div>
+          </div>
+        </div>
         @for (position of column; track position.number) {
           <div class="list-item" cdkDrag [cdkDragDisabled]="!enableEdit()" [class.draggable]="enableEdit()">
             <app-position  [position]="position"></app-position>

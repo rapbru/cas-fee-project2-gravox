@@ -76,9 +76,9 @@ export class PositionService {
             articleName: '',
             customerName: '',
             time: { actual: 0, preset: 0 },
-            temperature: { actual: 0, preset: 0 },
-            current: { actual: 0, preset: 0 },
-            voltage: { actual: 0, preset: 0 }
+            temperature: { actual: 0, preset: 0, isPresent: true},
+            current: { actual: 0, preset: 0, isPresent: true },
+            voltage: { actual: 0, preset: 0, isPresent: true }
           });
         }
 

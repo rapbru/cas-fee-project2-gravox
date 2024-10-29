@@ -1,4 +1,4 @@
-<div class="position-container">
+<div class="position-container" [ngClass]="{'with-flightbar': position.flightbar}">
     <div class="flightbar-information">
         <div class="position-header">
             <div class="position-number">{{ position.number }}</div>
@@ -7,13 +7,16 @@
     
         <div class="position-details" *ngIf="position.flightbar">
             <div class="detail">
-                <strong>Warenträger:</strong> {{ position.flightbar }}
+                <div>Warenträger</div>
+                <div>{{ position.flightbar }}</div> 
             </div>
             <div class="detail">
-                <strong>Artikelname:</strong> {{ position.articleName }}
+                <div>Artikel</div>
+                <div>{{ position.articleName }}</div>
             </div>
             <div class="detail">
-                <strong>Kundenname:</strong> {{ position.customerName }}
+                <div>Kunde</div>
+                <div> {{ position.customerName }}</div>
             </div>
         </div>
     </div>
@@ -21,27 +24,47 @@
     <div class="position-metrics">
         <div class="metric">
             <mat-icon *ngIf="position.flightbar">timer</mat-icon>
-            <span>min</span>
+            <span *ngIf="position.flightbar">min</span>
             <span *ngIf="position.flightbar">{{ position.time.preset }}</span>
             <span>{{ position.time.actual }}</span>
         </div>
-        <div class="metric">
-            <mat-icon *ngIf="position.flightbar">thermostat</mat-icon>
+        <div class="metric" *ngIf="position.flightbar">
+            <mat-icon>thermostat</mat-icon>
             <span>°C</span>
-            <span *ngIf="position.flightbar">{{ position.temperature.preset }}</span>
-            <span>{{ position.temperature.actual }}</span>
+            <ng-container *ngIf="position.temperature?.isPresent; else noTemperature">
+                <span>{{ position.temperature.preset }}</span>
+                <span>{{ position.temperature.actual }}</span>
+            </ng-container>
+            <ng-template #noTemperature>
+                <span>-</span>
+                <span>-</span>
+            </ng-template>
         </div>
-        <div class="metric" *ngIf="position.flightbar && position.current">
+        <div class="metric" *ngIf="!position.flightbar">
+            <span *ngIf="position.temperature?.isPresent">{{ position.temperature.actual }}</span>
+            <span *ngIf="!position.temperature?.isPresent">-</span>
+        </div>
+        <div class="metric" *ngIf="position.flightbar">
             <mat-icon>bolt</mat-icon>
             <span>A</span>
-            <span>{{ position.current.preset }}</span>
-            <span>{{ position.current.actual }}</span>
+            <span *ngIf="position.current.isPresent">{{ position.current.preset }}</span>
+            <span *ngIf="position.current.isPresent">{{ position.current.actual }}</span>
+            <span *ngIf="!position.current.isPresent">-</span>
+            <span *ngIf="!position.current.isPresent">-</span>
         </div>
-        <div class="metric" *ngIf="position.flightbar && position.voltage">
+        <div class="metric" *ngIf="!position.flightbar">
+            <span></span>
+        </div>
+        <div class="metric" *ngIf="position.flightbar">
             <mat-icon class="mat-icon-dark">bolt</mat-icon>
             <span>V</span>
-            <span>{{ position.voltage.preset }}</span>
-            <span>{{ position.voltage.actual }}</span>
+            <span *ngIf="position.voltage.isPresent">{{ position.voltage.preset }}</span>
+            <span *ngIf="position.voltage.isPresent">{{ position.voltage.actual }}</span>
+            <span *ngIf="!position.voltage.isPresent">-</span>
+            <span *ngIf="!position.voltage.isPresent">-</span>
+        </div> 
+        <div class="metric" *ngIf="!position.flightbar">
+            <span></span>
         </div>
     </div>
 </div>
