@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providedIn: 'root'
 })
 export class PositionService {
-  private apiUrl = 'http://localhost:3001/plc/';
+  private apiUrl = 'http://localhost:3001/plc/read/';
   public positions = signal<Position[]>([]);
   public orderedPositions = signal<Position[]>([]);
   private updateInterval = 1000;

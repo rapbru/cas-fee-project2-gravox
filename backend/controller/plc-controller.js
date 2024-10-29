@@ -18,10 +18,12 @@ export class PLCController {
 
     getTagValue = async (req, res) => {
         try {
-            const value = await this.plcService.get(req.params.tagName);
-            res.json(value);
+            const tags = req.body;
+            const tagNames = tags.map(tag => tag.tagName);
+            const values = await Promise.all(tagNames.map(tagName => this.plcService.get(tagName)));
+            res.json(values || []);
         } catch (err) {
-            console.error(`Error retrieving tag value for ${req.params.tagName}:`, err);
+            console.error('Error retrieving tag values:', err);
             res.status(500).json({ error: 'Internal Server Error' });
         }
     }
