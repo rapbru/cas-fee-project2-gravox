@@ -6,12 +6,12 @@ const mockPositions = {
             "articleName": "Artikel",
             "customerName": "Kunde",
             "time": {
-                "actual": 25,
-                "preset": 150
+                "actual": 150,
+                "preset": 600
             },
             "temperature": {
-                "actual": 0,
-                "preset": 2,
+                "actual": 60,
+                "preset": 59,
                 "isPresent": true
             },
             "current": {
@@ -81,12 +81,12 @@ const mockPositions = {
             "articleName": "Artikel",
             "customerName": "Kunde",
             "time": {
-                "actual": 0,
+                "actual": 30,
                 "preset": 6
             },
             "temperature": {
-                "actual": 0,
-                "preset": 25,
+                "actual": 20,
+                "preset": 20,
                 "isPresent": true
             },
             "current": {
@@ -106,8 +106,8 @@ const mockPositions = {
             "articleName": "Artikel",
             "customerName": "Kunde",
             "time": {
-                "actual": 0,
-                "preset": 300
+                "actual": 6,
+                "preset": 0
             },
             "temperature": {
                 "actual": 0,
@@ -210,8 +210,8 @@ const mockPositions = {
                 "preset": 240
             },
             "temperature": {
-                "actual": 0,
-                "preset": 8,
+                "actual": 36,
+                "preset": 58,
                 "isPresent": true
             },
             "current": {
@@ -227,16 +227,16 @@ const mockPositions = {
         },
         "11": {
             "name": "Beizen",
-            "flightbar": 0,
+            "flightbar": 4,
             "articleName": "Artikel",
             "customerName": "Kunde",
             "time": {
-                "actual": 0,
-                "preset": 60
+                "actual": 69,
+                "preset": 240
             },
             "temperature": {
-                "actual": 0,
-                "preset": 8,
+                "actual": 29,
+                "preset": 40,
                 "isPresent": true
             },
             "current": {
@@ -252,11 +252,11 @@ const mockPositions = {
         },
         "12": {
             "name": "Kreislaufspülen",
-            "flightbar": 0,
+            "flightbar": 1,
             "articleName": "Artikel",
             "customerName": "Kunde",
             "time": {
-                "actual": 0,
+                "actual": 10,
                 "preset": 30
             },
             "temperature": {
@@ -302,7 +302,7 @@ const mockPositions = {
         },
         "14": {
             "name": "El. Entfetten",
-            "flightbar": 0,
+            "flightbar": 2,
             "articleName": "Artikel",
             "customerName": "Kunde",
             "time": {
@@ -310,18 +310,18 @@ const mockPositions = {
                 "preset": 3000
             },
             "temperature": {
-                "actual": 0,
-                "preset": 20,
+                "actual": 31,
+                "preset": 40,
                 "isPresent": true
             },
             "current": {
-                "actual": 0,
-                "preset": 0,
+                "actual": 100,
+                "preset": 100,
                 "isPresent": true
             },
             "voltage": {
-                "actual": 0,
-                "preset": 0,
+                "actual": 4,
+                "preset": 4,
                 "isPresent": true
             }
         },
@@ -382,16 +382,16 @@ const mockPositions = {
             "customerName": "Kunde",
             "time": {
                 "actual": 0,
-                "preset": 300
+                "preset": 1800
             },
             "temperature": {
-                "actual": 0,
-                "preset": 17,
+                "actual": 22,
+                "preset": 22,
                 "isPresent": true
             },
             "current": {
                 "actual": 0,
-                "preset": 64,
+                "preset": 700,
                 "isPresent": true
             },
             "voltage": {
@@ -402,25 +402,25 @@ const mockPositions = {
         },
         "18": {
             "name": "Zink 2",
-            "flightbar": 0,
+            "flightbar": 21,
             "articleName": "Artikel",
             "customerName": "Kunde",
             "time": {
-                "actual": 0,
-                "preset": 180
+                "actual": 650,
+                "preset": 1800
             },
             "temperature": {
-                "actual": 0,
-                "preset": 17,
+                "actual": 28,
+                "preset": 22,
                 "isPresent": true
             },
             "current": {
-                "actual": 0,
-                "preset": 64,
+                "actual": 699,
+                "preset": 700,
                 "isPresent": true
             },
             "voltage": {
-                "actual": 0,
+                "actual": 5,
                 "preset": 0,
                 "isPresent": true
             }
@@ -432,11 +432,11 @@ const mockPositions = {
             "customerName": "Kunde",
             "time": {
                 "actual": 0,
-                "preset": 0
+                "preset": 1800
             },
             "temperature": {
-                "actual": 0,
-                "preset": 17,
+                "actual": 28,
+                "preset": 22,
                 "isPresent": true
             },
             "current": {
@@ -457,16 +457,16 @@ const mockPositions = {
             "customerName": "Kunde",
             "time": {
                 "actual": 0,
-                "preset": 0
+                "preset": 1800
             },
             "temperature": {
-                "actual": 0,
-                "preset": 17,
+                "actual": 27,
+                "preset": 22,
                 "isPresent": true
             },
             "current": {
                 "actual": 0,
-                "preset": 64,
+                "preset": 700,
                 "isPresent": true
             },
             "voltage": {
