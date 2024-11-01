@@ -4,11 +4,12 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 :root {
-  --button-bg-color: #FF6228;
-  --button-hover-color: #FF7442;
-  --button-active-color: #FFA786;
-  --button-border-color: #FF6228;
-  --button-text-color: #FFFFFF;
+  --button-bg-color: #E1E1E7;
+  --button-hover-color: #BFBFC5;
+  --button-active-color: #717175;
+  --button-border-color: #E1E1E7;
+  --button-text-color: #000000;
+  --button-active-text-color: #FFFFFF;
   --button-padding: 4px 14px 3px 8px;
   --button-gap: 6px;
   --button-border-radius: 12px;
@@ -16,6 +17,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   --button-transform: scale(0.99);
   --icon-size: 22px;
   --button-font-size: 14px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --button-bg-color: #3F3F41;
+    --button-hover-color: #717175;
+    --button-active-color: #272729;
+    --button-border-color: #3F3F41;
+    --button-text-color: #E1E1E7;
+    --button-active-text-color: #E1E1E7;
+
+  }
 }
 
 .custom-button {
@@ -41,5 +54,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .custom-button:hover:active {
   background-color: var(--button-active-color);
+  color: var(--button-active-text-color);
   transform: var(--button-transform);
 }
