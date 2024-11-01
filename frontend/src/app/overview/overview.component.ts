@@ -20,9 +20,9 @@ export class OverviewComponent implements OnDestroy, OnInit {
   // selectedPosition: Position | undefined;
   private positionService = inject(PositionService);
   public enableEdit = signal<boolean>(false);
-  private columnCount = 2;
+  private columnCount = 1;
   private maxColumnCount = 0;
-  private positionsPerColumn = [25, 26];
+  private positionsPerColumn = [22];
   private columnDistribution: number[] = [];
 
   ngOnInit() {

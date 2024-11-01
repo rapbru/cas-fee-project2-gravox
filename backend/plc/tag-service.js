@@ -1,11 +1,25 @@
 import { TagGroup } from 'st-ethernet-ip';
 
 export default class TagService {
+    static instance = null;
+
     constructor(plcConnection) {
+        if (TagService.instance) {
+            throw new Error("Use TagService.getInstance() to get the instance.");
+        }
         this.plcConnection = plcConnection;
         this.setupEventHandlers();
         this.tags = [];
         this.tagInitPromises = {};
+
+        TagService.instance = this;
+    }
+
+    static getInstance(plcConnection) {
+        if (!TagService.instance) {
+            TagService.instance = new TagService(plcConnection);
+        }
+        return TagService.instance;
     }
 
     setupEventHandlers() {
@@ -117,5 +131,12 @@ export default class TagService {
             console.error('Error writing tags:', err);
             throw err;
         }
+    }
+
+    async getTagsForPosition(positionNumber) {
+        console.log("positionNumber:");
+        console.log(positionNumber);
+        const tagsForPosition = this.tags.filter(tag => tag.name.includes(`POS[${positionNumber}]`));
+        return tagsForPosition.map(tag => ({ "tag": tag.name, "value": tag.value }));
     }
 }
