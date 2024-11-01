@@ -117,10 +117,10 @@ export class PositionService {
     if (tag.includes('TIME.ACTUAL')) return 'time.actual';
     if (tag.includes('TEMP.PRESET')) return 'temperature.preset';
     if (tag.includes('TEMP.ACTUAL1')) return 'temperature.actual';
-    if (tag.includes('VOLT.PRESET')) return 'voltage.preset';
-    if (tag.includes('VOLT.ACTUAL')) return 'voltage.actual';
-    if (tag.includes('CURR.PRESET')) return 'current.preset';
-    if (tag.includes('CURR.ACTUAL')) return 'current.actual';
+    if (tag.includes('GL.PRESETVOLT')) return 'voltage.preset';
+    if (tag.includes('GL.ACTUALVOLT')) return 'voltage.actual';
+    if (tag.includes('GL.PRESETAMPS')) return 'current.preset';
+    if (tag.includes('GL.ACTUALAMPS')) return 'current.actual';
     return null;
   }
 

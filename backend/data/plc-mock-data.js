@@ -1,28 +1,35 @@
 export default class PLCMockData {
 
     constructor() {
-        this.tagValues =  [
-            { "tag": "POS[0].FB.NBR", "value": 0 },
-            { "tag": "POS[0].TIME.PRESET", "value": 0 },
-            { "tag": "POS[0].TEMP.PRESET", "value": 0 },
-            { "tag": "POS[0].TIME.ACTUAL", "value": 0 },
-            { "tag": "POS[0].TEMP.ACTUAL1", "value": 0 },
-            { "tag": "POS[1].FB.NBR", "value": 0 },
-            { "tag": "POS[1].TIME.PRESET", "value": 100 },
-            { "tag": "POS[1].TEMP.ACTUAL1", "value": 50 },
-            { "tag": "POS[1].TEMP.PRESET", "value": 60 },
-            { "tag": "POS[1].TIME.ACTUAL", "value": 10 },
-            { "tag": "POS[2].FB.NBR", "value": 0 },
-            { "tag": "POS[2].TIME.PRESET", "value": 300 },
-            { "tag": "POS[2].TEMP.ACTUAL1", "value": 20 },
-            { "tag": "POS[2].TEMP.PRESET", "value": 22 },
-            { "tag": "POS[2].TIME.ACTUAL", "value": 0 },
-            { "tag": "POS[3].FB.NBR", "value": 0 },
-            { "tag": "POS[3].TIME.PRESET", "value": 300 },
-            { "tag": "POS[3].TEMP.ACTUAL1", "value": 35 },
-            { "tag": "POS[3].TEMP.PRESET", "value": 33 },
-            { "tag": "POS[3].TIME.ACTUAL", "value": 0 }            
-        ];
+
+        this.tagValues =  [];
+
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        
+        function getRandomFloat(min, max) {
+            return parseFloat(Math.random() * (max - min) + min).toFixed(2);
+        }
+
+        const tempPreset = getRandomInt(0, 100);
+        const ampPreset = getRandomFloat(0, 1000);
+        const voltPreset = getRandomFloat(0, 20);  
+
+        for (let i = 1; i <= 50; i++) {
+            this.tagValues.push(
+                { "tag": `POS[${i}].FB.NBR`, "value": i },
+                { "tag": `POS[${i}].TIME.PRESET`, "value": getRandomInt(0, 120) },
+                { "tag": `POS[${i}].TIME.ACTUAL`, "value": getRandomInt(0, 50) },
+                { "tag": `POS[${i}].TEMP.PRESET`, "value": tempPreset },
+                { "tag": `POS[${i}].TEMP.ACTUAL1`, "value": tempPreset },
+                { "tag": `POS[${i}].GL.PRESETAMPS[1]`, "value": ampPreset },
+                { "tag": `POS[${i}].GL.ACTUALAMPS[1]`, "value": ampPreset },
+                { "tag": `POS[${i}].GL.PRESETVOLT[1]`, "value": voltPreset },
+                { "tag": `POS[${i}].GL.ACTUALVOLT[1]`, "value": voltPreset }
+            );
+        }
+
         this.defaultTagValue = 0;
     }
 
@@ -31,7 +38,6 @@ export default class PLCMockData {
     }
 
     async get(tagName) {
-        // Mock response for the tag value
         return { "tag": tagName, "value": this.defaultTagValue };
     }
 }

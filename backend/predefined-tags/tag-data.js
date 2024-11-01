@@ -42,6 +42,10 @@ export class TagData {
             data.push({ tagName: `POS[${i}].TIME.ACTUAL` });
             data.push({ tagName: `POS[${i}].TEMP.PRESET` });
             data.push({ tagName: `POS[${i}].TEMP.ACTUAL1` });
+            data.push({ tagName: `POS[${i}].GL.PRESETAMPS[1]` });
+            data.push({ tagName: `POS[${i}].GL.ACTUALAMPS[1]` });
+            data.push({ tagName: `POS[${i}].GL.PRESETVOLT[1]` });
+            data.push({ tagName: `POS[${i}].GL.ACTUALVOLT[1]` });
         }
 
         // for (let j = 0; j <= fbArr; j++) {
