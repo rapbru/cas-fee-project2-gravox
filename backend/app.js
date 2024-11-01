@@ -1,6 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+// import path from 'path';
+
 import plcRoutes from './routes/plc-routes.js';
 import authRoutes from './routes/auth-routes.js';
 import authToken from './auth-token.js';
@@ -21,5 +23,12 @@ app.use((err, req, res, next) => {
         next(err);
     }
 });
+
+// const dirname = path.resolve();
+// app.use(express.static(path.join(dirname, 'dist/gravox/browser')));
+
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(dirname, 'dist/gravox/browser/index.html'));
+// });
 
 export default app;

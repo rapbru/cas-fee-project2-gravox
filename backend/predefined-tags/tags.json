@@ -15,6 +15,18 @@
     "tagName": "POS[0].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[0].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[0].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[0].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[0].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[1].FB.NBR"
   },
   {
@@ -28,6 +40,18 @@
   },
   {
     "tagName": "POS[1].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[1].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[1].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[1].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[1].GL.ACTUALVOLT[1]"
   },
   {
     "tagName": "POS[2].FB.NBR"
@@ -45,6 +69,18 @@
     "tagName": "POS[2].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[2].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[2].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[2].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[2].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[3].FB.NBR"
   },
   {
@@ -58,6 +94,18 @@
   },
   {
     "tagName": "POS[3].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[3].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[3].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[3].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[3].GL.ACTUALVOLT[1]"
   },
   {
     "tagName": "POS[4].FB.NBR"
@@ -75,6 +123,18 @@
     "tagName": "POS[4].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[4].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[4].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[4].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[4].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[5].FB.NBR"
   },
   {
@@ -88,6 +148,18 @@
   },
   {
     "tagName": "POS[5].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[5].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[5].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[5].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[5].GL.ACTUALVOLT[1]"
   },
   {
     "tagName": "POS[6].FB.NBR"
@@ -105,6 +177,18 @@
     "tagName": "POS[6].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[6].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[6].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[6].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[6].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[7].FB.NBR"
   },
   {
@@ -118,6 +202,18 @@
   },
   {
     "tagName": "POS[7].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[7].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[7].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[7].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[7].GL.ACTUALVOLT[1]"
   },
   {
     "tagName": "POS[8].FB.NBR"
@@ -135,6 +231,18 @@
     "tagName": "POS[8].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[8].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[8].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[8].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[8].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[9].FB.NBR"
   },
   {
@@ -148,6 +256,18 @@
   },
   {
     "tagName": "POS[9].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[9].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[9].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[9].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[9].GL.ACTUALVOLT[1]"
   },
   {
     "tagName": "POS[10].FB.NBR"
@@ -165,6 +285,18 @@
     "tagName": "POS[10].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[10].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[10].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[10].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[10].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[11].FB.NBR"
   },
   {
@@ -178,6 +310,18 @@
   },
   {
     "tagName": "POS[11].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[11].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[11].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[11].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[11].GL.ACTUALVOLT[1]"
   },
   {
     "tagName": "POS[12].FB.NBR"
@@ -195,6 +339,18 @@
     "tagName": "POS[12].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[12].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[12].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[12].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[12].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[13].FB.NBR"
   },
   {
@@ -208,6 +364,18 @@
   },
   {
     "tagName": "POS[13].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[13].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[13].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[13].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[13].GL.ACTUALVOLT[1]"
   },
   {
     "tagName": "POS[14].FB.NBR"
@@ -225,6 +393,18 @@
     "tagName": "POS[14].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[14].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[14].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[14].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[14].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[15].FB.NBR"
   },
   {
@@ -238,6 +418,18 @@
   },
   {
     "tagName": "POS[15].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[15].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[15].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[15].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[15].GL.ACTUALVOLT[1]"
   },
   {
     "tagName": "POS[16].FB.NBR"
@@ -255,6 +447,18 @@
     "tagName": "POS[16].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[16].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[16].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[16].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[16].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[17].FB.NBR"
   },
   {
@@ -268,6 +472,18 @@
   },
   {
     "tagName": "POS[17].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[17].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[17].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[17].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[17].GL.ACTUALVOLT[1]"
   },
   {
     "tagName": "POS[18].FB.NBR"
@@ -285,6 +501,18 @@
     "tagName": "POS[18].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[18].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[18].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[18].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[18].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[19].FB.NBR"
   },
   {
@@ -298,6 +526,18 @@
   },
   {
     "tagName": "POS[19].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[19].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[19].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[19].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[19].GL.ACTUALVOLT[1]"
   },
   {
     "tagName": "POS[20].FB.NBR"
@@ -315,6 +555,18 @@
     "tagName": "POS[20].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[20].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[20].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[20].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[20].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[21].FB.NBR"
   },
   {
@@ -328,6 +580,18 @@
   },
   {
     "tagName": "POS[21].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[21].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[21].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[21].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[21].GL.ACTUALVOLT[1]"
   },
   {
     "tagName": "POS[22].FB.NBR"
@@ -345,6 +609,18 @@
     "tagName": "POS[22].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[22].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[22].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[22].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[22].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[23].FB.NBR"
   },
   {
@@ -358,6 +634,18 @@
   },
   {
     "tagName": "POS[23].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[23].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[23].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[23].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[23].GL.ACTUALVOLT[1]"
   },
   {
     "tagName": "POS[24].FB.NBR"
@@ -375,6 +663,18 @@
     "tagName": "POS[24].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[24].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[24].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[24].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[24].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[25].FB.NBR"
   },
   {
@@ -388,6 +688,18 @@
   },
   {
     "tagName": "POS[25].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[25].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[25].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[25].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[25].GL.ACTUALVOLT[1]"
   },
   {
     "tagName": "POS[26].FB.NBR"
@@ -405,6 +717,18 @@
     "tagName": "POS[26].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[26].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[26].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[26].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[26].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[27].FB.NBR"
   },
   {
@@ -418,6 +742,18 @@
   },
   {
     "tagName": "POS[27].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[27].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[27].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[27].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[27].GL.ACTUALVOLT[1]"
   },
   {
     "tagName": "POS[28].FB.NBR"
@@ -435,6 +771,18 @@
     "tagName": "POS[28].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[28].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[28].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[28].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[28].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[29].FB.NBR"
   },
   {
@@ -448,6 +796,18 @@
   },
   {
     "tagName": "POS[29].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[29].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[29].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[29].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[29].GL.ACTUALVOLT[1]"
   },
   {
     "tagName": "POS[30].FB.NBR"
@@ -465,6 +825,18 @@
     "tagName": "POS[30].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[30].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[30].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[30].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[30].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[31].FB.NBR"
   },
   {
@@ -478,6 +850,18 @@
   },
   {
     "tagName": "POS[31].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[31].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[31].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[31].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[31].GL.ACTUALVOLT[1]"
   },
   {
     "tagName": "POS[32].FB.NBR"
@@ -495,6 +879,18 @@
     "tagName": "POS[32].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[32].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[32].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[32].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[32].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[33].FB.NBR"
   },
   {
@@ -508,6 +904,18 @@
   },
   {
     "tagName": "POS[33].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[33].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[33].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[33].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[33].GL.ACTUALVOLT[1]"
   },
   {
     "tagName": "POS[34].FB.NBR"
@@ -525,6 +933,18 @@
     "tagName": "POS[34].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[34].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[34].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[34].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[34].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[35].FB.NBR"
   },
   {
@@ -538,6 +958,18 @@
   },
   {
     "tagName": "POS[35].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[35].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[35].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[35].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[35].GL.ACTUALVOLT[1]"
   },
   {
     "tagName": "POS[36].FB.NBR"
@@ -555,6 +987,18 @@
     "tagName": "POS[36].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[36].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[36].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[36].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[36].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[37].FB.NBR"
   },
   {
@@ -568,6 +1012,18 @@
   },
   {
     "tagName": "POS[37].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[37].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[37].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[37].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[37].GL.ACTUALVOLT[1]"
   },
   {
     "tagName": "POS[38].FB.NBR"
@@ -585,6 +1041,18 @@
     "tagName": "POS[38].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[38].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[38].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[38].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[38].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[39].FB.NBR"
   },
   {
@@ -598,6 +1066,18 @@
   },
   {
     "tagName": "POS[39].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[39].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[39].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[39].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[39].GL.ACTUALVOLT[1]"
   },
   {
     "tagName": "POS[40].FB.NBR"
@@ -615,6 +1095,18 @@
     "tagName": "POS[40].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[40].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[40].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[40].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[40].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[41].FB.NBR"
   },
   {
@@ -628,6 +1120,18 @@
   },
   {
     "tagName": "POS[41].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[41].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[41].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[41].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[41].GL.ACTUALVOLT[1]"
   },
   {
     "tagName": "POS[42].FB.NBR"
@@ -645,6 +1149,18 @@
     "tagName": "POS[42].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[42].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[42].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[42].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[42].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[43].FB.NBR"
   },
   {
@@ -658,6 +1174,18 @@
   },
   {
     "tagName": "POS[43].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[43].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[43].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[43].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[43].GL.ACTUALVOLT[1]"
   },
   {
     "tagName": "POS[44].FB.NBR"
@@ -675,6 +1203,18 @@
     "tagName": "POS[44].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[44].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[44].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[44].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[44].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[45].FB.NBR"
   },
   {
@@ -688,6 +1228,18 @@
   },
   {
     "tagName": "POS[45].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[45].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[45].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[45].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[45].GL.ACTUALVOLT[1]"
   },
   {
     "tagName": "POS[46].FB.NBR"
@@ -705,6 +1257,18 @@
     "tagName": "POS[46].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[46].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[46].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[46].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[46].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[47].FB.NBR"
   },
   {
@@ -718,6 +1282,18 @@
   },
   {
     "tagName": "POS[47].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[47].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[47].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[47].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[47].GL.ACTUALVOLT[1]"
   },
   {
     "tagName": "POS[48].FB.NBR"
@@ -735,6 +1311,18 @@
     "tagName": "POS[48].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[48].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[48].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[48].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[48].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[49].FB.NBR"
   },
   {
@@ -750,6 +1338,18 @@
     "tagName": "POS[49].TEMP.ACTUAL1"
   },
   {
+    "tagName": "POS[49].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[49].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[49].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[49].GL.ACTUALVOLT[1]"
+  },
+  {
     "tagName": "POS[50].FB.NBR"
   },
   {
@@ -763,5 +1363,17 @@
   },
   {
     "tagName": "POS[50].TEMP.ACTUAL1"
+  },
+  {
+    "tagName": "POS[50].GL.PRESETAMPS[1]"
+  },
+  {
+    "tagName": "POS[50].GL.ACTUALAMPS[1]"
+  },
+  {
+    "tagName": "POS[50].GL.PRESETVOLT[1]"
+  },
+  {
+    "tagName": "POS[50].GL.ACTUALVOLT[1]"
   }
 ]

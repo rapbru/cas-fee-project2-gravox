@@ -30,11 +30,11 @@
   .position-details {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    // width: 100%;
     
     .detail {
       display: grid;
-      grid-template-columns: 1fr 2fr;
+      grid-template-columns: 70px auto;
     }
   }
   
