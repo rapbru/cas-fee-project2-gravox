@@ -2,3 +2,29 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.custom-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px 4px 6px;
+  gap: 6px;
+  border-radius: 12px;
+  background-color: #FF6228;
+  border: #FF6228;
+  color: #FFFFFF;
+}
+
+.custom-button mat-icon {
+  font-size: 22px;
+}
+
+
+.custom-button:hover {
+  background-color: #FF7442;
+  cursor: pointer;
+}
+
+.custom-button:hover:active {
+  background-color: #FFA786;
+  transform: scale(0.99);
+}
