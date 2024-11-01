@@ -3,28 +3,43 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+:root {
+  --button-bg-color: #FF6228;
+  --button-hover-color: #FF7442;
+  --button-active-color: #FFA786;
+  --button-border-color: #FF6228;
+  --button-text-color: #FFFFFF;
+  --button-padding: 4px 14px 3px 8px;
+  --button-gap: 6px;
+  --button-border-radius: 12px;
+  --button-border-thickness: 2px;
+  --button-transform: scale(0.99);
+  --icon-size: 22px;
+  --button-font-size: 14px;
+}
+
 .custom-button {
   display: inline-flex;
   align-items: center;
-  padding: 4px 12px 4px 6px;
-  gap: 6px;
-  border-radius: 12px;
-  background-color: #FF6228;
-  border: #FF6228;
-  color: #FFFFFF;
+  padding: var(--button-padding);
+  gap: var(--button-gap);
+  border-radius: var(--button-border-radius);
+  background-color: var(--button-bg-color);
+  border: var(--button-border-thickness) var(--button-border-color);
+  color: var(--button-text-color);
+  font-size: var(--button-font-size);
 }
 
 .custom-button mat-icon {
-  font-size: 22px;
+  font-size: var(--icon-size);
 }
 
-
 .custom-button:hover {
-  background-color: #FF7442;
+  background-color: var(--button-hover-color);
   cursor: pointer;
 }
 
 .custom-button:hover:active {
-  background-color: #FFA786;
-  transform: scale(0.99);
+  background-color: var(--button-active-color);
+  transform: var(--button-transform);
 }
