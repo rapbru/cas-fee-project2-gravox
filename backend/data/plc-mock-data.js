@@ -1,8 +1,12 @@
+import mockPositions from './mock-positions.js';
+
 export default class PLCMockData {
 
     constructor() {
 
         this.tagValues =  [];
+        this.positions = {};
+        this.initializePositions();
 
         function getRandomInt(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -33,11 +37,23 @@ export default class PLCMockData {
         this.defaultTagValue = 0;
     }
 
+    initializePositions() {
+        this.positions = mockPositions.positions;
+    }
+
     async all() {
         return this.tagValues;
     }
 
     async get(tagName) {
         return { "tag": tagName, "value": this.defaultTagValue };
+    }
+
+    async getPositions() {
+        return { positions: this.positions };
+    }
+
+    async getPositionById(positionId) {
+        return this.positions[positionId] ? { [positionId]: this.positions[positionId] } : null;
     }
 }
