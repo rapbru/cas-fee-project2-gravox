@@ -1,17 +1,23 @@
 <button mat-icon-button (click)="toggleEdit()">
   <mat-icon>{{ enableEdit() ? 'edit_off' : 'edit' }}</mat-icon>
 </button>
+
+<button mat-button>
+  <mat-icon>deployed_code</mat-icon>
+  Artikel
+</button>
+
 <button (click)="increaseColumns()">+</button>
 <button (click)="decreaseColumns()">-</button>
 
 <div cdkDropListGroup>
   <div class="overview-container">
-    @for (column of columns(); track $index; let index = $index) {  
+    @for (column of columns(); track $index; let index = $index) {
       <div cdkDropList [cdkDropListData]="column" class="overview-list" (cdkDropListDropped)="drop($event, index)">
         <div class="app-position-header">
           <div class="column-name">Spalte {{index + 1}}</div>
           <div class="column-metrics">
-            <div>min</div> 
+            <div>min</div>
             <div>°C</div>
             <div>A</div>
             <div>V</div>
