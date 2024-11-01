@@ -1,13 +1,20 @@
-import PLCConnection from "./plc-connection.js";
 import TagService from "./tag-service.js";
 import { tagData } from '../predefined-tags/tag-data.js';
 
 export default class PLCService {
-    constructor() {
-        this.plcConnection = new PLCConnection('10.198.200.82');
-        this.tagService = new TagService(this.plcConnection);
+    static instance = null;
+
+    constructor(plcConnection) {
+        if (PLCService.instance) {
+            throw new Error("Use PLCService.getInstance() to get the instance.");
+        }
+        
+        this.plcConnection = plcConnection;
+        this.tagService = TagService.getInstance(this.plcConnection);
         
         this.initialize();
+
+        PLCService.instance = this;
     }
 
     async initialize() {
@@ -46,5 +53,12 @@ export default class PLCService {
             console.error('Error writing tag data:', error);
             throw error;
         }
+    }
+
+    static getInstance(plcConnection) {
+        if (!PLCService.instance) {
+            PLCService.instance = new PLCService(plcConnection);
+        }
+        return PLCService.instance;
     }
 }

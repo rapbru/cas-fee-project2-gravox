@@ -1,9 +1,11 @@
 import PLCService from '../plc/plc-service.js';
 import PLCMockData from '../data/plc-mock-data.js';
+import PLCConnection from '../plc/plc-connection.js'
 
 export class PLCController {
-    constructor(plcService) {
-        this.plcService = plcService || (process.env.NODE_ENV === "production" ? new PLCService() : new PLCMockData());
+    constructor() {
+        this.plcConnection = new PLCConnection('10.198.200.82');
+        this.plcService = (process.env.NODE_ENV === "production" ? PLCService.getInstance(this.plcConnection) : new PLCMockData());
     }
 
     getAllValues = async (req, res) => {
