@@ -42,7 +42,7 @@
         </div>
         <div class="metric" *ngIf="!position.flightbar">
             <span *ngIf="position.temperature?.isPresent">{{ position.temperature.actual }}</span>
-            <span *ngIf="!position.temperature?.isPresent">-</span>
+            <span *ngIf="!position.temperature?.isPresent"></span>
         </div>
         <div class="metric" *ngIf="position.flightbar">
             <mat-icon>bolt</mat-icon>
