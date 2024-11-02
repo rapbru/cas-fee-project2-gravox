@@ -17,6 +17,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   --button-transform: scale(0.99);
   --icon-size: 22px;
   --button-font-size: 14px;
+
+  --button-primary-bg-color: #FF6228;
+  --button-primary-hover-color: #FF7442;
+  --button-primary-active-color: #FFA786;
+  --button-primary-border-color: #FF6228;
+  --button-primary-text-color: #FFFFFF;
+  --button-primary-active-text-color: #FFFFFF;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -27,7 +34,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     --button-border-color: #3F3F41;
     --button-text-color: #E1E1E7;
     --button-active-text-color: #E1E1E7;
-
   }
 }
 
@@ -54,6 +60,22 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .custom-button:hover:active {
   background-color: var(--button-active-color);
-  color: var(--button-active-text-color);
+  color: var(--button-hero-active-text-color);
   transform: var(--button-transform);
+}
+
+
+.primary-button {
+  background-color: var(--button-primary-bg-color);
+  color: var(--button-primary-text-color);
+  border: var(--button-primary-border-color);
+}
+
+.primary-button:hover {
+  background-color: var(--button-primary-hover-color);
+}
+
+.primary-button:hover:active {
+  background-color: var(--button-primary-active-color);
+  color: var(--button-primary-text-color);
 }
