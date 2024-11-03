@@ -29,9 +29,9 @@ export class OverviewComponent implements OnDestroy, OnInit {
     this.positionService.startFetching();
     window.addEventListener('resize', this.updateColumnDistribution.bind(this));
   }
-  
+
   columns = computed(() => {
-    const positions = this.positionService.orderedPositions(); 
+    const positions = this.positionService.orderedPositions();
     this.updateColumnDistribution();
     return this.splitPositionsDynamically(positions, this.columnDistribution);
   });
@@ -42,7 +42,7 @@ export class OverviewComponent implements OnDestroy, OnInit {
     this.maxColumnCount = Math.min(Math.floor(windowWidth / 450), 10);
     if (this.maxColumnCount === 0) this.maxColumnCount = 1;
 
-    const distribution = []; 
+    const distribution = [];
     for (let i = 0; i < this.columnCount; i++) {
       if (i < this.maxColumnCount) {
         distribution[i] = this.positionsPerColumn[i];
@@ -63,17 +63,17 @@ export class OverviewComponent implements OnDestroy, OnInit {
       columns.push(column);
       startIndex += count;
     }
-    
+
     return columns;
   }
 
   positions = computed(() => {
-    return this.positionService.orderedPositions();  
+    return this.positionService.orderedPositions();
   });
 
   drop(event: CdkDragDrop<Position[]>, columnIndex: number) {
     let movedBetween = false;
-    
+
     let previousColumnIndex = 0;
 
     const previousContainer = event.previousContainer;
@@ -126,7 +126,7 @@ export class OverviewComponent implements OnDestroy, OnInit {
       this.positionsPerColumn.push(0);
       this.updateColumnDistribution();
     }
-  } 
+  }
 
   public decreaseColumns() {
     if (this.columnCount > 1) {
@@ -153,7 +153,7 @@ export class OverviewComponent implements OnDestroy, OnInit {
   ngOnDestroy() {
     this.positionService.stopFetching();
   }
-  
+
   // getPositionHeight(position: Position): string {
   //   if (position.flightbar) {
   //     return '250px';
