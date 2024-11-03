@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { PositionComponent } from './position.component';
 import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem  } from '@angular/cdk/drag-drop';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 // import { PositionEditComponent } from '../position/position-edit/position-edit.component';
 
 @Component({
@@ -161,5 +162,22 @@ export class OverviewComponent implements OnDestroy, OnInit {
   //     return '150px';
   //   }
   // }
+
+
+  constructor(private router: Router) {}
+
+  navigateToArticles() {
+    this.router.navigate(['/articles']).then(success => {
+      if (success) {
+        console.log('Navigation successful!');
+      } else {
+        console.error('Navigation failed!');
+      }
+    }).catch(err => {
+      console.error('Error during navigation:', err);
+    });
+  }
+
+
 
 }
