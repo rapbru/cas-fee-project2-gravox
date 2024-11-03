@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-articles',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.scss'] // Corrected from styleUrl to styleUrls
 })
