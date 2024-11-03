@@ -1,3 +1,6 @@
 <h1>Articles Page</h1>
-<p *ngIf="isMobile">This content is displayed on mobile devices.</p>
-<p *ngIf="!isMobile">This content is displayed on desktop devices.</p>
+
+<div class="content-container" [ngClass]="{ 'mobile-layout': isMobile, 'desktop-layout': !isMobile }">
+  <div class="column">Column 1</div>
+  <div class="column">Column 2</div>
+</div>
