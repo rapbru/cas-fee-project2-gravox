@@ -1,0 +1,27 @@
+.content-container {
+  display: flex;
+  flex-wrap: wrap;
+
+  &.desktop-layout {
+    flex-direction: row;
+  }
+
+  &.mobile-layout {
+    flex-direction: column;
+  }
+}
+
+.column {
+  flex: 1;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  margin: 0.5rem;
+
+  &.desktop-layout .column {
+    width: calc(50% - 1rem);
+  }
+
+  &.mobile-layout .column {
+    width: 100%;
+  }
+}
