@@ -1,6 +1,4 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,20 +8,20 @@ import { CommonModule } from '@angular/common';
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.scss'] // Corrected from styleUrl to styleUrls
 })
-export class ArticlesComponent {
-  isMobile = false; // Type annotation removed
+export class ArticlesComponent implements OnInit {
+  isMobile = false;
 
-  constructor(private router: Router, private breakpointObserver: BreakpointObserver) {
-    this.breakpointObserver.observe([
-      Breakpoints.Handset,
-      Breakpoints.Tablet,
-      Breakpoints.Web
-    ]).subscribe(result => {
-      this.isMobile = result.matches && (result.breakpoints[Breakpoints.Handset] || result.breakpoints[Breakpoints.Tablet]);
-    });
+  ngOnInit() {
+    this.checkMobile();
   }
 
-  navigateToArticles() {
-    this.router.navigate(['/articles']);
+  @HostListener('window:resize', [])
+  onResize() {
+    this.checkMobile();
+  }
+
+  private checkMobile() {
+    this.isMobile = window.matchMedia('(max-width: 600px)').matches;
+    console.log('isMobile (matchMedia):', this.isMobile);
   }
 }
