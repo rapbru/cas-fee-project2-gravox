@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../authentication/auth.service';
 
+
 @Component({
   selector: 'app-navbar',
   standalone: true,
