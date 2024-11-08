@@ -3,22 +3,27 @@
 @use '@angular/material' as mat;
 @include mat.core();
 
-
-$orange-primary: mat.m2-define-palette(mat.$m2-red-palette);
-$accent: mat.m2-define-palette(mat.$m2-red-palette);
+$orange-primary: mat.m2-define-palette(mat.$m2-orange-palette);
+$accent: mat.m2-define-palette(mat.$m2-grey-palette);
 
 $custom-theme: mat.m2-define-light-theme($orange-primary, $accent);
-
 @include mat.all-component-themes($custom-theme);
 
+.mat-toolbar {
+  background-color: white;
 
+  .mat-button {
+    color: mat.m2-get-color-from-palette($accent, 500);
+  }
 
-
+  .mat-button-primary {
+    color: mat.m2-get-color-from-palette($orange-primary);
+  }
+}
 
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
 
 
 //:root {
