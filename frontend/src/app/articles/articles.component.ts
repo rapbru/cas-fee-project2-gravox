@@ -1,12 +1,13 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ToolbarComponent } from '../toolbar/toolbar.component';
 
 @Component({
   selector: 'app-articles',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ToolbarComponent],
   templateUrl: './articles.component.html',
-  styleUrls: ['./articles.component.scss'] // Corrected from styleUrl to styleUrls
+  styleUrls: ['./articles.component.scss']
 })
 export class ArticlesComponent implements OnInit {
   isMobile = false;
