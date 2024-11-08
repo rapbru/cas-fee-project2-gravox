@@ -1,8 +1,22 @@
+
 <h1 i18n="@@articlesHeader">Artikel</h1>
+
+<header>
+  <nav>
+    <span>Text</span>
+    <span class="spacer"></span>
+    <button mat-button routerLink="/home">Home</button>
+    <button mat-button routerLink="/articles">Articles</button>
+    <button mat-button routerLink="/about">About</button>
+  </nav>
+</header>
+
 
 <div class="content-container" [ngClass]="{ 'mobile-layout': isMobile, 'desktop-layout': !isMobile }">
   <div class="column">Column 1</div>
   <div class="column">Column 2</div>
 </div>
 
-
+<footer>
+    <span>VONESCO </span>
+</footer>
