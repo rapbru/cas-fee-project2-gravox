@@ -1,81 +1,101 @@
 /* You can add global styles to this file, and also import other style files */
 
+@use '@angular/material' as mat;
+@include mat.core();
+
+
+$orange-primary: mat.m2-define-palette(mat.$m2-red-palette);
+$accent: mat.m2-define-palette(mat.$m2-red-palette);
+
+$custom-theme: mat.m2-define-light-theme($orange-primary, $accent);
+
+@include mat.all-component-themes($custom-theme);
+
+
+
+
+
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-:root {
-  --button-bg-color: #E1E1E7;
-  --button-hover-color: #BFBFC5;
-  --button-active-color: #717175;
-  --button-border-color: #E1E1E7;
-  --button-text-color: #000000;
-  --button-active-text-color: #FFFFFF;
-  --button-padding: 4px 14px 3px 8px;
-  --button-gap: 6px;
-  --button-border-radius: 12px;
-  --button-border-thickness: 2px;
-  --button-transform: scale(0.99);
-  --icon-size: 22px;
-  --button-font-size: 14px;
-
-  --button-primary-bg-color: #FF6228;
-  --button-primary-hover-color: #FF7442;
-  --button-primary-active-color: #FFA786;
-  --button-primary-border-color: #FF6228;
-  --button-primary-text-color: #FFFFFF;
-  --button-primary-active-text-color: #FFFFFF;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --button-bg-color: #3F3F41;
-    --button-hover-color: #717175;
-    --button-active-color: #272729;
-    --button-border-color: #3F3F41;
-    --button-text-color: #E1E1E7;
-    --button-active-text-color: #E1E1E7;
-  }
-}
-
-.custom-button {
-  display: inline-flex;
-  align-items: center;
-  padding: var(--button-padding);
-  gap: var(--button-gap);
-  border-radius: var(--button-border-radius);
-  background-color: var(--button-bg-color);
-  border: var(--button-border-thickness) var(--button-border-color);
-  color: var(--button-text-color);
-  font-size: var(--button-font-size);
-}
-
-.custom-button mat-icon {
-  font-size: var(--icon-size);
-}
-
-.custom-button:hover {
-  background-color: var(--button-hover-color);
-  cursor: pointer;
-}
-
-.custom-button:hover:active {
-  background-color: var(--button-active-color);
-  color: var(--button-hero-active-text-color);
-  transform: var(--button-transform);
-}
 
 
-.primary-button {
-  background-color: var(--button-primary-bg-color);
-  color: var(--button-primary-text-color);
-  border: var(--button-primary-border-color);
-}
+//:root {
+//  --button-bg-color: #E1E1E7;
+//  --button-hover-color: #BFBFC5;
+//  --button-active-color: #717175;
+//  --button-border-color: #E1E1E7;
+//  --button-text-color: #000000;
+//  --button-active-text-color: #FFFFFF;
+//  --button-padding: 4px 14px 3px 8px;
+//  --button-gap: 6px;
+//  --button-border-radius: 12px;
+//  --button-border-thickness: 2px;
+//  --button-transform: scale(0.99);
+//  --icon-size: 22px;
+//  --button-font-size: 14px;
+//
+//  --button-primary-bg-color: #FF6228;
+//  --button-primary-hover-color: #FF7442;
+//  --button-primary-active-color: #FFA786;
+//  --button-primary-border-color: #FF6228;
+//  --button-primary-text-color: #FFFFFF;
+//  --button-primary-active-text-color: #FFFFFF;
+//}
+//
+//@media (prefers-color-scheme: dark) {
+//  :root {
+//    --button-bg-color: #3F3F41;
+//    --button-hover-color: #717175;
+//    --button-active-color: #272729;
+//    --button-border-color: #3F3F41;
+//    --button-text-color: #E1E1E7;
+//    --button-active-text-color: #E1E1E7;
+//  }
+//}
+//
+//.custom-button {
+//  display: inline-flex;
+//  align-items: center;
+//  padding: var(--button-padding);
+//  gap: var(--button-gap);
+//  border-radius: var(--button-border-radius);
+//  background-color: var(--button-bg-color);
+//  border: var(--button-border-thickness) var(--button-border-color);
+//  color: var(--button-text-color);
+//  font-size: var(--button-font-size);
+//}
+//
+//.custom-button mat-icon {
+//  font-size: var(--icon-size);
+//}
+//
+//.custom-button:hover {
+//  background-color: var(--button-hover-color);
+//  cursor: pointer;
+//}
+//
+//.custom-button:hover:active {
+//  background-color: var(--button-active-color);
+//  color: var(--button-hero-active-text-color);
+//  transform: var(--button-transform);
+//}
+//
+//
+//.primary-button {
+//  background-color: var(--button-primary-bg-color);
+//  color: var(--button-primary-text-color);
+//  border: var(--button-primary-border-color);
+//}
+//
+//.primary-button:hover {
+//  background-color: var(--button-primary-hover-color);
+//}
+//
+//.primary-button:hover:active {
+//  background-color: var(--button-primary-active-color);
+//  color: var(--button-primary-text-color);
+//}
 
-.primary-button:hover {
-  background-color: var(--button-primary-hover-color);
-}
 
-.primary-button:hover:active {
-  background-color: var(--button-primary-active-color);
-  color: var(--button-primary-text-color);
-}
