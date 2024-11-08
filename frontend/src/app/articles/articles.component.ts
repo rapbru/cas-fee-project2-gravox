@@ -7,14 +7,15 @@ import { ScreenService } from 'src/app/shared/screen.service';
   styleUrls: ['./articles.component.scss']
 })
 export class ArticlesComponent implements OnInit {
-  isMobile = false;
+  isMobile: boolean = false;
 
   constructor(private screenService: ScreenService) {}
 
   ngOnInit() {
-    this.screenService.isMobile$.subscribe((isMobile) => {
+    this.screenService.isMobile$.subscribe((isMobile: boolean) => {
       this.isMobile = isMobile;
       console.log('isMobile (ScreenService):', this.isMobile);
     });
   }
 }
+
