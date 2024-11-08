@@ -1,27 +1,20 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { ScreenService } from 'src/app/shared/screen.service';
 
 @Component({
   selector: 'app-articles',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './articles.component.html',
-  styleUrls: ['./articles.component.scss'] // Corrected from styleUrl to styleUrls
+  styleUrls: ['./articles.component.scss']
 })
 export class ArticlesComponent implements OnInit {
   isMobile = false;
 
+  constructor(private screenService: ScreenService) {}
+
   ngOnInit() {
-    this.checkMobile();
-  }
-
-  @HostListener('window:resize', [])
-  onResize() {
-    this.checkMobile();
-  }
-
-  private checkMobile() {
-    this.isMobile = window.matchMedia('(max-width: 600px)').matches;
-    console.log('isMobile (matchMedia):', this.isMobile);
+    this.screenService.isMobile$.subscribe((isMobile) => {
+      this.isMobile = isMobile;
+      console.log('isMobile (ScreenService):', this.isMobile);
+    });
   }
 }
