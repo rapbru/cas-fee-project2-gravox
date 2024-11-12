@@ -17,20 +17,21 @@ class PositionService {
         return result.rows;
     }
 
-    static mapPositionData(position, tagsForPosition) {
-        // console.log("tagsForPosition");
-        // console.log(tagsForPosition);
+    async mapPositionData(position) {
+        const tagsForPosition = await this.tagService.getTagsForPosition(position.position_number);
+
         return {
+            number: position.position_number,
             name: position.position_name,
             flightbar: tagsForPosition.find(tag => tag.tag === `POS[${position.position_number}].FB.NBR`)?.value || 0,
             articleName: "Artikel",
             customerName: "Kunde",
             time: {
-                actual: tagsForPosition.find(tag => tag.tag === `POS[${position.position_number}].TIME.ACTUAL`)?.value || 0,
-                preset: tagsForPosition.find(tag => tag.tag === `POS[${position.position_number}].TIME.PRESET`)?.value || 0,
+                actual: (tagsForPosition.find(tag => tag.tag === `POS[${position.position_number}].TIME.ACTUAL`)?.value || 0) / 60,
+                preset: (tagsForPosition.find(tag => tag.tag === `POS[${position.position_number}].TIME.PRESET`)?.value || 0) / 60,
             },
             temperature: {
-                actual: tagsForPosition.find(tag => tag.tag === `POS[${position.position_number}].TEMP.ACTUAL`)?.value || 0,
+                actual: tagsForPosition.find(tag => tag.tag === `POS[${position.position_number}].TEMP.ACTUAL1`)?.value || 0,
                 preset: tagsForPosition.find(tag => tag.tag === `POS[${position.position_number}].TEMP.PRESET`)?.value || 0,
                 isPresent: position.has_temperature,
             },
@@ -48,29 +49,23 @@ class PositionService {
     }
 
     async getPositions() {
-        const results = {};
-        await Promise.all(this.positions.map(async (position) => {
-            const tagsForPosition = await this.tagService.getTagsForPosition(position.position_number);
-            results[position.position_number] = PositionService.mapPositionData(position, tagsForPosition);
-        }));
+        const mappedPositions = await Promise.all(
+            this.positions.map(async (position) => this.mapPositionData(position))
+        );
 
-        return { positions: results };
+        return mappedPositions;
     }
 
     async getPositionById(positionId) {
-        const position = this.positions.find(p => p.positionNumber === positionId);
-        const results = {};
+        const id = Number(positionId);
+        const position = this.positions.find(pos => pos.position_number === id);
 
         if (!position) {
-            return { positions: {} };
+            return null;
         }
 
-        await Promise.all(position.map(async (pos) => {
-            const tagsForPosition = await this.tagService.getTagsForPosition(pos.positionNumber);
-            results[pos.positionNumber] = PositionService.mapPositionData(pos, tagsForPosition);
-        }));
-
-        return { positions: results };
+        const mappedPosition = await this.mapPositionData(position);
+        return mappedPosition;
     }
 }
 

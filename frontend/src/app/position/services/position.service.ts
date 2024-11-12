@@ -4,7 +4,7 @@ import { Position } from '../position.model';
 import { catchError, map, Observable, of } from 'rxjs';
 import { interval, Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PositionData } from '../position-data.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -34,24 +34,24 @@ export class PositionService {
     }
   }
 
-  public load(){
-    return this.http.get<{ positions: Record<string, Position> }>(this.apiUrl).pipe(
-      catchError((error) => {
-        this.snackbar.open('Could not load positions', 'Ok');
-        console.error('Error loading positions:', error);
-        return of({ positions: {} });
-      }),
-      map(data => {
-        console.log('API Response:', data);
-        const transformedData = this.transformData(data);
-        console.log('Transformed:', transformedData);
-        return transformedData;
-      })
+  public load() {
+    return this.http.get<Position[]>(this.apiUrl).pipe(
+        catchError((error) => {
+            this.snackbar.open('Could not load positions', 'Ok');
+            console.error('Error loading positions:', error);
+            return of([]);
+        }),
+        map(data => {
+            console.log('API Response:', data);
+            const transformedData = this.transformData(data);
+            console.log('Transformed:', transformedData);
+            return transformedData;
+        })
     ).subscribe(loaded => {
-      this.positions.set(loaded);
-      this.applyOrder();
+        this.positions.set(loaded);
+        this.applyOrder();
     });
-  }
+}
 
   private applyOrder() {
     const currentPositions = this.positions();
@@ -67,28 +67,33 @@ export class PositionService {
     this.orderedPositions.set(newOrder);
   }
 
-  private transformData(data: PositionData): Position[] {
-    const transformedPositions: Position[] = [];
-
-    for (const positionNumber in data.positions) {
-      if (Object.hasOwn(data.positions, positionNumber)) {
-          const position = data.positions[positionNumber];
-          transformedPositions.push({
-              number: Number(positionNumber),
-              name: position.name,
-              flightbar: position.flightbar,
-              articleName: position.articleName,
-              customerName: position.customerName,
-              time: {
-                actual: parseFloat((position.time.actual / 60).toFixed(2)),
-                preset: parseFloat((position.time.preset / 60).toFixed(2))
-              },
-              temperature: position.temperature,
-              current: position.current,
-              voltage: position.voltage
-          });
-      }
-  }
+  private transformData(data: Position[]): Position[] {
+    const transformedPositions: Position[] = data.map(position => ({
+        number: position.number,
+        name: position.name,
+        flightbar: position.flightbar,
+        articleName: position.articleName,
+        customerName: position.customerName,
+        time: {
+            actual: parseFloat((position.time.actual / 60).toFixed(2)),
+            preset: parseFloat((position.time.preset / 60).toFixed(2))
+        },
+        temperature: {
+            actual: position.temperature.actual,
+            preset: position.temperature.preset,
+            isPresent: position.temperature.isPresent
+        },
+        current: {
+            actual: position.current.actual,
+            preset: position.current.preset,
+            isPresent: position.current.isPresent
+        },
+        voltage: {
+            actual: position.voltage.actual,
+            preset: position.voltage.preset,
+            isPresent: position.voltage.isPresent
+        }
+    }));
 
     return transformedPositions;
   }
