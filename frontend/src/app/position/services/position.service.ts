@@ -23,9 +23,10 @@ export class PositionService {
 
   public startFetching() {
     this.intervalSubscription = interval(this.updateInterval).subscribe(() => {
-      console.log(this.load());
+      this.intervalSubscription = interval(this.updateInterval).subscribe(() => {
+        this.fetchPositions();
+      });
     });
-    // this.load();
   }
 
   public stopFetching() {
@@ -34,7 +35,7 @@ export class PositionService {
     }
   }
 
-  public load() {
+  public load(): Observable<Position[]> {
     return this.http.get<Position[]>(this.apiUrl).pipe(
         catchError((error) => {
             this.snackbar.open('Could not load positions', 'Ok');
@@ -42,21 +43,23 @@ export class PositionService {
             return of([]);
         }),
         map(data => {
-            console.log('API Response:', data);
             const transformedData = this.transformData(data);
-            console.log('Transformed:', transformedData);
             return transformedData;
         })
-    ).subscribe(loaded => {
+    );
+  }
+
+  public fetchPositions() {
+    this.load().subscribe(loaded => {
         this.positions.set(loaded);
         this.applyOrder();
     });
-}
+  }
 
   private applyOrder() {
     const currentPositions = this.positions();
     const ordered = this.orderedPositions();
-  
+
     const newOrdered = ordered.length > 0 
     ? ordered.map(pos => currentPositions.find(p => p.number === pos.number)).filter((pos): pos is Position => pos !== undefined)
     : [...currentPositions]; 
@@ -75,8 +78,8 @@ export class PositionService {
         articleName: position.articleName,
         customerName: position.customerName,
         time: {
-            actual: parseFloat((position.time.actual / 60).toFixed(2)),
-            preset: parseFloat((position.time.preset / 60).toFixed(2))
+            actual: parseFloat((position.time.actual).toFixed(2)),
+            preset: parseFloat((position.time.preset).toFixed(2))
         },
         temperature: {
             actual: position.temperature.actual,
