@@ -38,7 +38,7 @@ export default class PLCMockData {
     }
 
     initializePositions() {
-        this.positions = mockPositions.positions;
+        this.positions = mockPositions;
     }
 
     async all() {
@@ -50,10 +50,12 @@ export default class PLCMockData {
     }
 
     async getPositions() {
-        return { positions: this.positions };
+        return this.positions;
     }
 
     async getPositionById(positionId) {
-        return this.positions[positionId] ? { [positionId]: this.positions[positionId] } : null;
+        const id = Number(positionId);
+        const position = this.positions.find(pos => pos.number === id);
+        return { position } || null;
     }
 }
