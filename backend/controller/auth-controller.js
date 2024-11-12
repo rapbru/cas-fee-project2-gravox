@@ -29,7 +29,6 @@ class AuthController {
             return res.json({ token });
 
         } catch (error) {
-            console.error('Error during authentication:', error);
             return res.status(500).send('Internal Server Error');
         }
     }

@@ -13,7 +13,6 @@ export class PLCController {
             const values = await this.plcService.all();
             res.json(values || []);
         } catch (err) {
-            console.error('Error retrieving PLC values:', err);
             res.status(500).json({ error: 'Internal Server Error' });
         }
     }
@@ -25,7 +24,6 @@ export class PLCController {
             const values = await Promise.all(tagNames.map(tagName => this.plcService.get(tagName)));
             res.json(values || []);
         } catch (err) {
-            console.error('Error retrieving tag values:', err);
             res.status(500).json({ error: 'Internal Server Error' });
         }
     }
@@ -41,7 +39,6 @@ export class PLCController {
             const result = await this.plcService.write(tags);
             return res.json(result);
         } catch (err) {
-            console.error('Error writing tag values:', err);
             return res.status(500).json({ error: err.message });
         }
     }
