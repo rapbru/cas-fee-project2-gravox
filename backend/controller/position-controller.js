@@ -17,7 +17,6 @@ export class PositionController {
             const positions = await this.positionService.getPositions();
             res.json(positions);
         } catch (err) {
-            console.error('Error retrieving positions:', err);
             res.status(500).json({ error: 'Internal Server Error' });
         }
     };
@@ -28,7 +27,6 @@ export class PositionController {
             const position = await this.positionService.getPositionById(positionId);
             res.json(position);
         } catch (err) {
-            console.error('Error retrieving position:', err);
             res.status(500).json({ error: 'Internal Server Error' });
         }
     };

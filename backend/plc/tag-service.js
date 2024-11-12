@@ -134,8 +134,6 @@ export default class TagService {
     }
 
     async getTagsForPosition(positionNumber) {
-        console.log("positionNumber:");
-        console.log(positionNumber);
         const tagsForPosition = this.tags.filter(tag => tag.name.includes(`POS[${positionNumber}]`));
         return tagsForPosition.map(tag => ({ "tag": tag.name, "value": tag.value }));
     }

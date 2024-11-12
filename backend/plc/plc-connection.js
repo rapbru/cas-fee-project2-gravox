@@ -6,7 +6,6 @@ class PLCConnection {
         this.slot = slot;
         this.controllerManager = new ControllerManager();
         this.controller = this.controllerManager.addController(this.ipAddress, this.slot);
-        // this.controller.setMaxListeners(1000);
         this.connected = false;
     }
 
@@ -15,19 +14,13 @@ class PLCConnection {
             this.setupEventHandlers();
             await this.controller.connect();
             this.connected = true;
-            console.log(`Connected to PLC at ${this.ipAddress}`);
         } catch (error) {
             this.connected = false;
-            console.error('Error connecting to PLC:', error);
             throw error;
         }
     }
 
-    setupEventHandlers() {
-        // this.controller.on('TagChanged', (tag, prevValue) => {
-        //   console.log(`${tag.name} changed from ${prevValue} to ${tag.value}`);
-        // });
-    
+    setupEventHandlers() {  
         this.controller.on('Connected', () => {
             this.connected = true;
             console.log('PLC connection established');
