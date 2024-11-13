@@ -1,3 +1,33 @@
-nav {
-    background-color: #f0f0f6;
+.navbar-list {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    margin: 5px;
+    padding: 0px;
+}
+
+.navbar-item {
+    list-style: none;
+    text-decoration: none;
+    color: inherit;
+    border-style: solid;
+    border-radius: 15px;
+    font-style: inherit;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    padding: 5px;
+}
+
+.navbar-link {
+    text-decoration: none;
+    color: inherit;
+    background: none;
+    border-style: none;
+    font-style: inherit;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    padding: 0;
 }
