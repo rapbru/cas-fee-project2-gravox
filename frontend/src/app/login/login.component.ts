@@ -23,7 +23,6 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   login() {
-    console.log('user: '+this.username+'pw: '+this.password);
     this.authService.login(this.username, this.password).subscribe({
       next: (response) => {
         this.authService.saveToken(response.token);

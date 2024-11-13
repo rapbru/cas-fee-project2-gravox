@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, computed, OnDestroy, OnInit } from '@angular/core';
 import { Position } from '../position/position.model';
 import { PositionService } from '../position/services/position.service';
 import { CommonModule } from '@angular/common';
@@ -6,25 +6,22 @@ import { PositionComponent } from './position.component';
 import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem  } from '@angular/cdk/drag-drop';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-// import { PositionEditComponent } from '../position/position-edit/position-edit.component';
+import { EditStateService } from '../services/edit-state.service';
 
 @Component({
   selector: 'app-overview',
   standalone: true,
-  // imports: [CommonModule, PositionComponent, PositionEditComponent],
   imports: [CommonModule, PositionComponent, DragDropModule, MatIconModule],
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.scss'
 })
 export class OverviewComponent implements OnDestroy, OnInit {
-  // positions: Position[] = [];
-  // selectedPosition: Position | undefined;
-  private positionService = inject(PositionService);
-  public enableEdit = signal<boolean>(false);
   private columnCount = 1;
   private maxColumnCount = 0;
   private positionsPerColumn = [22];
   private columnDistribution: number[] = [];
+
+  constructor(private positionService: PositionService, private router: Router, public editStateService: EditStateService) {} 
 
   ngOnInit() {
     this.positionService.startFetching();
@@ -139,19 +136,7 @@ export class OverviewComponent implements OnDestroy, OnInit {
     }
   }
 
-  toggleEdit() {
-    this.enableEdit.set(!this.enableEdit());
-  }
-
-  // selectPosition(position: Position) {
-  //   this.selectedPosition = position;
-  // }
-
-  // closeEdit() {
-  //   this.selectedPosition = undefined;
-  // }
-
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.positionService.stopFetching();
   }
 
@@ -163,10 +148,7 @@ export class OverviewComponent implements OnDestroy, OnInit {
   //   }
   // }
 
-
-  constructor(private router: Router) {}
-
-  navigateToArticles() {
+  public navigateToArticles() {
     this.router.navigate(['/articles']).then(success => {
       if (success) {
         console.log('Navigation successful!');
