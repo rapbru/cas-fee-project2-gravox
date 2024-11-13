@@ -5,20 +5,25 @@
         <mat-icon>dashboard</mat-icon> Übersicht
       </a>
     </li>
+
     <li class="navbar-item">
       <a routerLink="/articles" class="navbar-link">
         <mat-icon>deployed_code</mat-icon> Artikel
       </a>
     </li>
+
+    <span class="flex-spacer"></span>
+
+    <li class="navbar-item">
+      <button (click)="toggleEdit()" class="navbar-link">
+        <mat-icon>{{ enableEdit() ? 'edit_off' : 'edit' }}</mat-icon>Bearbeiten
+      </button>
+    </li>
+
     <li class="navbar-item">
       <a (click)="logout()" (keydown.enter)="logout()" tabindex="0" class="navbar-link">
         <mat-icon>logout</mat-icon> Logout
       </a>
-    </li>
-    <li class="navbar-item">
-      <button (click)="toggleEdit()" class="navbar-link">
-        <mat-icon>{{ enableEdit() ? 'edit_off' : 'edit' }}</mat-icon> Anlage bearbeiten
-      </button>
     </li>
   </ul>
 </nav>
