@@ -23,9 +23,7 @@ export class PositionService {
 
   public startFetching() {
     this.intervalSubscription = interval(this.updateInterval).subscribe(() => {
-      this.intervalSubscription = interval(this.updateInterval).subscribe(() => {
-        this.fetchPositions();
-      });
+      this.fetchPositions();
     });
   }
 
