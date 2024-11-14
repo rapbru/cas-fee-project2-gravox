@@ -36,7 +36,7 @@ export class ArticlesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.http.get<{ article: Article }>('/assets/data.json').subscribe((data) => {
+    this.http.get<{ article: Article }>('/assets/articles-data.json').subscribe((data) => {
       this.article = data.article;
     });
   }
