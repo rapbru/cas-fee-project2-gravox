@@ -1,0 +1,14 @@
+{
+  "article": {
+    "number": "102",
+    "customer": "Pilatus",
+    "area": "150dm²",
+    "drainage": "100%",
+    "anodic": "0%",
+    "createdBy": "Silvan Weber",
+    "createdDate": "14.11.2024",
+    "modifiedBy": "Raphael Brunner",
+    "modifiedDate": "15.11.2024",
+    "note": "Ist eine Trommel."
+  }
+}
