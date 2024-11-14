@@ -17,55 +17,47 @@
   <div class="column">
 
     <mat-card>
-
       <mat-card-header>
         <mat-card-title class="article-pair-header">Trommel Passivieren</mat-card-title>
       </mat-card-header>
 
       <mat-card-content>
         <div class="article-columns">
-
           <div class="article-column-labels">
             <div class="article-column-label">Nummer:</div>
             <div class="article-column-label">Kunde:</div>
             <div class="article-column-spacer"></div>
-
             <div class="article-column-label">Fläche:</div>
             <div class="article-column-label">Abtropfen:</div>
             <div class="article-column-label">Anodisch:</div>
             <div class="article-column-spacer"></div>
-
             <div class="article-column-label">Erstellt:</div>
             <div class="article-column-label">Datum:</div>
             <div class="article-column-label">Geändert:</div>
             <div class="article-column-label">Datum:</div>
             <div class="article-column-spacer"></div>
-
             <div class="article-column-label">Bemerkung:</div>
           </div>
 
-          <div class="article-column-values">
-            <div class="article-column-value">102</div>
-            <div class="article-column-value">Pilatus</div>
+          <div class="article-column-values" *ngIf="article">
+            <div class="article-column-value">{{ article.number }}</div>
+            <div class="article-column-value">{{ article.customer }}</div>
             <div class="article-column-spacer"></div>
-
-            <div class="article-column-value">150dm²</div>
-            <div class="article-column-value">100%</div>
-            <div class="article-column-value">0%</div>
+            <div class="article-column-value">{{ article.area }}</div>
+            <div class="article-column-value">{{ article.drainage }}</div>
+            <div class="article-column-value">{{ article.anodic }}</div>
             <div class="article-column-spacer"></div>
-
-            <div class="article-column-value">Silvan Weber</div>
-            <div class="article-column-value">14.11.2024</div>
-            <div class="article-column-value">Raphael Brunner</div>
-            <div class="article-column-value">15.11.2024</div>
+            <div class="article-column-value">{{ article.createdBy }}</div>
+            <div class="article-column-value">{{ article.createdDate }}</div>
+            <div class="article-column-value">{{ article.modifiedBy }}</div>
+            <div class="article-column-value">{{ article.modifiedDate }}</div>
             <div class="article-column-spacer"></div>
-
-            <div class="article-column-value">Ist eine Trommel.</div>
+            <div class="article-column-value">{{ article.note }}</div>
             <div class="article-column-spacer"></div>
           </div>
-
         </div>
       </mat-card-content>
+
 
     </mat-card>
 
