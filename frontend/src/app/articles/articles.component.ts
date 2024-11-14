@@ -1,6 +1,7 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
+import { DeviceDetectionService } from '../services/device-detection.service';
 
 @Component({
   selector: 'app-articles',
@@ -9,20 +10,25 @@ import { ToolbarComponent } from '../toolbar/toolbar.component';
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.scss']
 })
-export class ArticlesComponent implements OnInit {
-  isMobile = false;
+export class ArticlesComponent {
+  isMobile = this.deviceDetectionService.isMobileSignal;
+  // isMobile = false;
 
-  ngOnInit() {
-    this.checkMobile();
-  }
+  constructor(private deviceDetectionService: DeviceDetectionService) {}
 
-  @HostListener('window:resize', [])
-  onResize() {
-    this.checkMobile();
-  }
+  // ngOnInit() {
+  //   this.checkMobile();
+  // }
 
-  private checkMobile() {
-    this.isMobile = window.matchMedia('(max-width: 600px)').matches;
-    console.log('isMobile (matchMedia):', this.isMobile);
-  }
+  // @HostListener('window:resize', [])
+  // onResize() {
+  //   this.checkMobile();
+  // }
+
+  // private checkMobile() {
+  //   this.isMobile = window.matchMedia('(max-width: 600px)').matches;
+  //   console.log('isMobile (matchMedia):', this.isMobile);
+  // }
 }
+
+
