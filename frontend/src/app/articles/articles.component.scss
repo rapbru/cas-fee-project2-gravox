@@ -25,3 +25,23 @@
     width: 100%;
   }
 }
+
+
+.article-pair-header {
+  margin-bottom: 0.4em;
+}
+
+.article-columns {
+  display: flex;
+}
+
+.article-column-labels,
+.article-column-values {
+  margin-right: 0.8em;
+
+}
+
+.article-column-label,
+.article-column-value {
+  margin-bottom: 0.4em;
+}
