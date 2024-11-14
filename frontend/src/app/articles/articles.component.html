@@ -1,22 +1,40 @@
 
 <h1 i18n="@@articlesHeader">Artikel</h1>
 
-<header>
-  <nav>
-    <span>Text</span>
-    <span class="spacer"></span>
-    <button mat-button routerLink="/home">Home</button>
-    <button mat-button routerLink="/articles">Articles</button>
-    <button mat-button routerLink="/about">About</button>
-  </nav>
-</header>
+<!--<header>-->
+<!--  <nav>-->
+<!--    <span>Text</span>-->
+<!--    <span class="spacer"></span>-->
+<!--    <button mat-button routerLink="/home">Home</button>-->
+<!--    <button mat-button routerLink="/articles">Articles</button>-->
+<!--    <button mat-button routerLink="/about">About</button>-->
+<!--  </nav>-->
+<!--</header>-->
 
 <app-toolbar></app-toolbar>
 
 
 
 <div class="content-container" [ngClass]="{ 'mobile-layout': isMobile(), 'desktop-layout': !isMobile() }">
-  <div class="column">Column 1</div>
+  <div class="column">
+
+    <mat-card>
+
+      <mat-card-header>
+        <mat-card-title>Trommel Passivieren</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p>Nummer: 102</p>
+      </mat-card-content>
+
+    </mat-card>
+
+
+
+
+
+  </div>
   <div class="column">Column 2</div>
 </div>
 
