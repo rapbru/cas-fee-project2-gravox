@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
 import { DeviceDetectionService } from '../services/device-detection.service';
+import { MatCardModule } from '@angular/material/card';
+
 
 @Component({
   selector: 'app-articles',
   standalone: true,
-  imports: [CommonModule, ToolbarComponent],
+  imports: [CommonModule, ToolbarComponent, MatCardModule],
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.scss']
 })
