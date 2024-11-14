@@ -15,7 +15,7 @@
 
 
 
-<div class="content-container" [ngClass]="{ 'mobile-layout': isMobile, 'desktop-layout': !isMobile }">
+<div class="content-container" [ngClass]="{ 'mobile-layout': isMobile(), 'desktop-layout': !isMobile() }">
   <div class="column">Column 1</div>
   <div class="column">Column 2</div>
 </div>
