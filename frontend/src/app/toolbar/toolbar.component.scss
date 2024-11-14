@@ -2,16 +2,11 @@
   flex: 1 1 auto;
 }
 
-.custom-icon-button {
+.icon-button {
   width: auto;
   padding: 0 8px;
   border-radius: 12px;
-
   background-color: var(--primary);
   color: var(--text);
-
-  //&:hover {
-  //  background-color: mat.color(mat.$violet-palette, 600);
-  //}
 }
 
