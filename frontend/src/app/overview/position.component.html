@@ -32,7 +32,8 @@
             <mat-icon>thermostat</mat-icon>
             <span>°C</span>
             <ng-container *ngIf="position.temperature?.isPresent; else noTemperature">
-                <span>{{ position.temperature.preset }}</span>
+                <input *ngIf="!isMobile()" type="text" [value]="position.temperature.preset" (keydown)="updatePresetValue($event, '.temperature.preset')" />
+                <span *ngIf="isMobile()" >{{ position.temperature.preset }}</span>
                 <span>{{ position.temperature.actual }}</span>
             </ng-container>
             <ng-template #noTemperature>
