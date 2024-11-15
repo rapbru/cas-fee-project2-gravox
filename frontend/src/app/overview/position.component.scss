@@ -65,6 +65,15 @@
       .mat-icon-dark{
         font-variation-settings: 'FILL' 1;
       }
+
+      input {
+        border: none;
+        text-align: center;
+        color: orange;
+        font-size: inherit;
+        width: 100%;
+        outline: none;
+      }
     }
   }
 }

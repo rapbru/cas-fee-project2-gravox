@@ -28,7 +28,6 @@ interface Article {
 })
 export class ArticlesComponent implements OnInit {
   article: Article | null = null;
-  isMobile = this.deviceDetectionService.isMobileSignal;
 
   constructor(
     private deviceDetectionService: DeviceDetectionService,
@@ -39,5 +38,9 @@ export class ArticlesComponent implements OnInit {
     this.http.get<{ article: Article }>('/assets/articles-data.json').subscribe((data) => {
       this.article = data.article;
     });
+  }
+
+  isMobile(): boolean {
+    return this.deviceDetectionService.isMobileSignal();
   }
 }
