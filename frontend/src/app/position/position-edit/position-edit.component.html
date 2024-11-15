@@ -1,36 +1,55 @@
 <div class="position-edit">
-    <h2>Bearbeiten der Position</h2>
-  
-    <form *ngIf="position">
-      <!-- Soll Werte -->
-      <label for="preTime">Soll Zeit [Min]:</label>
-      <input id="preTime" [(ngModel)]="position.time.preset" name="preTime" type="number" />
-  
-      <label for="preTemperature">Soll Temperatur [°C]:</label>
-      <input id="preTemperature" [(ngModel)]="position.temperature.preset" name="preTemperature" type="number" />
-  
-      <label for="preVoltage">Soll Spannung [V]:</label>
-      <!-- <input id="preVoltage" [(ngModel)]="position.voltage?.preset" name="preVoltage" type="number" /> -->
-  
-      <label for="preCurrent">Soll Strom [A]:</label>
-      <!-- <input id="preCurrent" [(ngModel)]="position.current?.preset" name="preCurrent" type="number" /> -->
-  
-      <!-- Ist Werte -->
-      <label for="actTime">Ist Zeit [Min]:</label>
-      <input id="actTime" [(ngModel)]="position.time.actual" name="actTime" type="number" />
-  
-      <label for="actTemperature">Ist Temperatur [°C]:</label>
-      <input id="actTemperature" [(ngModel)]="position.temperature.actual" name="actTemperature" type="number" />
-  
-      <label for="actVoltage">Ist Spannung [V]:</label>
-      <!-- <input id="actVoltage" [(ngModel)]="position.voltage?.actual" name="actVoltage" type="number" /> -->
-  
-      <label for="actCurrent">Ist Strom [A]:</label>
-      <!-- <input id="actCurrent" [(ngModel)]="position.current?.actual" name="actCurrent" type="number" /> -->
-  
-      <!-- Speichern und Abbrechen -->
-      <button type="button" (click)="saveChanges()">Speichern</button>
-      <button type="button" (click)="cancelChanges()">Abbrechen</button>
-    </form>
-  </div>
-  
+  <h2>Bearbeiten der Position</h2>
+  <form *ngIf="position">
+    <!-- Temperatur -->
+    <h3>Temperatur</h3>
+    <div>
+      <label for="temperature-actual">Aktuell:</label>
+      <input id="temperature-actual" type="number" [(ngModel)]="position.temperature.actual" name="temperatureActual" />
+    </div>
+    <div>
+      <label for="temperature-preset">Voreinstellung:</label>
+      <input id="temperature-preset" type="number" [(ngModel)]="position.temperature.preset" name="temperaturePreset" />
+    </div>
+    <div>
+      <label for="temperature-present">Vorhanden:</label>
+      <input id="temperature-present" type="checkbox" [(ngModel)]="position.temperature.isPresent" name="temperaturePresent" />
+    </div>
+
+    <!-- Strom -->
+    <h3>Strom</h3>
+    <div>
+      <label for="current-actual">Aktuell:</label>
+      <input id="current-actual" type="number" [(ngModel)]="position.current.actual" name="currentActual" />
+    </div>
+    <div>
+      <label for="current-preset">Voreinstellung:</label>
+      <input id="current-preset" type="number" [(ngModel)]="position.current.preset" name="currentPreset" />
+    </div>
+    <div>
+      <label for="current-present">Vorhanden:</label>
+      <input id="current-present" type="checkbox" [(ngModel)]="position.current.isPresent" name="currentPresent" />
+    </div>
+
+    <!-- Spannung -->
+    <h3>Spannung</h3>
+    <div>
+      <label for="voltage-actual">Aktuell:</label>
+      <input id="voltage-actual" type="number" [(ngModel)]="position.voltage.actual" name="voltageActual" />
+    </div>
+    <div>
+      <label for="voltage-preset">Voreinstellung:</label>
+      <input id="voltage-preset" type="number" [(ngModel)]="position.voltage.preset" name="voltagePreset" />
+    </div>
+    <div>
+      <label for="voltage-present">Vorhanden:</label>
+      <input id="voltage-present" type="checkbox" [(ngModel)]="position.voltage.isPresent" name="voltagePresent" />
+    </div>
+
+    <!-- Buttons -->
+    <div class="buttons">
+      <button mat-button (click)="saveChanges()">Speichern</button>
+      <button mat-button (click)="cancelChanges()">Abbrechen</button>
+    </div>
+  </form>
+</div>

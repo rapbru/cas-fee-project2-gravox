@@ -33,7 +33,21 @@ export class PositionComponent {
     }
   }
 
+  updatePositionInfo(event: KeyboardEvent, field: string) {
+    if (event.key === 'Enter') {
+      const inputElement = event.target as HTMLInputElement;
+      const newValue = inputElement.value;
+      console.log(newValue);
+      console.log(field);
+      console.log(this.position.number);
+    }
+  }  
+
   isMobile(): boolean {
     return this.deviceDetectionService.isMobileSignal();
+  }
+
+  enableEdit(): boolean {
+    return this.editStateService.enableEdit();
   }
 }

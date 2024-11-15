@@ -14,16 +14,19 @@ import { CommonModule } from '@angular/common';
 export class PositionEditComponent {
   @Input() position: Position | undefined;
   @Output() closeEdit = new EventEmitter<void>();
+  @Output() savePosition = new EventEmitter<Position>();
 
   constructor(private positionService: PositionService) {}
 
   saveChanges() {
-    if (this.position) {
-      this.positionService.savePosition(this.position).subscribe(() => {
-        this.positionService.showSuccessMessage();
-        this.closeEdit.emit();
-      });
-    }
+    // if (this.position) {
+    //   this.positionService.savePosition(this.position).subscribe(() => {
+    //     this.positionService.showSuccessMessage();
+    //     this.closeEdit.emit();
+    //   });
+    // }
+    this.savePosition.emit(this.position);
+    this.closeEdit.emit();
   }
 
   cancelChanges() {
