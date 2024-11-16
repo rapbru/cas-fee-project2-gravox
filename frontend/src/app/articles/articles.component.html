@@ -40,22 +40,23 @@
           </div>
 
           <div class="article-column-values" *ngIf="article">
-            <div class="article-column-value">{{ article.number }}</div>
-            <div class="article-column-value">{{ article.customer }}</div>
+            <div class="article-column-value" [id]="'article-number-' + article.id">{{ article.number }}</div>
+            <div class="article-column-value" [id]="'article-customer-' + article.id">{{ article.customer }}</div>
             <div class="article-column-spacer"></div>
-            <div class="article-column-value">{{ article.area }}</div>
-            <div class="article-column-value">{{ article.drainage }}</div>
-            <div class="article-column-value">{{ article.anodic }}</div>
+            <div class="article-column-value" [id]="'article-area-' + article.id">{{ article.area }}</div>
+            <div class="article-column-value" [id]="'article-drainage-' + article.id">{{ article.drainage }}</div>
+            <div class="article-column-value" [id]="'article-anodic-' + article.id">{{ article.anodic }}</div>
             <div class="article-column-spacer"></div>
-            <div class="article-column-value">{{ article.createdBy }}</div>
-            <div class="article-column-value">{{ article.createdDate }}</div>
-            <div class="article-column-value">{{ article.modifiedBy }}</div>
-            <div class="article-column-value">{{ article.modifiedDate }}</div>
+            <div class="article-column-value" [id]="'article-createdBy-' + article.id">{{ article.createdBy }}</div>
+            <div class="article-column-value" [id]="'article-createdDate-' + article.id">{{ article.createdDate }}</div>
+            <div class="article-column-value" [id]="'article-modifiedBy-' + article.id">{{ article.modifiedBy }}</div>
+            <div class="article-column-value" [id]="'article-modifiedDate-' + article.id">{{ article.modifiedDate }}</div>
             <div class="article-column-spacer"></div>
-            <div class="article-column-value">{{ article.note }}</div>
+            <div class="article-column-value" [id]="'article-note-' + article.id">{{ article.note }}</div>
             <div class="article-column-spacer"></div>
           </div>
         </div>
+
       </mat-card-content>
 
 

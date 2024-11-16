@@ -4,7 +4,7 @@ import { ToolbarComponent } from '../toolbar/toolbar.component';
 import { DeviceDetectionService } from '../services/device-detection.service';
 import { MatCardModule } from '@angular/material/card';
 import { HttpClient } from '@angular/common/http';
-import { HttpClientModule } from '@angular/common/http';
+// import { HttpClientModule } from '@angular/common/http';
 
 interface Article {
   number: string;
@@ -22,7 +22,7 @@ interface Article {
 @Component({
   selector: 'app-articles',
   standalone: true,
-  imports: [CommonModule, ToolbarComponent, MatCardModule, HttpClientModule],
+  imports: [CommonModule, ToolbarComponent, MatCardModule],
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.scss']
 })
