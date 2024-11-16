@@ -22,6 +22,7 @@
       </mat-card-header>
 
       <mat-card-content>
+
         <div class="article-columns">
           <div class="article-column-labels">
             <div class="article-column-label">Nummer:</div>
@@ -40,22 +41,23 @@
           </div>
 
           <div class="article-column-values" *ngIf="article">
-            <div class="article-column-value" [id]="'article-number-' + article.id">{{ article.number }}</div>
-            <div class="article-column-value" [id]="'article-customer-' + article.id">{{ article.customer }}</div>
+            <div class="article-column-value" [id]="article.number.id">{{ article.number.value }}</div>
+            <div class="article-column-value" [id]="article.customer.id">{{ article.customer.value }}</div>
             <div class="article-column-spacer"></div>
-            <div class="article-column-value" [id]="'article-area-' + article.id">{{ article.area }}</div>
-            <div class="article-column-value" [id]="'article-drainage-' + article.id">{{ article.drainage }}</div>
-            <div class="article-column-value" [id]="'article-anodic-' + article.id">{{ article.anodic }}</div>
+            <div class="article-column-value" [id]="article.area.id">{{ article.area.value }}</div>
+            <div class="article-column-value" [id]="article.drainage.id">{{ article.drainage.value }}</div>
+            <div class="article-column-value" [id]="article.anodic.id">{{ article.anodic.value }}</div>
             <div class="article-column-spacer"></div>
-            <div class="article-column-value" [id]="'article-createdBy-' + article.id">{{ article.createdBy }}</div>
-            <div class="article-column-value" [id]="'article-createdDate-' + article.id">{{ article.createdDate }}</div>
-            <div class="article-column-value" [id]="'article-modifiedBy-' + article.id">{{ article.modifiedBy }}</div>
-            <div class="article-column-value" [id]="'article-modifiedDate-' + article.id">{{ article.modifiedDate }}</div>
+            <div class="article-column-value" [id]="article.createdBy.id">{{ article.createdBy.value }}</div>
+            <div class="article-column-value" [id]="article.createdDate.id">{{ article.createdDate.value }}</div>
+            <div class="article-column-value" [id]="article.modifiedBy.id">{{ article.modifiedBy.value }}</div>
+            <div class="article-column-value" [id]="article.modifiedDate.id">{{ article.modifiedDate.value }}</div>
             <div class="article-column-spacer"></div>
-            <div class="article-column-value" [id]="'article-note-' + article.id">{{ article.note }}</div>
+            <div class="article-column-value" [id]="article.note.id">{{ article.note.value }}</div>
             <div class="article-column-spacer"></div>
           </div>
         </div>
+
 
       </mat-card-content>
 

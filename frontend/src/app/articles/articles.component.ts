@@ -6,18 +6,25 @@ import { MatCardModule } from '@angular/material/card';
 import { HttpClient } from '@angular/common/http';
 // import { HttpClientModule } from '@angular/common/http';
 
-interface Article {
-  number: string;
-  customer: string;
-  area: string;
-  drainage: string;
-  anodic: string;
-  createdBy: string;
-  createdDate: string;
-  modifiedBy: string;
-  modifiedDate: string;
-  note: string;
+interface ArticleField {
+  id: string;
+  value: string;
 }
+
+interface Article {
+  id: string;
+  number: ArticleField;
+  customer: ArticleField;
+  area: ArticleField;
+  drainage: ArticleField;
+  anodic: ArticleField;
+  createdBy: ArticleField;
+  createdDate: ArticleField;
+  modifiedBy: ArticleField;
+  modifiedDate: ArticleField;
+  note: ArticleField;
+}
+
 
 @Component({
   selector: 'app-articles',
