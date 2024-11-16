@@ -1,14 +1,15 @@
 {
   "article": {
-    "number": "102",
-    "customer": "Pilatus",
-    "area": "150dm²",
-    "drainage": "100%",
-    "anodic": "0%",
-    "createdBy": "Silvan Weber",
-    "createdDate": "14.11.2024",
-    "modifiedBy": "Raphael Brunner",
-    "modifiedDate": "15.11.2024",
-    "note": "Ist eine Trommel."
+    "id": "123",
+    "number": { "id": "article-number-123", "value": "102" },
+    "customer": { "id": "article-customer-123", "value": "Pilatus" },
+    "area": { "id": "article-area-123", "value": "150dm²" },
+    "drainage": { "id": "article-drainage-123", "value": "100%" },
+    "anodic": { "id": "article-anodic-123", "value": "0%" },
+    "createdBy": { "id": "article-createdBy-123", "value": "Silvan Weber" },
+    "createdDate": { "id": "article-createdDate-123", "value": "14.11.2024" },
+    "modifiedBy": { "id": "article-modifiedBy-123", "value": "Raphael Brunner" },
+    "modifiedDate": { "id": "article-modifiedDate-123", "value": "15.11.2024" },
+    "note": { "id": "article-note-123", "value": "Ist eine Trommel." }
   }
 }
