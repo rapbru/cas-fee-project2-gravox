@@ -7,11 +7,13 @@ import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem  } from
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { EditStateService } from '../services/edit-state.service';
+import { PositionEditComponent } from '../position/position-edit/position-edit.component';
+import { DeviceDetectionService } from '../services/device-detection.service';
 
 @Component({
   selector: 'app-overview',
   standalone: true,
-  imports: [CommonModule, PositionComponent, DragDropModule, MatIconModule],
+  imports: [CommonModule, PositionComponent, PositionEditComponent, DragDropModule, MatIconModule],
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.scss'
 })
@@ -20,12 +22,17 @@ export class OverviewComponent implements OnDestroy, OnInit {
   private maxColumnCount = 0;
   private positionsPerColumn = [22];
   private columnDistribution: number[] = [];
+  public selectedPosition: Position | null = null;
 
-  constructor(private positionService: PositionService, private router: Router, public editStateService: EditStateService) {} 
+  constructor(private positionService: PositionService, private router: Router, private deviceDetectionService: DeviceDetectionService, public editStateService: EditStateService) {} 
 
   ngOnInit() {
     this.positionService.startFetching();
     window.addEventListener('resize', this.updateColumnDistribution.bind(this));
+  }
+
+  enableEdit(): boolean {
+    return this.editStateService.enableEdit();
   }
 
   columns = computed(() => {
@@ -160,6 +167,36 @@ export class OverviewComponent implements OnDestroy, OnInit {
     });
   }
 
+  public deletePosition(position: Position) {
+    console.log(position);
+    // this.positionService.deletePosition(position.id).subscribe(() => {
+    //   this.loadPositions();
+    // });
+  }
 
+  public addPosition() {
+    const newPosition: Position = {
+      number: 0,
+      name: '',
+      flightbar: undefined,
+      articleName: '',
+      customerName: '',
+      time: { actual: 0, preset: 0 },
+      temperature: { actual: 0, preset: 0, isPresent: false },
+      current: { actual: 0, preset: 0, isPresent: false },
+      voltage: { actual: 0, preset: 0, isPresent: false }
+    };
+    this.selectedPosition = newPosition;
+  }
+
+  public savePosition(position: Position) {
+    // this.positionService.addPosition(position);
+    console.log(position);
+    this.selectedPosition = null;
+  }
+
+  isMobile(): boolean {
+    return this.deviceDetectionService.isMobileSignal();
+  }
 
 }

@@ -1,11 +1,13 @@
-<div class="position-container" [ngClass]="{'with-flightbar': position.flightbar}">
+<div class="position-container" [ngClass]="{'with-flightbar': position.flightbar || enableEdit()}">
     <div class="flightbar-information">
         <div class="position-header">
-            <div class="position-number">{{ position.number }}</div>
-            <div class="position-name">{{ position.name }}</div>
+            <input *ngIf="enableEdit() && !isMobile()"  class="position-number-input" type="text" [value]="position.number" (keydown)="updatePositionInfo($event, '.number')" />
+            <div *ngIf="!enableEdit() || isMobile()" class="position-number">{{ position.number }}</div>
+            <input *ngIf="enableEdit() && !isMobile()" class="position-name-input" type="text" [value]="position.name" (keydown)="updatePositionInfo($event, '.name')" />
+            <div *ngIf="!enableEdit() || isMobile()" class="position-name">{{ position.name }}</div>
         </div>
     
-        <div class="position-details" *ngIf="position.flightbar">
+        <div class="position-details" *ngIf="position.flightbar || enableEdit()">
             <div class="detail">
                 <div>WT-Nr.</div>
                 <div>{{ position.flightbar }}</div> 
@@ -23,12 +25,13 @@
   
     <div class="position-metrics">
         <div class="metric">
-            <mat-icon *ngIf="position.flightbar">timer</mat-icon>
-            <span *ngIf="position.flightbar">min</span>
-            <span *ngIf="position.flightbar">{{ position.time.preset }}</span>
+            <mat-icon *ngIf="position.flightbar || enableEdit()">timer</mat-icon>
+            <span *ngIf="position.flightbar || enableEdit()">min</span>
+            <input *ngIf="(!isMobile() && position.flightbar) || enableEdit()" type="text" [value]="position.time.preset" (keydown)="updatePresetValue($event, '.time.preset')" />
+            <span *ngIf="position.flightbar && isMobile()">{{ position.time.preset }}</span>
             <span>{{ position.time.actual }}</span>
         </div>
-        <div class="metric" *ngIf="position.flightbar">
+        <div class="metric" *ngIf="position.flightbar || enableEdit()">
             <mat-icon>thermostat</mat-icon>
             <span>°C</span>
             <ng-container *ngIf="position.temperature?.isPresent; else noTemperature">
@@ -41,30 +44,32 @@
                 <span>-</span>
             </ng-template>
         </div>
-        <div class="metric" *ngIf="!position.flightbar">
+        <div class="metric" *ngIf="!position.flightbar && !enableEdit()">
             <span *ngIf="position.temperature?.isPresent">{{ position.temperature.actual }}</span>
             <span *ngIf="!position.temperature?.isPresent"></span>
         </div>
-        <div class="metric" *ngIf="position.flightbar">
+        <div class="metric" *ngIf="position.flightbar || enableEdit()">
             <mat-icon>bolt</mat-icon>
             <span>A</span>
-            <span *ngIf="position.current.isPresent">{{ position.current.preset }}</span>
+            <input *ngIf="position.current.isPresent && !isMobile()" type="text" [value]="position.current.preset" (keydown)="updatePresetValue($event, '.current.preset')" />
+            <span *ngIf="position.current.isPresent && isMobile()">{{ position.current.preset }}</span>
             <span *ngIf="position.current.isPresent">{{ position.current.actual }}</span>
             <span *ngIf="!position.current.isPresent">-</span>
             <span *ngIf="!position.current.isPresent">-</span>
         </div>
-        <div class="metric" *ngIf="!position.flightbar">
+        <div class="metric" *ngIf="!position.flightbar && !enableEdit()">
             <span></span>
         </div>
-        <div class="metric" *ngIf="position.flightbar">
+        <div class="metric" *ngIf="position.flightbar || enableEdit()">
             <mat-icon class="mat-icon-dark">bolt</mat-icon>
             <span>V</span>
-            <span *ngIf="position.voltage.isPresent">{{ position.voltage.preset }}</span>
+            <input *ngIf="position.voltage.isPresent && !isMobile()" type="text" [value]="position.voltage.preset" (keydown)="updatePresetValue($event, '.voltage.preset')" />
+            <span *ngIf="position.voltage.isPresent && isMobile()">{{ position.voltage.preset }}</span>
             <span *ngIf="position.voltage.isPresent">{{ position.voltage.actual }}</span>
             <span *ngIf="!position.voltage.isPresent">-</span>
             <span *ngIf="!position.voltage.isPresent">-</span>
         </div> 
-        <div class="metric" *ngIf="!position.flightbar">
+        <div class="metric" *ngIf="!position.flightbar && !enableEdit()">
             <span></span>
         </div>
     </div>
