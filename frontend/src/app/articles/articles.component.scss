@@ -37,7 +37,7 @@
 .column {
   flex: 1;
   padding: 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-background);
   margin: 0.5rem;
 
   &.desktop-layout .column {
