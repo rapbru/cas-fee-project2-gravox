@@ -13,6 +13,7 @@ interface ArticleField {
 
 interface Article {
   id: string;
+  title: ArticleField;
   number: ArticleField;
   customer: ArticleField;
   area: ArticleField;
@@ -44,9 +45,9 @@ export class ArticlesComponent implements OnInit {
     this.http.get<{ articles: Article[] }>('/assets/articles-data.json').subscribe((data) => {
       this.articles = data.articles;
 
-      // Update IDs dynamically for each article
       this.articles.forEach((article) => {
         const articleId = article.id;
+        article.title.id = `article-title-${articleId}`;
         article.number.id = `article-number-${articleId}`;
         article.customer.id = `article-customer-${articleId}`;
         article.area.id = `article-area-${articleId}`;
