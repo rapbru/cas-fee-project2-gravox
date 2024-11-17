@@ -2,7 +2,7 @@ import { Component, computed, OnDestroy, OnInit } from '@angular/core';
 import { Position } from '../position/position.model';
 import { PositionService } from '../position/services/position.service';
 import { CommonModule } from '@angular/common';
-import { PositionComponent } from './position.component';
+import { PositionComponent } from '../position/position.component';
 import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem  } from '@angular/cdk/drag-drop';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
