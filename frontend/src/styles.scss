@@ -23,15 +23,38 @@ $dark-theme: mat.define-theme((
 ));
 
 
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
 :root {
-  --background-color: #E1E1E7;
+  --color-text: black;
+  --color-background: #F0F0F6;
+  --color-main: #FFFFFF;
+  --color-sub-1: #A4A4A8;
+  --color-sub-2: #BFBFC5;
+  --color-sub-3: #E1E1E7;
+  --color-green: #207F35;
+  --color-red: #D20015;
+  --color-vonesco: #FF6228;
+  --color-vonesco-sub: #FF7442;
+  --color-vonesco-sub-2: #FFA786;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background-color: #3F3F41;
+    --color-text: E1E1E7;
+    --color-background: #171719;
+    --color-main: #272729;
+    --color-sub-1: #717175;
+    --color-sub-2: #3F3F41;
+    --color-green: #2ACB4E;
+    --color-red: #D20015;
   }
 }
+
+
 
 .article-card {
   background-color: var(--background-color);
@@ -46,9 +69,6 @@ html {
 }
 
 
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 //.custom-icon-button {
 //  width: auto;
