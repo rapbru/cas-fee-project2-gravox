@@ -1,9 +1,11 @@
 .position-container {
+  color: var(--color-text);
+
   padding-left: 16px;
   // padding-right: 16px;
-  border: 1px solid #fff;
+  border: 1px solid var(--color-main);
   border-radius: 16px;
-  background-color: #fff;
+  background-color: var(--color-main);
   transition: background-color 0.3s;
   display: flex;
 
@@ -23,7 +25,7 @@
 
     input {
       border: none;
-      color: orange;
+      color: var(--color-vonesco-sub);
       font-size: inherit;
       font-style: inherit;
       font-weight: bold;
@@ -91,7 +93,7 @@
       input {
         border: none;
         text-align: center;
-        color: orange;
+        color: var(--color-vonesco-sub);
         font-size: inherit;
         width: 100%;
         outline: none;

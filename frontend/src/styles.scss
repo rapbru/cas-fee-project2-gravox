@@ -26,6 +26,9 @@ $dark-theme: mat.define-theme((
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+html {
+  background-color: var(--color-background);
+}
 
 
 :root {
@@ -44,7 +47,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-text: E1E1E7;
+    --color-text: #E1E1E7;
     --color-background: #171719;
     --color-main: #272729;
     --color-sub-1: #717175;
@@ -54,6 +57,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 }
 
+input {
+  color: var(--color-text);
+  background-color: var(--color-main);
+}
 
 
 .article-card {
