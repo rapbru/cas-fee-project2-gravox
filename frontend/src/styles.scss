@@ -23,6 +23,21 @@ $dark-theme: mat.define-theme((
 ));
 
 
+:root {
+  --background-color: #E1E1E7;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #3F3F41;
+  }
+}
+
+.article-card {
+  background-color: var(--background-color);
+}
+
+
 html {
   @include mat.all-component-themes($light-theme);
   @media (prefers-color-scheme: dark) {

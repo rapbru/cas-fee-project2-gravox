@@ -17,13 +17,13 @@
   <div class="column">
 
     <mat-card>
-      <mat-card-header>
+      <mat-card-header class="article-card">
         <mat-card-title class="article-pair-header">Trommel Passivieren</mat-card-title>
       </mat-card-header>
 
-      <mat-card-content>
+      <mat-card-content class="article-card">
 
-        <div class="article-columns">
+        <div class="article-columns" *ngFor="let article of articles">
           <div class="article-column-labels">
             <div class="article-column-label">Nummer:</div>
             <div class="article-column-label">Kunde:</div>
@@ -40,7 +40,7 @@
             <div class="article-column-label">Bemerkung:</div>
           </div>
 
-          <div class="article-column-values" *ngIf="article">
+          <div class="article-column-values">
             <div class="article-column-value" [id]="article.number.id">{{ article.number.value }}</div>
             <div class="article-column-value" [id]="article.customer.id">{{ article.customer.value }}</div>
             <div class="article-column-spacer"></div>
@@ -56,7 +56,6 @@
             <div class="article-column-value" [id]="article.note.id">{{ article.note.value }}</div>
             <div class="article-column-spacer"></div>
           </div>
-
         </div>
 
 

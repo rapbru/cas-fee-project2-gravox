@@ -25,7 +25,6 @@ interface Article {
   note: ArticleField;
 }
 
-
 @Component({
   selector: 'app-articles',
   standalone: true,
@@ -34,7 +33,7 @@ interface Article {
   styleUrls: ['./articles.component.scss']
 })
 export class ArticlesComponent implements OnInit {
-  article: Article | null = null;
+  articles: Article[] = [];
 
   constructor(
     private deviceDetectionService: DeviceDetectionService,
@@ -42,22 +41,23 @@ export class ArticlesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.http.get<{ article: Article }>('/assets/articles-data.json').subscribe((data) => {
-      this.article = data.article;
+    this.http.get<{ articles: Article[] }>('/assets/articles-data.json').subscribe((data) => {
+      this.articles = data.articles;
 
-      if (this.article) {
-        const articleId = this.article.id;
-        this.article.number.id = `article-number-${articleId}`;
-        this.article.customer.id = `article-customer-${articleId}`;
-        this.article.area.id = `article-area-${articleId}`;
-        this.article.drainage.id = `article-drainage-${articleId}`;
-        this.article.anodic.id = `article-anodic-${articleId}`;
-        this.article.createdBy.id = `article-createdBy-${articleId}`;
-        this.article.createdDate.id = `article-createdDate-${articleId}`;
-        this.article.modifiedBy.id = `article-modifiedBy-${articleId}`;
-        this.article.modifiedDate.id = `article-modifiedDate-${articleId}`;
-        this.article.note.id = `article-note-${articleId}`;
-      }
+      // Update IDs dynamically for each article
+      this.articles.forEach((article) => {
+        const articleId = article.id;
+        article.number.id = `article-number-${articleId}`;
+        article.customer.id = `article-customer-${articleId}`;
+        article.area.id = `article-area-${articleId}`;
+        article.drainage.id = `article-drainage-${articleId}`;
+        article.anodic.id = `article-anodic-${articleId}`;
+        article.createdBy.id = `article-createdBy-${articleId}`;
+        article.createdDate.id = `article-createdDate-${articleId}`;
+        article.modifiedBy.id = `article-modifiedBy-${articleId}`;
+        article.modifiedDate.id = `article-modifiedDate-${articleId}`;
+        article.note.id = `article-note-${articleId}`;
+      });
     });
   }
 
