@@ -16,11 +16,11 @@
 <div class="content-container" [ngClass]="{ 'mobile-layout': isMobile(), 'desktop-layout': !isMobile() }">
   <div class="column">
 
+    <div *ngFor="let article of articles" class="article-card">
     <mat-card>
       <mat-card-header class="article-card">
-        <mat-card-title class="article-pair-header">Trommel Passivieren</mat-card-title>
+        <mat-card-title class="article-pair-header" [id]="article.title.id">{{ article.title.value }}</mat-card-title>
       </mat-card-header>
-
       <mat-card-content class="article-card">
 
         <div class="article-columns" *ngFor="let article of articles">
@@ -58,14 +58,12 @@
           </div>
         </div>
 
-
       </mat-card-content>
-
-
     </mat-card>
-
-
+    </div>
   </div>
+
+
   <div class="column">Column 2</div>
 </div>
 

@@ -2,6 +2,7 @@
   "articles": [
     {
       "id": "123",
+      "title": { "id": "", "value": "Trommel Passivieren" },
       "number": { "id": "article-number-123", "value": "102" },
       "customer": { "id": "article-customer-123", "value": "Pilatus" },
       "area": { "id": "article-area-123", "value": "150dm²" },
@@ -15,6 +16,7 @@
     },
     {
       "id": "124",
+      "title": { "id": "", "value": "Neue Artikel" },
       "number": { "id": "article-number-124", "value": "103" },
       "customer": { "id": "article-customer-124", "value": "Mercedes" },
       "area": { "id": "article-area-124", "value": "200dm²" },
