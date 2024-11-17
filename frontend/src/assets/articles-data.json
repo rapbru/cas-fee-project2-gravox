@@ -1,15 +1,30 @@
 {
-  "article": {
-    "id": "123",
-    "number": { "id": "article-number-123", "value": "102" },
-    "customer": { "id": "article-customer-123", "value": "Pilatus" },
-    "area": { "id": "article-area-123", "value": "150dm²" },
-    "drainage": { "id": "article-drainage-123", "value": "100%" },
-    "anodic": { "id": "article-anodic-123", "value": "0%" },
-    "createdBy": { "id": "article-createdBy-123", "value": "Silvan Weber" },
-    "createdDate": { "id": "article-createdDate-123", "value": "14.11.2024" },
-    "modifiedBy": { "id": "article-modifiedBy-123", "value": "Raphael Brunner" },
-    "modifiedDate": { "id": "article-modifiedDate-123", "value": "15.11.2024" },
-    "note": { "id": "article-note-123", "value": "Ist eine Trommel." }
-  }
+  "articles": [
+    {
+      "id": "123",
+      "number": { "id": "article-number-123", "value": "102" },
+      "customer": { "id": "article-customer-123", "value": "Pilatus" },
+      "area": { "id": "article-area-123", "value": "150dm²" },
+      "drainage": { "id": "article-drainage-123", "value": "100%" },
+      "anodic": { "id": "article-anodic-123", "value": "0%" },
+      "createdBy": { "id": "article-createdBy-123", "value": "Silvan Weber" },
+      "createdDate": { "id": "article-createdDate-123", "value": "14.11.2024" },
+      "modifiedBy": { "id": "article-modifiedBy-123", "value": "Raphael Brunner" },
+      "modifiedDate": { "id": "article-modifiedDate-123", "value": "15.11.2024" },
+      "note": { "id": "article-note-123", "value": "Ist eine Trommel." }
+    },
+    {
+      "id": "124",
+      "number": { "id": "article-number-124", "value": "103" },
+      "customer": { "id": "article-customer-124", "value": "Mercedes" },
+      "area": { "id": "article-area-124", "value": "200dm²" },
+      "drainage": { "id": "article-drainage-124", "value": "85%" },
+      "anodic": { "id": "article-anodic-124", "value": "1%" },
+      "createdBy": { "id": "article-createdBy-124", "value": "John Doe" },
+      "createdDate": { "id": "article-createdDate-124", "value": "12.11.2024" },
+      "modifiedBy": { "id": "article-modifiedBy-124", "value": "Jane Smith" },
+      "modifiedDate": { "id": "article-modifiedDate-124", "value": "14.11.2024" },
+      "note": { "id": "article-note-124", "value": "Neue Spezifikation." }
+    }
+  ]
 }
