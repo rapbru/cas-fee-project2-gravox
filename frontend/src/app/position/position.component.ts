@@ -66,7 +66,7 @@ export class PositionComponent {
   toggleCollapsed() {
     this.isCollapsed = !this.isCollapsed;
   }
-  
+
   toggleSelection() {
     this.isSelected = !this.isSelected;
   }
