@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DeviceDetectionService } from '../services/device-detection.service';
-import { EditStateService } from '../services/edit-state.service';
+import { OverviewStateService } from '../services/overview-state.service';
 
 
 @Component({
@@ -20,8 +20,10 @@ import { EditStateService } from '../services/edit-state.service';
 })
 export class PositionComponent {
   @Input() position!: Position;
+  public isSelected = false;
+  public isCollapsed = false;
 
-  constructor(private deviceDetectionService: DeviceDetectionService, private editStateService: EditStateService) {}
+  constructor(private deviceDetectionService: DeviceDetectionService, private overviewStateService: OverviewStateService) {}
 
   updatePresetValue(event: KeyboardEvent, field: string) {
     if (event.key === 'Enter') {
@@ -43,11 +45,45 @@ export class PositionComponent {
     }
   }  
 
+  get collapsed(): boolean {
+    return !(this.isCollapsed || this.position?.flightbar);
+  }
+
+  toggleIsPresent(type: string) {
+    switch (type) {
+      case 'temperature':
+        this.position.temperature.isPresent = !this.position.temperature.isPresent;
+        break;
+      case 'current':
+        this.position.current.isPresent = !this.position.current.isPresent;
+        break;
+      case 'voltage':
+        this.position.voltage.isPresent = !this.position.voltage.isPresent;
+        break;
+    }
+  }
+
+  toggleCollapsed() {
+    this.isCollapsed = !this.isCollapsed;
+  }
+  
+  toggleSelection() {
+    this.isSelected = !this.isSelected;
+  }
+
   isMobile(): boolean {
     return this.deviceDetectionService.isMobileSignal();
   }
 
   enableEdit(): boolean {
-    return this.editStateService.enableEdit();
+    return this.overviewStateService.enableEdit();
+  }
+
+  enableOrder(): boolean {
+    return this.overviewStateService.enableOrder();
+  }
+
+  enableMultiSelect(): boolean {
+    return this.overviewStateService.enableMultiSelect();
   }
 }

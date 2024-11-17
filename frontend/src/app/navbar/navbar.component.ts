@@ -3,7 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../authentication/auth.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { EditStateService } from '../services/edit-state.service';
+import { OverviewStateService } from '../services/overview-state.service';
 
 
 @Component({
@@ -14,7 +14,7 @@ import { EditStateService } from '../services/edit-state.service';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-  constructor(private authService: AuthService, private router: Router, public editStateService: EditStateService) {}
+  constructor(private authService: AuthService, private router: Router, public overviewStateService: OverviewStateService) {}
 
   editEnabled = false;
 
@@ -24,10 +24,14 @@ export class NavbarComponent {
   }
 
   toggleEdit() {
-    this.editStateService.toggleEdit();
+    if (this.enableEdit()) {
+      this.overviewStateService.resetState();
+    } else {
+      this.overviewStateService.toggleEdit();
+    }
   }
 
   enableEdit() {
-    return this.editStateService.enableEdit();
+    return this.overviewStateService.enableEdit();
   }
 }

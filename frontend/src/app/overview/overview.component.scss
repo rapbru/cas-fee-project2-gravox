@@ -37,6 +37,8 @@
 app-position {
     width: calc(100% - 4px);
     margin: 2px;
+    border-width: 2px;
+    border-color: var(--color-vonesco);
 }
 
 .overview-list {
