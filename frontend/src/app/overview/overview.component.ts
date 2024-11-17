@@ -6,7 +6,7 @@ import { PositionComponent } from '../position/position.component';
 import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem  } from '@angular/cdk/drag-drop';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import { EditStateService } from '../services/edit-state.service';
+import { OverviewStateService } from '../services/overview-state.service';
 import { PositionEditComponent } from '../position/position-edit/position-edit.component';
 import { DeviceDetectionService } from '../services/device-detection.service';
 
@@ -24,15 +24,11 @@ export class OverviewComponent implements OnDestroy, OnInit {
   private columnDistribution: number[] = [];
   public selectedPosition: Position | null = null;
 
-  constructor(private positionService: PositionService, private router: Router, private deviceDetectionService: DeviceDetectionService, public editStateService: EditStateService) {} 
+  constructor(private positionService: PositionService, private router: Router, private deviceDetectionService: DeviceDetectionService, public overviewStateService: OverviewStateService) {} 
 
   ngOnInit() {
     this.positionService.startFetching();
     window.addEventListener('resize', this.updateColumnDistribution.bind(this));
-  }
-
-  enableEdit(): boolean {
-    return this.editStateService.enableEdit();
   }
 
   columns = computed(() => {
@@ -147,14 +143,6 @@ export class OverviewComponent implements OnDestroy, OnInit {
     this.positionService.stopFetching();
   }
 
-  // getPositionHeight(position: Position): string {
-  //   if (position.flightbar) {
-  //     return '250px';
-  //   } else {
-  //     return '150px';
-  //   }
-  // }
-
   public navigateToArticles() {
     this.router.navigate(['/articles']).then(success => {
       if (success) {
@@ -165,13 +153,6 @@ export class OverviewComponent implements OnDestroy, OnInit {
     }).catch(err => {
       console.error('Error during navigation:', err);
     });
-  }
-
-  public deletePosition(position: Position) {
-    console.log(position);
-    // this.positionService.deletePosition(position.id).subscribe(() => {
-    //   this.loadPositions();
-    // });
   }
 
   public addPosition() {
@@ -190,13 +171,36 @@ export class OverviewComponent implements OnDestroy, OnInit {
   }
 
   public savePosition(position: Position) {
-    // this.positionService.addPosition(position);
     console.log(position);
     this.selectedPosition = null;
   }
 
+  public orderPositions() {
+    this.overviewStateService.enableOrder.set(true);  
+  }
+
+  public deletePositions() {
+    this.overviewStateService.enableMultiSelect.set(true);
+  }
+
+  public saveChanges() {
+    this.overviewStateService.resetState();
+  }
+
+  public cancelChanges() {
+    this.overviewStateService.resetState();
+  }
+
   isMobile(): boolean {
     return this.deviceDetectionService.isMobileSignal();
+  }
+
+  enableEdit(): boolean {
+    return this.overviewStateService.enableEdit();
+  }
+
+  enableOrder(): boolean {
+    return this.overviewStateService.enableOrder();
   }
 
 }
