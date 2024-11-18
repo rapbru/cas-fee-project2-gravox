@@ -3,11 +3,12 @@ import { PositionService } from '../services/position.service';
 import { Position } from '../position.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-position-edit',
   standalone: true,
-  imports: [ CommonModule, FormsModule ],
+  imports: [ CommonModule, FormsModule, MatSlideToggleModule ],
   templateUrl: './position-edit.component.html',
   styleUrls: ['./position-edit.component.scss']
 })
