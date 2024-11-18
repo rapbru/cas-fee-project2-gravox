@@ -1,7 +1,7 @@
 
 <div *ngIf="enableEdit() && !(isMobile() && selectedPosition)"> 
-  <button *ngIf="enableEdit()" (click)="increaseColumns()">Linie hinzufügen</button>
-  <button *ngIf="enableEdit()" (click)="decreaseColumns()">Linie löschen</button>
+  <button *ngIf="!isMobile() && enableEdit()" (click)="increaseColumns()">Linie hinzufügen</button>
+  <button *ngIf="!isMobile() && enableEdit()" (click)="decreaseColumns()">Linie löschen</button>
   <button *ngIf="enableEdit()" (click)="addPosition()">hinzufügen</button>
   <button *ngIf="enableEdit()" (click)="orderPositions()">Reihenfolge</button>
   <button *ngIf="enableEdit()" (click)="deletePositions()">löschen</button>
@@ -13,7 +13,7 @@
   <div class="overview-container">
     @for (column of columns(); track $index; let index = $index) {
       <div cdkDropList [cdkDropListData]="column" class="overview-list" (cdkDropListDropped)="drop($event, index)">
-        <div class="app-position-header">
+        <div *ngIf="!enableMultiSelect() && !enableOrder()" class="app-position-header">
           <!-- <div class="column-name">Spalte {{index + 1}}</div> -->
           <div class="column-name"></div>
           <div class="column-metrics">
@@ -24,7 +24,7 @@
           </div>
         </div>
         @for (position of column; track position.number) {
-          <div class="list-item" cdkDrag [cdkDragDisabled]="!overviewStateService.enableOrder()" [class.draggable]="overviewStateService.enableOrder()">
+          <div class="list-item" cdkDrag [cdkDragDisabled]="!enableOrder()" [class.draggable]="enableOrder()">
             <app-position [position]="position"></app-position>
           </div>
         }
