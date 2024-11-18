@@ -203,4 +203,8 @@ export class OverviewComponent implements OnDestroy, OnInit {
     return this.overviewStateService.enableOrder();
   }
 
+  enableMultiSelect(): boolean {
+    return this.overviewStateService.enableMultiSelect();
+  }
+
 }
