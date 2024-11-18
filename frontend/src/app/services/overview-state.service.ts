@@ -10,18 +10,26 @@ export class OverviewStateService {
 
   toggleEdit() {
     this.enableEdit.set(!this.enableEdit());
+    if (!this.enableEdit()) {
+      this.resetState();
+    }
   }
 
   toggleOrder() {
     this.enableOrder.set(!this.enableOrder());
+    if (this.enableOrder()){
+      this.enableMultiSelect.set(false);
+    }
   }
 
   toggleMultiSelect() {
     this.enableMultiSelect.set(!this.enableMultiSelect());
+    if (this.enableMultiSelect()){
+      this.enableOrder.set(false);
+    }
   }
 
   resetState() {
-    this.enableEdit.set(false);
     this.enableOrder.set(false);
     this.enableMultiSelect.set(false); 
   }

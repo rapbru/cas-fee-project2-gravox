@@ -176,11 +176,11 @@ export class OverviewComponent implements OnDestroy, OnInit {
   }
 
   public orderPositions() {
-    this.overviewStateService.enableOrder.set(true);  
+    this.overviewStateService.toggleOrder();  
   }
 
   public deletePositions() {
-    this.overviewStateService.enableMultiSelect.set(true);
+    this.overviewStateService.toggleMultiSelect();
   }
 
   public saveChanges() {
