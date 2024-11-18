@@ -1,7 +1,17 @@
 <div class="position-edit">
-  <h2>Bearbeiten der Position</h2>
+  <h5>Neue Position erfassen</h5>
   <form *ngIf="position">
-    <h3>Temperatur</h3>
+    <h6>Position</h6>
+    <div class="form-group">
+      <label for="position-number">Nummer</label>
+      <input id="position-number" type="text" [(ngModel)]="position.number" name="positionNumber" />
+    </div>
+    <div class="form-group">
+      <label for="position-name">Name</label>
+      <input id="position-name" type="text" [(ngModel)]="position.name" name="positionName" />
+    </div>
+
+    <h6>Temperatur</h6>
     <div>
       <label for="temperature-actual">Aktuell:</label>
       <input id="temperature-actual" type="number" [(ngModel)]="position.temperature.actual" name="temperatureActual" />
@@ -11,8 +21,7 @@
       <input id="temperature-preset" type="number" [(ngModel)]="position.temperature.preset" name="temperaturePreset" />
     </div>
     <div>
-      <label for="temperature-present">Vorhanden:</label>
-      <input id="temperature-present" type="checkbox" [(ngModel)]="position.temperature.isPresent" name="temperaturePresent" />
+      <mat-slide-toggle [(ngModel)]="position.temperature.isPresent">Aktiv/Inaktiv</mat-slide-toggle>
     </div>
 
     <!-- Strom -->
