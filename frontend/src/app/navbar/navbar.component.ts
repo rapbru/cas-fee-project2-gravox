@@ -24,11 +24,7 @@ export class NavbarComponent {
   }
 
   toggleEdit() {
-    if (this.enableEdit()) {
-      this.overviewStateService.resetState();
-    } else {
-      this.overviewStateService.toggleEdit();
-    }
+    this.overviewStateService.toggleEdit();
   }
 
   enableEdit() {
