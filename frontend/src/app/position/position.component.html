@@ -1,5 +1,5 @@
 <div class="position-container" [ngClass]="{'with-flightbar': (position.flightbar || !collapsed)  && !enableEdit()}">
-    <div class="flightbar-information" (keydown)="!enableEdit() && toggleCollapsed()" (click)="!enableEdit() && toggleCollapsed()" tabindex="0">
+    <div class="flightbar-information" (keydown)="toggleCollapsed()" (click)="toggleCollapsed()" tabindex="0">
         <div class="position-header">
             <ng-container *ngIf="!enableEdit(); else editHeader">
                 <div class="position-number-base">{{ position.number }}</div>  
