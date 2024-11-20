@@ -29,9 +29,8 @@ html {
   }
 }
 
-body { height: 100%; width: 100%;}
 // html, body { height: 100%; } //this is bad, really bad. i mean really really really bad. don't do this. it's bad. really bad. don't do it. it's bad
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; height: 100%; width: 100%; }
 
 html {
   background-color: var(--color-background);
