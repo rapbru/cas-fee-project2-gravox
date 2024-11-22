@@ -5,7 +5,13 @@ class PLCConnection {
         this.ipAddress = ipAddress;
         this.slot = slot;
         this.controllerManager = new ControllerManager();
-        this.controller = this.controllerManager.addController(this.ipAddress, this.slot);
+        this.controller = this.controllerManager.addController(
+            this.ipAddress, 
+            this.slot,
+            1000,   // RPI auf 1 Sekunde setzen
+            false,  // Connected Messaging deaktivieren
+            5000    // Retry-Timeout auf 5 Sekunden setzen
+        );
         this.connected = false;
     }
 
@@ -34,7 +40,7 @@ class PLCConnection {
         this.controller.on('Error', (error) => {
             console.error('PLC error:', error);
         });
-      }
+    }
 
     async disconnect() {
         try {
