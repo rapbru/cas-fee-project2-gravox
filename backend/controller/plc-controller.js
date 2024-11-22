@@ -42,6 +42,35 @@ export class PLCController {
             return res.status(500).json({ error: err.message });
         }
     }
+
+    getStructureByNumber = async (req, res) => {
+        try {
+            const { tagname, nbr } = req.params;
+            const structureTag = `${tagname}[${nbr}]`;
+            const structure = await this.plcService.readOnce(structureTag);
+            
+            if (!structure) {
+                return res.status(404).json({ 
+                    error: `Struktur ${structureTag} nicht gefunden` 
+                });
+            }
+            
+            // structure.value.FB.NBR = 0;
+
+            // await this.plcService.writeStructure(structure);
+
+            return res.json({
+                tagName: structureTag,
+                arrayIndex: parseInt(nbr, 10),
+                value: structure.value,
+                type: structure.type
+            });
+
+        } catch (err) {
+            console.error('Fehler beim Abrufen der Struktur:', err);
+            return res.status(500).json({ error: err.message });
+        }
+    }
 }
 
 export const plcController = new PLCController();

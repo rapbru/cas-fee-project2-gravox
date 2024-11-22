@@ -7,5 +7,6 @@ const plcRoutes = router;
 router.get("/read", plcController.getAllValues);
 router.post("/read", plcController.getTagValue);
 router.post("/write", plcController.writeTagValue);
+router.get("/structure/:tagname/:nbr", plcController.getStructureByNumber);
 
 export default plcRoutes;
