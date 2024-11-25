@@ -1,19 +1,19 @@
 import { Component, computed, OnDestroy, OnInit } from '@angular/core';
 import { Position } from '../position/position.model';
-import { PositionService } from '../position/services/position.service';
+import { PositionService } from '../services/position.service';
 import { CommonModule } from '@angular/common';
 import { PositionComponent } from '../position/position.component';
 import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem  } from '@angular/cdk/drag-drop';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { OverviewStateService } from '../services/overview-state.service';
-import { PositionEditComponent } from '../position/position-edit/position-edit.component';
+import { AddPositionComponent } from '../position/add-position/add-position.component';
 import { DeviceDetectionService } from '../services/device-detection.service';
 
 @Component({
   selector: 'app-overview',
   standalone: true,
-  imports: [CommonModule, PositionComponent, PositionEditComponent, DragDropModule, MatIconModule],
+  imports: [CommonModule, PositionComponent, DragDropModule, MatIconModule, AddPositionComponent],
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.scss'
 })
@@ -22,7 +22,7 @@ export class OverviewComponent implements OnDestroy, OnInit {
   private maxColumnCount = 0;
   private positionsPerColumn = [22];
   private columnDistribution: number[] = [];
-  public selectedPosition: Position | null = null;
+  public newPosition: Position | null = null;
 
   constructor(private positionService: PositionService, private router: Router, private deviceDetectionService: DeviceDetectionService, public overviewStateService: OverviewStateService) {} 
 
@@ -157,6 +157,7 @@ export class OverviewComponent implements OnDestroy, OnInit {
 
   public addPosition() {
     const newPosition: Position = {
+      id: 0,
       number: 0,
       name: '',
       flightbar: undefined,
@@ -167,12 +168,16 @@ export class OverviewComponent implements OnDestroy, OnInit {
       current: { actual: 0, preset: 0, isPresent: false },
       voltage: { actual: 0, preset: 0, isPresent: false }
     };
-    this.selectedPosition = newPosition;
+    this.newPosition = newPosition;
   }
 
   public savePosition(position: Position) {
     console.log(position);
-    this.selectedPosition = null;
+    this.newPosition = null;
+  }
+
+  public closeAddPosition() {
+    this.newPosition = null;
   }
 
   public orderPositions() {
@@ -184,10 +189,12 @@ export class OverviewComponent implements OnDestroy, OnInit {
   }
 
   public saveChanges() {
+    this.positionService.saveChanges();
     this.overviewStateService.resetState();
   }
 
   public cancelChanges() {
+    this.positionService.cancelChanges();
     this.overviewStateService.resetState();
   }
 

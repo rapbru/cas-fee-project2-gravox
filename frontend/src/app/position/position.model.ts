@@ -1,4 +1,5 @@
 export interface Position {
+  id: number;
   number: number;
   name: string;
   flightbar?: number;

@@ -21,6 +21,7 @@ class PositionService {
         const tagsForPosition = await this.tagService.getTagsForPosition(position.position_number);
 
         return {
+            id: position.id,
             number: position.position_number,
             name: position.position_name,
             flightbar: tagsForPosition.find(tag => tag.tag === `POS[${position.position_number}].FB.NBR`)?.value || 0,
@@ -66,6 +67,84 @@ class PositionService {
 
         const mappedPosition = await this.mapPositionData(position);
         return mappedPosition;
+    }
+
+    async createPosition(positionData) {
+        try {
+            const query = `
+                INSERT INTO position (
+                    position_number,
+                    position_name,
+                    has_temperature,
+                    has_current,
+                    has_voltage
+                ) VALUES ($1, $2, $3, $4, $5)
+                RETURNING *
+            `;
+            
+            const values = [
+                positionData.number,
+                positionData.name,
+                positionData.temperature?.isPresent || false,
+                positionData.current?.isPresent || false,
+                positionData.voltage?.isPresent || false
+            ];  
+            const result = await pool.query(query, values);
+            this.positions.push(result.rows[0]);
+            return result.rows[0];
+        } catch (error) {
+            throw new Error('Failed to create position in the database.');
+        }
+    }
+
+    async updatePositions(updates) {
+        try {
+            await pool.query('BEGIN');
+
+            await Promise.all(
+                updates.map((update) => {
+                    const query = `
+                        UPDATE position 
+                        SET position_number = $1,
+                            position_name = $2,
+                            has_temperature = $3,
+                            has_current = $4,
+                            has_voltage = $5
+                        WHERE id = $6
+                    `;
+                    const values = [
+                        update.updates.number,
+                        update.updates.name,
+                        update.updates.temperature.isPresent,
+                        update.updates.current.isPresent,
+                        update.updates.voltage.isPresent,
+                        update.id
+                    ];
+                    return pool.query(query, values); 
+                })
+            );
+
+            this.positions = this.positions.map(pos => {
+                const update = updates.find(u => u.id === pos.id);
+                if (update) {
+                    return {
+                        ...pos,
+                        position_number: update.updates.number,
+                        position_name: update.updates.name,
+                        has_temperature: update.updates.temperature.isPresent,
+                        has_current: update.updates.current.isPresent,
+                        has_voltage: update.updates.voltage.isPresent
+                    };
+                }
+                return pos;
+            });
+
+            await pool.query('COMMIT');
+            return true;
+        } catch (error) {
+            await pool.query('ROLLBACK');
+            throw new Error('Failed to update positions: ', error);
+        }
     }
 }
 

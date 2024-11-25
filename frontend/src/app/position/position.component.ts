@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DeviceDetectionService } from '../services/device-detection.service';
 import { OverviewStateService } from '../services/overview-state.service';
+import { PositionService } from '../services/position.service';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class PositionComponent {
   public isSelected = false;
   public isCollapsed = false;
 
-  constructor(private deviceDetectionService: DeviceDetectionService, private overviewStateService: OverviewStateService) {}
+  constructor(private deviceDetectionService: DeviceDetectionService, private overviewStateService: OverviewStateService, private positionService: PositionService) {}
 
   updatePresetValue(event: KeyboardEvent, field: string) {
     if (event.key === 'Enter') {
@@ -39,9 +40,14 @@ export class PositionComponent {
     if (event.key === 'Enter') {
       const inputElement = event.target as HTMLInputElement;
       const newValue = inputElement.value;
-      console.log(newValue);
-      console.log(field);
-      console.log(this.position.number);
+      
+      if (field === '.number') {
+        this.position.number = Number(newValue);
+      } else if (field === '.name') {
+        this.position.name = newValue;
+      }
+      
+      this.positionService.addModifiedPosition(this.position);
     }
   }  
 
@@ -61,6 +67,7 @@ export class PositionComponent {
         this.position.voltage.isPresent = !this.position.voltage.isPresent;
         break;
     }
+    this.positionService.addModifiedPosition(this.position);
   }
 
   toggleCollapsed() {

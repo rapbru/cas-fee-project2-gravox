@@ -1,5 +1,5 @@
 
-<div *ngIf="enableEdit() && !(isMobile() && selectedPosition)"> 
+<div *ngIf="enableEdit() && !(isMobile() && newPosition)"> 
   <button *ngIf="!isMobile() && enableEdit()" (click)="increaseColumns()">Linie hinzufügen</button>
   <button *ngIf="!isMobile() && enableEdit()" (click)="decreaseColumns()">Linie löschen</button>
   <button *ngIf="enableEdit()" (click)="addPosition()">hinzufügen</button>
@@ -9,7 +9,7 @@
   <button *ngIf="enableEdit()" (click)="cancelChanges()">Änderungen verwerfen</button>
 </div>
 
-<div *ngIf="!(isMobile() && selectedPosition)" cdkDropListGroup>
+<div *ngIf="!(isMobile() && newPosition)" cdkDropListGroup>
   <div class="overview-container">
     @for (column of columns(); track $index; let index = $index) {
       <div cdkDropList [cdkDropListData]="column" class="overview-list" (cdkDropListDropped)="drop($event, index)">
@@ -33,4 +33,10 @@
   </div>
 </div>
 
-<app-position-edit *ngIf="selectedPosition" [ngClass]="{'position-edit-overlay': !isMobile(),'position-edit-mobile': isMobile()}" class="position-edit-overlay" [position]="selectedPosition" (savePosition)="savePosition($event)"></app-position-edit>
+<app-add-position 
+  *ngIf="newPosition" 
+  [ngClass]="{'position-edit-overlay': !isMobile(),'position-edit-mobile': isMobile()}" 
+  class="position-edit-overlay" [position]="newPosition" 
+  (savePosition)="savePosition($event)" 
+  (cancelEdit)="closeAddPosition()">
+</app-add-position>

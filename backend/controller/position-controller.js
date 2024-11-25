@@ -30,6 +30,28 @@ export class PositionController {
             res.status(500).json({ error: 'Internal Server Error' });
         }
     };
+
+    createPosition = async (req, res) => {
+        try {
+            const positionData = req.body;
+            const newPosition = await this.positionService.createPosition(positionData);
+            res.status(201).json(newPosition);
+        } catch (err) {
+            console.error('Error creating position:', err);
+            res.status(500).json({ error: 'Interner Server Fehler' });
+        }
+    };
+
+    updatePositions = async (req, res) => {
+        try {
+            const { updates } = req.body;
+            console.log(updates);
+            await this.positionService.updatePositions(updates);
+            return res.status(200).json({ message: 'Positions updated successfully' });
+        } catch (error) {
+            return res.status(500).json({ error: error.message });
+        }
+    };
 }
 
 export const positionController = new PositionController();

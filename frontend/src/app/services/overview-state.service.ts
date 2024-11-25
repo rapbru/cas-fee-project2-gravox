@@ -32,6 +32,7 @@ export class OverviewStateService {
   resetState() {
     this.enableOrder.set(false);
     this.enableMultiSelect.set(false); 
+    this.enableEdit.set(false);
   }
 
 }
