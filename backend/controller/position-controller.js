@@ -35,10 +35,10 @@ export class PositionController {
         try {
             const positionData = req.body;
             const newPosition = await this.positionService.createPosition(positionData);
-            res.status(201).json(newPosition);
+            return res.status(201).json(newPosition);
         } catch (err) {
             console.error('Error creating position:', err);
-            res.status(500).json({ error: 'Interner Server Fehler' });
+            return res.status(500).json({ error: 'Interner Server Fehler' });
         }
     };
 

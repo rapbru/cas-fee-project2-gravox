@@ -8,6 +8,10 @@ class PositionService {
     }
 
     async init() {
+        this.readPositions();
+    }
+
+    async readPositions() {
         this.positions = await PositionService.getPositions();
     }
 
@@ -59,7 +63,7 @@ class PositionService {
 
     async getPositionById(positionId) {
         const id = Number(positionId);
-        const position = this.positions.find(pos => pos.position_number === id);
+        const position = this.positions.find(pos => pos.id === id);
 
         if (!position) {
             return null;
@@ -90,8 +94,12 @@ class PositionService {
                 positionData.voltage?.isPresent || false
             ];  
             const result = await pool.query(query, values);
-            this.positions.push(result.rows[0]);
-            return result.rows[0];
+            const newDbPosition = result.rows[0];
+            
+            const mappedPosition = await this.mapPositionData(newDbPosition);
+            
+            await this.readPositions();
+            return mappedPosition;
         } catch (error) {
             throw new Error('Failed to create position in the database.');
         }
@@ -140,6 +148,7 @@ class PositionService {
             });
 
             await pool.query('COMMIT');
+            await this.readPositions();
             return true;
         } catch (error) {
             await pool.query('ROLLBACK');

@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { OverviewStateService } from '../services/overview-state.service';
 import { AddPositionComponent } from '../position/add-position/add-position.component';
 import { DeviceDetectionService } from '../services/device-detection.service';
+import { ErrorHandlingService } from '../services/error-handling.service';
 
 @Component({
   selector: 'app-overview',
@@ -22,9 +23,26 @@ export class OverviewComponent implements OnDestroy, OnInit {
   private maxColumnCount = 0;
   private positionsPerColumn = [22];
   private columnDistribution: number[] = [];
+  private originalColumnCount = 1;
+  private originalPositionsPerColumn: number[] = [22];
   public newPosition: Position | null = null;
 
-  constructor(private positionService: PositionService, private router: Router, private deviceDetectionService: DeviceDetectionService, public overviewStateService: OverviewStateService) {} 
+  // Beispiel für die Aufteilung der Positionen
+  // Angenommen wir haben:
+  // columnCount = 3;
+  // positionsPerColumn = [22, 22, 22];   // 3 Spalten mit je 22 Positionen
+  // maxColumnCount = 2;                  // Aber Fenster erlaubt nur 2 Spalten
+
+  // Dann wird columnDistribution so berechnet:
+  // columnDistribution = [22, 44];       // Erste Spalte: 22, Zweite Spalte: 22+22=44
+
+  constructor(
+    private positionService: PositionService, 
+    private router: Router, 
+    private deviceDetectionService: DeviceDetectionService, 
+    public overviewStateService: OverviewStateService,
+    private errorHandlingService: ErrorHandlingService
+  ) {} 
 
   ngOnInit() {
     this.positionService.startFetching();
@@ -48,7 +66,7 @@ export class OverviewComponent implements OnDestroy, OnInit {
       if (i < this.maxColumnCount) {
         distribution[i] = this.positionsPerColumn[i];
       } else {
-          distribution[this.maxColumnCount - 1] += this.positionsPerColumn[i];
+        distribution[this.maxColumnCount - 1] += this.positionsPerColumn[i];
       }
     }
 
@@ -172,8 +190,28 @@ export class OverviewComponent implements OnDestroy, OnInit {
   }
 
   public savePosition(position: Position) {
-    console.log(position);
-    this.newPosition = null;
+    if (!position.number || position.number === 0 || !position.name || position.name.trim().length === 0) {
+      console.error('Position number and name are required');
+      return;
+    }
+
+    if (this.originalPositionsPerColumn === this.positionsPerColumn) {
+      this.originalPositionsPerColumn = [...this.positionsPerColumn];
+      this.originalColumnCount = this.columnCount;
+    }
+
+    const currentPositions = this.positionService.positions();
+    this.positionService.positions.set([...currentPositions, position]);
+    
+    const currentOrderedPositions = this.positionService.orderedPositions();
+    this.positionService.orderedPositions.set([...currentOrderedPositions, position]);
+    
+    const lastColumnIndex = this.columnCount - 1;
+    this.positionsPerColumn[lastColumnIndex] += 1;
+    this.updateColumnDistribution();
+    
+    this.positionService.addModifiedPosition(position);
+    this.closeAddPosition();
   }
 
   public closeAddPosition() {
@@ -190,10 +228,16 @@ export class OverviewComponent implements OnDestroy, OnInit {
 
   public saveChanges() {
     this.positionService.saveChanges();
+    this.originalColumnCount = this.columnCount;
+    this.originalPositionsPerColumn = [...this.positionsPerColumn];
     this.overviewStateService.resetState();
   }
 
   public cancelChanges() {
+    this.columnCount = this.originalColumnCount;
+    this.positionsPerColumn = [...this.originalPositionsPerColumn];
+    this.updateColumnDistribution();
+    
     this.positionService.cancelChanges();
     this.overviewStateService.resetState();
   }

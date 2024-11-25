@@ -24,8 +24,8 @@
                         </button>
                     </ng-container>
                     <ng-template #noOrder>
-                        <input class="position-number-input" type="text" [value]="position.number" (keydown)="updatePositionInfo($event, '.number')" />
-                        <input class="position-name-input" type="text" [value]="position.name" (keydown)="updatePositionInfo($event, '.name')" />
+                        <input class="position-number-input" type="text" [value]="position.number" (input)="updatePositionInfo($event, '.number')" />
+                        <input class="position-name-input" type="text" [value]="position.name" (input)="updatePositionInfo($event, '.name')" />
                     </ng-template>
                 </ng-template>       
             </ng-template>
