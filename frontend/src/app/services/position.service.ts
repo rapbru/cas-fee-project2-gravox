@@ -17,6 +17,7 @@ export class PositionService {
   private updateInterval = 1000;
   private intervalSubscription!: Subscription;
   private modifiedPositions = new Set<Position>();
+  private originalPositions = new Map<number, Position>();
 
   constructor(
     private http: HttpClient, 
@@ -51,12 +52,21 @@ export class PositionService {
   }
 
   public fetchPositions() {
-    if (!this.overviewStateService.enableEdit()) {
-      this.load().subscribe(loaded => {
-        this.positions.set(loaded);
+    this.load().subscribe(loaded => {
+        const currentPositions = this.positions();
+        // Im Edit-Modus behalte die aktuellen Änderungen bei
+        if (this.overviewStateService.enableEdit()) {
+            // Aktualisiere nur Positionen die nicht bearbeitet wurden
+            const updatedPositions = currentPositions.map(pos => {
+                const loadedPos = loaded.find(p => p.id === pos.id);
+                return this.modifiedPositions.has(pos) ? pos : loadedPos || pos;
+            });
+            this.positions.set(updatedPositions);
+        } else {
+            this.positions.set(loaded);
+        }
         this.applyOrder();
-      });
-    }
+    });
   }
 
   private applyOrder() {
@@ -120,20 +130,6 @@ export class PositionService {
     return tags;
   }
 
-  savePosition(position: Position): Observable<void> {
-    const tagsToWrite = this.mapPositionToTags(position);
-    return this.http.post<void>(this.apiUrl+'write', tagsToWrite).pipe(
-      catchError(error => {
-        this.snackbar.open('Failed to save position.', 'Close', {
-          duration: 3000,
-          panelClass: ['error-snackbar']
-        });
-        console.error('Error saving position:', error);
-        return of();
-      })
-    );
-  }
-
   showSuccessMessage() {
     this.snackbar.open('Position saved successfully!', 'Close', {
       duration: 3000,
@@ -142,6 +138,9 @@ export class PositionService {
   }
 
   addModifiedPosition(position: Position) {
+    if (!this.originalPositions.has(position.id)) {
+      this.originalPositions.set(position.id, {...position});
+    }
     this.modifiedPositions.add(position);
   }
 
@@ -149,25 +148,56 @@ export class PositionService {
     if (this.modifiedPositions.size === 0) return;
 
     const updates = Array.from(this.modifiedPositions).map(position => ({
-        id: position.id,
-        updates: {
-            number: position.number,
-            name: position.name,
-            temperature: { isPresent: position.temperature.isPresent },
-            current: { isPresent: position.current.isPresent },
-            voltage: { isPresent: position.voltage.isPresent }
-        }
+      id: position.id,
+      updates: {
+        number: position.number,
+        name: position.name,
+        temperature: { isPresent: position.temperature.isPresent },
+        current: { isPresent: position.current.isPresent },
+        voltage: { isPresent: position.voltage.isPresent }
+      }
     }));
-    console.log(updates);
+
     return this.http.patch(this.apiUrl, { updates }).pipe(
-        tap(() => {
-            this.showSuccessMessage();
-            this.modifiedPositions.clear();
-        })
+      tap(() => {
+        this.showSuccessMessage();
+        this.modifiedPositions.clear();
+        this.originalPositions.clear();
+      })
     ).subscribe();
   }
 
   cancelChanges() {
+    const currentPositions = this.positions();
+    const updatedPositions = currentPositions.map(pos => {
+      const originalPos = this.originalPositions.get(pos.id);
+      return originalPos && this.modifiedPositions.has(pos) ? originalPos : pos;
+    });
+    
+    this.positions.set(updatedPositions);
     this.modifiedPositions.clear();
+    this.originalPositions.clear();
+  }
+
+  createPosition(position: Position): Observable<Position> {
+    return this.http.post<Position>(this.apiUrl, position).pipe(
+      map(response => this.transformData([response])[0]),
+      tap(newPosition => {
+        const currentPositions = this.positions();
+        this.positions.set([...currentPositions, newPosition]);
+        
+        const currentOrderedPositions = this.orderedPositions();
+        this.orderedPositions.set([...currentOrderedPositions, newPosition]);
+        
+        this.showSuccessMessage();
+      }),
+      catchError(error => {
+        this.snackbar.open('Failed to create position', 'Close', {
+          duration: 3000,
+          panelClass: ['error-snackbar']
+        });
+        throw error;
+      })
+    );
   }
 }

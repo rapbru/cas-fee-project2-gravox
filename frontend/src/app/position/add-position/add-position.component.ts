@@ -14,17 +14,16 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 })
 export class AddPositionComponent {
   @Input() position: Position | undefined;
-  @Output() closeEdit = new EventEmitter<void>();
+  @Output() cancelEdit = new EventEmitter<void>();
   @Output() savePosition = new EventEmitter<Position>();
 
   constructor(private positionService: PositionService) {}
 
-  saveChanges() {
+  confirmChanges() {
     this.savePosition.emit(this.position);
-    this.closeEdit.emit();
   }
 
   cancelChanges() {
-    this.closeEdit.emit();
+    this.cancelEdit.emit();
   }
 }

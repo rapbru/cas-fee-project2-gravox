@@ -36,19 +36,17 @@ export class PositionComponent {
     }
   }
 
-  updatePositionInfo(event: KeyboardEvent, field: string) {
-    if (event.key === 'Enter') {
-      const inputElement = event.target as HTMLInputElement;
-      const newValue = inputElement.value;
-      
-      if (field === '.number') {
-        this.position.number = Number(newValue);
-      } else if (field === '.name') {
-        this.position.name = newValue;
-      }
-      
-      this.positionService.addModifiedPosition(this.position);
+  updatePositionInfo(event: Event, field: string) {
+    const inputElement = event.target as HTMLInputElement;
+    const newValue = inputElement.value;
+    
+    if (field === '.number') {
+      this.position.number = Number(newValue);
+    } else if (field === '.name') {
+      this.position.name = newValue;
     }
+    
+    this.positionService.addModifiedPosition(this.position);
   }  
 
   get collapsed(): boolean {
