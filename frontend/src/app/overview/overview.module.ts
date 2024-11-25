@@ -5,11 +5,10 @@ import { OverviewComponent } from './overview.component'; // Import OverviewComp
 
 @NgModule({
   declarations: [
-    OverviewComponent // Declare the OverviewComponent here
   ],
   imports: [
-    CommonModule
-    // SharedModule // Import the SharedModule to use directives like appButtonStyle
+    CommonModule,
+    OverviewComponent
   ]
 })
 export class OverviewModule {}

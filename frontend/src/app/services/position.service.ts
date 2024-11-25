@@ -1,25 +1,28 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { Position } from '../position.model';
-import { catchError, map, Observable, of } from 'rxjs';
+import { Position } from '../position/position.model';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 import { interval, Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { OverviewStateService } from './overview-state.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class PositionService {
-  // private apiUrl = 'http://localhost:3001/plc/read/';
   private apiUrl = 'http://localhost:3001/position/';
   public positions = signal<Position[]>([]);
   public orderedPositions = signal<Position[]>([]);
   private updateInterval = 1000;
   private intervalSubscription!: Subscription;
+  private modifiedPositions = new Set<Position>();
 
-  constructor(private http: HttpClient, private snackbar: MatSnackBar) {
-    // this.startFetching();
-  }
+  constructor(
+    private http: HttpClient, 
+    private snackbar: MatSnackBar,
+    private overviewStateService: OverviewStateService
+  ) {}
 
   public startFetching() {
     this.intervalSubscription = interval(this.updateInterval).subscribe(() => {
@@ -48,10 +51,12 @@ export class PositionService {
   }
 
   public fetchPositions() {
-    this.load().subscribe(loaded => {
+    if (!this.overviewStateService.enableEdit()) {
+      this.load().subscribe(loaded => {
         this.positions.set(loaded);
         this.applyOrder();
-    });
+      });
+    }
   }
 
   private applyOrder() {
@@ -70,6 +75,7 @@ export class PositionService {
 
   private transformData(data: Position[]): Position[] {
     const transformedPositions: Position[] = data.map(position => ({
+        id: position.id,
         number: position.number,
         name: position.name,
         flightbar: position.flightbar,
@@ -133,5 +139,35 @@ export class PositionService {
       duration: 3000,
       panelClass: ['success-snackbar']
     });
+  }
+
+  addModifiedPosition(position: Position) {
+    this.modifiedPositions.add(position);
+  }
+
+  saveChanges() {
+    if (this.modifiedPositions.size === 0) return;
+
+    const updates = Array.from(this.modifiedPositions).map(position => ({
+        id: position.id,
+        updates: {
+            number: position.number,
+            name: position.name,
+            temperature: { isPresent: position.temperature.isPresent },
+            current: { isPresent: position.current.isPresent },
+            voltage: { isPresent: position.voltage.isPresent }
+        }
+    }));
+    console.log(updates);
+    return this.http.patch(this.apiUrl, { updates }).pipe(
+        tap(() => {
+            this.showSuccessMessage();
+            this.modifiedPositions.clear();
+        })
+    ).subscribe();
+  }
+
+  cancelChanges() {
+    this.modifiedPositions.clear();
   }
 }

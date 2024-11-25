@@ -1,0 +1,20 @@
+<div class="add-position">
+  <h5>Neue Position erfassen</h5>
+  <form *ngIf="position">
+    <h6>Position</h6>
+    <div class="form-group">
+      <label for="position-number">Nummer</label>
+      <input id="position-number" type="text" [(ngModel)]="position.number" name="positionNumber" />
+    </div>
+    <div class="form-group">
+      <label for="position-name">Bezeichung</label>
+      <input id="position-name" type="text" [(ngModel)]="position.name" name="positionName" />
+    </div>
+    
+    <!-- Buttons -->
+    <div class="buttons">
+      <button mat-button (click)="saveChanges()">Speichern</button>
+      <button mat-button (click)="cancelChanges()">Abbrechen</button>
+    </div>
+  </form>
+</div>
