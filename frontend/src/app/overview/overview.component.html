@@ -23,7 +23,7 @@
             <div>V</div>
           </div>
         </div>
-        @for (position of column; track position.number) {
+        @for (position of column; track position.id) {
           <div class="list-item" cdkDrag [cdkDragDisabled]="!enableOrder()" [class.draggable]="enableOrder()">
             <app-position [position]="position"></app-position>
           </div>

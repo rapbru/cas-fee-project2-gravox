@@ -32,6 +32,7 @@ export class PositionController {
     };
 
     createPosition = async (req, res) => {
+        console.log(req.body);
         try {
             const positionData = req.body;
             const newPosition = await this.positionService.createPosition(positionData);
@@ -43,6 +44,7 @@ export class PositionController {
     };
 
     updatePositions = async (req, res) => {
+        console.log(req.body);
         try {
             const { updates } = req.body;
             console.log(updates);

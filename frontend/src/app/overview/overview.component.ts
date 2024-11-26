@@ -1,216 +1,99 @@
 import { Component, computed, OnDestroy, OnInit } from '@angular/core';
-import { Position } from '../position/position.model';
+import { Position } from '../models/position.model';
 import { PositionService } from '../services/position.service';
 import { CommonModule } from '@angular/common';
 import { PositionComponent } from '../position/position.component';
-import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem  } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
+import { DeviceDetectionService } from '../services/device-detection.service';
 import { OverviewStateService } from '../services/overview-state.service';
 import { AddPositionComponent } from '../position/add-position/add-position.component';
-import { DeviceDetectionService } from '../services/device-detection.service';
 import { ErrorHandlingService } from '../services/error-handling.service';
+import { ColumnManagementService } from '../services/column-management.service';
+import { PositionDragDropService } from '../services/position-drag-drop.service';
 
 @Component({
   selector: 'app-overview',
   standalone: true,
-  imports: [CommonModule, PositionComponent, DragDropModule, MatIconModule, AddPositionComponent],
+  imports: [
+    CommonModule, 
+    PositionComponent, 
+    DragDropModule, 
+    MatIconModule, 
+    AddPositionComponent
+  ],
   templateUrl: './overview.component.html',
-  styleUrl: './overview.component.scss'
+  styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent implements OnDestroy, OnInit {
-  private columnCount = 1;
-  private maxColumnCount = 0;
-  private positionsPerColumn = [22];
-  private columnDistribution: number[] = [];
-  private originalColumnCount = 1;
-  private originalPositionsPerColumn: number[] = [22];
   public newPosition: Position | null = null;
 
-  // Beispiel für die Aufteilung der Positionen
-  // Angenommen wir haben:
-  // columnCount = 3;
-  // positionsPerColumn = [22, 22, 22];   // 3 Spalten mit je 22 Positionen
-  // maxColumnCount = 2;                  // Aber Fenster erlaubt nur 2 Spalten
-
-  // Dann wird columnDistribution so berechnet:
-  // columnDistribution = [22, 44];       // Erste Spalte: 22, Zweite Spalte: 22+22=44
-
-  constructor(
-    private positionService: PositionService, 
-    private router: Router, 
-    private deviceDetectionService: DeviceDetectionService, 
-    public overviewStateService: OverviewStateService,
-    private errorHandlingService: ErrorHandlingService
-  ) {} 
-
-  ngOnInit() {
-    this.positionService.startFetching();
-    window.addEventListener('resize', this.updateColumnDistribution.bind(this));
-  }
+  public readonly isMobile = this.deviceDetectionService.isMobileSignal;
+  public readonly enableEdit = this.overviewStateService.enableEdit;
+  public readonly enableOrder = this.overviewStateService.enableOrder;
+  public readonly enableMultiSelect = this.overviewStateService.enableMultiSelect;
 
   columns = computed(() => {
     const positions = this.positionService.orderedPositions();
-    this.updateColumnDistribution();
-    return this.splitPositionsDynamically(positions, this.columnDistribution);
+    return this.columnManagementService.splitPositionsDynamically(positions);
   });
 
-  private updateColumnDistribution() {
-    const windowWidth = window.innerWidth;
+  constructor(
+    private positionService: PositionService,
+    private columnManagementService: ColumnManagementService,
+    private deviceDetectionService: DeviceDetectionService,
+    private positionDragDropService: PositionDragDropService,
+    public overviewStateService: OverviewStateService,
+    private errorHandlingService: ErrorHandlingService
+  ) {}
 
-    this.maxColumnCount = Math.min(Math.floor(windowWidth / 450), 10);
-    if (this.maxColumnCount === 0) this.maxColumnCount = 1;
-
-    const distribution = [];
-    for (let i = 0; i < this.columnCount; i++) {
-      if (i < this.maxColumnCount) {
-        distribution[i] = this.positionsPerColumn[i];
-      } else {
-        distribution[this.maxColumnCount - 1] += this.positionsPerColumn[i];
-      }
-    }
-
-    this.columnDistribution = distribution;
+  ngOnInit() {  
+    this.columnManagementService.loadColumnSettings().subscribe();
+    this.positionService.startFetching();
   }
 
-  private splitPositionsDynamically(positions: Position[], distribution: number[]): Position[][] {
-    const columns: Position[][] = [];
-    let startIndex = 0;
-
-    for (const count of distribution) {
-      const column = positions.slice(startIndex, startIndex + count);
-      columns.push(column);
-      startIndex += count;
-    }
-
-    return columns;
-  }
-
-  positions = computed(() => {
-    return this.positionService.orderedPositions();
-  });
-
-  drop(event: CdkDragDrop<Position[]>, columnIndex: number) {
-    let movedBetween = false;
-
-    let previousColumnIndex = 0;
-
-    const previousContainer = event.previousContainer;
-    if (previousContainer) {
-      const previousData = previousContainer.data as Position[];
-      previousColumnIndex = this.columns().findIndex(column => column === previousData);
-    }
-    console.log(previousColumnIndex);
-
-    if (event.previousContainer === event.container) {
-      // Wenn das Element innerhalb der Liste verschoben wird
-      moveItemInArray(this.columns()[columnIndex], event.previousIndex, event.currentIndex);
-    } else {
-      // Wenn das Element zwischen den Listen verschoben wird
-      movedBetween = true;
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    }
-
-    const newOrderedPositions = this.columns().reduce((acc, column) => {
-      return acc.concat(column);
-    }, [] as Position[]);
-
-    if (movedBetween) {
-      if (columnIndex !== previousColumnIndex) {
-        this.positionsPerColumn[previousColumnIndex] -= 1;
-        this.positionsPerColumn[columnIndex] += 1;
-      }
-      if (this.positionsPerColumn[previousColumnIndex] <= 0) {
-        this.removeColumn(previousColumnIndex);
-      }
-    }
-
-    this.positionService.updateOrderedPositions(newOrderedPositions);
-  }
-
-  private removeColumn(index: number) {
-    this.columnDistribution.splice(index, 1);
-    this.positionsPerColumn.splice(index, 1);
-    this.columnCount = this.columnDistribution.length;
-  }
-
-  public increaseColumns() {
-    if (this.columnCount < this.maxColumnCount) {
-      this.columnCount++;
-      this.positionsPerColumn.push(0);
-      this.updateColumnDistribution();
-    }
-  }
-
-  public decreaseColumns() {
-    if (this.columnCount > 1) {
-      const lastColumnIndex = this.columnCount - 1;
-      this.positionsPerColumn[lastColumnIndex - 1] += this.positionsPerColumn[lastColumnIndex];
-      this.positionsPerColumn[lastColumnIndex] = 0;
-      this.columnCount--;
-      this.updateColumnDistribution();
-    }
-  }
-
-  public ngOnDestroy() {
+  ngOnDestroy() {
     this.positionService.stopFetching();
   }
 
-  public navigateToArticles() {
-    this.router.navigate(['/articles']).then(success => {
-      if (success) {
-        console.log('Navigation successful!');
-      } else {
-        console.error('Navigation failed!');
-      }
-    }).catch(err => {
-      console.error('Error during navigation:', err);
-    });
+  // Spalten-Management
+  public increaseColumns() {
+    this.columnManagementService.increaseColumns();
   }
 
+  public decreaseColumns() {
+    this.columnManagementService.decreaseColumns();
+  }
+
+  // Änderungen speichern/verwerfen
+  public saveChanges() {
+    this.positionService.saveAllChanges();
+  }
+
+  public cancelChanges() {
+    this.positionService.cancelAllChanges();
+  }
+
+  // Position-Management
   public addPosition() {
-    const newPosition: Position = {
+    this.newPosition = {
       id: 0,
       number: 0,
       name: '',
-      flightbar: undefined,
-      articleName: '',
-      customerName: '',
       time: { actual: 0, preset: 0 },
-      temperature: { actual: 0, preset: 0, isPresent: false },
-      current: { actual: 0, preset: 0, isPresent: false },
-      voltage: { actual: 0, preset: 0, isPresent: false }
+      temperature: { actual: 0, preset: 0, isPresent: true },
+      current: { actual: 0, preset: 0, isPresent: true },
+      voltage: { actual: 0, preset: 0, isPresent: true }
     };
-    this.newPosition = newPosition;
   }
 
   public savePosition(position: Position) {
     if (!position.number || position.number === 0 || !position.name || position.name.trim().length === 0) {
-      console.error('Position number and name are required');
+      this.errorHandlingService.showError('Positionsnummer und Name sind erforderlich');
       return;
     }
-
-    if (this.originalPositionsPerColumn === this.positionsPerColumn) {
-      this.originalPositionsPerColumn = [...this.positionsPerColumn];
-      this.originalColumnCount = this.columnCount;
-    }
-
-    const currentPositions = this.positionService.positions();
-    this.positionService.positions.set([...currentPositions, position]);
     
-    const currentOrderedPositions = this.positionService.orderedPositions();
-    this.positionService.orderedPositions.set([...currentOrderedPositions, position]);
-    
-    const lastColumnIndex = this.columnCount - 1;
-    this.positionsPerColumn[lastColumnIndex] += 1;
-    this.updateColumnDistribution();
-    
-    this.positionService.addModifiedPosition(position);
+    this.positionService.handleTemporaryPosition(position);
     this.closeAddPosition();
   }
 
@@ -218,44 +101,19 @@ export class OverviewComponent implements OnDestroy, OnInit {
     this.newPosition = null;
   }
 
+  // Drag & Drop
+  public drop(event: CdkDragDrop<Position[]>, columnIndex: number) {
+    if (this.enableOrder()) {
+      this.positionDragDropService.handleDrop(event, this.columns(), columnIndex);
+    }
+  }
+
+  // Position-Auswahl und Bearbeitung
   public orderPositions() {
-    this.overviewStateService.toggleOrder();  
+    this.overviewStateService.toggleOrder();
   }
 
   public deletePositions() {
     this.overviewStateService.toggleMultiSelect();
   }
-
-  public saveChanges() {
-    this.positionService.saveChanges();
-    this.originalColumnCount = this.columnCount;
-    this.originalPositionsPerColumn = [...this.positionsPerColumn];
-    this.overviewStateService.resetState();
-  }
-
-  public cancelChanges() {
-    this.columnCount = this.originalColumnCount;
-    this.positionsPerColumn = [...this.originalPositionsPerColumn];
-    this.updateColumnDistribution();
-    
-    this.positionService.cancelChanges();
-    this.overviewStateService.resetState();
-  }
-
-  isMobile(): boolean {
-    return this.deviceDetectionService.isMobileSignal();
-  }
-
-  enableEdit(): boolean {
-    return this.overviewStateService.enableEdit();
-  }
-
-  enableOrder(): boolean {
-    return this.overviewStateService.enableOrder();
-  }
-
-  enableMultiSelect(): boolean {
-    return this.overviewStateService.enableMultiSelect();
-  }
-
 }

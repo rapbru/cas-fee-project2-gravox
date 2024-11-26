@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { PositionService } from '../../services/position.service';
-import { Position } from '../position.model';
+import { Position } from '../../models/position.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -16,8 +15,6 @@ export class AddPositionComponent {
   @Input() position: Position | undefined;
   @Output() cancelEdit = new EventEmitter<void>();
   @Output() savePosition = new EventEmitter<Position>();
-
-  constructor(private positionService: PositionService) {}
 
   confirmChanges() {
     this.savePosition.emit(this.position);
