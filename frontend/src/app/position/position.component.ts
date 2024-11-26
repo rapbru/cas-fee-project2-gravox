@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { Position } from '../position/position.model';
+import { Position } from '../models/position.model';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
@@ -40,13 +40,25 @@ export class PositionComponent {
     const inputElement = event.target as HTMLInputElement;
     const newValue = inputElement.value;
     
-    if (field === '.number') {
-      this.position.number = Number(newValue);
-    } else if (field === '.name') {
-      this.position.name = newValue;
+    switch (field) {
+      case 'name':
+        this.position.name = newValue;
+        break;
+      case 'number':
+        this.position.number = parseInt(newValue, 10);
+        break;
+      case 'temperature.preset':
+        this.position.temperature.preset = parseFloat(newValue);
+        break;
+      case 'current.preset':
+        this.position.current.preset = parseFloat(newValue);
+        break;
+      case 'voltage.preset':
+        this.position.voltage.preset = parseFloat(newValue);
+        break;
     }
     
-    this.positionService.addModifiedPosition(this.position);
+    this.positionService.trackModification(this.position);
   }  
 
   get collapsed(): boolean {
@@ -65,7 +77,7 @@ export class PositionComponent {
         this.position.voltage.isPresent = !this.position.voltage.isPresent;
         break;
     }
-    this.positionService.addModifiedPosition(this.position);
+    this.positionService.trackModification(this.position);
   }
 
   toggleCollapsed() {
