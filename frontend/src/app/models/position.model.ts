@@ -9,4 +9,5 @@ export interface Position {
   temperature: { actual: number; preset: number; isPresent: boolean; };
   current: { actual: number; preset: number; isPresent: boolean; };
   voltage: { actual: number; preset: number; isPresent: boolean; };
+  isSelected?: boolean;
 }

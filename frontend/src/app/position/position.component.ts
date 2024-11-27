@@ -21,7 +21,6 @@ import { PositionService } from '../services/position.service';
 })
 export class PositionComponent {
   @Input() position!: Position;
-  public isSelected = false;
   public isCollapsed = false;
 
   constructor(private deviceDetectionService: DeviceDetectionService, private overviewStateService: OverviewStateService, private positionService: PositionService) {}
@@ -85,7 +84,12 @@ export class PositionComponent {
   }
 
   toggleSelection() {
-    this.isSelected = !this.isSelected;
+    this.position.isSelected = !this.position.isSelected;
+    this.positionService.trackModification(this.position);
+  }
+
+  get isSelected(): boolean {
+    return this.position.isSelected || false;
   }
 
   isMobile(): boolean {

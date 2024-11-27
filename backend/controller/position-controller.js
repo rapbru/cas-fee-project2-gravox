@@ -1,12 +1,14 @@
 import PositionService from '../services/position-service.js';
 import TagService from '../plc/tag-service.js';
+import PLCService from '../plc/plc-service.js';
 import PLCMockData from '../data/plc-mock-data.js';
 
 export class PositionController {
     constructor() {
         if (process.env.NODE_ENV === "production") {
             this.tagService = TagService.getInstance();
-            this.positionService = new PositionService(this.tagService);
+            this.plcService = PLCService.getInstance();
+            this.positionService = new PositionService(this.tagService, this.plcService);
         } else {
             this.positionService = new PLCMockData();
         }
@@ -50,6 +52,26 @@ export class PositionController {
             console.log(updates);
             await this.positionService.updatePositions(updates);
             return res.status(200).json({ message: 'Positions updated successfully' });
+        } catch (error) {
+            return res.status(500).json({ error: error.message });
+        }
+    };
+
+    deletePosition = async (req, res) => {
+        try {
+            const positionId = req.params.id;
+            await this.positionService.deletePosition(positionId);
+            return res.status(200).json({ message: 'Position erfolgreich gelöscht' });
+        } catch (error) {
+            return res.status(500).json({ error: error.message });
+        }
+    };
+
+    savePositionOrder = async (req, res) => {
+        try {
+            const { positions } = req.body;
+            await this.positionService.savePositionOrder(positions);
+            return res.status(200).json({ message: 'Positionsreihenfolge erfolgreich gespeichert' });
         } catch (error) {
             return res.status(500).json({ error: error.message });
         }
