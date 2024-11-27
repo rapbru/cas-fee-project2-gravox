@@ -25,6 +25,40 @@ export class SettingsController {
             return res.status(500).json({ error: 'Fehler beim Speichern der Spalteneinstellungen' });
         }
     };
+
+    getPositionOrder = async (req, res) => {
+        try {
+            const order = await this.settingsService.getPositionOrder();
+            return res.json(order);
+        } catch (error) {
+            console.error('Error loading position order:', error);
+            return res.status(500).json({ 
+                error: 'Fehler beim Laden der Positionsreihenfolge' 
+            });
+        }
+    };
+
+    savePositionOrder = async (req, res) => {
+        try {
+            const { positions } = req.body;
+            
+            if (!Array.isArray(positions)) {
+                return res.status(400).json({ 
+                    error: 'Ungültiges Format für Positionsreihenfolge' 
+                });
+            }
+
+            await this.settingsService.savePositionOrder(positions);
+            return res.json({ 
+                message: 'Positionsreihenfolge erfolgreich gespeichert' 
+            });
+        } catch (error) {
+            console.error('Error saving position order:', error);
+            return res.status(500).json({ 
+                error: 'Fehler beim Speichern der Positionsreihenfolge' 
+            });
+        }
+    };
 }
 
 export const settingsController = new SettingsController(); 

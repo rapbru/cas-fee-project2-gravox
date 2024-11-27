@@ -14,6 +14,7 @@ export class PositionDragDropService {
   ) {}
 
   handleDrop(event: CdkDragDrop<Position[]>, columns: Position[][], columnIndex: number) {
+    console.log(event);
     let movedBetween = false;
     const prevColumnIndex = columns.findIndex(col => col === event.previousContainer.data);
 
@@ -58,6 +59,7 @@ export class PositionDragDropService {
 
     // Aktualisiere die geordneten Positionen im PositionService
     this.positionService.orderedPositions.set(newOrderedPositions);
+    console.log(this.positionService.orderedPositions());
   }
 } 
 

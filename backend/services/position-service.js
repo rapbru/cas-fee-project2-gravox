@@ -1,8 +1,9 @@
 import pool from '../data/db-connection.js';
 
 class PositionService {
-    constructor(tagService) {
+    constructor(tagService, plcService) {
         this.tagService = tagService;
+        this.plcService = plcService;
         this.positions = [];
         this.init();
     }
@@ -12,13 +13,19 @@ class PositionService {
     }
 
     async readPositions() {
-        this.positions = await PositionService.getPositions();
+        this.positions = await PositionService.getDatabasePositions();
     }
 
-    static async getPositions() {
+    static async getDatabasePositions() {
         const query = 'SELECT * FROM position';
         const result = await pool.query(query);
         return result.rows;
+    }
+
+    static async getPositionNumbers() {
+        const query = 'SELECT position_number FROM position';
+        const result = await pool.query(query);
+        return result.rows.map(row => row.position_number);
     }
 
     async mapPositionData(position) {
@@ -74,7 +81,10 @@ class PositionService {
     }
 
     async createPosition(positionData) {
+        const client = await pool.connect();
         try {
+            await client.query('BEGIN');
+            
             const query = `
                 INSERT INTO position (
                     position_number,
@@ -82,26 +92,33 @@ class PositionService {
                     has_temperature,
                     has_current,
                     has_voltage
-                ) VALUES ($1, $2, $3, $4, $5)
-                RETURNING *
-            `;
+                ) VALUES ($1, $2, $3, $4, $5) 
+                RETURNING id, position_number as number, position_name as name`;
             
             const values = [
                 positionData.number,
                 positionData.name,
-                positionData.temperature?.isPresent || false,
-                positionData.current?.isPresent || false,
-                positionData.voltage?.isPresent || false
-            ];  
-            const result = await pool.query(query, values);
-            const newDbPosition = result.rows[0];
-            
-            const mappedPosition = await this.mapPositionData(newDbPosition);
-            
-            await this.readPositions();
-            return mappedPosition;
+                positionData.temperature?.isPresent ?? true,
+                positionData.current?.isPresent ?? true,
+                positionData.voltage?.isPresent ?? true
+            ];
+
+            const result = await client.query(query, values);
+            await client.query('COMMIT');
+
+            this.readPositions();
+
+            // Format der Position beibehalten
+            return {
+                ...positionData,
+                id: result.rows[0].id
+            };
+
         } catch (error) {
-            throw new Error('Failed to create position in the database.');
+            await client.query('ROLLBACK');
+            throw error;
+        } finally {
+            client.release();
         }
     }
 
@@ -153,6 +170,39 @@ class PositionService {
         } catch (error) {
             await pool.query('ROLLBACK');
             throw new Error('Failed to update positions: ', error);
+        }
+    }
+
+    async deletePosition(positionId) {
+        const client = await pool.connect();
+        try {
+            await client.query('BEGIN');
+
+            const getQuery = 'SELECT position_number FROM position WHERE id = $1';
+            const posResult = await client.query(getQuery, [positionId]);
+            
+            if (posResult.rows.length === 0) {
+                throw new Error('Position nicht gefunden');
+            }
+
+            const positionNumber = posResult.rows[0].position_number;
+            const deleteQuery = 'DELETE FROM position WHERE id = $1';
+            await client.query(deleteQuery, [positionId]);
+            
+            await client.query('COMMIT');
+
+            if (this.plcService) {
+                await this.plcService.unsubscribeFromPosition(positionNumber);
+            }
+
+            await this.readPositions();
+            
+            return true;
+        } catch (error) {
+            await client.query('ROLLBACK');
+            throw error;
+        } finally {
+            client.release();
         }
     }
 }

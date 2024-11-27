@@ -1,6 +1,6 @@
 import { TagList, Structure } from 'st-ethernet-ip';
 import TagService from "./tag-service.js";
-import { tagData } from '../predefined-tags/tag-data.js';
+import PositionService from '../services/position-service.js';
 
 export default class PLCService {
     static instance = null;
@@ -12,6 +12,7 @@ export default class PLCService {
         
         this.plcConnection = plcConnection;
         this.tagService = TagService.getInstance(this.plcConnection);
+        this.subscribedPositions = new Set();
         
         this.initialize();
 
@@ -22,11 +23,31 @@ export default class PLCService {
         try {
             await this.plcConnection.connect();
             if (this.plcConnection.isConnected()) {
-                await this.tagService.loadTagsFromTagData(tagData);
+                const positionNumbers = await PositionService.getPositionNumbers();
+                await Promise.all(positionNumbers.map(number => this.subscribeToPosition(number)));
             }
+            console.log('Successfully subscribed positions:', 
+                Array.from(this.subscribedPositions).sort((a, b) => a - b)
+            );
         } catch (error) {
             console.error('Error initializing PLC Service:', error);
         }
+    }
+
+    async subscribeToPosition(positionNumber) {
+        if (this.subscribedPositions.has(positionNumber)) return;
+
+        const tags = TagService.getPositionTags(positionNumber);
+        await this.tagService.subscribeTags(tags);
+        this.subscribedPositions.add(positionNumber);
+    }
+
+    async unsubscribeFromPosition(positionNumber) {
+        if (!this.subscribedPositions.has(positionNumber)) return;
+
+        const tags = TagService.getPositionTags(positionNumber);
+        await this.tagService.unsubscribeTags(tags);
+        this.subscribedPositions.delete(positionNumber);
     }
 
     async all() {

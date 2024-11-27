@@ -103,6 +103,7 @@ export class OverviewComponent implements OnDestroy, OnInit {
 
   // Drag & Drop
   public drop(event: CdkDragDrop<Position[]>, columnIndex: number) {
+    console.log(event);
     if (this.enableOrder()) {
       this.positionDragDropService.handleDrop(event, this.columns(), columnIndex);
     }
