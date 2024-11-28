@@ -1,12 +1,12 @@
 
 <div *ngIf="enableEdit() && !(isMobile() && newPosition)"> 
   <button *ngIf="!isMobile() && enableEdit()" (click)="increaseColumns()">Linie hinzufügen</button>
-  <button *ngIf="!isMobile() && enableEdit()" (click)="decreaseColumns()">Linie löschen</button>
+  <button *ngIf="(columns().length > 1) && !isMobile() && enableEdit()" (click)="decreaseColumns()">Linie löschen</button>
   <button *ngIf="enableEdit()" (click)="addPosition()">hinzufügen</button>
   <button *ngIf="enableEdit()" (click)="orderPositions()">Reihenfolge</button>
   <button *ngIf="enableEdit()" (click)="deletePositions()">löschen</button>
-  <button *ngIf="enableEdit()" (click)="saveChanges()">Änderungen speichern</button>
-  <button *ngIf="enableEdit()" (click)="cancelChanges()">Änderungen verwerfen</button>
+  <button *ngIf="enableEdit()" (click)="saveChanges()">Speichern</button>
+  <button *ngIf="enableEdit()" (click)="cancelChanges()">Abbrechen</button>
 </div>
 
 <div *ngIf="!(isMobile() && newPosition)" cdkDropListGroup>

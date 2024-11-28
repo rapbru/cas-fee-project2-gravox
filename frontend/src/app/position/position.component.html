@@ -6,28 +6,22 @@
                 <div class="position-name-base">{{ position.name }}</div> 
             </ng-container>
             <ng-template #editHeader>
-                <ng-container *ngIf="enableMultiSelect(); else noMultiSelect">
+                <ng-container *ngIf="enableOrder(); else noOrder">
                     <div class="position-number">{{ position.number }}</div>  
                     <div class="position-name">{{ position.name }}</div> 
+                    <button mat-icon-button class="drag-handle">
+                        <mat-icon>drag_handle</mat-icon>
+                    </button>
+                </ng-container>
+                <ng-template #noOrder>
                     <button mat-icon-button class="check-circle" (click)="toggleSelection()">
                         <mat-icon class="check-circle-icon" [ngClass]="{ 'selected': isSelected }">
                             {{ isSelected ? 'check_circle' : 'radio_button_unchecked' }}
                         </mat-icon>
                     </button>
-                </ng-container>
-                <ng-template #noMultiSelect>
-                    <ng-container *ngIf="enableOrder(); else noOrder">
-                        <div class="position-number">{{ position.number }}</div>  
-                        <div class="position-name">{{ position.name }}</div> 
-                        <button mat-icon-button class="drag-handle">
-                            <mat-icon>drag_handle</mat-icon>
-                        </button>
-                    </ng-container>
-                    <ng-template #noOrder>
-                        <input class="position-number-input" type="text" [value]="position.number" (input)="updatePositionInfo($event, '.number')" />
-                        <input class="position-name-input" type="text" [value]="position.name" (input)="updatePositionInfo($event, '.name')" />
-                    </ng-template>
-                </ng-template>       
+                    <input class="position-number-input" type="text" [value]="position.number" (input)="updatePositionInfo($event, '.number')" />
+                    <input class="position-name-input" type="text" [value]="position.name" (input)="updatePositionInfo($event, '.name')" /> 
+                </ng-template>
             </ng-template>
         </div>
 

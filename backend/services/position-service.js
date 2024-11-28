@@ -108,7 +108,14 @@ class PositionService {
 
             this.readPositions();
 
-            // Format der Position beibehalten
+            if (this.plcService) {
+                try {
+                    await this.plcService.subscribeToPosition(positionData.number);
+                } catch (plcError) {
+                    console.error('Fehler beim Abonnieren der PLC-Tags:', plcError);
+                }
+            }
+
             return {
                 ...positionData,
                 id: result.rows[0].id
