@@ -21,6 +21,7 @@ export class PositionService {
   private intervalSubscription!: Subscription;
   public modifiedPositions = signal<Position[]>([]);
   private originalPositions = new Map<number, Position>();
+  private positionsToDelete = signal<Position[]>([]);
 
   constructor(
     private http: HttpClient, 
@@ -156,22 +157,35 @@ export class PositionService {
     );
   }
 
-  public saveAllChanges() {
+  private collectSaveOperations(): Observable<Position | void | ColumnSettings>[] {
     const observables: Observable<Position | void | ColumnSettings>[] = [];
+    
+    this.addModificationOperations(observables);
+    this.addDeletionOperations(observables);
+    this.addColumnSettingsOperation(observables);
+    this.addPositionOrderOperation(observables);
+    
+    return observables;
+  }
 
+  private addModificationOperations(observables: Observable<Position | void | ColumnSettings>[]): void {
     if (this.hasModifications()) {
       observables.push(...this.handleModifiedPositions());
     }
+  }
 
-    // Handle deletions
+  private addDeletionOperations(observables: Observable<Position | void | ColumnSettings>[]): void {
     const deleteObservables = this.handleDeletedPositions();
     if (deleteObservables.length > 0) {
       observables.push(...deleteObservables);
     }
+  }
 
-    // Save column settings
+  private addColumnSettingsOperation(observables: Observable<Position | void | ColumnSettings>[]): void {
     observables.push(this.columnManagementService.saveColumnSettings());
+  }
 
+  private addPositionOrderOperation(observables: Observable<Position | void | ColumnSettings>[]): void {
     const orderedPositions = this.orderedPositions();
     if (orderedPositions.length > 0) {
       observables.push(
@@ -180,9 +194,13 @@ export class PositionService {
         )
       );
     }
+  }
 
-    if (observables.length > 0) {
-      this.executeSaveOperations(observables);
+  public saveAllChanges(): void {
+    const saveOperations = this.collectSaveOperations();
+    
+    if (saveOperations.length > 0) {
+      this.executeSaveOperations(saveOperations);
     }
   }
 
@@ -190,7 +208,7 @@ export class PositionService {
     const modifiedPositions = this.modifiedPositions();
     const observables: Observable<Position | void>[] = [];
     
-    const newPositions = modifiedPositions.filter(pos => pos.id === 0);
+    const newPositions = modifiedPositions.filter(pos => pos.id < 0);
     const existingPositions = modifiedPositions.filter(pos => pos.id > 0);
 
     if (newPositions.length > 0) {
@@ -220,18 +238,17 @@ export class PositionService {
   }
 
   private handleDeletedPositions(): Observable<void>[] {
-    const selectedPositions = this.positions()
-      .filter(pos => pos.isSelected);
-    console.log(selectedPositions);
-    return selectedPositions.map(pos => 
-      this.http.delete<void>(`${this.apiUrl}${pos.id}`).pipe(
-        tap(() => {
-          const currentPositions = this.positions().filter(p => p.id !== pos.id);
-          const currentOrderedPositions = this.orderedPositions().filter(p => p.id !== pos.id);
-          this.positions.set(currentPositions);
-          this.orderedPositions.set(currentOrderedPositions);
-        })
-      )
+    const positionsToDelete = this.positionsToDelete();
+    if (positionsToDelete.length === 0) return [];
+    
+    return positionsToDelete.map(pos => 
+        this.http.delete<void>(`${this.apiUrl}${pos.id}`).pipe(
+            tap(() => {
+                const currentPositions = this.positions()
+                    .filter(p => p.id !== pos.id);
+                this.positions.set(currentPositions);
+            })
+        )
     );
   }
 
@@ -239,8 +256,8 @@ export class PositionService {
     forkJoin(observables).pipe(
       tap(() => {
         this.clearModifiedPositions();
-        const currentOrderedPositions = this.orderedPositions().filter(pos => pos.id !== 0);
-        this.orderedPositions.set(currentOrderedPositions);
+        // const currentOrderedPositions = this.orderedPositions().filter(pos => pos.id !== 0);
+        // this.orderedPositions.set(currentOrderedPositions);
         this.errorHandlingService.showSuccess('Alle Änderungen erfolgreich gespeichert');
       }),
       catchError(error => {
@@ -254,11 +271,11 @@ export class PositionService {
   public clearModifiedPositions(): void {
     this.modifiedPositions.set([]);
     this.originalPositions.clear();
-
+    this.positionsToDelete.set([]);
   }
 
   public handleTemporaryPosition(position: Position): void {
-    position.id = 0;
+    // position.id = 0;
     
     const currentPositions = this.positions();
     this.positions.set([...currentPositions, position]);
@@ -299,5 +316,18 @@ export class PositionService {
     if (!currentModified.some(p => p.id === position.id)) {
       this.modifiedPositions.set([...currentModified, position]);
     }
+  }
+
+  public markPositionsForDeletion(): void {
+    const selectedPositions = this.positions()
+        .filter(pos => pos.isSelected);
+    
+    // Entferne die ausgewählten Positionen aus orderedPositions
+    const currentOrderedPositions = this.orderedPositions()
+        .filter(pos => !selectedPositions.some(selected => selected.id === pos.id));
+    this.orderedPositions.set(currentOrderedPositions);
+    
+    // Markiere Positionen zum Löschen
+    this.positionsToDelete.set(selectedPositions);
   }
 }

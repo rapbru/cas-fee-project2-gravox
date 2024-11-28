@@ -71,9 +71,11 @@ export default class TagService {
         await tagChunks.reduce(async (previousPromise, chunk) => {
             await previousPromise;
             
-            const chunkPromises = chunk.map(tag => 
-                this.plcConnection.controller.PLC.unsubscribe(tag)
-            );
+            const chunkPromises = chunk.map(tag => {
+                this.plcConnection.controller.removeTag(tag);
+                this.tags = this.tags.filter(t => t.name !== tag);
+                return Promise.resolve();
+            });
             
             return Promise.all(chunkPromises);
         }, Promise.resolve());

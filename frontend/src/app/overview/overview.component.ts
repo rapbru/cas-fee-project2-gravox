@@ -68,16 +68,19 @@ export class OverviewComponent implements OnDestroy, OnInit {
   // Änderungen speichern/verwerfen
   public saveChanges() {
     this.positionService.saveAllChanges();
+    this.overviewStateService.resetState();
   }
 
   public cancelChanges() {
     this.positionService.cancelAllChanges();
+    this.overviewStateService.resetState();
   }
 
   // Position-Management
   public addPosition() {
+    const randomId = -(Date.now() + Math.floor(Math.random() * 1000));
     this.newPosition = {
-      id: 0,
+      id: randomId,
       number: 0,
       name: '',
       time: { actual: 0, preset: 0 },
@@ -116,5 +119,6 @@ export class OverviewComponent implements OnDestroy, OnInit {
 
   public deletePositions() {
     this.overviewStateService.toggleMultiSelect();
+    this.positionService.markPositionsForDeletion();
   }
 }
