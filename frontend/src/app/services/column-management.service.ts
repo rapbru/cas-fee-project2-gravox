@@ -83,23 +83,20 @@ export class ColumnManagementService {
   }
 
   public splitPositionsDynamically(positions: Position[]): Position[][] {
-    const columns: Position[][] = [];
-    let currentIndex = 0;
-
-    for (let i = 0; i < this.columnCount && i < this.maxColumnCount; i++) {
-      const endIndex = this.columnDistribution[i];
-      columns.push(positions.slice(currentIndex, endIndex));
-      currentIndex = endIndex;
-    }
-
-    return columns;
+    const startIndices = this.positionsPerColumn
+        .slice(0, Math.min(this.columnCount, this.maxColumnCount))
+        .reduce((acc, _, index) => {
+            const prevSum = index === 0 ? 0 : acc[index - 1] + this.positionsPerColumn[index - 1];
+            return [...acc, prevSum];
+        }, [] as number[]);
+    console.log('startIndices', startIndices);
+    return startIndices.map((startIndex, index) => 
+        positions.slice(startIndex, startIndex + this.positionsPerColumn[index])
+    );
   }
 
   private updateColumnDistribution(): void {   
-    this.columnDistribution = this.positionsPerColumn.reduce((acc, curr, i) => {
-      acc[i] = (acc[i-1] || 0) + curr;
-      return acc;
-    }, [] as number[]);
+    this.columnDistribution = [...this.positionsPerColumn];
   }
 
   public getColumnCount(): number {

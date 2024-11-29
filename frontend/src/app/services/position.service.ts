@@ -1,11 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, signal } from '@angular/core';
+import { computed, Injectable, Signal, signal } from '@angular/core';
 import { Position } from '../models/position.model';
-import { catchError, map, Observable, of, tap, forkJoin } from 'rxjs';
+import { catchError, map, Observable, of, tap, forkJoin, switchMap } from 'rxjs';
 import { interval, Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { OverviewStateService } from './overview-state.service';
-import { ColumnSettings } from '../models/column-settings.model';
 import { ColumnManagementService } from './column-management.service';
 import { ErrorHandlingService } from './error-handling.service';
 import { PositionOrderService } from './position-order.service';
@@ -15,13 +14,15 @@ import { PositionOrderService } from './position-order.service';
 })
 export class PositionService {
   private apiUrl = 'http://localhost:3001/position/';
-  public positions = signal<Position[]>([]);
-  public orderedPositions = signal<Position[]>([]);
+
+  public positions = signal<Position[]>([]); // alle Positionen aus dem Backend
+  public orderedPositions = signal<Position[]>([]); // Positionen geordnet nach der DB
+  public editPositions = signal<Position[]>([]); // Positionen die bearbeitet werden
+  public modifiedPositions = signal<Position[]>([]); // Positionen die geändert wurden
+  public positionsToDelete = signal<Position[]>([]); // Positionen die gelöscht werden
+
   private updateInterval = 1000;
   private intervalSubscription!: Subscription;
-  public modifiedPositions = signal<Position[]>([]);
-  private originalPositions = new Map<number, Position>();
-  private positionsToDelete = signal<Position[]>([]);
 
   constructor(
     private http: HttpClient, 
@@ -44,37 +45,13 @@ export class PositionService {
     }
   }
 
-  public load(): Observable<Position[]> {
-    return this.http.get<Position[]>(this.apiUrl).pipe(
-      catchError((error) => {
-        this.snackbar.open('Could not load positions', 'Ok');
-        console.error('Error loading positions:', error);
-        return of([]);
-      }),
-      map(data => this.transformData(data))
-    );
-  }
-
   public fetchPositions() {
     this.http.get<Position[]>(this.apiUrl).pipe(
       map(positions => this.transformData(positions)),
-      tap(loaded => {
-        const currentPositions = this.positions();
-
-        if (this.overviewStateService.enableEdit()) {
-
-          const updatedPositions = currentPositions.map(pos => {
-            const loadedPos = loaded.find(p => p.id === pos.id);
-            if (loadedPos) {
-              loadedPos.isSelected = pos.isSelected;
-            }
-            return this.modifiedPositions().some(p => p.id === pos.id) ? pos : loadedPos || pos;
-          });
-          this.positions.set(updatedPositions);
-        } else {
-          this.positions.set(loaded);
-        }
-        this.applyOrder();
+      tap(loaded => this.positions.set(loaded)),
+      switchMap(() => this.positionOrderService.applyOrder(this.positions())),
+      tap(orderedPositions => {
+        this.orderedPositions.set(orderedPositions);
       }),
       catchError(error => {
         console.error('Error fetching positions:', error);
@@ -83,27 +60,23 @@ export class PositionService {
     ).subscribe();
   }
 
-  private applyOrder() {
-    const currentPositions = this.positions();
-    const ordered = this.orderedPositions();
-    
-    if (!this.overviewStateService.enableEdit()) {
-        this.positionOrderService.applyOrder(currentPositions).subscribe({
-            next: (orderedPositions) => {
-                this.orderedPositions.set(orderedPositions);
-            },
-            error: (error) => {
-                console.error('Error applying order:', error);
-                this.orderedPositions.set(currentPositions);
-            }
-        });
-    } else {
-        const newOrdered = ordered.length > 0 
-            ? ordered.map(pos => currentPositions.find(p => p.number === pos.number))
-                .filter((pos): pos is Position => pos !== undefined)
-            : [...currentPositions]; 
-        this.orderedPositions.set(newOrdered);
-    }
+  // Getter für die View
+  public getPositions(): Signal<Position[]> {
+    return computed(() => 
+      this.overviewStateService.enableEdit() 
+        ? this.editPositions() 
+        : this.orderedPositions()
+    );
+  }
+
+  public startEditing(): void {
+    this.editPositions.set([...this.orderedPositions()]);
+    console.log('startEditing');
+    console.log(this.editPositions());
+  }
+
+  public cancelEditing(): void {
+    this.editPositions.set([]);
   }
 
   private transformData(data: Position[]): Position[] {
@@ -141,13 +114,7 @@ export class PositionService {
   public createPosition(position: Position): Observable<Position> {
     return this.http.post<Position>(this.apiUrl, position).pipe(
       map(response => this.transformData([response])[0]),
-      tap(newPosition => {
-        const currentPositions = this.positions();
-        this.positions.set([...currentPositions, newPosition]);
-        
-        const currentOrderedPositions = this.orderedPositions();
-        this.orderedPositions.set([...currentOrderedPositions, newPosition]);
-        
+      tap(() => {        
         this.errorHandlingService.showSuccess('Position erfolgreich erstellt');
       }),
       catchError(error => {
@@ -157,63 +124,119 @@ export class PositionService {
     );
   }
 
-  private collectSaveOperations(): Observable<Position | void | ColumnSettings>[] {
-    const observables: Observable<Position | void | ColumnSettings>[] = [];
-    
-    this.addModificationOperations(observables);
-    this.addDeletionOperations(observables);
-    this.addColumnSettingsOperation(observables);
-    this.addPositionOrderOperation(observables);
-    
-    return observables;
-  }
-
-  private addModificationOperations(observables: Observable<Position | void | ColumnSettings>[]): void {
-    if (this.hasModifications()) {
-      observables.push(...this.handleModifiedPositions());
-    }
-  }
-
-  private addDeletionOperations(observables: Observable<Position | void | ColumnSettings>[]): void {
-    const deleteObservables = this.handleDeletedPositions();
-    if (deleteObservables.length > 0) {
-      observables.push(...deleteObservables);
-    }
-  }
-
-  private addColumnSettingsOperation(observables: Observable<Position | void | ColumnSettings>[]): void {
-    observables.push(this.columnManagementService.saveColumnSettings());
-  }
-
-  private addPositionOrderOperation(observables: Observable<Position | void | ColumnSettings>[]): void {
-    const orderedPositions = this.orderedPositions();
-    if (orderedPositions.length > 0) {
-      observables.push(
-        this.positionOrderService.savePositionOrder(
-          orderedPositions.map(pos => pos.id)
-        )
-      );
-    }
-  }
-
   public saveAllChanges(): void {
-    const saveOperations = this.collectSaveOperations();
-    
-    if (saveOperations.length > 0) {
-      this.executeSaveOperations(saveOperations);
+    // 1. Erst neue Positionen speichern
+    if (this.hasNewPositions()) {
+        console.log('saveNewPositions');
+        this.saveNewPositions().subscribe({
+            next: () => {
+                console.log('Neue Positionen gespeichert, führe restliche Operationen aus');
+                this.saveRemainingOperations();
+            },
+            error: (error) => {
+                console.error('Fehler beim Speichern der neuen Positionen:', error);
+                this.errorHandlingService.showError('Fehler beim Speichern der neuen Positionen');
+            }
+        });
+    } else {
+        console.log('saveRemainingOperations');
+        this.saveRemainingOperations();
     }
+    // this.positions.set(this.editPositions());
+    // this.orderedPositions.set(this.editPositions());
+    this.fetchPositions();
+  }
+
+  private saveNewPositions(): Observable<void> {
+    return this.handleNewPositions().pipe(
+        tap(newPositions => {
+            // Update die temporären IDs mit den neuen DB-IDs
+            const editPositions = this.editPositions();
+            const updatedPositions = editPositions.map(pos => {
+                const newPosition = newPositions.find(p => p.oldId === pos.id);
+                return newPosition ? { ...pos, id: newPosition.id } : pos;
+            });
+            this.editPositions.set(updatedPositions);
+            
+            // Hier das neue Console.log
+            console.log('Positionen nach dem Speichern mit neuen IDs:', 
+                this.editPositions().map(pos => ({
+                    id: pos.id,
+                    number: pos.number,
+                    name: pos.name
+                }))
+            );
+        }),
+        map(() => void 0) // Konvertiere zu Observable<void>
+    );
+  }
+
+  private handleNewPositions(): Observable<{id: number, oldId: number}[]> {
+    const newPositions = this.editPositions().filter(pos => pos.id < 0);
+    if (newPositions.length === 0) return of([]);
+
+    return forkJoin(
+        newPositions.map(pos => 
+            this.http.post<Position>(`${this.apiUrl}`, pos).pipe(
+                tap(savedPos => {
+                    // Hier die Antwort vom Server loggen
+                    console.log('Server Antwort für neue Position:', {
+                        gesendet: pos,
+                        erhalten: savedPos
+                    });
+                }),
+                map(savedPos => ({
+                    id: savedPos.id,
+                    oldId: pos.id
+                }))
+            )
+        )
+    );
+  }
+
+  private hasNewPositions(): boolean {
+    return this.editPositions().some(pos => pos.id < 0);
+  }
+
+  private saveRemainingOperations(): void {
+    // Modifikationen
+    if (this.hasModifications()) {
+        this.handleModifiedPositions().forEach(observable => 
+            observable.subscribe({
+                error: (error) => this.errorHandlingService.showError('Fehler beim Aktualisieren der Positionen', error)
+            })
+        );
+    }
+
+    // Löschungen
+    this.handleDeletedPositions().forEach(observable => 
+        observable.subscribe({
+            error: (error) => this.errorHandlingService.showError('Fehler beim Löschen der Positionen', error)
+        })
+    );
+
+    // Spalteneinstellungen
+    this.columnManagementService.saveColumnSettings().subscribe({
+        error: (error) => this.errorHandlingService.showError('Fehler beim Speichern der Spalteneinstellungen', error)
+    });
+
+    // Positionsreihenfolge mit den aktualisierten IDs
+    const editPositions = this.editPositions();
+    console.log('Speichere Reihenfolge mit aktualisierten IDs:', editPositions.map(p => p.id));
+    this.positionOrderService.savePositionOrder(editPositions.map(pos => pos.id)).subscribe({
+        next: () => {
+            this.clearModifiedPositions();
+            this.errorHandlingService.showSuccess('Alle Änderungen erfolgreich gespeichert');
+        },
+        error: (error) => this.errorHandlingService.showError('Fehler beim Speichern der Reihenfolge', error)
+    });
   }
 
   private handleModifiedPositions(): Observable<Position | void>[] {
     const modifiedPositions = this.modifiedPositions();
     const observables: Observable<Position | void>[] = [];
     
-    const newPositions = modifiedPositions.filter(pos => pos.id < 0);
     const existingPositions = modifiedPositions.filter(pos => pos.id > 0);
-
-    if (newPositions.length > 0) {
-      observables.push(...newPositions.map(pos => this.createPosition(pos)));
-    }
 
     if (existingPositions.length > 0) {
       observables.push(this.updateExistingPositions(existingPositions));
@@ -252,52 +275,23 @@ export class PositionService {
     );
   }
 
-  private executeSaveOperations(observables: Observable<Position | void | ColumnSettings>[]): void {
-    forkJoin(observables).pipe(
-      tap(() => {
-        this.clearModifiedPositions();
-        // const currentOrderedPositions = this.orderedPositions().filter(pos => pos.id !== 0);
-        // this.orderedPositions.set(currentOrderedPositions);
-        this.errorHandlingService.showSuccess('Alle Änderungen erfolgreich gespeichert');
-      }),
-      catchError(error => {
-        console.error('Fehler beim Speichern:', error);
-        this.errorHandlingService.showError('Fehler beim Speichern der Änderungen');
-        throw error;
-      })
-    ).subscribe();
-  }
-
   public clearModifiedPositions(): void {
     this.modifiedPositions.set([]);
-    this.originalPositions.clear();
     this.positionsToDelete.set([]);
   }
 
   public handleTemporaryPosition(position: Position): void {
-    // position.id = 0;
-    
-    const currentPositions = this.positions();
-    this.positions.set([...currentPositions, position]);
-    
-    const currentModified = this.modifiedPositions();
-    this.modifiedPositions.set([...currentModified, position]);
-    
-    this.orderedPositions.set([...this.orderedPositions(), position]);
+    const currentEditPositions = this.editPositions();
+    this.editPositions.set([...currentEditPositions, position]);
 
+    const currentModifiedPositions = this.modifiedPositions();
+    this.modifiedPositions.set([...currentModifiedPositions, position]);
+
+    console.log(this.editPositions());
     this.columnManagementService.addPositionToLastColumn();
   }
 
   public cancelAllChanges(): void {
-    const currentPositions = this.positions().filter(pos => pos.id >= 0);
-    this.positions.set(currentPositions);
-    
-    const updatedPositions = currentPositions.map(pos => {
-      const original = this.originalPositions.get(pos.id);
-      return original || pos;
-    });
-    
-    this.positions.set(updatedPositions);
     this.clearModifiedPositions();
     
     this.columnManagementService.resetToOriginal();
@@ -308,10 +302,7 @@ export class PositionService {
   }
 
   public trackModification(position: Position): void {
-    if (!this.originalPositions.has(position.id)) {
-      this.originalPositions.set(position.id, { ...position });
-    }
-    
+   
     const currentModified = this.modifiedPositions();
     if (!currentModified.some(p => p.id === position.id)) {
       this.modifiedPositions.set([...currentModified, position]);
@@ -319,15 +310,17 @@ export class PositionService {
   }
 
   public markPositionsForDeletion(): void {
-    const selectedPositions = this.positions()
-        .filter(pos => pos.isSelected);
-    
-    // Entferne die ausgewählten Positionen aus orderedPositions
-    const currentOrderedPositions = this.orderedPositions()
-        .filter(pos => !selectedPositions.some(selected => selected.id === pos.id));
-    this.orderedPositions.set(currentOrderedPositions);
-    
-    // Markiere Positionen zum Löschen
+    const selectedPositions = this.editPositions().filter(pos => pos.isSelected);
+    const currentEditPositions = this.editPositions()
+      .filter(pos => !selectedPositions.some(selected => selected.id === pos.id));
+    this.editPositions.set(currentEditPositions);
+
     this.positionsToDelete.set(selectedPositions);
+  }
+
+  public refreshPositions(): void {
+    // Löst eine Neuberechnung aus, indem wir das Signal aktualisieren
+    const currentPositions = this.editPositions();
+    this.editPositions.set([...currentPositions]);
   }
 }

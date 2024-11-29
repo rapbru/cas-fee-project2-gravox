@@ -34,7 +34,7 @@ export class OverviewComponent implements OnDestroy, OnInit {
   public readonly enableMultiSelect = this.overviewStateService.enableMultiSelect;
 
   columns = computed(() => {
-    const positions = this.positionService.orderedPositions();
+    const positions = this.positionService.getPositions()();
     return this.columnManagementService.splitPositionsDynamically(positions);
   });
 
@@ -59,10 +59,12 @@ export class OverviewComponent implements OnDestroy, OnInit {
   // Spalten-Management
   public increaseColumns() {
     this.columnManagementService.increaseColumns();
+    this.positionService.refreshPositions();
   }
 
   public decreaseColumns() {
     this.columnManagementService.decreaseColumns();
+    this.positionService.refreshPositions();
   }
 
   // Änderungen speichern/verwerfen
@@ -118,7 +120,6 @@ export class OverviewComponent implements OnDestroy, OnInit {
   }
 
   public deletePositions() {
-    this.overviewStateService.toggleMultiSelect();
     this.positionService.markPositionsForDeletion();
   }
 }
