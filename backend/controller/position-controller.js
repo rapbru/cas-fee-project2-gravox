@@ -50,7 +50,6 @@ export class PositionController {
         console.log(req.body);
         try {
             const { updates } = req.body;
-            console.log(updates);
             await this.positionService.updatePositions(updates);
             return res.status(200).json({ message: 'Positions updated successfully' });
         } catch (error) {
@@ -58,11 +57,11 @@ export class PositionController {
         }
     };
 
-    deletePosition = async (req, res) => {
+    deletePositions = async (req, res) => {
         try {
-            const positionId = req.params.id;
-            await this.positionService.deletePosition(positionId);
-            return res.status(200).json({ message: 'Position erfolgreich gelöscht' });
+            const { positionIds } = req.body;
+            await this.positionService.deletePositions(positionIds);
+            return res.status(200).json({ message: 'Positionen erfolgreich gelöscht' });
         } catch (error) {
             return res.status(500).json({ error: error.message });
         }

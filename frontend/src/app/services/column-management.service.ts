@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { ErrorHandlingService } from './error-handling.service';
 import { Observable, of } from 'rxjs';
 import { tap, catchError, map } from 'rxjs/operators';
+import { PositionIndex } from '../models/position-index.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class ColumnManagementService {
   private positionsPerColumn: number[] = [];
   private originalSettings: ColumnSettings | null = null;
   private columnDistribution: number[] = [];
+  private positionIndices: PositionIndex[] = [];
 
   constructor(
     private http: HttpClient,
@@ -83,16 +85,31 @@ export class ColumnManagementService {
   }
 
   public splitPositionsDynamically(positions: Position[]): Position[][] {
-    const startIndices = this.positionsPerColumn
-        .slice(0, Math.min(this.columnCount, this.maxColumnCount))
-        .reduce((acc, _, index) => {
-            const prevSum = index === 0 ? 0 : acc[index - 1] + this.positionsPerColumn[index - 1];
-            return [...acc, prevSum];
-        }, [] as number[]);
-    console.log('startIndices', startIndices);
-    return startIndices.map((startIndex, index) => 
-        positions.slice(startIndex, startIndex + this.positionsPerColumn[index])
-    );
+    const columns: Position[][] = Array.from({ length: this.columnCount }, () => []);
+    let currentColumn = 0;
+    
+    // Reset position indices
+    this.positionIndices = [];
+    
+    positions.forEach((position) => {
+      if (currentColumn >= this.columnCount) {
+        currentColumn = 0;
+      }
+      
+      // Speichere die Position-Index-Information
+      this.positionIndices.push({
+        positionNumber: position.number,
+        columnIndex: currentColumn,
+        indexInColumn: columns[currentColumn].length
+      });
+      
+      columns[currentColumn].push(position);
+      
+      if (columns[currentColumn].length >= this.positionsPerColumn[currentColumn]) {
+        currentColumn++;
+      }
+    });
+    return columns;
   }
 
   private updateColumnDistribution(): void {   
@@ -151,6 +168,12 @@ export class ColumnManagementService {
       this.positionsPerColumn[columnIndex] += change;
       this.updateColumnDistribution();
     }
+
+    console.log('Column Settings updated:', {
+        columnCount: this.columnCount,
+        positionsPerColumn: [...this.positionsPerColumn],
+        columnDistribution: [...this.columnDistribution]
+      });
   }
 
   public removeColumn(columnIndex: number): void {
@@ -175,5 +198,13 @@ export class ColumnManagementService {
     this.saveOriginalSettings();
     this.positionsPerColumn[this.positionsPerColumn.length - 1]++;
     this.updateColumnDistribution();
+  }
+
+  public getPositionIndex(positionNumber: number): PositionIndex | undefined {
+    return this.positionIndices.find(index => index.positionNumber === positionNumber);
+  }
+
+  public getAllPositionIndices(): PositionIndex[] {
+    return [...this.positionIndices];
   }
 } 

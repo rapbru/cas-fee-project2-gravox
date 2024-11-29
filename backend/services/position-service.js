@@ -133,73 +133,61 @@ class PositionService {
         try {
             await pool.query('BEGIN');
 
-            await Promise.all(
-                updates.map((update) => {
-                    const query = `
-                        UPDATE position 
-                        SET position_number = $1,
-                            position_name = $2,
-                            has_temperature = $3,
-                            has_current = $4,
-                            has_voltage = $5
-                        WHERE id = $6
-                    `;
-                    const values = [
-                        update.updates.number,
-                        update.updates.name,
-                        update.updates.temperature.isPresent,
-                        update.updates.current.isPresent,
-                        update.updates.voltage.isPresent,
-                        update.id
-                    ];
-                    return pool.query(query, values); 
-                })
-            );
+            const query = `
+                UPDATE position 
+                SET position_number = $1,
+                    position_name = $2,
+                    has_temperature = $3,
+                    has_current = $4,
+                    has_voltage = $5
+                WHERE id = $6
+                RETURNING *`;
 
-            this.positions = this.positions.map(pos => {
-                const update = updates.find(u => u.id === pos.id);
-                if (update) {
-                    return {
-                        ...pos,
-                        position_number: update.updates.number,
-                        position_name: update.updates.name,
-                        has_temperature: update.updates.temperature.isPresent,
-                        has_current: update.updates.current.isPresent,
-                        has_voltage: update.updates.voltage.isPresent
-                    };
-                }
-                return pos;
-            });
+            await updates.reduce(async (promise, update) => {
+                await promise;
+                return pool.query(query, [
+                    update.updates.number,
+                    update.updates.name,
+                    update.updates.temperature.isPresent,
+                    update.updates.current.isPresent,
+                    update.updates.voltage.isPresent,
+                    update.id
+                ]);
+            }, Promise.resolve());
 
             await pool.query('COMMIT');
             await this.readPositions();
+            
             return true;
         } catch (error) {
             await pool.query('ROLLBACK');
-            throw new Error('Failed to update positions: ', error);
+            console.error('Failed to update positions:', error);
+            throw error;
         }
     }
 
-    async deletePosition(positionId) {
+    async deletePositions(positionIds) {
         const client = await pool.connect();
         try {
             await client.query('BEGIN');
 
-            const getQuery = 'SELECT position_number FROM position WHERE id = $1';
-            const posResult = await client.query(getQuery, [positionId]);
+            // Hole alle Positionsnummern für die zu löschenden IDs
+            const getQuery = 'SELECT position_number FROM position WHERE id = ANY($1)';
+            const posResult = await client.query(getQuery, [positionIds]);
             
-            if (posResult.rows.length === 0) {
-                throw new Error('Position nicht gefunden');
-            }
+            const positionNumbers = posResult.rows.map(row => row.position_number);
 
-            const positionNumber = posResult.rows[0].position_number;
-            const deleteQuery = 'DELETE FROM position WHERE id = $1';
-            await client.query(deleteQuery, [positionId]);
-            
+            // Lösche alle Positionen in einer Query
+            const deleteQuery = 'DELETE FROM position WHERE id = ANY($1)';
+            await client.query(deleteQuery, [positionIds]);
+
             await client.query('COMMIT');
 
+            // Unsubscribe von allen gelöschten Positionen
             if (this.plcService) {
-                await this.plcService.unsubscribeFromPosition(positionNumber);
+                await Promise.all(positionNumbers.map(number => 
+                    this.plcService.unsubscribeFromPosition(number)
+                ));
             }
 
             await this.readPositions();

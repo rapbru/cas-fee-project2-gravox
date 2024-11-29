@@ -8,6 +8,6 @@ router.get("/", positionController.getAllPositions);
 router.get("/:id", positionController.getPositionById);
 router.post("/", positionController.createPosition);
 router.patch("/", positionController.updatePositions);
-router.delete("/:id", positionController.deletePosition);
+router.delete("/", positionController.deletePositions);
 
 export default positionRoutes;
