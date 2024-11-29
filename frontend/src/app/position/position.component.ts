@@ -38,22 +38,13 @@ export class PositionComponent {
   updatePositionInfo(event: Event, field: string) {
     const inputElement = event.target as HTMLInputElement;
     const newValue = inputElement.value;
-    
+
     switch (field) {
       case 'name':
         this.position.name = newValue;
         break;
       case 'number':
         this.position.number = parseInt(newValue, 10);
-        break;
-      case 'temperature.preset':
-        this.position.temperature.preset = parseFloat(newValue);
-        break;
-      case 'current.preset':
-        this.position.current.preset = parseFloat(newValue);
-        break;
-      case 'voltage.preset':
-        this.position.voltage.preset = parseFloat(newValue);
         break;
     }
     
