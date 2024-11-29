@@ -19,8 +19,8 @@
                             {{ isSelected ? 'check_circle' : 'radio_button_unchecked' }}
                         </mat-icon>
                     </button>
-                    <input class="position-number-input" type="text" [value]="position.number" (input)="updatePositionInfo($event, '.number')" />
-                    <input class="position-name-input" type="text" [value]="position.name" (input)="updatePositionInfo($event, '.name')" /> 
+                    <input class="position-number-input" type="text" [value]="position.number" (input)="updatePositionInfo($event, 'number')" />
+                    <input class="position-name-input" type="text" [value]="position.name" (input)="updatePositionInfo($event, 'name')" /> 
                 </ng-template>
             </ng-template>
         </div>
