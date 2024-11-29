@@ -34,6 +34,7 @@ export class PositionController {
     };
 
     createPosition = async (req, res) => {
+        console.log('createPosition');
         console.log(req.body);
         try {
             const positionData = req.body;

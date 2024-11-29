@@ -34,5 +34,4 @@ export class OverviewStateService {
     this.enableMultiSelect.set(false); 
     this.enableEdit.set(false);
   }
-
 }

@@ -45,21 +45,19 @@ export class PositionDragDropService {
       return acc.concat(column);
     }, [] as Position[]);
 
+    console.log('newOrderedPositions', newOrderedPositions);
     // Aktualisiere die Spalteninformationen nur wenn zwischen Spalten verschoben wurde
     if (movedBetween) {
+      console.log('movedBetween', movedBetween, columnIndex, prevColumnIndex);
       if (columnIndex !== prevColumnIndex) {
         this.columnManagementService.updatePositionsPerColumn(prevColumnIndex, -1);
         this.columnManagementService.updatePositionsPerColumn(columnIndex, 1);
       }
-      // Prüfe ob die vorherige Spalte leer ist und entfernt werden soll
-      if (columns[prevColumnIndex].length <= 0) {
-        this.columnManagementService.removeColumn(prevColumnIndex);
-      }
     }
 
     // Aktualisiere die geordneten Positionen im PositionService
-    this.positionService.orderedPositions.set(newOrderedPositions);
-    console.log(this.positionService.orderedPositions());
+    this.positionService.editPositions.set(newOrderedPositions);
+    console.log('handleDrop', this.positionService.editPositions());
   }
 } 
 
