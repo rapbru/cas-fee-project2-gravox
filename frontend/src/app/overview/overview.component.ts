@@ -86,9 +86,9 @@ export class OverviewComponent implements OnDestroy, OnInit {
       number: 0,
       name: '',
       time: { actual: 0, preset: 0 },
-      temperature: { actual: 0, preset: 0, isPresent: true },
-      current: { actual: 0, preset: 0, isPresent: true },
-      voltage: { actual: 0, preset: 0, isPresent: true }
+      temperature: { actual: 0, preset: 0, isPresent: false },
+      current: { actual: 0, preset: 0, isPresent: false },
+      voltage: { actual: 0, preset: 0, isPresent: false }
     };
   }
 

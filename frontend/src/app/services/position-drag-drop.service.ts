@@ -14,7 +14,6 @@ export class PositionDragDropService {
   ) {}
 
   handleDrop(event: CdkDragDrop<Position[]>, columns: Position[][], columnIndex: number) {
-    console.log(event);
     let movedBetween = false;
     const prevColumnIndex = columns.findIndex(col => col === event.previousContainer.data);
 
@@ -48,7 +47,6 @@ export class PositionDragDropService {
     console.log('newOrderedPositions', newOrderedPositions);
     // Aktualisiere die Spalteninformationen nur wenn zwischen Spalten verschoben wurde
     if (movedBetween) {
-      console.log('movedBetween', movedBetween, columnIndex, prevColumnIndex);
       if (columnIndex !== prevColumnIndex) {
         this.columnManagementService.updatePositionsPerColumn(prevColumnIndex, -1);
         this.columnManagementService.updatePositionsPerColumn(columnIndex, 1);
@@ -57,7 +55,6 @@ export class PositionDragDropService {
 
     // Aktualisiere die geordneten Positionen im PositionService
     this.positionService.editPositions.set(newOrderedPositions);
-    console.log('handleDrop', this.positionService.editPositions());
   }
 } 
 

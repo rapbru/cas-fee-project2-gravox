@@ -71,8 +71,7 @@ export class PositionService {
 
   public startEditing(): void {
     this.editPositions.set([...this.orderedPositions()]);
-    console.log('startEditing');
-    console.log(this.editPositions());
+    this.columnManagementService.saveOriginalSettings();
   }
 
   public cancelEditing(): void {
@@ -209,11 +208,9 @@ export class PositionService {
     }
 
     // Löschungen
-    this.handleDeletedPositions().forEach(observable => 
-        observable.subscribe({
-            error: (error) => this.errorHandlingService.showError('Fehler beim Löschen der Positionen', error)
-        })
-    );
+    this.handleDeletedPositions().subscribe({
+      error: (error) => this.errorHandlingService.showError('Fehler beim Löschen der Positionen', error)
+    });
 
     // Spalteneinstellungen
     this.columnManagementService.saveColumnSettings().subscribe({
@@ -233,9 +230,11 @@ export class PositionService {
   }
 
   private handleModifiedPositions(): Observable<Position | void>[] {
-    const modifiedPositions = this.modifiedPositions();
-    const observables: Observable<Position | void>[] = [];
+    const modifiedPositions = this.modifiedPositions()
+        .filter(pos => !this.positionsToDelete().some(delPos => delPos.id === pos.id));
     
+    const observables: Observable<Position | void>[] = [];
+    console.log('modifiedPositions', modifiedPositions);
     const existingPositions = modifiedPositions.filter(pos => pos.id > 0);
 
     if (existingPositions.length > 0) {
@@ -260,18 +259,18 @@ export class PositionService {
     });
   }
 
-  private handleDeletedPositions(): Observable<void>[] {
+  private handleDeletedPositions(): Observable<void> {
     const positionsToDelete = this.positionsToDelete();
-    if (positionsToDelete.length === 0) return [];
+    if (positionsToDelete.length === 0) return of(void 0);
     
-    return positionsToDelete.map(pos => 
-        this.http.delete<void>(`${this.apiUrl}${pos.id}`).pipe(
-            tap(() => {
-                const currentPositions = this.positions()
-                    .filter(p => p.id !== pos.id);
-                this.positions.set(currentPositions);
-            })
-        )
+    return this.http.delete<void>(this.apiUrl, {
+        body: { positionIds: positionsToDelete.map(pos => pos.id) }
+    }).pipe(
+        tap(() => {
+            const currentPositions = this.positions()
+                .filter(p => !positionsToDelete.some(del => del.id === p.id));
+            this.positions.set(currentPositions);
+        })
     );
   }
 
@@ -313,8 +312,14 @@ export class PositionService {
     const selectedPositions = this.editPositions().filter(pos => pos.isSelected);
     const currentEditPositions = this.editPositions()
       .filter(pos => !selectedPositions.some(selected => selected.id === pos.id));
-    this.editPositions.set(currentEditPositions);
+    selectedPositions.forEach(pos => {
+      const positionIndex = this.columnManagementService.getPositionIndex(pos.number);
+      if (positionIndex) {
+        this.columnManagementService.updatePositionsPerColumn(positionIndex.columnIndex, -1);
+      }
+    });
 
+    this.editPositions.set(currentEditPositions);
     this.positionsToDelete.set(selectedPositions);
   }
 
