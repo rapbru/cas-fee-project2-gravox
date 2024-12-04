@@ -160,12 +160,21 @@ input {
 //  flex: 1 1 auto;
 //}
 
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  max-width: 400px;
+}
+
 .icon-button {
-  //width: auto;
-  padding: 0 8px;
+  display: flex;
+  align-items: center;
   border-radius: 12px;
-  background-color: var(--primary);
+  border-style: none;
+  background-color: var(--color-main);
   color: var(--text);
+  padding: 0.4em 0.8em 0.4em 0.4em;
+  gap: 0.4em;
 }
 
 
