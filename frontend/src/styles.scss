@@ -155,6 +155,21 @@ input {
 
 
 
+//
+//.spacer {
+//  flex: 1 1 auto;
+//}
+
+.icon-button {
+  //width: auto;
+  padding: 0 8px;
+  border-radius: 12px;
+  background-color: var(--primary);
+  color: var(--text);
+}
+
+
+
 
 .custom-button {
   display: inline-flex;
