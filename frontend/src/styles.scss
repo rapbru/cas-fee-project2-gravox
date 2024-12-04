@@ -1,33 +1,33 @@
-@use '@angular/material' as mat;
-
-@include mat.core();
-
-$light-theme: mat.define-theme((
-  color: (
-    theme-type: light,
-    //primary: mat.$orange-palette,
-  ),
-  density: (
-    scale: -2
-  ),
-));
-
-$dark-theme: mat.define-theme((
-  color: (
-    theme-type: dark,
-    //primary: mat.$violet-palette,
-  ),
-  density: (
-    scale: -2
-  ),
-));
-
-html {
-  @include mat.all-component-themes($light-theme);
-  @media (prefers-color-scheme: dark) {
-    @include mat.all-component-themes($dark-theme);
-  }
-}
+//@use '@angular/material' as mat;
+//
+//@include mat.core();
+//
+//$light-theme: mat.define-theme((
+//  color: (
+//    theme-type: light,
+//    //primary: mat.$orange-palette,
+//  ),
+//  density: (
+//    scale: -2
+//  ),
+//));
+//
+//$dark-theme: mat.define-theme((
+//  color: (
+//    theme-type: dark,
+//    //primary: mat.$violet-palette,
+//  ),
+//  density: (
+//    scale: -2
+//  ),
+//));
+//
+//html {
+//  @include mat.all-component-themes($light-theme);
+//  @media (prefers-color-scheme: dark) {
+//    @include mat.all-component-themes($dark-theme);
+//  }
+//}
 
 // html, body { height: 100%; } //this is bad, really bad. i mean really really really bad. don't do this. it's bad. really bad. don't do it. it's bad
 body { margin: 0; font-family: 'Inter', 'Roboto', sans-serif; height: 100%; width: 100%; }
