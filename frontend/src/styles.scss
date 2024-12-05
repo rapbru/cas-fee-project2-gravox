@@ -47,7 +47,7 @@ html {
   --color-green: #207F35;
   --color-red: #D20015;
   --color-highlight: #FF6228;
-  --color-highlight-sub: #ff8758;
+  --color-highlight-sub: #FF7442;
   --color-highlight-sub-2: #FFA786;
   --color-highlight-text: #FFFFFF;
 
@@ -91,7 +91,6 @@ html {
     --button-active-color: #272729;
     --button-border-color: #3F3F41;
     --button-text-color: #E1E1E7;
-    --button-active-text-color: #E1E1E7;
   }
 }
 
@@ -175,14 +174,20 @@ input {
   border-style: none;
   background-color: var(--color-sub-2);
   color: var(--color-text);
-  padding: 0.4em 0.8em 0.4em 0.4em;
+  padding: 0.4em 1.2em 0.4em 0.6em;
   gap: 0.4em;
-  font-variation-settings: "wght" 240;
+  font-variation-settings: "wght" 320;
 }
 
-.highlight {
+.button-highlight-main {
   background-color: var(--color-highlight-sub);
   color: var(--color-highlight-text);
+  font-variation-settings: "wght" 400;
+  font-weight: 600;
+}
+
+.button-highlight-sub {
+  color: var(--color-highlight-sub);
 }
 
 
