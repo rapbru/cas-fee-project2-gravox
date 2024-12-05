@@ -170,7 +170,7 @@ input {
 .button-icon {
   display: flex;
   align-items: center;
-  border-radius: 12px;
+  border-radius: (12px);
   border-style: none;
   background-color: var(--color-sub-2);
   color: var(--color-text);
@@ -189,6 +189,28 @@ input {
 .button-highlight-sub {
   color: var(--color-highlight-sub);
 }
+
+.button-icon:hover {
+  filter: brightness(102%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button-icon:focus {
+  filter: brightness(108%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button-icon:active {
+  filter: brightness(94%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button-icon:disabled {
+  color: var(--color-sub-1);
+}
+
+
+
 
 
 .custom-button {
