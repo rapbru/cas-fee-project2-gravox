@@ -167,14 +167,22 @@ input {
   max-width: 400px;
 }
 
-.button-icon {
+.button {
   display: flex;
   align-items: center;
   border-radius: var(--button-border-radius);
   border-style: none;
   background-color: var(--color-sub-2);
   color: var(--color-text);
-  padding: 0.4em 1.2em 0.4em 0.6em;
+  padding: 0.4em 0.6em;
+  gap: 0.4em;
+  font-variation-settings: "wght" 320;
+}
+
+.button-label {
+  display: flex;
+  align-items: center;
+  padding-right: 1.2em;
   gap: 0.4em;
   font-variation-settings: "wght" 320;
 }
@@ -190,22 +198,22 @@ input {
   color: var(--color-highlight-sub);
 }
 
-.button-icon:hover {
+.button:hover {
   filter: brightness(102%);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.button-icon:focus {
+.button:focus {
   filter: brightness(108%);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.button-icon:active {
+.button:active {
   filter: brightness(94%);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.button-icon:disabled {
+.button:disabled {
   color: var(--color-sub-1);
 }
 
