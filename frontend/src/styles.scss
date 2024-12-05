@@ -59,7 +59,7 @@ html {
   --button-padding: 0.4em;
   --button-gap: 0.4em;
   --button-margin: 0.4em 0em;
-  --button-border-radius: 4em;
+  --button-border-radius: 12px;
   //--button-border-thickness: 2px;
   --button-transform: scale(0.99);
 
@@ -170,7 +170,7 @@ input {
 .button-icon {
   display: flex;
   align-items: center;
-  border-radius: (12px);
+  border-radius: var(--button-border-radius);
   border-style: none;
   background-color: var(--color-sub-2);
   color: var(--color-text);
