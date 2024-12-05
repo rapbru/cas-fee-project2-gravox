@@ -42,14 +42,14 @@ html {
   --color-text: black;
   --color-background: #F0F0F6;
   --color-main: #FFFFFF;
-  --color-sub-1: #A4A4A8;
-  --color-sub-2: #BFBFC5;
-  --color-sub-3: #E1E1E7;
+  --color-sub-1: #BFBFC5;
+  --color-sub-2: #E1E1E7;
   --color-green: #207F35;
   --color-red: #D20015;
-  --color-vonesco: #FF6228;
-  --color-vonesco-sub: #FF7442;
-  --color-vonesco-sub-2: #FFA786;
+  --color-highlight: #FF6228;
+  --color-highlight-sub: #ff8758;
+  --color-highlight-sub-2: #FFA786;
+  --color-highlight-text: #FFFFFF;
 
   --button-hover-color: #BFBFC5;
   --button-active-color: #717175;
@@ -83,6 +83,8 @@ html {
     --color-sub-2: #3F3F41;
     --color-green: #2ACB4E;
     --color-red: #D20015;
+    --color-highlight-text: #171719;
+
 
     --button-bg-color: #3F3F41;
     --button-hover-color: #717175;
@@ -166,18 +168,22 @@ input {
   max-width: 400px;
 }
 
-.icon-button {
+.button-icon {
   display: flex;
   align-items: center;
   border-radius: 12px;
   border-style: none;
-  background-color: var(--color-main);
-  color: var(--text);
+  background-color: var(--color-sub-2);
+  color: var(--color-text);
   padding: 0.4em 0.8em 0.4em 0.4em;
   gap: 0.4em;
+  font-variation-settings: "wght" 240;
 }
 
-
+.highlight {
+  background-color: var(--color-highlight-sub);
+  color: var(--color-highlight-text);
+}
 
 
 .custom-button {
