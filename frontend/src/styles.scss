@@ -156,6 +156,10 @@ input {
 
 
 
+
+
+
+
 //
 //.spacer {
 //  flex: 1 1 auto;
@@ -172,7 +176,7 @@ input {
   align-items: center;
   border-radius: var(--button-border-radius);
   border-style: none;
-  background-color: var(--color-sub-2);
+  background-color: var(--color-main);
   color: var(--color-text);
   padding: 0.4em 0.6em;
   gap: 0.4em;
@@ -189,7 +193,7 @@ input {
 
 .button-highlight-main {
   background-color: var(--color-highlight-sub);
-  color: var(--color-highlight-text);
+  color: #FFFFFF;
   font-variation-settings: "wght" 400;
   font-weight: 600;
 }
@@ -199,12 +203,12 @@ input {
 }
 
 .button:hover {
-  filter: brightness(102%);
+  filter: brightness(103%);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .button:focus {
-  filter: brightness(108%);
+  filter: brightness(110%);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -216,6 +220,18 @@ input {
 .button:disabled {
   color: var(--color-sub-1);
 }
+
+.scrollable-content {
+  width: 100%;
+  max-height: 800px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: var(--button-border-radius);
+  padding: 1em;
+}
+
+
+
 
 
 
