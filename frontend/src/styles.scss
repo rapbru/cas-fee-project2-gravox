@@ -231,7 +231,17 @@ input {
 }
 
 
+.input-field {
+  //display: flex;
+  //align-items: center;
+  //justify-content: space-between;
+  //margin-bottom: 0.5em;
+}
 
+.input-field-header{
+  display: flex;
+  align-items: baseline;
+}
 
 .input-field-label {
   font-size: var(--font-size);
@@ -241,6 +251,8 @@ input {
 }
 
 .input-field-value {
+  //display: flex;
+  //flex-direction: column;
   width: 100%;
   padding: 0.56em 1.2em;
   font-family: inherit;
