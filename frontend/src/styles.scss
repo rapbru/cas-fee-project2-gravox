@@ -233,6 +233,10 @@ input {
   padding: 1em;
 }
 
+.input-field {
+}
+
+
 .input-field-label {
   font-size: var(--font-size);
   color: var(--color-text);
@@ -240,7 +244,7 @@ input {
   display: block;
 }
 
-.input-field {
+.input-field-value {
   width: 100%;
   padding: 0.56em 1.2em;
   font-family: inherit;
@@ -251,6 +255,36 @@ input {
   background-color: var(--color-main);
   color: var(--color-text);
 }
+
+//.input-field-clear {
+//  position: absolute;
+//  right: 10px;
+//  background: transparent;
+//  border: none;
+//  font-size: 1.2rem;
+//  color: #ccc;
+//  padding: 0;
+//}
+//
+//.input-field-clear:hover {
+//  filter: brightness(103%);
+//  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+//}
+//
+//.input-field-clear:focus {
+//  filter: brightness(110%);
+//  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+//}
+//
+//.input-field-clear:active {
+//  filter: brightness(94%);
+//  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+//}
+
+
+
+
+
 
 .input-field::placeholder {
   color: var(--color-sub-1);
