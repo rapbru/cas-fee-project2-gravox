@@ -33,14 +33,21 @@
 
 <div class="scrollable-content" aria-label="Scrollbarer Inhalt" i18n-aria-label="@@ScrollableContent">
 
-  <label for="InputFieldNameArticle" class="input-field-label" aria-label="Eingabefeld Bezeichnung Artikel" i18n-aria-label="@@InputFieldNameArticle">Bezeichnung:</label>
-  <input type="text" id="InputFieldNameArticle" class="input-field" placeholder="Artikelbezeichnung" />
+    <label for="InputFieldNameArticle" class="input-field-label" i18n="@@Input-field-label-name">Bezeichnung</label>
+    <div class="input-field">
+      <input [(ngModel)]="inputValue" id="InputFieldNameArticle" class="input-field-value" placeholder="max. 20 Zeichen" maxlength="20" i18n="@@Input-field-placeholder-name" aria-label="Bezeichnung Artikel max. 20 Zeichen" i18n-aria-label="@@InputFieldNameArticle">
+    </div>
 
-  <div class="input-wrapper">
-    <label for="InputFieldNameArticle" class="input-field-label">Bezeichnung</label>
-    <input [(ngModel)]="inputValue" class="input-field" placeholder="Artikelbezeichnung" aria-label="Eingabefeld Bezeichnung Artikel" i18n-aria-label="@@InputFieldNameArticle">
-    <button class="clear-btn" type="button" (click)="clearInput()">×</button>
+
+
+  <label for="InputFieldNameArticle" class="input-field-label">Bezeichnung</label>
+  <div class="input-field">
+    <input [(ngModel)]="inputValue" id="InputFieldNameArticle2" class="input-field-value" placeholder="max. 20 Zeichen" aria-label="Bezeichnung Artikel max. 20 Zeichen" i18n-aria-label="@@InputFieldNameArticle">
+    <!--      <button class="input-field-clear" type="button" (click)="clearInput()"><mat-icon>close</mat-icon></button>-->
   </div>
+
+
+
 
 </div>
 
