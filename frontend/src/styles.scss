@@ -40,15 +40,16 @@ html {
 :root {
   --font-size: 14px;
   --color-text: black;
+  --color-inverted: white;
   --color-background: #F0F0F6;
   --color-main: #FFFFFF;
   --color-sub-1: #BFBFC5;
   --color-sub-2: #E1E1E7;
   --color-green: #207F35;
   --color-red: #D20015;
-  --color-highlight: #FF6228;
-  --color-highlight-sub: #FF7442;
-  --color-highlight-sub-2: #FFA786;
+  --color-vonesco: #FF6228;
+  --color-vonesco-sub: #FF7442;
+  --color-vonesco-sub-2: #FFA786;
   --color-highlight-text: #FFFFFF;
 
   --button-hover-color: #BFBFC5;
@@ -77,6 +78,7 @@ html {
 @media (prefers-color-scheme: dark) {
   :root {
     --color-text: #E1E1E7;
+    --color-inverted: black;
     --color-background: #171719;
     --color-main: #272729;
     --color-sub-1: #717175;
@@ -192,14 +194,14 @@ input {
 }
 
 .button-highlight-main {
-  background-color: var(--color-highlight-sub);
-  color: #FFFFFF;
+  background-color: var(--color-vonesco-sub);
+  color: var(--color-inverted);
   font-variation-settings: "wght" 400;
   font-weight: 600;
 }
 
 .button-highlight-sub {
-  color: var(--color-highlight-sub);
+  color: var(--color-vonesco-sub);
 }
 
 .button:hover {
@@ -223,13 +225,31 @@ input {
 
 .scrollable-content {
   width: 100%;
-  max-height: 800px;
+  max-height: 200px;
   overflow-y: auto;
   overflow-x: hidden;
   border-radius: var(--button-border-radius);
   padding: 1em;
 }
 
+.input-field-label {
+  font-size: var(--font-size);
+  color: var(--color-text);
+  margin: 0em 0em 0.6em 1.24em;
+  display: block;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.56em 1.2em;
+  font-family: inherit;
+  font-size: var(--font-size);
+  box-sizing: border-box;
+  border: 1px solid var(--color-main);
+  border-radius: var(--button-border-radius);
+  background-color: var(--color-main);
+  color: var(--color-text);
+}
 
 
 
