@@ -36,7 +36,13 @@
     <label for="InputFieldNameArticle" class="input-field-label" i18n="@@Input-field-label-name">Bezeichnung</label>
     <div class="input-field">
       <input [(ngModel)]="inputValue" id="InputFieldNameArticle" class="input-field-value" placeholder="max. 20 Zeichen" maxlength="20" i18n="@@Input-field-placeholder-name" aria-label="Bezeichnung Artikel max. 20 Zeichen" i18n-aria-label="@@InputFieldNameArticle">
+      <div
+        class="input-field-counter"
+        [class.input-field-counter-limit]="(inputValue?.length || 0) >= 20">
+        {{ inputValue?.length || 0 }} / 20 Zeichen
+      </div>
     </div>
+
 
 
 
