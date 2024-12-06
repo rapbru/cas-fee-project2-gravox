@@ -33,14 +33,22 @@
 
 <div class="scrollable-content" aria-label="Scrollbarer Inhalt" i18n-aria-label="@@ScrollableContent">
 
-    <label for="InputFieldNameArticle" class="input-field-label" i18n="@@Input-field-label-name">Bezeichnung</label>
-    <div class="input-field">
-      <input [(ngModel)]="inputValue" id="InputFieldNameArticle" class="input-field-value" placeholder="max. 20 Zeichen" maxlength="20" i18n="@@Input-field-placeholder-name" aria-label="Bezeichnung Artikel max. 20 Zeichen" i18n-aria-label="@@InputFieldNameArticle">
-      <div
-        class="input-field-counter"
-        [class.input-field-counter-limit]="(inputValue?.length || 0) >= 20">
-        {{ inputValue?.length || 0 }} / 20 Zeichen
-      </div>
+
+
+  <div class="input-field">
+
+    <div class="input-field-header">
+  <label for="InputFieldNameArticle" class="input-field-label" i18n="@@Input-field-label-name">Bezeichnung</label>
+  <div
+    class="input-field-counter" i18n="@@Input-field-counter"
+    [class.input-field-counter-limit]="(inputValue?.length || 0) >= 20">
+    {{ inputValue?.length || 0 }} / 20 Zeichen
+  </div>
+    </div>
+
+      <input [(ngModel)]="inputValue" id="InputFieldNameArticle" class="input-field-value"
+             placeholder="max. 20 Zeichen" maxlength="20" i18n="@@Input-field-placeholder-name"
+             aria-label="Bezeichnung Artikel max. 20 Zeichen" i18n-aria-label="@@InputFieldNameArticle">
     </div>
 
 
@@ -51,8 +59,6 @@
     <input [(ngModel)]="inputValue" id="InputFieldNameArticle2" class="input-field-value" placeholder="max. 20 Zeichen" aria-label="Bezeichnung Artikel max. 20 Zeichen" i18n-aria-label="@@InputFieldNameArticle">
     <!--      <button class="input-field-clear" type="button" (click)="clearInput()"><mat-icon>close</mat-icon></button>-->
   </div>
-
-
 
 
 </div>
