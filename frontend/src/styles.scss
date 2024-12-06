@@ -220,6 +220,7 @@ input {
 }
 
 .button:disabled {
+  cursor: not-allowed;
   color: var(--color-sub-1);
 }
 
@@ -235,7 +236,7 @@ input {
 .input-field-label {
   font-size: var(--font-size);
   color: var(--color-text);
-  margin: 0em 0em 0.6em 1.24em;
+  margin: 0 0 0.6em 1.24em;
   display: block;
 }
 
@@ -251,6 +252,18 @@ input {
   color: var(--color-text);
 }
 
+.input-field::placeholder {
+  color: var(--color-sub-1);
+}
+
+.input-field:focus {
+  filter: brightness(110%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.input-field:disabled {
+  cursor: not-allowed;
+}
 
 
 
