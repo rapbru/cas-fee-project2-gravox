@@ -206,17 +206,14 @@ input {
 
 .button:hover {
   filter: brightness(103%);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .button:focus {
   filter: brightness(110%);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .button:active {
   filter: brightness(94%);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .button:disabled {
@@ -233,8 +230,7 @@ input {
   padding: 1em;
 }
 
-.input-field {
-}
+
 
 
 .input-field-label {
@@ -254,6 +250,34 @@ input {
   border-radius: var(--button-border-radius);
   background-color: var(--color-main);
   color: var(--color-text);
+}
+
+.input-field-value::placeholder {
+  color: var(--color-sub-1);
+}
+
+.input-field-value:hover {
+  filter: brightness(110%);
+}
+
+.input-field-value:focus {
+  filter: brightness(110%);
+}
+
+.input-field-value:disabled {
+  cursor: not-allowed;
+}
+
+
+
+.input-field-counter {
+  font-size: 0.875rem;
+  color: #666;
+  margin-top: 0.2em;
+}
+
+.input-field-counter-limit {
+  color: red;
 }
 
 //.input-field-clear {
@@ -286,18 +310,6 @@ input {
 
 
 
-.input-field::placeholder {
-  color: var(--color-sub-1);
-}
-
-.input-field:focus {
-  filter: brightness(110%);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.input-field:disabled {
-  cursor: not-allowed;
-}
 
 
 
