@@ -19,12 +19,13 @@ import {CommonModule} from "@angular/common";
   styleUrl: './add-article.component.scss'
 })
 export class AddArticleComponent {
-  inputValue = '';
+  inputValueNameArticle = '';
   isFocused = false;
   flashCounter = false;
 
   onInputChange() {
-    if ((this.inputValue?.length || 0) === 20) {
+    const inputLength = this.inputValueNameArticle?.length || 0;
+    if (inputLength >= 20) {
       this.flashCounter = true;
       setTimeout(() => {
         this.flashCounter = false;

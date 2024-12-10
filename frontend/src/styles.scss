@@ -250,6 +250,8 @@ input {
   border-radius: var(--button-border-radius);
   background-color: var(--color-main);
   color: var(--color-text);
+  transition: color 0.3s ease;
+
 }
 
 .input-field-value::placeholder {
@@ -295,7 +297,9 @@ input {
   color: var(--color-vonesco-sub);
 }
 
-
+.input-field-value.flash-limit {
+  color: var(--color-vonesco-sub);
+}
 
 .input-field-counter.flash-limit {
   color: var(--color-vonesco-sub);
