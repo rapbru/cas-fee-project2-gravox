@@ -43,15 +43,15 @@
     class="input-field-counter"
     i18n="@@Input-field-counter"
     [ngClass]="{
-  'visible': isFocused || (inputValue && inputValue.length > 0),
+  'visible': isFocused || (inputValueNameArticle && inputValueNameArticle.length > 0),
   'flash-limit': flashCounter
 }">
-    {{ inputValue?.length || 0 }} / 20 Zeichen
+    {{ inputValueNameArticle?.length || 0 }} / 20 Zeichen
   </div>
     </div>
 
     <input
-      [(ngModel)]="inputValue"
+      [(ngModel)]="inputValueNameArticle"
       id="InputFieldNameArticle"
       class="input-field-value"
       (input)="onInputChange()"
@@ -61,15 +61,16 @@
       maxlength="20"
       i18n="@@Input-field-placeholder-name"
       aria-label="Bezeichnung Artikel max. 20 Zeichen"
-      i18n-aria-label="@@InputFieldNameArticle">
-    </div>
+      i18n-aria-label="@@InputFieldNameArticle"
+    [ngClass]="{'flash-limit': flashCounter}">
+  </div>
 
 
 
 
   <label for="InputFieldNameArticle" class="input-field-label">Bezeichnung</label>
   <div class="input-field">
-    <input [(ngModel)]="inputValue" id="InputFieldNameArticle2" class="input-field-value" placeholder="max. 20 Zeichen" aria-label="Bezeichnung Artikel max. 20 Zeichen" i18n-aria-label="@@InputFieldNameArticle">
+    <input [(ngModel)]="inputValueNameArticle" id="InputFieldNameArticle2" class="input-field-value" placeholder="max. 20 Zeichen" aria-label="Bezeichnung Artikel max. 20 Zeichen" i18n-aria-label="@@InputFieldNameArticle">
     <!--      <button class="input-field-clear" type="button" (click)="clearInput()"><mat-icon>close</mat-icon></button>-->
   </div>
 
