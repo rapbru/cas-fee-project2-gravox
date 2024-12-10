@@ -3,6 +3,7 @@ import {MatIcon} from "@angular/material/icon";
 import {MatMiniFabButton} from "@angular/material/button";
 import {MatTooltip} from "@angular/material/tooltip";
 import {FormsModule} from "@angular/forms";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-add-article',
@@ -11,15 +12,22 @@ import {FormsModule} from "@angular/forms";
     MatIcon,
     MatMiniFabButton,
     MatTooltip,
-    FormsModule
+    FormsModule,
+    CommonModule
   ],
   templateUrl: './add-article.component.html',
   styleUrl: './add-article.component.scss'
 })
 export class AddArticleComponent {
   inputValue = '';
+  flashCounter = false;
 
-  clearInput() {
-    this.inputValue = '';
+  onInputChange(): void {
+    if (this.inputValue?.length === 20) {
+      this.flashCounter = true;
+      setTimeout(() => {
+        this.flashCounter = false;
+      }, 1000);
+    }
   }
 }
