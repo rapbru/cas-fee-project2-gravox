@@ -238,18 +238,6 @@ input {
   //margin-bottom: 0.5em;
 }
 
-.input-field-header{
-  display: flex;
-  align-items: baseline;
-}
-
-.input-field-label {
-  font-size: var(--font-size);
-  color: var(--color-text);
-  margin: 0 0 0.6em 1.24em;
-  display: block;
-}
-
 .input-field-value {
   //display: flex;
   //flex-direction: column;
@@ -276,20 +264,32 @@ input {
   filter: brightness(110%);
 }
 
+.input-field-header{
+  display: flex;
+  align-items: baseline;
+}
+
+.input-field-label {
+  font-size: var(--font-size);
+  color: var(--color-text);
+  margin: 0 0 0.6em 1.24em;
+  display: block;
+}
+
 .input-field-value:disabled {
   cursor: not-allowed;
 }
 
-
-
 .input-field-counter {
-  font-size: 0.875rem;
-  color: #666;
-  margin-top: 0.2em;
+  font-size: var(--font-size);
+  color: var(--color-sub-1);
+  margin-left: 0.8em;
+
+  transition: color 0.3s ease;
 }
 
 .input-field-counter-limit {
-  color: red;
+  color: var(--color-vonesco-sub);
 }
 
 //.input-field-clear {
