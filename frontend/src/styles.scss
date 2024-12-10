@@ -43,8 +43,8 @@ html {
   --color-inverted: white;
   --color-background: #F0F0F6;
   --color-main: #FFFFFF;
-  --color-sub-1: #BFBFC5;
-  --color-sub-2: #E1E1E7;
+  --color-sub-1: #838388;
+  --color-sub-2: #A4A4A9;
   --color-green: #207F35;
   --color-red: #D20015;
   --color-vonesco: #FF6228;
@@ -271,7 +271,7 @@ input {
 
 .input-field-label {
   font-size: var(--font-size);
-  color: var(--color-text);
+  color: var(--color-sub-1);
   margin: 0 0 0.6em 1.24em;
   display: block;
 }
@@ -284,12 +284,36 @@ input {
   font-size: var(--font-size);
   color: var(--color-sub-1);
   margin-left: 0.8em;
-
-  transition: color 0.3s ease;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
+
+
 
 .input-field-counter-limit {
   color: var(--color-vonesco-sub);
+}
+
+
+
+.input-field-counter.flash-limit {
+  color: var(--color-vonesco-sub);
+  animation: flash-color 1s ease;
+}
+
+.input-field-counter.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+@keyframes flash-color {
+  0% {
+    color: var(--color-vonesco-sub);
+  }
+  100% {
+    color: var(--color-sub-1);
+  }
 }
 
 //.input-field-clear {

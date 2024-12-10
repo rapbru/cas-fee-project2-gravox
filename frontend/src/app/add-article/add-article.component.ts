@@ -20,10 +20,11 @@ import {CommonModule} from "@angular/common";
 })
 export class AddArticleComponent {
   inputValue = '';
+  isFocused = false;
   flashCounter = false;
 
-  onInputChange(): void {
-    if (this.inputValue?.length === 20) {
+  onInputChange() {
+    if ((this.inputValue?.length || 0) === 20) {
       this.flashCounter = true;
       setTimeout(() => {
         this.flashCounter = false;

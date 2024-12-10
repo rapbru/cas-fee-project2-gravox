@@ -40,8 +40,12 @@
     <div class="input-field-header">
   <label for="InputFieldNameArticle" class="input-field-label" i18n="@@Input-field-label-name">Bezeichnung</label>
   <div
-    class="input-field-counter" i18n="@@Input-field-counter"
-    [ngClass]="{'input-field-counter-limit': flashCounter}">
+    class="input-field-counter"
+    i18n="@@Input-field-counter"
+    [ngClass]="{
+  'visible': isFocused || (inputValue && inputValue.length > 0),
+  'flash-limit': flashCounter
+}">
     {{ inputValue?.length || 0 }} / 20 Zeichen
   </div>
     </div>
@@ -51,6 +55,8 @@
       id="InputFieldNameArticle"
       class="input-field-value"
       (input)="onInputChange()"
+      (focus)="isFocused = true"
+      (blur)="isFocused = false"
       placeholder="max. 20 Zeichen"
       maxlength="20"
       i18n="@@Input-field-placeholder-name"
