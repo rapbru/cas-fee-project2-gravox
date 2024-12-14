@@ -14,7 +14,9 @@ export class KeyEventService {
   keyPressed = new Subject<KeyboardEvent>();
   private actions: KeyAction[] = [];
 
-  constructor() {}
+  constructor() {
+    return
+  }
 
   registerKeyAction(key: string, action: () => void): void {
     this.actions.push({ key, action });

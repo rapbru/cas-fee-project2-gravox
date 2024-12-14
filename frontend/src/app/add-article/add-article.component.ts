@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import {MatIcon} from "@angular/material/icon";
-import {MatMiniFabButton} from "@angular/material/button";
-import {MatTooltip} from "@angular/material/tooltip";
-import {FormsModule} from "@angular/forms";
-import {CommonModule} from "@angular/common";
+import { Router } from '@angular/router';
 import { AudioService } from '../audio.service';
 import { KeyEventService } from '../key-event.service';
-import { Router } from '@angular/router';
-
+import { MatIcon } from '@angular/material/icon';
+import { MatMiniFabButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-article',
@@ -20,13 +20,14 @@ import { Router } from '@angular/router';
     CommonModule
   ],
   templateUrl: './add-article.component.html',
-  styleUrl: './add-article.component.scss'
+  styleUrls: ['./add-article.component.scss']
 })
-
 export class AddArticleComponent implements OnInit, OnDestroy {
   inputValueNameArticle = '';
   isFocused = false;
   flashCounter = false;
+
+  private keyPressSubscription: Subscription | undefined;
 
   constructor(
     private audioService: AudioService,
@@ -36,23 +37,21 @@ export class AddArticleComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.keyEventService.registerKeyAction('Escape', this.onEscapeKey.bind(this));
-    this.keyEventService.registerKeyAction('Enter', this.onEnterKey.bind(this));
+    this.keyEventService.registerKeyAction('Enter', this.onSaveKey.bind(this));
   }
 
   ngOnDestroy(): void {
-    if (!this.isFocused) {
-      return    }
+    this.keyEventService.keyPressed.unsubscribe();
   }
 
-  public onEscapeKey(): void {
+  onEscapeKey(): void {
     if (!this.isFocused) {
       this.router.navigate(['/articles']);
     }
   }
 
-  public onEnterKey(): void {
-    return
-  }
+  onSaveKey(): void {
+return  }
 
   onInputChange(): void {
     const inputLength = this.inputValueNameArticle?.length || 0;
