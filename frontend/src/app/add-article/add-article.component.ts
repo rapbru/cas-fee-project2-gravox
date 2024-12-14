@@ -6,9 +6,6 @@ import {FormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import { AudioService } from '../audio.service';
 import { KeyEventService } from '../key-event.service';
-import { Subscription } from 'rxjs';
-
-
 
 @Component({
   selector: 'app-add-article',
@@ -34,32 +31,27 @@ export class AddArticleComponent implements OnInit, OnDestroy {
     private keyEventService: KeyEventService
   ) {}
 
-  private keyPressSubscription: Subscription | undefined;
-
-
   ngOnInit(): void {
-    this.keyPressSubscription = this.keyEventService.keyPressed.subscribe((event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        this.onEscapeKey();
-      }
-    });
+    this.keyEventService.registerKeyAction('Escape', this.onEscapeKey.bind(this));
+    this.keyEventService.registerKeyAction('Enter', this.onEnterKey.bind(this));
   }
 
   ngOnDestroy(): void {
-    if (this.keyPressSubscription) {
-      this.keyPressSubscription.unsubscribe();
-    }
-  }
-
-
-  protected onEscapeKey(): void {
     if (!this.isFocused) {
-      console.log('Escape key pressed');
-      return;
+      return    }
+  }
+
+  public onEscapeKey(): void {
+    if (!this.isFocused) {
+return
     }
   }
 
-  onInputChange() {
+  public onEnterKey(): void {
+    return
+  }
+
+  onInputChange(): void {
     const inputLength = this.inputValueNameArticle?.length || 0;
     if (inputLength >= 20) {
       this.flashCounter = true;
