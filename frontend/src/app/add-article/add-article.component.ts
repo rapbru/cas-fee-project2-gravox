@@ -23,10 +23,21 @@ export class AddArticleComponent {
   isFocused = false;
   flashCounter = false;
 
+  private playWarningSound() {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
+    oscillator.connect(audioContext.destination);
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime + 0.2);
+  }
+
   onInputChange() {
     const inputLength = this.inputValueNameArticle?.length || 0;
     if (inputLength >= 20) {
       this.flashCounter = true;
+      this.playWarningSound();
       setTimeout(() => {
         this.flashCounter = false;
       }, 1000);
