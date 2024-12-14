@@ -183,6 +183,7 @@ input {
   padding: 0.4em 0.6em;
   gap: 0.4em;
   font-variation-settings: "wght" 320;
+  font-size: var(--font-size);
 }
 
 .button-label {
@@ -343,6 +344,15 @@ input {
 .flash-limit {
   animation: shake 0.5s ease-in-out;
 }
+
+
+//.mat-tooltip {
+//  position: absolute;
+//  top: 100%;
+//  left: 50%;
+//  transform: translateX(-50%);
+//  z-index: 1000;
+//}
 
 
 
