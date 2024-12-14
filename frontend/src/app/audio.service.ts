@@ -10,13 +10,13 @@ export class AudioService {
     this.audioContext = new AudioContext();
   }
 
-  playTone(frequency = 440, duration = 0.2): void {
+  playErrorSound() {
     const oscillator = this.audioContext.createOscillator();
-    oscillator.type = 'sine';
-    oscillator.frequency.setValueAtTime(frequency, this.audioContext.currentTime);
+    oscillator.type = 'square'; // Square wave gives a buzzing sound
+    oscillator.frequency.setValueAtTime(50, this.audioContext.currentTime); // Low frequency for the hum
     oscillator.connect(this.audioContext.destination);
     oscillator.start();
-    oscillator.stop(this.audioContext.currentTime + duration);
+    oscillator.stop(this.audioContext.currentTime + 0.08); // Short duration (0.3 seconds)
   }
 }
 

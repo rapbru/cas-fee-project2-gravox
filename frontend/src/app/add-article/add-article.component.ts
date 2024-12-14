@@ -32,7 +32,7 @@ export class AddArticleComponent {
     const inputLength = this.inputValueNameArticle?.length || 0;
     if (inputLength >= 20) {
       this.flashCounter = true;
-      this.audioService.playTone();
+      this.audioService.playErrorSound();
       setTimeout(() => {
         this.flashCounter = false;
       }, 1000);
