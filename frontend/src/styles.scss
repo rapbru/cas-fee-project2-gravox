@@ -299,7 +299,7 @@ input {
 
 .input-field-value.flash-limit {
   color: var(--color-vonesco-sub);
-  animation: flash 0s ease-in-out;
+  animation: shake 0.2s ease-in-out;
 
 }
 
@@ -321,6 +321,30 @@ input {
     color: var(--color-sub-1);
   }
 }
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.flash-limit {
+  animation: shake 0.5s ease-in-out;
+}
+
+
 
 //.input-field-clear {
 //  position: absolute;
