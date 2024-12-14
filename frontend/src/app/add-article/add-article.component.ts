@@ -6,6 +6,8 @@ import {FormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import { AudioService } from '../audio.service';
 import { KeyEventService } from '../key-event.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-add-article',
@@ -15,7 +17,7 @@ import { KeyEventService } from '../key-event.service';
     MatMiniFabButton,
     MatTooltip,
     FormsModule,
-    CommonModule,
+    CommonModule
   ],
   templateUrl: './add-article.component.html',
   styleUrl: './add-article.component.scss'
@@ -28,7 +30,8 @@ export class AddArticleComponent implements OnInit, OnDestroy {
 
   constructor(
     private audioService: AudioService,
-    private keyEventService: KeyEventService
+    private keyEventService: KeyEventService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -43,7 +46,7 @@ export class AddArticleComponent implements OnInit, OnDestroy {
 
   public onEscapeKey(): void {
     if (!this.isFocused) {
-return
+      this.router.navigate(['/articles']);
     }
   }
 
