@@ -311,6 +311,28 @@ input {
 
 
 
+
+.input-field-group {
+  display: flex;
+  gap: 1em; /* Adds spacing between the fields */
+  width: 100%; /* Ensures the group spans the container width */
+  align-items: flex-start; /* Aligns the fields properly */
+}
+
+.input-field-group .input-field {
+  flex: 1; /* Distributes space equally among the fields */
+  min-width: 150px; /* Ensures fields don't get too small */
+}
+
+@media (max-width: 768px) {
+  .input-field-group {
+    flex-direction: column; /* Stacks fields vertically */
+  }
+}
+
+
+
+
 .input-field-counter-limit {
   color: var(--color-vonesco-sub);
 }
