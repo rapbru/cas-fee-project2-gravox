@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "start-dev": "cross-env NODE_ENV=development node index.js",
-    "start-prod": "cross-env NODE_ENV=production node index.js",
+    "start": "node index.js --host 0.0.0.0",
+    "start-dev": "cross-env NODE_ENV=development node index.js --host 0.0.0.0",
+    "start-prod": "cross-env NODE_ENV=production node index.js --host 0.0.0.0",
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslint": "eslint \"**/*.js\"",
     "all": "npm run eslint  && npm run start && node -e \"console.log('npm run all completed')\""

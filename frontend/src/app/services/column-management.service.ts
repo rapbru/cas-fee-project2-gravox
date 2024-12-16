@@ -6,6 +6,7 @@ import { ErrorHandlingService } from './error-handling.service';
 import { Observable, of } from 'rxjs';
 import { tap, catchError, map } from 'rxjs/operators';
 import { PositionIndex } from '../models/position-index.model';
+import { ApiConfigService } from '../services/api-config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class ColumnManagementService {
 
   // Dann wird columnDistribution so berechnet:
   // columnDistribution = [22, 44];       // Erste Spalte: 22, Zweite Spalte: 22+22=44
-  private apiUrl = 'http://localhost:3001/settings/columns';
+  private apiUrl: string;
   private columnCount = 1;
   private maxColumnCount = 10;
   private positionsPerColumn: number[] = [];
@@ -29,8 +30,11 @@ export class ColumnManagementService {
 
   constructor(
     private http: HttpClient,
-    private errorHandlingService: ErrorHandlingService
-  ) {}
+    private errorHandlingService: ErrorHandlingService,
+    private apiConfig: ApiConfigService
+  ) {
+    this.apiUrl = this.apiConfig.getUrl('settings/columns');
+  }
 
   public loadColumnSettings(): Observable<ColumnSettings> {
     return this.http.get<ColumnSettingsDTO>(this.apiUrl).pipe(

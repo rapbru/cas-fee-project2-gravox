@@ -4,7 +4,7 @@ import PLCConnection from '../plc/plc-connection.js'
 
 export class PLCController {
     constructor() {
-        this.plcConnection = new PLCConnection('10.198.200.82');
+        this.plcConnection = new PLCConnection('10.198.200.39');
         this.plcService = (process.env.NODE_ENV === "production" ? PLCService.getInstance(this.plcConnection) : new PLCMockData());
     }
 

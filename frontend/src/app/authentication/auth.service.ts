@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ApiConfigService } from '../services/api-config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3001/auth/login';
+  private apiUrl: string;
 
-  constructor(private http: HttpClient) {
-    // window.addEventListener('beforeunload', () => this.logout());
+  constructor(
+    private http: HttpClient,
+    private apiConfig: ApiConfigService
+  ) {
+    this.apiUrl = this.apiConfig.getUrl('auth/login');
   }
 
   login(username: string, password: string): Observable<{ token: string }> {
