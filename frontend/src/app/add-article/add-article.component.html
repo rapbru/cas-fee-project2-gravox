@@ -74,11 +74,38 @@
   </app-input-field>
 
   <app-input-field
+    [(inputValue)]="articleSurface"
+    [maxLength]="50"
+    placeholder="max. 50 Zeichen"
+    ariaLabel="Kommentar Artikel max. 50 Zeichen"
+    label="Fläche"
+    fieldId="InputFieldCommentArticle">
+  </app-input-field>
+
+  <app-input-field
+    [(inputValue)]="articleDripoff"
+    [maxLength]="50"
+    placeholder="max. 50 Zeichen"
+    ariaLabel="Kommentar Artikel max. 50 Zeichen"
+    label="Abtropfen"
+    fieldId="InputFieldCommentArticle">
+  </app-input-field>
+
+  <app-input-field
+    [(inputValue)]="articleAnodic"
+    [maxLength]="50"
+    placeholder="max. 50 Zeichen"
+    ariaLabel="Kommentar Artikel max. 50 Zeichen"
+    label="Anodisch"
+    fieldId="InputFieldCommentArticle">
+  </app-input-field>
+
+  <app-input-field
     [(inputValue)]="articleComment"
     [maxLength]="50"
     placeholder="max. 50 Zeichen"
     ariaLabel="Kommentar Artikel max. 50 Zeichen"
-    label="Kommentar"
+    label="Bemerkung"
     fieldId="InputFieldCommentArticle">
   </app-input-field>
 

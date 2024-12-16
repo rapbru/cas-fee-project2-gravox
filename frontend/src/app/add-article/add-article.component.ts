@@ -27,12 +27,26 @@ import {InputFieldComponent} from '../input-field/input-field.component';
 
 export class AddArticleComponent implements OnInit, OnDestroy {
   articleName = '';
+  articleSurface = '';
+  articleDripoff = '';
+  articleAnodic = '';
   articleComment = '';
   isFocused = false;
-  // flashCounter = false;   ////////////////////////////////////////////////
 
   handleArticleNameChange(newValue: string): void {
     this.articleName = newValue;
+  }
+
+  handleArticleSurfaceChange(newValue: string): void {
+    this.articleSurface = newValue;
+  }
+
+  handleArticleDripoffChange(newValue: string): void {
+    this.articleDripoff = newValue;
+  }
+
+  handleArticleAnodicChange(newValue: string): void {
+    this.articleAnodic = newValue;
   }
 
   handleArticleCommentChange(newValue: string): void {

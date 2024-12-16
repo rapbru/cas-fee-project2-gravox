@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 })
 export class InputFieldComponent {
   @Input() inputValue = '';
-  @Input() maxLength = 20;
+  @Input() maxLength = 160;
   @Input() placeholder = '';
   @Input() ariaLabel = '';
   @Input() label = '';
