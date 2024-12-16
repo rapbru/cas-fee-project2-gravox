@@ -90,8 +90,8 @@ export class PositionService {
       articleName: position.articleName,
       customerName: position.customerName,
       time: {
-        actual: parseFloat(position.time.actual.toFixed(2)),
-        preset: parseFloat(position.time.preset.toFixed(2))
+        actual: parseFloat((position.time.actual / 60).toFixed(2)),
+        preset: parseFloat((position.time.preset / 60).toFixed(2))
       },
       temperature: {
         actual: parseFloat(position.temperature.actual.toFixed(2)),
