@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { AudioService } from '../audio.service';
 import { KeyEventService } from '../key-event.service';
 import { MatIcon } from '@angular/material/icon';
-import { MatMiniFabButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -14,7 +13,6 @@ import { Subscription } from 'rxjs';
   standalone: true,
   imports: [
     MatIcon,
-    MatMiniFabButton,
     MatTooltip,
     FormsModule,
     CommonModule
