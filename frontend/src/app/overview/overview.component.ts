@@ -40,7 +40,7 @@ export class OverviewComponent implements OnDestroy, OnInit {
 
   constructor(
     private positionService: PositionService,
-    private columnManagementService: ColumnManagementService,
+    public columnManagementService: ColumnManagementService,
     private deviceDetectionService: DeviceDetectionService,
     private positionDragDropService: PositionDragDropService,
     public overviewStateService: OverviewStateService,

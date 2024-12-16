@@ -125,7 +125,6 @@ export class PositionService {
   }
 
   public saveAllChanges(): void {
-    // 1. Erst neue Positionen speichern
     if (this.hasNewPositions()) {
         console.log('saveNewPositions');
         this.saveNewPositions().subscribe({
@@ -142,8 +141,6 @@ export class PositionService {
         console.log('saveRemainingOperations');
         this.saveRemainingOperations();
     }
-    // this.positions.set(this.editPositions());
-    // this.orderedPositions.set(this.editPositions());
     this.fetchPositions();
   }
 
@@ -158,7 +155,6 @@ export class PositionService {
             });
             this.editPositions.set(updatedPositions);
             
-            // Hier das neue Console.log
             console.log('Positionen nach dem Speichern mit neuen IDs:', 
                 this.editPositions().map(pos => ({
                     id: pos.id,
@@ -167,7 +163,7 @@ export class PositionService {
                 }))
             );
         }),
-        map(() => void 0) // Konvertiere zu Observable<void>
+        map(() => void 0)
     );
   }
 

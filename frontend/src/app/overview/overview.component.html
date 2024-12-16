@@ -1,7 +1,8 @@
-
 <div *ngIf="enableEdit() && !(isMobile() && newPosition)"> 
-  <button *ngIf="!isMobile() && enableEdit()" (click)="increaseColumns()">Linie hinzufügen</button>
-  <button *ngIf="(columns().length > 1) && !isMobile() && enableEdit()" (click)="decreaseColumns()">Linie löschen</button>
+  <button *ngIf="!isMobile() && enableEdit()" 
+    (click)="increaseColumns()">Linie hinzufügen</button>
+  <button *ngIf="(columns().length > 1) && !isMobile() && enableEdit()" 
+    (click)="decreaseColumns()">Linie löschen</button>
   <button *ngIf="enableEdit()" (click)="addPosition()">hinzufügen</button>
   <button *ngIf="enableEdit()" (click)="orderPositions()">Reihenfolge</button>
   <button *ngIf="enableEdit()" (click)="deletePositions()">löschen</button>
@@ -10,11 +11,11 @@
 </div>
 
 <div *ngIf="!(isMobile() && newPosition)" cdkDropListGroup>
-  <div class="overview-container">
+  <div class="overview-container" [style.--total-columns]="columnManagementService.getColumnCount()">
     @for (column of columns(); track $index; let index = $index) {
       <div cdkDropList [cdkDropListData]="column" class="overview-list" (cdkDropListDropped)="drop($event, index)">
         <div *ngIf="!enableMultiSelect() && !enableOrder()" class="app-position-header">
-          <!-- <div class="column-name">Spalte {{index + 1}}</div> -->
+          <div class="column-name">Linie {{index + 1}}</div>
           <div class="column-name"></div>
           <div class="column-metrics">
             <div>min</div>
