@@ -10,7 +10,6 @@ export class SettingsController {
             const settings = await this.settingsService.getColumnSettings();
             return res.json(settings);
         } catch (err) {
-            console.error('Error loading column settings:', err);
             return res.status(500).json({ error: 'Fehler beim Laden der Spalteneinstellungen' });
         }
     };
@@ -21,7 +20,6 @@ export class SettingsController {
             const savedSettings = await this.settingsService.saveColumnSettings(settings);
             return res.json(savedSettings);
         } catch (err) {
-            console.error('Error saving column settings:', err);
             return res.status(500).json({ error: 'Fehler beim Speichern der Spalteneinstellungen' });
         }
     };
@@ -31,7 +29,6 @@ export class SettingsController {
             const order = await this.settingsService.getPositionOrder();
             return res.json(order);
         } catch (error) {
-            console.error('Error loading position order:', error);
             return res.status(500).json({ 
                 error: 'Fehler beim Laden der Positionsreihenfolge' 
             });
@@ -53,7 +50,6 @@ export class SettingsController {
                 message: 'Positionsreihenfolge erfolgreich gespeichert' 
             });
         } catch (error) {
-            console.error('Error saving position order:', error);
             return res.status(500).json({ 
                 error: 'Fehler beim Speichern der Positionsreihenfolge' 
             });

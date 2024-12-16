@@ -109,11 +109,7 @@ class PositionService {
             this.readPositions();
 
             if (this.plcService) {
-                try {
-                    await this.plcService.subscribeToPosition(positionData.number);
-                } catch (plcError) {
-                    console.error('Fehler beim Abonnieren der PLC-Tags:', plcError);
-                }
+                await this.plcService.subscribeToPosition(positionData.number);
             }
 
             return {
@@ -161,7 +157,6 @@ class PositionService {
             return true;
         } catch (error) {
             await pool.query('ROLLBACK');
-            console.error('Failed to update positions:', error);
             throw error;
         }
     }

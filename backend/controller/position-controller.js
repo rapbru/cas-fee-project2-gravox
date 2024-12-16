@@ -34,20 +34,16 @@ export class PositionController {
     };
 
     createPosition = async (req, res) => {
-        console.log('createPosition');
-        console.log(req.body);
         try {
             const positionData = req.body;
             const newPosition = await this.positionService.createPosition(positionData);
             return res.status(201).json(newPosition);
         } catch (err) {
-            console.error('Error creating position:', err);
             return res.status(500).json({ error: 'Interner Server Fehler' });
         }
     };
 
     updatePositions = async (req, res) => {
-        console.log(req.body);
         try {
             const { updates } = req.body;
             await this.positionService.updatePositions(updates);
