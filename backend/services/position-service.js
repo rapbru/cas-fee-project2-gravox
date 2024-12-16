@@ -39,8 +39,8 @@ class PositionService {
             articleName: "Artikel",
             customerName: "Kunde",
             time: {
-                actual: (tagsForPosition.find(tag => tag.tag === `POS[${position.position_number}].TIME.ACTUAL`)?.value || 0) / 60,
-                preset: (tagsForPosition.find(tag => tag.tag === `POS[${position.position_number}].TIME.PRESET`)?.value || 0) / 60,
+                actual: (tagsForPosition.find(tag => tag.tag === `POS[${position.position_number}].TIME.ACTUAL`)?.value || 0),
+                preset: (tagsForPosition.find(tag => tag.tag === `POS[${position.position_number}].TIME.PRESET`)?.value || 0),
             },
             temperature: {
                 actual: tagsForPosition.find(tag => tag.tag === `POS[${position.position_number}].TEMP.ACTUAL1`)?.value || 0,
