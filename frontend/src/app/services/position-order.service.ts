@@ -4,17 +4,21 @@ import { Observable, catchError, map, tap } from 'rxjs';
 import { Position } from '../models/position.model';
 import { PositionOrder } from '../models/position-order.model';
 import { ErrorHandlingService } from './error-handling.service';
+import { ApiConfigService } from './api-config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PositionOrderService {
-  private apiUrl = 'http://localhost:3001/settings/position-order';
+  private apiUrl: string;
 
   constructor(
     private http: HttpClient,
-    private errorHandlingService: ErrorHandlingService
-  ) {}
+    private errorHandlingService: ErrorHandlingService,
+    private apiConfig: ApiConfigService
+  ) {
+    this.apiUrl = this.apiConfig.getUrl('settings/position-order');
+  }
 
   getPositionOrder(): Observable<PositionOrder[]> {
     return this.http.get<PositionOrder[]>(this.apiUrl);

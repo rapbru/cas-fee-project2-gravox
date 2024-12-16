@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { DeviceDetectionService } from '../services/device-detection.service';
 import { OverviewStateService } from '../services/overview-state.service';
 import { PositionService } from '../services/position.service';
+import { PlcService } from '../services/plc.service';
 
 
 @Component({
@@ -23,16 +24,34 @@ export class PositionComponent {
   @Input() position!: Position;
   public isCollapsed = false;
 
-  constructor(private deviceDetectionService: DeviceDetectionService, private overviewStateService: OverviewStateService, private positionService: PositionService) {}
+  constructor(
+    private deviceDetectionService: DeviceDetectionService,
+    private overviewStateService: OverviewStateService,
+    private positionService: PositionService,
+    private plcService: PlcService
+  ) {}
 
-  updatePresetValue(event: KeyboardEvent, field: string) {
-    if (event.key === 'Enter') {
-      const inputElement = event.target as HTMLInputElement;
-      const newValue = inputElement.value;
-      console.log(newValue);
-      console.log(field);
-      console.log(this.position.number);
-    }
+  updatePresetValue(event: Event, field: string) {
+    const inputElement = event.target as HTMLInputElement;
+    const value = parseFloat(inputElement.value);
+    
+    if (isNaN(value) || value <= 0) return;
+
+    const tagName = `POS[${this.position.number}]${field}`;
+    
+    const update = {
+      tagName,
+      value: field.includes('TIME') ? value * 60 : value
+    };
+
+    this.plcService.writeValues([update]).subscribe({
+      next: () => {
+        console.log(`Wert ${value} für ${tagName} erfolgreich gesetzt`);
+      },
+      error: (error) => {
+        console.error(`Fehler beim Setzen des Wertes für ${tagName}:`, error);
+      }
+    });
   }
 
   updatePositionInfo(event: Event, field: string) {
@@ -97,5 +116,10 @@ export class PositionComponent {
 
   enableMultiSelect(): boolean {
     return this.overviewStateService.enableMultiSelect();
+  }
+
+  selectInputContent(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    input.select();
   }
 }
