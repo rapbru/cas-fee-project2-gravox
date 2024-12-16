@@ -44,7 +44,6 @@ export class PositionDragDropService {
       return acc.concat(column);
     }, [] as Position[]);
 
-    console.log('newOrderedPositions', newOrderedPositions);
     // Aktualisiere die Spalteninformationen nur wenn zwischen Spalten verschoben wurde
     if (movedBetween) {
       if (columnIndex !== prevColumnIndex) {

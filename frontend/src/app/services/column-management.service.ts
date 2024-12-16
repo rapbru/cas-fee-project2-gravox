@@ -33,7 +33,6 @@ export class ColumnManagementService {
   constructor(
     private http: HttpClient,
     private errorHandlingService: ErrorHandlingService,
-    private deviceDetectionService: DeviceDetectionService,
     private apiConfig: ApiConfigService
   ) {
     this.apiUrl = this.apiConfig.getUrl('settings/columns');
@@ -58,7 +57,7 @@ export class ColumnManagementService {
         this.updateColumnDistribution();
       }),
       catchError(error => {
-        console.log('Error loading column settings:', error);
+        this.errorHandlingService.showError('Fehler beim Laden der Spalteneinstellungen', error);
         const defaultSettings = this.getDefaultColumnSettings();
         this.originalSettings = { ...defaultSettings };
         this.applySettings(defaultSettings); 
@@ -187,12 +186,6 @@ export class ColumnManagementService {
       this.positionsPerColumn[columnIndex] += change;
       this.updateColumnDistribution();
     }
-
-    console.log('Column Settings updated:', {
-        columnCount: this.columnCount,
-        positionsPerColumn: [...this.positionsPerColumn],
-        columnDistribution: [...this.columnDistribution]
-      });
   }
 
   public removeColumn(columnIndex: number): void {
