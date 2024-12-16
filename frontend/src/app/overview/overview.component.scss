@@ -1,6 +1,31 @@
 .overview-container {
-    display: flex;
+    display: grid;
+    gap: 8px;
     background-color: var(--color-background);
+    width: 100%;
+    
+    @media (min-width: 2000px) {
+        grid-template-columns: repeat(min(var(--total-columns), 4), 1fr);
+    }
+    
+    @media (min-width: 1500px) and (max-width: 1999px) {
+        grid-template-columns: repeat(min(var(--total-columns), 3), 1fr);
+    }
+    
+    @media (min-width: 1000px) and (max-width: 1499px) { 
+        grid-template-columns: repeat(min(var(--total-columns), 2), 1fr);
+    }
+    
+    @media (max-width: 999px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.overview-list {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-background);
+    min-width: 0;
 }
 
 .list-container {
@@ -39,13 +64,6 @@ app-position {
     margin: 2px;
     border-width: 2px;
     border-color: var(--color-vonesco);
-}
-
-.overview-list {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    background-color: var(--color-background);
 }
 
 .list-item {

@@ -23,12 +23,11 @@ export class ColumnManagementService {
   // columnDistribution = [22, 44];       // Erste Spalte: 22, Zweite Spalte: 22+22=44
   private apiUrl: string;
   private columnCount = 1;
-  private maxColumnCount = 10;
+  private readonly COLUMN_MAX_COUNT = 4;
   private positionsPerColumn: number[] = [];
   private originalSettings: ColumnSettings | null = null;
   private columnDistribution: number[] = [];
   private positionIndices: PositionIndex[] = [];
-  private readonly COLUMN_MIN_WIDTH = 500; // Minimale Breite pro Spalte in Pixeln
   public columnsChanged = new EventEmitter<void>();
 
   constructor(
@@ -38,11 +37,6 @@ export class ColumnManagementService {
     private apiConfig: ApiConfigService
   ) {
     this.apiUrl = this.apiConfig.getUrl('settings/columns');
-    
-    // Reagiere auf Änderungen der maxColumns
-    window.addEventListener('resize', () => {
-      this.redistributeColumns();
-    });
   }
 
   public loadColumnSettings(): Observable<ColumnSettings> {
@@ -62,25 +56,21 @@ export class ColumnManagementService {
         this.columnCount = settings.columnCount;
         this.positionsPerColumn = [...settings.positionsPerColumn];
         this.updateColumnDistribution();
-        this.redistributeColumns();
       }),
       catchError(error => {
         console.log('Error loading column settings:', error);
         const defaultSettings = this.getDefaultColumnSettings();
         this.originalSettings = { ...defaultSettings };
-        this.applySettings(defaultSettings);
-        this.redistributeColumns(); 
+        this.applySettings(defaultSettings); 
         return of(defaultSettings);
       })
     );
   }
 
   public increaseColumns(): void {
-    const maxCols = this.calculateMaxColumns();
-    
-    if (this.columnCount >= maxCols) {
+    if (this.columnCount >= this.COLUMN_MAX_COUNT) {
       this.errorHandlingService.showError(
-        `Maximale Spaltenanzahl (${maxCols}) erreicht. Bildschirm zu klein für weitere Spalten.`
+        `Maximale Spaltenanzahl (${this.COLUMN_MAX_COUNT}) erreicht. Bildschirm zu klein für weitere Spalten.`
       );
       return;
     }
@@ -110,7 +100,6 @@ export class ColumnManagementService {
       this.positionsPerColumn = [...this.originalSettings.positionsPerColumn];
       this.updateColumnDistribution();
     }
-    this.redistributeColumns();
   }
 
   public splitPositionsDynamically(positions: Position[]): Position[][] {
@@ -157,7 +146,6 @@ export class ColumnManagementService {
     this.columnCount = settings.columnCount;
     this.positionsPerColumn = [...settings.positionsPerColumn];
     this.updateColumnDistribution();
-    this.redistributeColumns();
   }
 
   private getDefaultColumnSettings(): ColumnSettings {
@@ -227,34 +215,4 @@ export class ColumnManagementService {
   public getAllPositionIndices(): PositionIndex[] {
     return [...this.positionIndices];
   }
-
-  private calculateMaxColumns(): number {
-    const screenWidth = window.innerWidth;
-    return Math.floor(screenWidth / this.COLUMN_MIN_WIDTH);
-  }
-
-  private redistributeColumns() {
-    console.log('redistributeColumns');
-    const maxCols = this.deviceDetectionService.getMaxColumns();
-    
-    this.columnCount = this.originalSettings?.columnCount || 1;
-    this.positionsPerColumn = this.originalSettings?.positionsPerColumn || [0];
-    
-    if (this.columnCount > maxCols) {
-      const excessColumns = this.columnCount - maxCols;
-      let lastColumnPositions = this.positionsPerColumn[maxCols - 1];
-      
-      for (let i = 0; i < excessColumns; i++) {
-        lastColumnPositions += this.positionsPerColumn[maxCols + i];
-      }
-      
-      this.positionsPerColumn = this.positionsPerColumn.slice(0, maxCols);
-      this.positionsPerColumn[maxCols - 1] = lastColumnPositions;
-      this.columnCount = maxCols;
-    } 
-
-    this.updateColumnDistribution();
-    this.columnsChanged.emit();
-  }
-
 } 
