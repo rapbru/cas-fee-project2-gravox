@@ -14,10 +14,10 @@
   <div class="overview-container" [style.--total-columns]="columnManagementService.getColumnCount()">
     @for (column of columns(); track $index; let index = $index) {
       <div cdkDropList [cdkDropListData]="column" class="overview-list" (cdkDropListDropped)="drop($event, index)">
-        <div *ngIf="!enableMultiSelect() && !enableOrder()" class="app-position-header">
+        <div *ngIf="!enableMultiSelect()" class="app-position-header">
           <div class="column-name">Linie {{index + 1}}</div>
           <div class="column-name"></div>
-          <div class="column-metrics">
+          <div *ngIf="!enableOrder()" class="column-metrics">
             <div>min</div>
             <div>°C</div>
             <div>A</div>
