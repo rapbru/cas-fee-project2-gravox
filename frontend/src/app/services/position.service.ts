@@ -75,7 +75,6 @@ export class PositionService {
 
   public startEditing(): void {
     this.editPositions.set([...this.orderedPositions()]);
-    this.columnManagementService.saveOriginalSettings();
   }
 
   public cancelEditing(): void {

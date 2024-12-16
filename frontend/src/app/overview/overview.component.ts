@@ -45,7 +45,11 @@ export class OverviewComponent implements OnDestroy, OnInit {
     private positionDragDropService: PositionDragDropService,
     public overviewStateService: OverviewStateService,
     private errorHandlingService: ErrorHandlingService
-  ) {}
+  ) {
+    this.columnManagementService.columnsChanged.subscribe(() => {
+      this.positionService.refreshPositions();
+    });
+  }
 
   ngOnInit() {  
     this.columnManagementService.loadColumnSettings().subscribe();
