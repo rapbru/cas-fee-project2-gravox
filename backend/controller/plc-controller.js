@@ -54,10 +54,6 @@ export class PLCController {
                     error: `Struktur ${structureTag} nicht gefunden` 
                 });
             }
-            
-            // structure.value.FB.NBR = 0;
-
-            // await this.plcService.writeStructure(structure);
 
             return res.json({
                 tagName: structureTag,
@@ -67,7 +63,6 @@ export class PLCController {
             });
 
         } catch (err) {
-            console.error('Fehler beim Abrufen der Struktur:', err);
             return res.status(500).json({ error: err.message });
         }
     }

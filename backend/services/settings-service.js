@@ -1,4 +1,5 @@
 import pool from '../data/db-connection.js';
+import logger from '../logger.js';
 
 class SettingsService {
     constructor() {
@@ -15,7 +16,7 @@ class SettingsService {
             const result = await this.pool.query(query);
             return result.rows[0] || this.defaultSettings;
         } catch (error) {
-            console.error('Error fetching column settings:', error);
+            logger.error('Error fetching column settings:', error);
             throw error;
         }
     }
@@ -25,7 +26,7 @@ class SettingsService {
             const columnCount = settings?.columnCount ?? this.defaultSettings.columnCount;
             const positionsPerColumn = settings?.positionsPerColumn ?? this.defaultSettings.positionsPerColumn;
             
-            console.log('Saving column settings:', settings);
+            logger.info('Saving column settings:', settings);
             
             const query = `
                 INSERT INTO column_settings (column_count, positions_per_column)
@@ -36,7 +37,7 @@ class SettingsService {
             const result = await this.pool.query(query, values);
             return result.rows[0];
         } catch (error) {
-            console.error('Error saving column settings:', error);
+            logger.error('Error saving column settings:', error);
             throw error;
         }
     }
@@ -47,7 +48,7 @@ class SettingsService {
             const result = await this.pool.query(query);
             return result.rows;
         } catch (error) {
-            console.error('Error fetching position order:', error);
+            logger.error('Error fetching position order:', error);
             throw error;
         }
     }
@@ -56,11 +57,11 @@ class SettingsService {
         try {
             await this.pool.query('BEGIN');
             
-            console.log('Deleting existing position order...');
+            logger.info('Deleting existing position order...');
             const deleteResult = await this.pool.query('DELETE FROM position_order');
-            console.log(`Deleted ${deleteResult.rowCount} existing position order entries`);
+            logger.info(`Deleted ${deleteResult.rowCount} existing position order entries`);
 
-            console.log('Positions to save:', positions);
+            logger.info('Positions to save:', positions);
             
             // Erstelle die Werte für den Bulk-Insert
             const values = positions.map((positionId, index) => 
@@ -76,10 +77,10 @@ class SettingsService {
             await this.pool.query(insertQuery);
             await this.pool.query('COMMIT');
             
-            console.log('Successfully saved all position orders');
+            logger.info('Successfully saved all position orders');
         } catch (error) {
             await this.pool.query('ROLLBACK');
-            console.error('Error in savePositionOrder:', error);
+            logger.error('Error in savePositionOrder:', error);
             throw error;
         }
     }

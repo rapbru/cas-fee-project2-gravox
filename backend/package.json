@@ -24,7 +24,8 @@
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.12.0",
     "postgres": "^3.4.4",
-    "st-ethernet-ip": "^2.7.3"
+    "st-ethernet-ip": "^2.7.3",
+    "winston": "^3.17.0"
   },
   "type": "module",
   "devDependencies": {

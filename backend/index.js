@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import app from "./app.js";
+import logger from "./logger.js";
 
 // load config-file
 dotenv.config();
@@ -7,5 +8,5 @@ dotenv.config();
 const hostname = '0.0.0.0';
 const port = process.env.PORT || 3001;
 app.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
+    logger.info(`Server running at http://${hostname}:${port}/`);
 });

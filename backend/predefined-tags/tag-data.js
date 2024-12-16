@@ -1,12 +1,13 @@
 import { promises as fs } from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import logger from '../logger.js';
 
 
 export class TagData {
     constructor() {
         const dirname = path.dirname(fileURLToPath(import.meta.url));
-        console.log(dirname);
+        logger.info(dirname);
         this.filePath = path.resolve(dirname, '../predefined-tags/tags.json');
         this.initTagsIfNeeded();
     }
@@ -15,17 +16,17 @@ export class TagData {
         try {
             const fileContent = await fs.readFile(this.filePath, 'utf8');
             if (fileContent.trim() === '') {
-                console.log('tags.json ist leer, Initialisierung erforderlich');
+                logger.info('tags.json ist leer, Initialisierung erforderlich');
                 await this.initTags();
             } else {
-                console.log('tags.json existiert bereits und hat Inhalt, keine Initialisierung erforderlich');
+                logger.info('tags.json existiert bereits und hat Inhalt, keine Initialisierung erforderlich');
             }
         } catch (err) {
             if (err.code === 'ENOENT') {
-                console.log('tags.json existiert nicht, Initialisierung erforderlich');
+                logger.info('tags.json existiert nicht, Initialisierung erforderlich');
                 await this.initTags();
             } else {
-                console.error('Fehler beim Überprüfen der Datei', err);
+                logger.error('Fehler beim Überprüfen der Datei', err);
             }
         }
     }
@@ -56,9 +57,9 @@ export class TagData {
 
         try {
             await fs.writeFile(this.filePath, JSON.stringify(data, null, 2));
-            console.log('Datei erfolgreich geschrieben');
+            logger.info('Datei erfolgreich geschrieben');
         } catch (err) {
-            console.error('Fehler beim Schreiben der Datei', err);
+            logger.error('Fehler beim Schreiben der Datei', err);
         }
     }
 
@@ -67,7 +68,7 @@ export class TagData {
             const fileContent = await fs.readFile(this.filePath, 'utf8');
             return JSON.parse(fileContent);
         } catch (err) {
-            console.error('Fehler beim Lesen der Datei', err);
+            logger.error('Fehler beim Lesen der Datei', err);
             return [];
         }
     }

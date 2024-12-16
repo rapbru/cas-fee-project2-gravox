@@ -1,6 +1,8 @@
 import { TagList, Structure } from 'st-ethernet-ip';
 import TagService from "./tag-service.js";
 import PositionService from '../services/position-service.js';
+import logger from '../logger.js';
+
 
 export default class PLCService {
     static instance = null;
@@ -26,11 +28,11 @@ export default class PLCService {
                 const positionNumbers = await PositionService.getPositionNumbers();
                 await Promise.all(positionNumbers.map(number => this.subscribeToPosition(number)));
             }
-            console.log('Successfully subscribed positions:', 
+            logger.info('Successfully subscribed positions:', 
                 Array.from(this.subscribedPositions).sort((a, b) => a - b)
             );
         } catch (error) {
-            console.error('Error initializing PLC Service:', error);
+            logger.error('Error initializing PLC Service:', error);
         }
     }
 
@@ -54,7 +56,7 @@ export default class PLCService {
         try {
             return await this.tagService.getAllData();
         } catch (error) {
-            console.error('Error retrieving all tag data:', error);
+            logger.error('Error retrieving all tag data:', error);
             throw error;
         }
     }
@@ -63,7 +65,7 @@ export default class PLCService {
         try {
             return await this.tagService.getTagData(tagName);
         } catch (error) {
-            console.error(`Error retrieving tag data for ${tagName}:`, error);
+            logger.error(`Error retrieving tag data for ${tagName}:`, error);
             throw error;
         }
     }
@@ -72,7 +74,7 @@ export default class PLCService {
         try {
             return await this.tagService.writeTagData(tags);
         } catch (error) {
-            console.error('Error writing tag data:', error);
+            logger.error('Error writing tag data:', error);
             throw error;
         }
     }
@@ -109,7 +111,7 @@ export default class PLCService {
             return structureTag;
 
         } catch (error) {
-            console.error(`Error reading tag ${tagName}:`, error);
+            logger.error(`Error reading tag ${tagName}:`, error);
             throw error;
         }
     }
@@ -124,7 +126,7 @@ export default class PLCService {
             return true;
 
         } catch (error) {
-            console.error('Error writing structure:', error);
+            logger.error('Error writing structure:', error);
             throw error;
         }
     }

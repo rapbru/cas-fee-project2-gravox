@@ -1,4 +1,5 @@
 import { ControllerManager } from 'st-ethernet-ip';
+import logger from '../logger.js';
 
 class PLCConnection {
     constructor(ipAddress, slot = 0) {
@@ -29,16 +30,16 @@ class PLCConnection {
     setupEventHandlers() {  
         this.controller.on('Connected', () => {
             this.connected = true;
-            console.log('PLC connection established');
+            logger.info('PLC connection established');
         });
     
         this.controller.on('Disconnected', () => {
             this.connected = false;
-            console.log('PLC connection lost - automatic reconnection will be attempted');
+            logger.info('PLC connection lost - automatic reconnection will be attempted');
         });
     
         this.controller.on('Error', (error) => {
-            console.error('PLC error:', error);
+            logger.error('PLC error:', error);
         });
     }
 
@@ -46,9 +47,9 @@ class PLCConnection {
         try {
             await this.controller.disconnect();
             this.connected = false;
-            console.log(`Disconnected from PLC at ${this.ipAddress}`);
+            logger.info(`Disconnected from PLC at ${this.ipAddress}`);
         } catch (error) {
-            console.error('Error disconnecting from PLC:', error);
+            logger.error('Error disconnecting from PLC:', error);
         }
     }
 

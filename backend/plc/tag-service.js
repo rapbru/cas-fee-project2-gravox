@@ -1,4 +1,5 @@
 import { TagGroup } from 'st-ethernet-ip';
+import logger from '../logger.js';
 
 export default class TagService {
     static instance = null;
@@ -51,7 +52,7 @@ export default class TagService {
             await previousPromise;
             
             const chunkPromises = chunk.map(async currentTag => new Promise((resolve, reject) => {
-                console.log(`Subscribe Tag: ${currentTag}`);
+                logger.info(`Subscribe Tag: ${currentTag}`);
                 this.plcConnection.controller.addTag(currentTag);
                 this.tagInitPromises[currentTag] = { resolve, reject };
                 
@@ -83,7 +84,7 @@ export default class TagService {
 
     setupEventHandlers() {
         this.plcConnection.controller.on("TagInit", (tag) => {
-            console.log(`${tag.name} initial value: ${tag.value}, datatype: ${tag.type}`);
+            logger.info(`${tag.name} initial value: ${tag.value}, datatype: ${tag.type}`);
             this.updateTagInArray(tag);
 
             if (this.tagInitPromises[tag.name]) {
@@ -93,7 +94,7 @@ export default class TagService {
         });
         
         this.plcConnection.controller.on("TagChanged", (tag, lastValue) => {
-            console.log(`${tag.name} changed from ${lastValue} -> ${tag.value}`);
+            logger.info(`${tag.name} changed from ${lastValue} -> ${tag.value}`);
             this.updateTagInArray(tag);
         });
     }
@@ -140,13 +141,13 @@ export default class TagService {
             if (tagGroup.size > 0) {
                 await this.plcConnection.controller.writeTagGroup(tagGroup);
                 tagGroup.forEach(tag => {
-                    console.log(`Tag ${tag.name} successfully written with value: ${tag.value}`);
+                    logger.info(`Tag ${tag.name} successfully written with value: ${tag.value}`);
                 });
             }
 
             return { success: true, tagDataArray };
         } catch (err) {
-            console.error('Error writing tags:', err);
+            logger.error('Error writing tags:', err);
             throw err;
         }
     }
