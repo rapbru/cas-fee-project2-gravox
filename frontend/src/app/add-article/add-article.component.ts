@@ -33,6 +33,12 @@ export class AddArticleComponent implements OnInit, OnDestroy {
   articleComment = '';
   isFocused = false;
 
+  maxLengthName = 20;
+  maxLengthSurface = 20;
+  maxLengthDripoff = 20;
+  maxLengthAnodic = 20;
+  maxLengthComment = 100;
+
   handleArticleNameChange(newValue: string): void {
     this.articleName = newValue;
   }
