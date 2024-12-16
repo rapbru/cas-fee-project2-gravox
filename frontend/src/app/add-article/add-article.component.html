@@ -75,39 +75,41 @@
 
   <app-input-field
     [(inputValue)]="articleSurface"
-    [maxLength]="50"
-    [placeholder]="'max. ' + 50 + ' Zeichen'"
-    [ariaLabel]="'Fläche Artikel max. 50 Zeichen'"
+    [maxLength]="maxLengthSurface"
+    [placeholder]="'max. ' + maxLengthSurface + ' Zeichen'"
+    [ariaLabel]="'Fläche Artikel max. ' + maxLengthSurface + ' Zeichen'"
     label="Fläche"
     fieldId="InputFieldSurfaceArticle">
   </app-input-field>
 
   <app-input-field
     [(inputValue)]="articleDripoff"
-    [maxLength]="50"
-    [placeholder]="'max. ' + 50 + ' Zeichen'"
-    [ariaLabel]="'Abtropfen Artikel max. 50 Zeichen'"
+    [maxLength]="maxLengthDripoff"
+    [placeholder]="'max. ' + maxLengthDripoff + ' Zeichen'"
+    [ariaLabel]="'Abtropfen Artikel max. ' + maxLengthDripoff + ' Zeichen'"
     label="Abtropfen"
     fieldId="InputFieldDripoffArticle">
   </app-input-field>
 
   <app-input-field
     [(inputValue)]="articleAnodic"
-    [maxLength]="50"
-    [placeholder]="'max. ' + 50 + ' Zeichen'"
-    [ariaLabel]="'Anodisch Artikel max. 50 Zeichen'"
+    [maxLength]="maxLengthAnodic"
+    [placeholder]="'max. ' + maxLengthAnodic + ' Zeichen'"
+    [ariaLabel]="'Anodisch Artikel max. ' + maxLengthAnodic + ' Zeichen'"
     label="Anodisch"
     fieldId="InputFieldAnodicArticle">
   </app-input-field>
 
   <app-input-field
     [(inputValue)]="articleComment"
-    [maxLength]="100"
-    [placeholder]="'max. ' + 100 + ' Zeichen'"
-    [ariaLabel]="'Kommentar Artikel max. 100 Zeichen'"
+    [maxLength]="maxLengthComment"
+    [placeholder]="'max. ' + maxLengthComment + ' Zeichen'"
+    [ariaLabel]="'Kommentar Artikel max. ' + maxLengthComment + ' Zeichen'"
     label="Bemerkung"
     fieldId="InputFieldCommentArticle">
   </app-input-field>
-  
+
+
+
 </div>
 

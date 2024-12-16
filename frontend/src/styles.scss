@@ -232,16 +232,34 @@ input {
 }
 
 
+input {
+  width: 100%; /* Ensures the input spans the full width of its container */
+  padding: 0.56em 1.2em;
+  font-family: inherit;
+  font-size: var(--font-size);
+  box-sizing: border-box; /* Ensures padding and border are included in the width */
+  border: 1px solid var(--color-main);
+  border-radius: var(--button-border-radius);
+  background-color: var(--color-main);
+  color: var(--color-text);
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+
+
 .input-field {
   //display: flex;
-  //align-items: center;
-  //justify-content: space-between;
-  //margin-bottom: 0.5em;
+  //flex-direction: column;
+  //width: 100%;
+}
+
+
+.input-field input {
+  width: 100%; /* Makes the input field stretch */
+  //box-sizing: border-box; /* Includes padding and border in width calculation */
 }
 
 .input-field-value {
-  //display: flex;
-  //flex-direction: column;
   width: 100%;
   padding: 0.56em 1.2em;
   font-family: inherit;
@@ -252,7 +270,6 @@ input {
   background-color: var(--color-main);
   color: var(--color-text);
   transition: color 0.3s ease;
-
 }
 
 .input-field-value::placeholder {
