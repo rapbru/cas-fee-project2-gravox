@@ -1,0 +1,19 @@
+<div class="input-field">
+  <div class="input-field-header">
+    <label [for]="fieldId" class="input-field-label">{{ label }}</label>
+    <div class="input-field-counter" [ngClass]="{ 'visible': isFocused || inputValue, 'flash-limit': flashCounter }">
+      {{ inputValue.length }} / {{ maxLength }} Zeichen
+    </div>
+  </div>
+
+  <input
+    [(ngModel)]="inputValue"
+    [id]="fieldId"
+    [placeholder]="placeholder"
+    [maxlength]="maxLength"
+    [attr.aria-label]="ariaLabel"
+    (input)="onInputChange()"
+    (focus)="isFocused = true"
+    (blur)="isFocused = false"
+    [ngClass]="{ 'flash-limit': flashCounter }" />
+</div>

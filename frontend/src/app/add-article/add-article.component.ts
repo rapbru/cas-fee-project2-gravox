@@ -3,29 +3,41 @@ import { Router } from '@angular/router';
 import { AudioService } from '../audio.service';
 import { KeyEventService } from '../key-event.service';
 import { MatIcon } from '@angular/material/icon';
-import { MatMiniFabButton } from '@angular/material/button';
+// import { MatMiniFabButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
+import {InputFieldComponent} from '../input-field/input-field.component';
 
 @Component({
   selector: 'app-add-article',
   standalone: true,
   imports: [
     MatIcon,
-    MatMiniFabButton,
+    // MatMiniFabButton,
     MatTooltip,
     FormsModule,
-    CommonModule
+    CommonModule,
+    InputFieldComponent
   ],
   templateUrl: './add-article.component.html',
   styleUrls: ['./add-article.component.scss']
 })
+
 export class AddArticleComponent implements OnInit, OnDestroy {
-  inputValueNameArticle = '';
+  articleName = '';
+  articleComment = '';
   isFocused = false;
-  flashCounter = false;
+  // flashCounter = false;   ////////////////////////////////////////////////
+
+  handleArticleNameChange(newValue: string): void {
+    this.articleName = newValue;
+  }
+
+  handleArticleCommentChange(newValue: string): void {
+    this.articleComment = newValue;
+  }
 
   private keyPressSubscription: Subscription | undefined;
 
@@ -34,6 +46,18 @@ export class AddArticleComponent implements OnInit, OnDestroy {
     private keyEventService: KeyEventService,
     private router: Router
   ) {}
+
+
+  // onInputChange(): void {
+  //   const inputLength = this.inputValueNameArticle?.length || 0;
+  //   if (inputLength >= 20) {
+  //     this.flashCounter = true;
+  //     this.audioService.playErrorSound();
+  //     setTimeout(() => {
+  //       this.flashCounter = false;
+  //     }, 1000);
+  //   }
+  // }
 
   ngOnInit(): void {
     this.keyEventService.registerKeyAction('Escape', this.onEscapeKey.bind(this));
@@ -51,16 +75,5 @@ export class AddArticleComponent implements OnInit, OnDestroy {
   }
 
   onSaveKey(): void {
-return  }
-
-  onInputChange(): void {
-    const inputLength = this.inputValueNameArticle?.length || 0;
-    if (inputLength >= 20) {
-      this.flashCounter = true;
-      this.audioService.playErrorSound();
-      setTimeout(() => {
-        this.flashCounter = false;
-      }, 1000);
-    }
-  }
+    return  }
 }
