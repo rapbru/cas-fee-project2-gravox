@@ -11,6 +11,7 @@ import { DeviceDetectionService } from '../services/device-detection.service';
 import { OverviewStateService } from '../services/overview-state.service';
 import { PositionService } from '../services/position.service';
 import { PlcService } from '../services/plc.service';
+import { ErrorHandlingService } from '../services/error-handling.service';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class PositionComponent {
   constructor(
     private deviceDetectionService: DeviceDetectionService,
     private overviewStateService: OverviewStateService,
+    private errorHandlingService: ErrorHandlingService,
     private positionService: PositionService,
     private plcService: PlcService
   ) {}
@@ -45,11 +47,8 @@ export class PositionComponent {
     };
 
     this.plcService.writeValues([update]).subscribe({
-      next: () => {
-        console.log(`Wert ${value} für ${tagName} erfolgreich gesetzt`);
-      },
       error: (error) => {
-        console.error(`Fehler beim Setzen des Wertes für ${tagName}:`, error);
+        this.errorHandlingService.showError(`Fehler beim Setzen des Wertes für ${tagName}`, error);
       }
     });
   }

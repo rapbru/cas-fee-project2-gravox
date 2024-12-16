@@ -2,7 +2,6 @@ import dotenv from "dotenv";
 import app from "./app.js";
 import logger from "./logger.js";
 
-// load config-file
 dotenv.config();
 
 const hostname = '0.0.0.0';

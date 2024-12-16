@@ -126,19 +126,15 @@ export class PositionService {
 
   public saveAllChanges(): void {
     if (this.hasNewPositions()) {
-        console.log('saveNewPositions');
         this.saveNewPositions().subscribe({
             next: () => {
-                console.log('Neue Positionen gespeichert, führe restliche Operationen aus');
                 this.saveRemainingOperations();
             },
             error: (error) => {
-                console.error('Fehler beim Speichern der neuen Positionen:', error);
-                this.errorHandlingService.showError('Fehler beim Speichern der neuen Positionen');
+                this.errorHandlingService.showError('Fehler beim Speichern der neuen Positionen', error);
             }
         });
     } else {
-        console.log('saveRemainingOperations');
         this.saveRemainingOperations();
     }
     this.fetchPositions();
@@ -154,14 +150,6 @@ export class PositionService {
                 return newPosition ? { ...pos, id: newPosition.id } : pos;
             });
             this.editPositions.set(updatedPositions);
-            
-            console.log('Positionen nach dem Speichern mit neuen IDs:', 
-                this.editPositions().map(pos => ({
-                    id: pos.id,
-                    number: pos.number,
-                    name: pos.name
-                }))
-            );
         }),
         map(() => void 0)
     );
@@ -174,13 +162,6 @@ export class PositionService {
     return forkJoin(
         newPositions.map(pos => 
             this.http.post<Position>(`${this.apiUrl}`, pos).pipe(
-                tap(savedPos => {
-                    // Hier die Antwort vom Server loggen
-                    console.log('Server Antwort für neue Position:', {
-                        gesendet: pos,
-                        erhalten: savedPos
-                    });
-                }),
                 map(savedPos => ({
                     id: savedPos.id,
                     oldId: pos.id
@@ -216,7 +197,6 @@ export class PositionService {
 
     // Positionsreihenfolge mit den aktualisierten IDs
     const editPositions = this.editPositions();
-    console.log('Speichere Reihenfolge mit aktualisierten IDs:', editPositions.map(p => p.id));
     this.positionOrderService.savePositionOrder(editPositions.map(pos => pos.id)).subscribe({
         next: () => {
             this.clearModifiedPositions();
@@ -231,7 +211,6 @@ export class PositionService {
         .filter(pos => !this.positionsToDelete().some(delPos => delPos.id === pos.id));
     
     const observables: Observable<Position | void>[] = [];
-    console.log('modifiedPositions', modifiedPositions);
     const existingPositions = modifiedPositions.filter(pos => pos.id > 0);
 
     if (existingPositions.length > 0) {
@@ -282,8 +261,6 @@ export class PositionService {
 
     const currentModifiedPositions = this.modifiedPositions();
     this.modifiedPositions.set([...currentModifiedPositions, position]);
-
-    console.log(this.editPositions());
     this.columnManagementService.addPositionToLastColumn();
   }
 
