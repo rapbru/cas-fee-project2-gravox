@@ -8,12 +8,13 @@ import { OverviewStateService } from './overview-state.service';
 import { ColumnManagementService } from './column-management.service';
 import { ErrorHandlingService } from './error-handling.service';
 import { PositionOrderService } from './position-order.service';
+import { ApiConfigService } from '../services/api-config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PositionService {
-  private apiUrl = 'http://localhost:3001/position/';
+  private apiUrl: string;
 
   public positions = signal<Position[]>([]); // alle Positionen aus dem Backend
   public orderedPositions = signal<Position[]>([]); // Positionen geordnet nach der DB
@@ -30,8 +31,11 @@ export class PositionService {
     private overviewStateService: OverviewStateService,
     private columnManagementService: ColumnManagementService,
     private errorHandlingService: ErrorHandlingService,
-    private positionOrderService: PositionOrderService
-  ) {}
+    private positionOrderService: PositionOrderService,
+    private apiConfig: ApiConfigService
+  ) {
+    this.apiUrl = this.apiConfig.getUrl('position');
+  }
 
   public startFetching() {
     this.intervalSubscription = interval(this.updateInterval).subscribe(() => {
@@ -87,27 +91,25 @@ export class PositionService {
       articleName: position.articleName,
       customerName: position.customerName,
       time: {
-        actual: parseFloat((position.time.actual).toFixed(2)),
-        preset: parseFloat((position.time.preset).toFixed(2))
+        actual: parseFloat(position.time.actual.toFixed(2)),
+        preset: parseFloat(position.time.preset.toFixed(2))
       },
       temperature: {
-        actual: position.temperature.actual,
-        preset: position.temperature.preset,
+        actual: parseFloat(position.temperature.actual.toFixed(2)),
+        preset: parseFloat(position.temperature.preset.toFixed(2)),
         isPresent: position.temperature.isPresent
       },
       current: {
-        actual: position.current.actual,
-        preset: position.current.preset,
+        actual: parseFloat(position.current.actual.toFixed(2)),
+        preset: parseFloat(position.current.preset.toFixed(2)),
         isPresent: position.current.isPresent
       },
       voltage: {
-        actual: position.voltage.actual,
-        preset: position.voltage.preset,
+        actual: parseFloat(position.voltage.actual.toFixed(2)),
+        preset: parseFloat(position.voltage.preset.toFixed(2)),
         isPresent: position.voltage.isPresent
       }
     }));
-
-
   }
 
   public createPosition(position: Position): Observable<Position> {
