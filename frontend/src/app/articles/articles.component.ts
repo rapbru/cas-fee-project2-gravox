@@ -65,13 +65,3 @@ export class ArticlesComponent implements OnInit {
     return this.deviceDetectionService.isMobileSignal();
   }
 }
-
-// const routes: Routes = [
-//   { path: 'add-article', component: AddArticleComponent },
-// ];
-//
-// @NgModule({
-//   imports: [RouterModule.forChild(routes)],
-//   exports: [RouterModule]
-// })
-// export class ArticlesRoutingModule {}

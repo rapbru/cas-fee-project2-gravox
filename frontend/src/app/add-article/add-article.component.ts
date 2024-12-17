@@ -1,9 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { AudioService } from '../audio.service';
+import { AudioService } from '../services/audio.service';
 import { KeyEventService } from '../key-event.service';
 import { MatIcon } from '@angular/material/icon';
-// import { MatMiniFabButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -15,27 +14,25 @@ import {InputFieldComponent} from '../input-field/input-field.component';
   standalone: true,
   imports: [
     MatIcon,
-    // MatMiniFabButton,
     MatTooltip,
     FormsModule,
     CommonModule,
     InputFieldComponent
   ],
   templateUrl: './add-article.component.html',
-  styleUrls: ['./add-article.component.scss']
 })
 
 export class AddArticleComponent implements OnInit, OnDestroy {
   articleName = '';
   articleSurface = '';
-  articleDripoff = '';
+  articleDripOff = '';
   articleAnodic = '';
   articleComment = '';
   isFocused = false;
 
   maxLengthName = 20;
   maxLengthSurface = 20;
-  maxLengthDripoff = 20;
+  maxLengthDripOff = 20;
   maxLengthAnodic = 20;
   maxLengthComment = 100;
 
@@ -48,7 +45,7 @@ export class AddArticleComponent implements OnInit, OnDestroy {
   }
 
   handleArticleDripoffChange(newValue: string): void {
-    this.articleDripoff = newValue;
+    this.articleDripOff = newValue;
   }
 
   handleArticleAnodicChange(newValue: string): void {
@@ -66,18 +63,6 @@ export class AddArticleComponent implements OnInit, OnDestroy {
     private keyEventService: KeyEventService,
     private router: Router
   ) {}
-
-
-  // onInputChange(): void {
-  //   const inputLength = this.inputValueNameArticle?.length || 0;
-  //   if (inputLength >= 20) {
-  //     this.flashCounter = true;
-  //     this.audioService.playErrorSound();
-  //     setTimeout(() => {
-  //       this.flashCounter = false;
-  //     }, 1000);
-  //   }
-  // }
 
   ngOnInit(): void {
     this.keyEventService.registerKeyAction('Escape', this.onEscapeKey.bind(this));

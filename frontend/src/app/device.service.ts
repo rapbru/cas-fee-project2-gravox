@@ -10,3 +10,6 @@ export class DeviceService {
     return window.innerWidth < 768;
   }
 }
+
+
+// Redundant durch device-detection.service.ts?
