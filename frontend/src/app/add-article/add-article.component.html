@@ -10,12 +10,18 @@
   <span i18n="@@ButtonCancel">Abbrechen</span>
 </button>
 
-<button class="button button-label button-highlight-main" tabindex="0"
-        aria-label="Speichern" i18n-aria-label="@@ButtonSaveAriaLabel"
-        matTooltip="Speichern" i18n-matTooltip="@@ButtonSaveTooltip">
-  <mat-icon>check</mat-icon>
-  <span i18n="@@ButtonSave">Speichern</span>
-</button>
+  <button
+    class="button button-label button-highlight-main"
+    tabindex="0"
+    aria-label="Speichern"
+    i18n-aria-label="@@ButtonSaveAriaLabel"
+    matTooltip="Speichern"
+    i18n-matTooltip="@@ButtonSaveTooltip"
+    (click)="onSave()">
+    <mat-icon>check</mat-icon>
+    <span i18n="@@ButtonSave">Speichern</span>
+  </button>
+
 
   </div>
 
