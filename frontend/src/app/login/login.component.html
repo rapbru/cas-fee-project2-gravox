@@ -1,23 +1,25 @@
 <div class="login-container">
   <h1>Anmelden</h1>
   
-  <div class="input-group">
-    <input type="text" 
-           [(ngModel)]="username" 
-           name="username" 
-           placeholder="Benutzername" 
-           required>
-           
-    <input type="password" 
-           [(ngModel)]="password" 
-           name="password" 
-           placeholder="Passwort" 
-           required>
-  </div>
+  <form (ngSubmit)="login()">
+    <div class="input-group">
+      <input type="text" 
+             [(ngModel)]="username" 
+             name="username" 
+             placeholder="Benutzername" 
+             required>
+             
+      <input type="password" 
+             [(ngModel)]="password" 
+             name="password" 
+             placeholder="Passwort" 
+             required>
+    </div>
 
-  <button (click)="login()">Anmelden</button>
+    <button type="submit">Anmelden</button>
 
-  <div class="error-message" *ngIf="errorMessage">
-    {{ errorMessage }}
-  </div>
+    <div class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+  </form>
 </div>
