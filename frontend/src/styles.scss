@@ -1,41 +1,8 @@
-//@use '@angular/material' as mat;
-//
-//@include mat.core();
-//
-//$light-theme: mat.define-theme((
-//  color: (
-//    theme-type: light,
-//    //primary: mat.$orange-palette,
-//  ),
-//  density: (
-//    scale: -2
-//  ),
-//));
-//
-//$dark-theme: mat.define-theme((
-//  color: (
-//    theme-type: dark,
-//    //primary: mat.$violet-palette,
-//  ),
-//  density: (
-//    scale: -2
-//  ),
-//));
-//
-//html {
-//  @include mat.all-component-themes($light-theme);
-//  @media (prefers-color-scheme: dark) {
-//    @include mat.all-component-themes($dark-theme);
-//  }
-//}
-
-// html, body { height: 100%; } //this is bad, really bad. i mean really really really bad. don't do this. it's bad. really bad. don't do it. it's bad
 body { margin: 0; font-family: 'Inter', 'Roboto', sans-serif; height: 100%; width: 100%; }
 
 html {
   background-color: var(--color-background);
 }
-
 
 :root {
   --font-size: 14px;
@@ -61,18 +28,10 @@ html {
   --button-gap: 0.4em;
   --button-margin: 0.4em 0em;
   --button-border-radius: 12px;
-  //--button-border-thickness: 2px;
   --button-transform: scale(0.99);
 
   --icon-size: 2.2em;
   --button-font-size: 1.4em;
-  //
-  //--button-primary-bg-color: #FF6228;
-  //--button-primary-hover-color: #FF7442;
-  //--button-primary-active-color: #FFA786;
-  //--button-primary-border-color: #FF6228;
-  //--button-primary-text-color: #FFFFFF;
-  //--button-primary-active-text-color: #FFFFFF;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -155,18 +114,6 @@ input {
   flex-grow: 1;
 }
 
-
-
-
-
-
-
-
-//
-//.spacer {
-//  flex: 1 1 auto;
-//}
-
 .toolbar {
   display: flex;
   justify-content: space-between;
@@ -233,11 +180,11 @@ input {
 
 
 input {
-  width: 100%; /* Ensures the input spans the full width of its container */
+  width: 100%;
   padding: 0.56em 1.2em;
   font-family: inherit;
   font-size: var(--font-size);
-  box-sizing: border-box; /* Ensures padding and border are included in the width */
+  box-sizing: border-box;
   border: 1px solid var(--color-main);
   border-radius: var(--button-border-radius);
   background-color: var(--color-main);
@@ -246,17 +193,8 @@ input {
 }
 
 
-
-.input-field {
-  //display: flex;
-  //flex-direction: column;
-  //width: 100%;
-}
-
-
 .input-field input {
-  width: 100%; /* Makes the input field stretch */
-  //box-sizing: border-box; /* Includes padding and border in width calculation */
+  width: 100%;
 }
 
 .input-field-value {
@@ -309,29 +247,23 @@ input {
   transition: opacity 0s ease, visibility 0s ease;
 }
 
-
-
-
 .input-field-group {
   display: flex;
-  gap: 1em; /* Adds spacing between the fields */
-  width: 100%; /* Ensures the group spans the container width */
-  align-items: flex-start; /* Aligns the fields properly */
+  gap: 1em;
+  width: 100%;
+  align-items: flex-start;
 }
 
 .input-field-group .input-field {
-  flex: 1; /* Distributes space equally among the fields */
-  min-width: 150px; /* Ensures fields don't get too small */
+  flex: 1;
+  min-width: 150px;
 }
 
 @media (max-width: 768px) {
   .input-field-group {
-    flex-direction: column; /* Stacks fields vertically */
+    flex-direction: column;
   }
 }
-
-
-
 
 .input-field-counter-limit {
   color: var(--color-vonesco-sub);
@@ -383,52 +315,6 @@ input {
 .flash-limit {
   animation: shake 0.5s ease-in-out;
 }
-
-
-//.mat-tooltip {
-//  position: absolute;
-//  top: 100%;
-//  left: 50%;
-//  transform: translateX(-50%);
-//  z-index: 1000;
-//}
-
-
-
-//.input-field-clear {
-//  position: absolute;
-//  right: 10px;
-//  background: transparent;
-//  border: none;
-//  font-size: 1.2rem;
-//  color: #ccc;
-//  padding: 0;
-//}
-//
-//.input-field-clear:hover {
-//  filter: brightness(103%);
-//  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-//}
-//
-//.input-field-clear:focus {
-//  filter: brightness(110%);
-//  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-//}
-//
-//.input-field-clear:active {
-//  filter: brightness(94%);
-//  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-//}
-
-
-
-
-
-
-
-
-
-
 
 
 .custom-button {

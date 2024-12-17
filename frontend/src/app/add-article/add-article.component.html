@@ -17,52 +17,9 @@
   <span i18n="@@ButtonSave">Speichern</span>
 </button>
 
-<!--  <button class="button"-->
-<!--          aria-label="Abbrechen" i18n-aria-label="@@ButtonCancelAriaLabel"-->
-<!--          matTooltip="Abbrechen" i18n-matTooltip="@@ButtonCancelTooltip">-->
-<!--  <mat-icon>close</mat-icon>-->
-<!--</button>-->
-
-<!--  <button disabled class="button button-label"-->
-<!--          aria-label="Abbrechen" i18n-aria-label="@@ButtonCancelAriaLabel"-->
-<!--          matTooltip="Abbrechen" i18n-matTooltip="@@ButtonCancelTooltip">-->
-<!--  <mat-icon>close</mat-icon>-->
-<!--  <span i18n="@@ButtonCancel">Deaktiviert</span>-->
-<!--</button>-->
-
   </div>
 
 <div class="scrollable-content" aria-label="Scrollbarer Inhalt" i18n-aria-label="@@ScrollableContent">
-
-
-
-<!--  <div class="input-field">-->
-<!--    <div class="input-field-header">-->
-<!--      <label [for]="fieldId" class="input-field-label" i18n>{{ label }}</label>-->
-<!--      <div-->
-<!--        class="input-field-counter"-->
-<!--        i18n-->
-<!--        [ngClass]="{-->
-<!--        'visible': isFocused || (inputValue && inputValue.length > 0),-->
-<!--        'flash-limit': flashCounter-->
-<!--      }">-->
-<!--        {{ inputValue?.length || 0 }} / {{ maxLength }} Zeichen-->
-<!--      </div>-->
-<!--    </div>-->
-
-<!--    <input-->
-<!--      [(ngModel)]="inputValue"-->
-<!--      [id]="fieldId"-->
-<!--      class="input-field-value"-->
-<!--      (input)="onInputChange()"-->
-<!--      (focus)="isFocused = true"-->
-<!--      (blur)="isFocused = false"-->
-<!--      [placeholder]="placeholder"-->
-<!--      [maxlength]="maxLength"-->
-<!--      [attr.aria-label]="ariaLabel"-->
-<!--      [ngClass]="{ 'flash-limit': flashCounter }">-->
-<!--  </div>-->
-
 
   <app-input-field
     [(inputValue)]="articleName"
@@ -72,7 +29,6 @@
     label="Bezeichnung"
     fieldId="InputFieldNameArticle">
   </app-input-field>
-
 
   <div class="input-field-group">
 
@@ -86,10 +42,10 @@
   </app-input-field>
 
   <app-input-field
-    [(inputValue)]="articleDripoff"
-    [maxLength]="maxLengthDripoff"
-    [placeholder]="'max. ' + maxLengthDripoff + ' Zeichen'"
-    [ariaLabel]="'Abtropfen Artikel max. ' + maxLengthDripoff + ' Zeichen'"
+    [(inputValue)]="articleDripOff"
+    [maxLength]="maxLengthDripOff"
+    [placeholder]="'max. ' + maxLengthDripOff + ' Zeichen'"
+    [ariaLabel]="'Abtropfen Artikel max. ' + maxLengthDripOff + ' Zeichen'"
     label="Abtropfen"
     fieldId="InputFieldDripoffArticle">
   </app-input-field>
@@ -105,7 +61,6 @@
 
   </div>
 
-
   <app-input-field
     [(inputValue)]="articleComment"
     [maxLength]="maxLengthComment"
@@ -114,8 +69,6 @@
     label="Bemerkung"
     fieldId="InputFieldCommentArticle">
   </app-input-field>
-
-
 
 </div>
 
