@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import logger from '../logger.js';
+import logger from '../utils/logger.js';
 
 
 export class TagData {

@@ -1,5 +1,5 @@
 import { TagGroup } from 'st-ethernet-ip';
-import logger from '../logger.js';
+import logger from '../utils/logger.js';
 
 export default class TagService {
     static instance = null;

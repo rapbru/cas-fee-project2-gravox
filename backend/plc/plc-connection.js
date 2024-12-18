@@ -1,5 +1,5 @@
 import { ControllerManager } from 'st-ethernet-ip';
-import logger from '../logger.js';
+import logger from '../utils/logger.js';
 
 class PLCConnection {
     constructor(ipAddress, slot = 0) {
