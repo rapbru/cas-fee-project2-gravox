@@ -1,5 +1,5 @@
 import pool from '../data/db-connection.js';
-import logger from '../logger.js';
+import logger from '../utils/logger.js';
 
 class SettingsService {
     constructor() {

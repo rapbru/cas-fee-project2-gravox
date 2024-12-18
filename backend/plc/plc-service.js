@@ -1,7 +1,7 @@
 import { TagList, Structure } from 'st-ethernet-ip';
 import TagService from "./tag-service.js";
 import PositionService from '../services/position-service.js';
-import logger from '../logger.js';
+import logger from '../utils/logger.js';
 
 
 export default class PLCService {

@@ -8,6 +8,7 @@ import positionRoutes from './routes/position-routes.js';
 import settingsRoutes from './routes/settings-routes.js';
 import authRoutes from './routes/auth-routes.js';
 import authToken from './auth-token.js';
+import articleRoutes from './routes/article-routes.js';
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use("/auth", authRoutes);
 app.use("/plc", authToken, plcRoutes);
 app.use("/position", authToken, positionRoutes);
 app.use('/settings', authToken, settingsRoutes);
+app.use('/article', authToken, articleRoutes);
 
 app.use((err, req, res, next) => {
     if (err.name === 'UnauthorizedError') {
