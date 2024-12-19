@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return sessionStorage.getItem('token'); 
+    return sessionStorage.getItem('token');
   }
 
   removeToken(): void {
@@ -39,5 +39,5 @@ export class AuthService {
   logout(): void {
     this.removeToken();
   }
-  
+
 }

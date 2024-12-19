@@ -67,7 +67,7 @@ export class AddArticleComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // No subscription to clean up
+return
   }
 
   loadArticles(): void {
@@ -91,24 +91,29 @@ export class AddArticleComponent implements OnInit, OnDestroy {
       modifiedDate: { id: '', value: new Date().toISOString() }
     };
 
-    this.articles.push(newArticle);
-    console.log('Updated Articles:', this.articles);
-    this.saveToJson();
+    this.http.post('http://localhost:3001/article', newArticle).subscribe({
+      next: (response) => {
+        console.log('Article saved successfully:', response);
+        this.articles.push(newArticle); // Optionally update local state
+      },
+      error: (err) => console.error('Error saving article:', err)
+    });
   }
 
-  saveToJson(): void {
-    const blob = new Blob(
-      [JSON.stringify({ articles: this.articles }, null, 2)],
-      { type: 'application/json' }
-    );
 
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'articles-data.json';
-    a.click();
-    URL.revokeObjectURL(url);
-  }
+  // saveToJson(): void {
+  //   const blob = new Blob(
+  //     [JSON.stringify({ articles: this.articles }, null, 2)],
+  //     { type: 'application/json' }
+  //   );
+  //
+  //   const url = URL.createObjectURL(blob);
+  //   const a = document.createElement('a');
+  //   a.href = url;
+  //   a.download = 'articles-data.json';
+  //   a.click();
+  //   URL.revokeObjectURL(url);
+  // }
 
   onEscapeKey(): void {
     if (!this.isFocused) {
