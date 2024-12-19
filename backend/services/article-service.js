@@ -33,14 +33,14 @@ class ArticleService {
             `;
             
             const articleResult = await client.query(articleQuery, [
-                articleData.number.value,
-                articleData.title.value,
-                articleData.customer.value,
-                articleData.area.value,
-                articleData.drainage.value,
-                articleData.anodic.value,
-                articleData.note.value,
-                articleData.createdBy.value
+                articleData.number,
+                articleData.title,
+                articleData.customer,
+                articleData.area,
+                articleData.drainage,
+                articleData.anodic,
+                articleData.note,
+                articleData.createdBy
             ]);
 
             const articleId = articleResult.rows[0].id;
@@ -157,14 +157,14 @@ class ArticleService {
             WHERE id = $9`;
 
         await client.query(updateQuery, [
-            articleData.number.value,
-            articleData.title.value,
-            articleData.customer.value,
-            articleData.area.value,
-            articleData.drainage.value,
-            articleData.anodic.value,
-            articleData.note.value,
-            articleData.modifiedBy.value,
+            articleData.number,
+            articleData.title,
+            articleData.customer,
+            articleData.area,
+            articleData.drainage,
+            articleData.anodic,
+            articleData.note,
+            articleData.modifiedBy,
             id
         ]);
     }
