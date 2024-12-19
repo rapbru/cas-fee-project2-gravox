@@ -17,7 +17,7 @@
   <div class="column">
 
     <div *ngFor="let article of articles" class="article-card">
-    <mat-card>
+    <mat-card (click)="navigateToDetails(article.id)">
       <mat-card-header class="article-card">
         <mat-card-title class="article-pair-header" [id]="article.title.id">{{ article.title.value }}</mat-card-title>
       </mat-card-header>

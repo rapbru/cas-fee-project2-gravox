@@ -4,13 +4,16 @@ import { ToolbarComponent } from '../toolbar/toolbar.component';
 import { DeviceDetectionService } from '../services/device-detection.service';
 import { MatCardModule } from '@angular/material/card';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
-interface ArticleField {
+
+
+export interface ArticleField {
   id: string;
   value: string;
 }
 
-interface Article {
+export interface Article {
   id: string;
   title: ArticleField;
   number: ArticleField;
@@ -37,8 +40,13 @@ export class ArticlesComponent implements OnInit {
 
   constructor(
     private deviceDetectionService: DeviceDetectionService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {}
+
+  navigateToDetails(articleId: string) {
+    this.router.navigate(['/articles', articleId]);
+  }
 
   ngOnInit(): void {
     this.http.get<{ articles: Article[] }>('/assets/articles-data.json').subscribe((data) => {

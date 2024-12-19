@@ -1,1 +1,36 @@
 <p>articles-details works!</p>
+
+<div class="article-details" *ngIf="article">
+  <h2>{{ article?.title?.value }}</h2>
+  <div class="article-columns">
+    <div class="article-column-label">Nummer:</div>
+    <div>{{ article?.number?.value }}</div>
+
+    <div class="article-column-label">Kunde:</div>
+    <div>{{ article?.customer?.value }}</div>
+
+    <div class="article-column-label">Fläche:</div>
+    <div>{{ article?.area?.value }}</div>
+
+    <div class="article-column-label">Abtropfen:</div>
+    <div>{{ article?.drainage?.value }}</div>
+
+    <div class="article-column-label">Anodisch:</div>
+    <div>{{ article?.anodic?.value }}</div>
+
+    <div class="article-column-label">Erstellt:</div>
+    <div>{{ article?.createdBy?.value }}</div>
+
+    <div class="article-column-label">Datum:</div>
+    <div>{{ article?.createdDate?.value }}</div>
+
+    <div class="article-column-label">Geändert:</div>
+    <div>{{ article?.modifiedBy?.value }}</div>
+
+    <div class="article-column-label">Datum:</div>
+    <div>{{ article?.modifiedDate?.value }}</div>
+
+    <div class="article-column-label">Bemerkung:</div>
+    <div>{{ article?.note?.value }}</div>
+  </div>
+</div>
