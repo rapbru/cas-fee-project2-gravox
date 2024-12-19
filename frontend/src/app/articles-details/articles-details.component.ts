@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { Article } from '../articles/articles.component';
 
 @Component({
@@ -14,9 +15,15 @@ export class ArticlesDetailsComponent implements OnInit {
   articleId: string | null = null;
   article: Article | null = null;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.articleId = this.route.snapshot.paramMap.get('id');
+
+    if (this.articleId) {
+      this.http.get<{ articles: Article[] }>('/assets/articles-data.json').subscribe((data) => {
+        this.article = data.articles.find(article => article.id === this.articleId) || null;
+      });
+    }
   }
 }
