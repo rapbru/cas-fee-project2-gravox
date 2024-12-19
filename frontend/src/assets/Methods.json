@@ -1,0 +1,480 @@
+{
+  "info": {
+    "_postman_id": "29c9e3ef-a16e-4ef0-83e9-d87970d626d3",
+    "name": "GravoX",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "7630140"
+  },
+  "item": [
+    {
+      "name": "write multiple tags",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczMTQxNDM5MiwiZXhwIjoxNzM0MDA2MzkyfQ.kpaAmYO9HcRASovtxQRanc_5gW8GgZSO6A-TOaBxeYA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "[\r\n  {\r\n    \"tagName\": \"POS[6].TIME.PRESET\",\r\n    \"value\": 120\r\n  },\r\n  {\r\n    \"tagName\": \"POS[55].TIME.PRESET\",\r\n    \"value\": 250\r\n  },\r\n  {\r\n    \"tagName\": \"POS[3].TIME.PRESET\",\r\n    \"value\": 60\r\n  }\r\n]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3001/plc/write",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["plc", "write"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "create new position",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczMjUyMTQ2MCwiZXhwIjoxNzM1MTEzNDYwfQ.4mccy_y6Wq90Jy3tgoR_urQIjOg4--X0sWu9yqwQQug",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"number\": 101,\r\n    \"name\": \"Neue Position\",\r\n    \"temperature\": {\r\n        \"isPresent\": true\r\n    },\r\n    \"current\": {\r\n        \"isPresent\": false\r\n    },\r\n    \"voltage\": {\r\n        \"isPresent\": true\r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3001/position",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["position"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "create article",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczNDQ0Nzg4NywiZXhwIjoxNzM3MDM5ODg3fQ.jIAjUqyupz6UVBYQDED6P3q028Xzol2N43GN3MbeqEs",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": { \"value\": \"Trommel Passivieren\" },\r\n  \"number\": { \"value\": \"102\" },\r\n  \"customer\": { \"value\": \"Pilatus\" },\r\n  \"area\": { \"value\": \"150dm²\" },\r\n  \"drainage\": { \"value\": \"100%\" },\r\n  \"anodic\": { \"value\": \"0%\" },\r\n  \"createdBy\": { \"value\": \"Silvan Weber\" },\r\n  \"note\": { \"value\": \"Ist eine Trommel.\" },\r\n  \"sequence\": [\r\n    {\r\n      \"positionId\": 19,\r\n      \"orderNumber\": 1,\r\n      \"timePreset\": 60,\r\n      \"currentPreset\": 260,\r\n      \"voltagePreset\": null\r\n    },\r\n    {\r\n      \"positionId\": 22,\r\n      \"orderNumber\": 2,\r\n      \"timePreset\": 120,\r\n      \"currentPreset\": 260,\r\n      \"voltagePreset\": null\r\n    }\r\n  ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3001/article",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["article"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get all articles",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczNDQ0Nzg4NywiZXhwIjoxNzM3MDM5ODg3fQ.jIAjUqyupz6UVBYQDED6P3q028Xzol2N43GN3MbeqEs",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": { \"value\": \"Trommel Passivieren\" },\r\n  \"number\": { \"value\": \"102\" },\r\n  \"customer\": { \"value\": \"Pilatus\" },\r\n  \"area\": { \"value\": \"150dm²\" },\r\n  \"drainage\": { \"value\": \"100%\" },\r\n  \"anodic\": { \"value\": \"0%\" },\r\n  \"createdBy\": { \"value\": \"Silvan Weber\" },\r\n  \"note\": { \"value\": \"Ist eine Trommel.\" },\r\n  \"sequence\": [\r\n    {\r\n      \"positionId\": 19,\r\n      \"orderNumber\": 1,\r\n      \"timePreset\": 60,\r\n      \"currentPreset\": 260,\r\n      \"voltagePreset\": null\r\n    },\r\n    {\r\n      \"positionId\": 22,\r\n      \"orderNumber\": 2,\r\n      \"timePreset\": 120,\r\n      \"currentPreset\": 260,\r\n      \"voltagePreset\": null\r\n    }\r\n  ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3001/article",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["article"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get article",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczNDQ0Nzg4NywiZXhwIjoxNzM3MDM5ODg3fQ.jIAjUqyupz6UVBYQDED6P3q028Xzol2N43GN3MbeqEs",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": { \"value\": \"Trommel Passivieren\" },\r\n  \"number\": { \"value\": \"102\" },\r\n  \"customer\": { \"value\": \"Pilatus\" },\r\n  \"area\": { \"value\": \"150dm²\" },\r\n  \"drainage\": { \"value\": \"100%\" },\r\n  \"anodic\": { \"value\": \"0%\" },\r\n  \"createdBy\": { \"value\": \"Silvan Weber\" },\r\n  \"note\": { \"value\": \"Ist eine Trommel.\" },\r\n  \"sequence\": [\r\n    {\r\n      \"positionId\": 19,\r\n      \"orderNumber\": 1,\r\n      \"timePreset\": 60,\r\n      \"currentPreset\": 260,\r\n      \"voltagePreset\": null\r\n    },\r\n    {\r\n      \"positionId\": 22,\r\n      \"orderNumber\": 2,\r\n      \"timePreset\": 120,\r\n      \"currentPreset\": 260,\r\n      \"voltagePreset\": null\r\n    }\r\n  ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3001/article/4",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["article", "4"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "delete article",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczNDQ0Nzg4NywiZXhwIjoxNzM3MDM5ODg3fQ.jIAjUqyupz6UVBYQDED6P3q028Xzol2N43GN3MbeqEs",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3001/article/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["article", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update article",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczNDQ0Nzg4NywiZXhwIjoxNzM3MDM5ODg3fQ.jIAjUqyupz6UVBYQDED6P3q028Xzol2N43GN3MbeqEs",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\": { \"value\": \"Trommel Passivieren Updated\" },\r\n    \"number\": { \"value\": \"102\" },\r\n    \"customer\": { \"value\": \"Pilatus AG\" },\r\n    \"area\": { \"value\": \"160dm²\" },\r\n    \"drainage\": { \"value\": \"95%\" },\r\n    \"anodic\": { \"value\": \"0%\" },\r\n    \"modifiedBy\": { \"value\": \"John Doe\" },\r\n    \"note\": { \"value\": \"Aktualisierte Notiz\" },\r\n    \"sequence\": [\r\n        {\r\n            \"positionId\": 19,\r\n            \"orderNumber\": 1,\r\n            \"timePreset\": 65,\r\n            \"currentPreset\": 270,\r\n            \"voltagePreset\": null\r\n        },\r\n        {\r\n            \"positionId\": 22,\r\n            \"orderNumber\": 2,\r\n            \"timePreset\": 95,\r\n            \"currentPreset\": 285,\r\n            \"voltagePreset\": null\r\n        },\r\n        {\r\n            \"positionId\": 10,\r\n            \"orderNumber\": 3,\r\n            \"timePreset\": 10,\r\n            \"currentPreset\": null,\r\n            \"voltagePreset\": null\r\n        }\r\n    ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3001/article/4",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["article", "4"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update article",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczMjUyMTQ2MCwiZXhwIjoxNzM1MTEzNDYwfQ.4mccy_y6Wq90Jy3tgoR_urQIjOg4--X0sWu9yqwQQug",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\": { \"value\": \"Trommel Passivieren Updated\" },\r\n    \"number\": { \"value\": \"102\" },\r\n    \"customer\": { \"value\": \"Pilatus AG\" },\r\n    \"area\": { \"value\": \"160dm²\" },\r\n    \"drainage\": { \"value\": \"100%\" },\r\n    \"anodic\": { \"value\": \"0%\" },\r\n    \"modifiedBy\": { \"value\": \"Raphael Brunner\" },\r\n    \"note\": { \"value\": \"Ist eine aktualisierte Trommel.\" }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3001/article/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["article", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "write one tag",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczMjUyMTQ2MCwiZXhwIjoxNzM1MTEzNDYwfQ.4mccy_y6Wq90Jy3tgoR_urQIjOg4--X0sWu9yqwQQug",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "[\r\n  {\r\n    \"tagName\": \"POS[6].TIME.PRESET\",\r\n    \"value\": 320\r\n  }\r\n]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3001/plc/write",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["plc", "write"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"password\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3001/auth/login",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["auth", "login"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "read tag",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczMTQxNDM5MiwiZXhwIjoxNzM0MDA2MzkyfQ.kpaAmYO9HcRASovtxQRanc_5gW8GgZSO6A-TOaBxeYA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "[\r\n  {\r\n    \"tagName\": \"POS[55].TIME.PRESET\"\r\n  },\r\n  {\r\n    \"tagName\": \"POS[56].TIME.PRESET\"\r\n  },\r\n  {\r\n    \"tagName\": \"POS[57].TIME.PRESET\"\r\n  }\r\n]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3001/plc/read",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["plc", "read"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get tags",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczMDEwMDU2MSwiZXhwIjoxNzMyNjkyNTYxfQ.Q4LfXPZkXcXRENAjTyv3wfjxn58x7gdWgbPODOH-cws",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/plc/structure/pos/0",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["plc", "structure", "pos", "0"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "read all tags",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczMDEwMDU2MSwiZXhwIjoxNzMyNjkyNTYxfQ.Q4LfXPZkXcXRENAjTyv3wfjxn58x7gdWgbPODOH-cws",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/plc/read",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["plc", "read"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "read all positions",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczNDQ0Nzg4NywiZXhwIjoxNzM3MDM5ODg3fQ.jIAjUqyupz6UVBYQDED6P3q028Xzol2N43GN3MbeqEs",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/position",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["position"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "column settings",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczMjY5NjIyOCwiZXhwIjoxNzM1Mjg4MjI4fQ.XP93kc3j2fW0qSykvq-LZNJ3zJ5MB5515vNcM0f6rJw",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/settings/columns",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["settings", "columns"]
+        }
+      },
+      "response": []
+    }
+  ]
+}
