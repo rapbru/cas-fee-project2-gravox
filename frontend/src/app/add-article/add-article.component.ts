@@ -6,7 +6,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { InputFieldComponent} from "../input-field/input-field.component";
+import { InputFieldComponent } from '../input-field/input-field.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 export interface Article {
@@ -60,14 +60,13 @@ export class AddArticleComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // Registering key event handlers directly without the subscription
     this.keyEventService.registerKeyAction('Escape', this.onEscapeKey.bind(this));
     this.keyEventService.registerKeyAction('Enter', this.onSaveKey.bind(this));
     this.loadArticles();
   }
 
   ngOnDestroy(): void {
-return
+    return;
   }
 
   loadArticles(): void {
@@ -94,26 +93,25 @@ return
     this.http.post('http://localhost:3001/article', newArticle).subscribe({
       next: (response) => {
         console.log('Article saved successfully:', response);
-        this.articles.push(newArticle); // Optionally update local state
+        this.articles.push(newArticle);
       },
       error: (err) => console.error('Error saving article:', err)
     });
   }
 
+  logArticleData(): void {
+    const articleData = {
+      articleName: this.articleName,
+      articleSurface: this.articleSurface,
+      articleDripOff: this.articleDripOff,
+      articleAnodic: this.articleAnodic,
+      articleComment: this.articleComment,
+      currentUser: this.currentUser,
+      articles: this.articles
+    };
 
-  // saveToJson(): void {
-  //   const blob = new Blob(
-  //     [JSON.stringify({ articles: this.articles }, null, 2)],
-  //     { type: 'application/json' }
-  //   );
-  //
-  //   const url = URL.createObjectURL(blob);
-  //   const a = document.createElement('a');
-  //   a.href = url;
-  //   a.download = 'articles-data.json';
-  //   a.click();
-  //   URL.revokeObjectURL(url);
-  // }
+    console.log('Current Article Data:', articleData);
+  }
 
   onEscapeKey(): void {
     if (!this.isFocused) {
