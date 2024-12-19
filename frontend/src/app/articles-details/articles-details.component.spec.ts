@@ -1,23 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Article } from '../articles/articles.component'; // Import the Article interface
 
-import { ArticlesDetailsComponent } from './articles-details.component';
+@Component({
+  selector: 'app-articles-details',
+  templateUrl: './articles-details.component.html',
+  styleUrls: ['./articles-details.component.scss']
+})
+export class ArticlesDetailsComponent implements OnInit {
+  article: Article | undefined; // Article object
+  articleId: string | null = null; // Article ID from route
 
-describe('ArticlesDetailsComponent', () => {
-  let component: ArticlesDetailsComponent;
-  let fixture: ComponentFixture<ArticlesDetailsComponent>;
+  constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ArticlesDetailsComponent]
-    })
-    .compileComponents();
+  ngOnInit(): void {
+    this.articleId = this.route.snapshot.paramMap.get('id'); // Get articleId from route params
 
-    fixture = TestBed.createComponent(ArticlesDetailsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    // Fetch article data from JSON or API based on the articleId
+    this.http.get<{ articles: Article[] }>('/assets/articles-data.json').subscribe((data) => {
+      this.article = data.articles.find(article => article.id === this.articleId); // Find article by id
+    });
+  }
+}
