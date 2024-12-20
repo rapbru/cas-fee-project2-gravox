@@ -99,20 +99,6 @@ export class AddArticleComponent implements OnInit, OnDestroy {
     });
   }
 
-  logArticleData(): void {
-    const articleData = {
-      articleName: this.articleName,
-      articleSurface: this.articleSurface,
-      articleDripOff: this.articleDripOff,
-      articleAnodic: this.articleAnodic,
-      articleComment: this.articleComment,
-      currentUser: this.currentUser,
-      articles: this.articles
-    };
-
-    console.log('Current Article Data:', articleData);
-  }
-
   onEscapeKey(): void {
     if (!this.isFocused) {
       this.router.navigate(['/articles']);
