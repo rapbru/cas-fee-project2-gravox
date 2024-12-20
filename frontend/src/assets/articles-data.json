@@ -12,7 +12,7 @@
       "createdDate": { "id": "article-createdDate-123", "value": "14.11.2024" },
       "modifiedBy": { "id": "article-modifiedBy-123", "value": "Raphael Brunner" },
       "modifiedDate": { "id": "article-modifiedDate-123", "value": "15.11.2024" },
-      "note": { "id": "article-note-123", "value": "Ist eine Trommel. Local" }
+      "note": { "id": "article-note-123", "value": "Ist eine Trommel. Local." }
     },
     {
       "id": "124",
