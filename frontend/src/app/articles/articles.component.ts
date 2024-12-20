@@ -8,25 +8,22 @@ import { Router } from '@angular/router';
 
 
 
-export interface ArticleField {
-  id: string;
-  value: string;
-}
-
 export interface Article {
   id: string;
-  title: ArticleField;
-  number: ArticleField;
-  customer: ArticleField;
-  area: ArticleField;
-  drainage: ArticleField;
-  anodic: ArticleField;
-  createdBy: ArticleField;
-  createdDate: ArticleField;
-  modifiedBy: ArticleField;
-  modifiedDate: ArticleField;
-  note: ArticleField;
+  title: { id: string; value: string };
+  area: { id: string; value: string };
+  drainage: { id: string; value: string };
+  anodic: { id: string; value: string };
+  note: { id: string; value: string };
+  createdBy: { id: string; value: string };
+  createdDate: { id: string; value: string };
+  modifiedBy: { id: string; value: string };
+  modifiedDate: { id: string; value: string };
+  number: { id: string; value: string };
+  customer: { id: string; value: string };
 }
+
+
 
 @Component({
   selector: 'app-articles',
@@ -49,23 +46,14 @@ export class ArticlesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.get<{ articles: Article[] }>('/assets/articles-data.json').subscribe((data) => {
-      this.articles = data.articles;
-
-      this.articles.forEach((article) => {
-        const articleId = article.id;
-        article.title.id = `article-title-${articleId}`;
-        article.number.id = `article-number-${articleId}`;
-        article.customer.id = `article-customer-${articleId}`;
-        article.area.id = `article-area-${articleId}`;
-        article.drainage.id = `article-drainage-${articleId}`;
-        article.anodic.id = `article-anodic-${articleId}`;
-        article.createdBy.id = `article-createdBy-${articleId}`;
-        article.createdDate.id = `article-createdDate-${articleId}`;
-        article.modifiedBy.id = `article-modifiedBy-${articleId}`;
-        article.modifiedDate.id = `article-modifiedDate-${articleId}`;
-        article.note.id = `article-note-${articleId}`;
-      });
+    this.loadArticles();
+  }
+  loadArticles(): void {
+    this.http.get<{ articles: Article[] }>('assets/articles-data.json').subscribe({
+      next: (data) => {
+        this.articles = data.articles;
+      },
+      error: (err) => console.error('Error loading articles:', err)
     });
   }
 
