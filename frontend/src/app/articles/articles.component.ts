@@ -5,7 +5,7 @@ import { DeviceDetectionService } from '../services/device-detection.service';
 import { MatCardModule } from '@angular/material/card';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-
+import { LoggerService } from '../services/logger.service';
 
 
 export interface Article {
@@ -38,23 +38,44 @@ export class ArticlesComponent implements OnInit {
   constructor(
     private deviceDetectionService: DeviceDetectionService,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private loggerService: LoggerService
   ) {}
 
-  navigateToDetails(articleId: string) {
-    this.router.navigate(['/articles', articleId]);
-  }
 
   ngOnInit(): void {
     this.loadArticles();
   }
+
+  // loadArticles(): void {
+  //   this.http.get<{ articles: Article[] }>('assets/articles-data.json').subscribe({
+  //     next: (data) => {
+  //       this.articles = data.articles;
+  //       this.loggerService.log('Articles loaded successfully:', this.articles); // Log the data
+  //     },
+  //     error: (err) => {
+  //       console.error('Error loading articles:', err);
+  //       this.loggerService.error('Error loading articles:', err); // Log the error
+  //     }
+  //   });
+  // }
+
+
   loadArticles(): void {
-    this.http.get<{ articles: Article[] }>('assets/articles-data.json').subscribe({
+    this.http.get<{ articles: Article[] }>('http://localhost:3001/articles').subscribe({
       next: (data) => {
         this.articles = data.articles;
+        this.loggerService.log('Articles loaded successfully:', this.articles);
       },
-      error: (err) => console.error('Error loading articles:', err)
+      error: (err) => {
+        console.error('Error loading articles:', err);
+        this.loggerService.error('Error loading articles:', err);
+      }
     });
+  }
+
+  navigateToDetails(articleId: string) {
+    this.router.navigate(['/articles', articleId]);
   }
 
   isMobile(): boolean {
