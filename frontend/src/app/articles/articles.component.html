@@ -13,9 +13,15 @@
 <app-toolbar></app-toolbar>
 <button mat-button (click)="loadArticles()">Load Articles</button>
 
-
+<!-- Add these debug lines -->
+<div>Loading: {{ loading }}</div>
+<div>Error: {{ error }}</div>
+<div>Number of articles: {{ articles?.length }}</div>
 
 <div *ngFor="let article of articles" class="article-card">
+  <!-- Add this temporary debug line -->
+  <pre>{{ article | json }}</pre>
+  
   <mat-card (click)="navigateToDetails(article.id)">
     <mat-card-header class="article-card">
       <mat-card-title class="article-pair-header">

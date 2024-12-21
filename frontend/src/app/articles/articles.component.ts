@@ -71,13 +71,14 @@ ngOnInit() {
     this.http.get<Article[]>('http://localhost:3001/article')
       .subscribe({
         next: (data) => {
+          this.loggerService.log('Articles loaded successfully:', data);
           this.articles = data;
           this.loading = false;
         },
         error: (err) => {
           this.error = 'Failed to load articles';
           this.loading = false;
-          console.error('Error loading articles:', err);
+          this.loggerService.error('Error loading articles:', err);
         }
       });
   }
