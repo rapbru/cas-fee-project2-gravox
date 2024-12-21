@@ -10,19 +10,27 @@ import { LoggerService } from '../services/logger.service';
 
 export interface Article {
   id: string;
-  title: { id: string; value: string };
-  area: { id: string; value: string };
-  drainage: { id: string; value: string };
-  anodic: { id: string; value: string };
-  note: { id: string; value: string };
-  createdBy: { id: string; value: string };
-  createdDate: { id: string; value: string };
-  modifiedBy: { id: string; value: string };
-  modifiedDate: { id: string; value: string };
-  number: { id: string; value: string };
-  customer: { id: string; value: string };
+  title: { value: string };
+  number: { value: string };
+  customer: { value: string };
+  area: { value: string };
+  drainage: { value: string };
+  anodic: { value: string };
+  createdBy: { value: string };
+  createdDate?: string;
+  note: { value: string };
+  sequence?: SequenceItem[];
+  modifiedBy?: { value: string };
+  modifiedDate?: string;
 }
 
+interface SequenceItem {
+  positionId: number;
+  orderNumber: number;
+  timePreset: number;
+  currentPreset: number;
+  voltagePreset: number | null;
+}
 
 
 @Component({
@@ -30,10 +38,22 @@ export interface Article {
   standalone: true,
   imports: [CommonModule, ToolbarComponent, MatCardModule],
   templateUrl: './articles.component.html',
-  styleUrls: ['./articles.component.scss']
+  styleUrls: ['./articles.component.scss'],
+  template: `
+    <div *ngIf="articles.length">
+      <div *ngFor="let article of articles">
+        <h2>{{article.title}}</h2>
+        <p>{{article.content}}</p>
+      </div>
+    </div>
+    <div *ngIf="error">{{error}}</div>
+    <div *ngIf="loading">Loading...</div>
+  `
 })
 export class ArticlesComponent implements OnInit {
   articles: Article[] = [];
+  error = '';
+  loading = true;
 
   constructor(
     private deviceDetectionService: DeviceDetectionService,
@@ -43,42 +63,30 @@ export class ArticlesComponent implements OnInit {
   ) {}
 
 
-  ngOnInit(): void {
+ngOnInit() {
     this.loadArticles();
   }
 
-  // loadArticles(): void {
-  //   this.http.get<{ articles: Article[] }>('assets/articles-data.json').subscribe({
-  //     next: (data) => {
-  //       this.articles = data.articles;
-  //       this.loggerService.log('Articles loaded successfully:', this.articles); // Log the data
-  //     },
-  //     error: (err) => {
-  //       console.error('Error loading articles:', err);
-  //       this.loggerService.error('Error loading articles:', err); // Log the error
-  //     }
-  //   });
-  // }
-
-
-  loadArticles(): void {
-    this.http.get<{ articles: Article[] }>('http://localhost:3001/articles').subscribe({
-      next: (data) => {
-        this.articles = data.articles;
-        this.loggerService.log('Articles loaded successfully:', this.articles);
-      },
-      error: (err) => {
-        console.error('Error loading articles:', err);
-        this.loggerService.error('Error loading articles:', err);
-      }
-    });
+  public loadArticles() {
+    this.http.get<Article[]>('http://localhost:3001/article')
+      .subscribe({
+        next: (data) => {
+          this.articles = data;
+          this.loading = false;
+        },
+        error: (err) => {
+          this.error = 'Failed to load articles';
+          this.loading = false;
+          console.error('Error loading articles:', err);
+        }
+      });
   }
 
-  navigateToDetails(articleId: string) {
+  public navigateToDetails(articleId: string) {
     this.router.navigate(['/articles', articleId]);
   }
 
-  isMobile(): boolean {
-    return this.deviceDetectionService.isMobileSignal();
-  }
+  // isMobile(): boolean {
+  //   return this.deviceDetectionService.isMobileSignal();
+  // }
 }
