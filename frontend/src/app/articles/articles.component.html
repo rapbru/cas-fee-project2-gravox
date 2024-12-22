@@ -19,13 +19,10 @@
 <div>Number of articles: {{ articles?.length }}</div>
 
 <div *ngFor="let article of articles" class="article-card">
-  <!-- Add this temporary debug line -->
-  <pre>{{ article | json }}</pre>
-  
   <mat-card (click)="navigateToDetails(article.id)">
     <mat-card-header class="article-card">
       <mat-card-title class="article-pair-header">
-        {{ article.title.value }}
+        {{ article.title }}
       </mat-card-title>
     </mat-card-header>
     <mat-card-content class="article-card">
@@ -38,27 +35,17 @@
           <div class="article-column-label">Abtropfen:</div>
           <div class="article-column-label">Anodisch:</div>
           <div class="article-column-spacer"></div>
-          <div class="article-column-label">Erstellt:</div>
-          <div class="article-column-label">Datum:</div>
-          <div class="article-column-label">Geändert:</div>
-          <div class="article-column-label">Datum:</div>
-          <div class="article-column-spacer"></div>
           <div class="article-column-label">Bemerkung:</div>
         </div>
         <div class="article-column-values">
-          <div class="article-column-value">{{ article?.number?.value }}</div>
-          <div class="article-column-value">{{ article?.customer?.value }}</div>
+          <div class="article-column-value">{{ article.number }}</div>
+          <div class="article-column-value">{{ article.customer }}</div>
           <div class="article-column-spacer"></div>
-          <div class="article-column-value">{{ article?.area?.value }}</div>
-          <div class="article-column-value">{{ article?.drainage?.value }}</div>
-          <div class="article-column-value">{{ article?.anodic?.value }}</div>
+          <div class="article-column-value">{{ article.area }}</div>
+          <div class="article-column-value">{{ article.drainage }}</div>
+          <div class="article-column-value">{{ article.anodic }}</div>
           <div class="article-column-spacer"></div>
-          <div class="article-column-value">{{ article?.createdBy?.value }}</div>
-          <div class="article-column-value">{{ article?.createdDate }}</div>
-          <div class="article-column-value">{{ article?.modifiedBy?.value }}</div>
-          <div class="article-column-value">{{ article?.modifiedDate }}</div>
-          <div class="article-column-spacer"></div>
-          <div class="article-column-value">{{ article?.note?.value }}</div>
+          <div class="article-column-value">{{ article.note }}</div>
         </div>
       </div>
     </mat-card-content>
