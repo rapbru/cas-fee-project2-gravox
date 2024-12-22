@@ -21,6 +21,11 @@
 <div *ngFor="let article of articles" class="article-card">
   <mat-card (click)="navigateToDetails(article.id)">
     <mat-card-header class="article-card">
+      <mat-checkbox 
+        [(ngModel)]="article.selected" 
+        (click)="$event.stopPropagation()"
+        class="article-checkbox">
+      </mat-checkbox>
       <mat-card-title class="article-pair-header">
         {{ article.title }}
       </mat-card-title>

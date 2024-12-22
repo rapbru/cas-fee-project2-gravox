@@ -6,6 +6,8 @@ import { MatCardModule } from '@angular/material/card';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { LoggerService } from '../services/logger.service';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormsModule } from '@angular/forms';
 
 
 export interface Article {
@@ -22,6 +24,7 @@ export interface Article {
   sequence?: SequenceItem[];
   modifiedBy?: { value: string };
   modifiedDate?: string;
+  selected?: boolean;
 }
 
 interface SequenceItem {
@@ -36,7 +39,13 @@ interface SequenceItem {
 @Component({
   selector: 'app-articles',
   standalone: true,
-  imports: [CommonModule, ToolbarComponent, MatCardModule],
+  imports: [
+    CommonModule, 
+    ToolbarComponent, 
+    MatCardModule,
+    MatCheckboxModule,
+    FormsModule,
+  ],
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.scss'],
   template: `
