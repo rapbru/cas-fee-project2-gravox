@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { LoggerService } from '../services/logger.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 
 
 export interface Article {
@@ -45,6 +46,7 @@ interface SequenceItem {
     MatCardModule,
     MatCheckboxModule,
     FormsModule,
+    MatButtonModule,
   ],
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.scss'],
@@ -99,4 +101,30 @@ ngOnInit() {
   // isMobile(): boolean {
   //   return this.deviceDetectionService.isMobileSignal();
   // }
+
+  public hasSelectedArticles(): boolean {
+    return this.articles.some(article => article.selected);
+  }
+
+  public deleteSelectedArticles() {
+    const selectedArticles = this.articles.filter(article => article.selected);
+    this.loggerService.log('Deleting articles:', selectedArticles);
+    
+    // Add confirmation dialog if needed
+    if (confirm(`Are you sure you want to delete ${selectedArticles.length} articles?`)) {
+      // Implement deletion logic here
+      selectedArticles.forEach(article => {
+        this.http.delete(`http://localhost:3001/article/${article.id}`)
+          .subscribe({
+            next: () => {
+              this.loggerService.log(`Article ${article.id} deleted successfully`);
+              this.loadArticles(); // Reload the list after deletion
+            },
+            error: (err) => {
+              this.loggerService.error(`Error deleting article ${article.id}:`, err);
+            }
+          });
+      });
+    }
+  }
 }

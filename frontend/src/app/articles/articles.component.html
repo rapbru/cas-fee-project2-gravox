@@ -11,12 +11,16 @@
 <!--</header>-->
 
 <app-toolbar></app-toolbar>
-<button mat-button (click)="loadArticles()">Load Articles</button>
 
-<!-- Add these debug lines -->
-<div>Loading: {{ loading }}</div>
-<div>Error: {{ error }}</div>
-<div>Number of articles: {{ articles?.length }}</div>
+<div class="article-actions">
+  <button 
+    mat-button 
+    color="warn"
+    [disabled]="!hasSelectedArticles()"
+    (click)="deleteSelectedArticles()">
+    Delete Selected
+  </button>
+</div>
 
 <div *ngFor="let article of articles" class="article-card">
   <mat-card (click)="navigateToDetails(article.id)">
@@ -56,38 +60,6 @@
     </mat-card-content>
   </mat-card>
 </div>
-
-
-
-
-
-
-<!--          <div class="article-column-values">-->
-<!--            <div class="article-column-value" [id]="article.number.id">{{ article.number.value }}</div>-->
-<!--            <div class="article-column-value" [id]="article.customer.id">{{ article.customer.value }}</div>-->
-<!--            <div class="article-column-spacer"></div>-->
-<!--            <div class="article-column-value" [id]="article.area.id">{{ article.area.value }}</div>-->
-<!--            <div class="article-column-value" [id]="article.drainage.id">{{ article.drainage.value }}</div>-->
-<!--            <div class="article-column-value" [id]="article.anodic.id">{{ article.anodic.value }}</div>-->
-<!--            <div class="article-column-spacer"></div>-->
-<!--            <div class="article-column-value" [id]="article.createdBy.id">{{ article.createdBy.value }}</div>-->
-<!--            <div class="article-column-value" [id]="article.createdDate.id">{{ article.createdDate.value }}</div>-->
-<!--            <div class="article-column-value" [id]="article.modifiedBy.id">{{ article.modifiedBy.value }}</div>-->
-<!--            <div class="article-column-value" [id]="article.modifiedDate.id">{{ article.modifiedDate.value }}</div>-->
-<!--            <div class="article-column-spacer"></div>-->
-<!--            <div class="article-column-value" [id]="article.note.id">{{ article.note.value }}</div>-->
-<!--            <div class="article-column-spacer"></div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </mat-card-content>-->
-<!--    </mat-card>-->
-
-<!--    </div>-->
-<!--  </div>-->
-
-
-  <div class="column">Column 2</div>
-
 
 <footer class="footer">
   <span>VONESCO </span>
