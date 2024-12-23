@@ -1,49 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ToolbarComponent } from '../toolbar/toolbar.component';
-import { DeviceDetectionService } from '../services/device-detection.service';
-import { MatCardModule } from '@angular/material/card';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { LoggerService } from '../services/logger.service';
+import { environment } from '../../environments/environment';
+import { Article } from '../models/article.model';
+import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { environment } from '../../environments/environment';
-import { Article } from '../models/article.model';
+import { ToolbarComponent } from '../toolbar/toolbar.component';
 
 @Component({
   selector: 'app-articles',
   standalone: true,
   imports: [
-    CommonModule, 
-    ToolbarComponent, 
+    CommonModule,
     MatCardModule,
     MatCheckboxModule,
     FormsModule,
     MatButtonModule,
+    ToolbarComponent
   ],
   templateUrl: './articles.component.html',
-  styleUrls: ['./articles.component.scss'],
-  template: `
-    <div *ngIf="articles.length">
-      <div *ngFor="let article of articles">
-        <h2>{{article.title}}</h2>
-        <p>{{article.content}}</p>
-      </div>
-    </div>
-    <div *ngIf="error">{{error}}</div>
-    <div *ngIf="loading">Loading...</div>
-  `
+  styleUrls: ['./articles.component.scss']
 })
 export class ArticlesComponent implements OnInit {
   private enableLogging = environment.enableLogging;
   articles: Article[] = [];
-  error = '';
-  loading = true;
 
   constructor(
-    private deviceDetectionService: DeviceDetectionService,
     private http: HttpClient,
     private router: Router,
     private loggerService: LoggerService
@@ -53,7 +39,7 @@ export class ArticlesComponent implements OnInit {
     this.loadArticles();
   }
 
-  public loadArticles() {
+  loadArticles() {
     this.http.get<Article[]>(`${environment.apiUrl}/article`)
       .subscribe({
         next: (articles) => {
@@ -70,7 +56,7 @@ export class ArticlesComponent implements OnInit {
       });
   }
 
-  public navigateToDetails(id: string | number | undefined) {
+  navigateToDetails(id: string | number | undefined) {
     if (id !== undefined) {
       this.router.navigate(['/articles', id.toString()]);
     } else {
@@ -80,33 +66,26 @@ export class ArticlesComponent implements OnInit {
     }
   }
 
-  // isMobile(): boolean {
-  //   return this.deviceDetectionService.isMobileSignal();
-  // }
-
-  public hasSelectedArticles(): boolean {
+  hasSelectedArticles(): boolean {
     return this.articles.some(article => article.selected);
   }
 
-  public deleteSelectedArticles() {
-    const selectedArticles = this.articles.filter(article => article.selected);
-    this.loggerService.log('Deleting articles:', selectedArticles);
-    
-    // Add confirmation dialog if needed
-    if (confirm(`Are you sure you want to delete ${selectedArticles.length} articles?`)) {
-      // Implement deletion logic here
-      selectedArticles.forEach(article => {
-        this.http.delete(`${environment.apiUrl}/article/${article.id}`)
-          .subscribe({
-            next: () => {
-              this.loggerService.log(`Article ${article.id} deleted successfully`);
-              this.loadArticles(); // Reload the list after deletion
-            },
-            error: (err) => {
-              this.loggerService.error(`Error deleting article ${article.id}:`, err);
-            }
-          });
-      });
+  hasExactlyOneSelected(): boolean {
+    return this.articles.filter(article => article.selected).length === 1;
+  }
+
+  loadSelectedArticle(): void {
+    const selectedArticle = this.articles.find(article => article.selected);
+    if (selectedArticle?.id) {
+      this.navigateToDetails(selectedArticle.id);
+    }
+  }
+
+  deleteSelectedArticles() {
+    // TODO: Implement deletion logic
+    if (this.enableLogging) {
+      this.loggerService.log('Delete action triggered for selected articles');
     }
   }
 }
+
