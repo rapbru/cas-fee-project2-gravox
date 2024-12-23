@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { Component, Input, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -33,7 +33,7 @@ import { MatInputModule } from '@angular/material/input';
              [value]="value"
              (input)="onInputChange($event)"
              (blur)="markAsTouched()">
-      <mat-hint *ngIf="maxLength" align="end">{{value?.length || 0}}/{{maxLength}}</mat-hint>
+      <mat-hint *ngIf="maxLength" align="end">{{value.length || 0}}/{{maxLength}}</mat-hint>
     </mat-form-field>
   `,
   styleUrls: ['./input-field.component.scss']
@@ -48,8 +48,8 @@ export class InputFieldComponent implements ControlValueAccessor {
   @Input() disabled = false;
 
   private _value = '';
-  private onChange: (value: string) => void = () => {};
-  private onTouched: () => void = () => {};
+  private onChange: (value: string) => void = () => { /* will be set by registerOnChange */ };
+  private onTouched = (): void => { /* will be set by registerOnTouched */ };
 
   get value(): string {
     return this._value;
