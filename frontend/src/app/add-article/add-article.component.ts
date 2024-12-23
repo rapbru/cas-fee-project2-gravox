@@ -1,26 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { AudioService } from '../services/audio.service';
-import { KeyEventService } from '../key-event.service';
-import { MatIcon } from '@angular/material/icon';
-import { MatTooltip } from '@angular/material/tooltip';
+import { LoggerService } from '../services/logger.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { InputFieldComponent } from '../input-field/input-field.component';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-
-export interface Article {
-  id: string;
-  title: { id: string; value: string };
-  area: { id: string; value: string };
-  drainage: { id: string; value: string };
-  anodic: { id: string; value: string };
-  note: { id: string; value: string };
-  createdBy: { id: string; value: string };
-  createdDate: { id: string; value: string };
-  modifiedBy: { id: string; value: string };
-  modifiedDate: { id: string; value: string };
-}
+import { Article } from '../models/article.model';
 
 @Component({
   selector: 'app-add-article',
@@ -28,10 +15,9 @@ export interface Article {
   imports: [
     CommonModule,
     FormsModule,
-    MatIcon,
-    MatTooltip,
+    MatIconModule,
+    MatTooltipModule,
     InputFieldComponent,
-    HttpClientModule
   ],
   templateUrl: './add-article.component.html',
   styleUrls: ['./add-article.component.scss']
@@ -55,61 +41,40 @@ export class AddArticleComponent {
   maxLengthAnodic = 20;
   maxLengthComment = 100;
 
-  articles: Article[] = [];
-  private readonly currentUser = 'Current User';
-
   constructor(
     private http: HttpClient,
-    private audioService: AudioService,
-    private keyEventService: KeyEventService,
-    private router: Router
+    private router: Router,
+    private loggerService: LoggerService
   ) {}
 
-  ngOnInit(): void {
-    this.keyEventService.registerKeyAction('Escape', this.onEscapeKey.bind(this));
-    this.keyEventService.registerKeyAction('Enter', this.onSaveKey.bind(this));
-    this.loadArticles();
-  }
-
-  ngOnDestroy(): void {
-    return;
-  }
-
-  loadArticles(): void {
-    this.http.get<{ articles: Article[] }>('assets/articles-data.json').subscribe({
-      next: (data) => (this.articles = data.articles),
-      error: (err) => console.error('Error loading articles:', err)
-    });
-  }
-
-  onSave(): void {
-    const newArticle: Article = {
-      id: Date.now().toString(),
-      title: { id: '', value: this.article.name },
-      area: { id: '', value: this.article.surface },
-      drainage: { id: '', value: this.article.dripOff },
-      anodic: { id: '', value: this.article.anodic },
-      note: { id: '', value: this.article.comment },
-      createdBy: { id: '', value: this.currentUser },
-      createdDate: { id: '', value: new Date().toISOString() },
-      modifiedBy: { id: '', value: this.currentUser },
-      modifiedDate: { id: '', value: new Date().toISOString() }
+  onSave() {
+    this.loggerService.log('Saving article:', this.article);
+    
+    const articleData: Article = {
+      title: { value: this.article.name },
+      number: { value: this.article.number },
+      customer: { value: this.article.customer },
+      area: { value: this.article.surface },
+      drainage: { value: this.article.dripOff },
+      anodic: { value: this.article.anodic },
+      note: { value: this.article.comment },
+      createdBy: { value: 'system' }, // You might want to get this from a user service
+      sequence: [] // Empty array for new articles
     };
 
-    this.http.post('http://localhost:3001/article', newArticle).subscribe({
-      next: (response) => {
-        console.log('Article saved successfully:', response);
-        this.articles.push(newArticle);
-      },
-      error: (err) => console.error('Error saving article:', err)
-    });
+    this.http.post<Article>('http://localhost:3001/article', articleData)
+      .subscribe({
+        next: (response) => {
+          this.loggerService.log('Article saved successfully:', response);
+          this.router.navigate(['/articles']);
+        },
+        error: (error) => {
+          this.loggerService.error('Error saving article:', error);
+        }
+      });
   }
 
-  onEscapeKey(): void {
+  onEscapeKey() {
     this.router.navigate(['/articles']);
-  }
-
-  onSaveKey(): void {
-    this.onSave();
   }
 }
