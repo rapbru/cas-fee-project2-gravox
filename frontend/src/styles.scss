@@ -179,7 +179,7 @@ input {
 
 .scrollable-content {
   width: 100%;
-  // max-height: 800px;
+  max-height: 800px;
   overflow-y: auto;
   overflow-x: hidden;
   border-radius: var(--button-border-radius);

@@ -2,13 +2,18 @@
 
 <app-toolbar></app-toolbar>
 
-<div class="article-actions">
-  <button 
-    mat-button 
-    color="warn"
-    [disabled]="!hasSelectedArticles()"
-    (click)="deleteSelectedArticles()">
-    Delete Selected
+<div class="button-container">
+  <button mat-raised-button 
+          color="warn"
+          [disabled]="!hasSelectedArticles()"
+          (click)="deleteSelectedArticles()">
+    Löschen
+  </button>
+  <button mat-raised-button 
+          color="accent"
+          [disabled]="!hasExactlyOneSelected()"
+          (click)="loadSelectedArticle()">
+    Laden
   </button>
 </div>
 
