@@ -57,7 +57,6 @@ export class ArticlesComponent implements OnInit {
     this.http.get<Article[]>(`${environment.apiUrl}/article`)
       .subscribe({
         next: (articles) => {
-          console.log('Raw API response:', articles);
           this.articles = articles;
           if (this.enableLogging) {
             this.loggerService.log('Articles loaded successfully:', articles);

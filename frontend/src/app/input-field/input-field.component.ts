@@ -1,6 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
@@ -13,11 +13,33 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatInputModule
   ],
-  templateUrl: './input-field.component.html'
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InputFieldComponent),
+      multi: true
+    }
+  ],
+  template: `
+    <mat-form-field>
+      <mat-label>{{ label }}</mat-label>
+      <input matInput
+             [id]="fieldId"
+             [attr.aria-label]="ariaLabel"
+             [placeholder]="placeholder"
+             [required]="required"
+             [attr.maxlength]="maxLength"
+             [disabled]="disabled"
+             [value]="value"
+             (input)="onInputChange($event)"
+             (blur)="markAsTouched()">
+      <mat-hint *ngIf="maxLength" align="end">{{value?.length || 0}}/{{maxLength}}</mat-hint>
+    </mat-form-field>
+  `,
+  styleUrls: ['./input-field.component.scss']
 })
-export class InputFieldComponent {
+export class InputFieldComponent implements ControlValueAccessor {
   @Input() label = '';
-  @Input() value = '';
   @Input() maxLength?: number;
   @Input() required = false;
   @Input() placeholder = '';
@@ -25,19 +47,45 @@ export class InputFieldComponent {
   @Input() ariaLabel = '';
   @Input() disabled = false;
 
-  @Output() valueChange = new EventEmitter<string>();
-  @Output() touched = new EventEmitter<void>();
+  private _value = '';
+  private onChange: (value: string) => void = () => {};
+  private onTouched: () => void = () => {};
 
-  onInput(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    this.valueChange.emit(input.value);
+  get value(): string {
+    return this._value;
+  }
+
+  set value(val: string) {
+    if (val !== this._value) {
+      this._value = val;
+      this.onChange(val);
+    }
+  }
+
+  writeValue(value: string): void {
+    if (value !== this._value) {
+      this._value = value;
+    }
+  }
+
+  registerOnChange(fn: (value: string) => void): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
   }
 
   onInputChange(event: Event): void {
-    this.onInput(event);
+    const value = (event.target as HTMLInputElement).value;
+    this.value = value;
   }
 
-  onTouched(): void {
-    this.touched.emit();
+  markAsTouched(): void {
+    this.onTouched();
   }
 }

@@ -9,6 +9,8 @@ import { InputFieldComponent } from '../input-field/input-field.component';
 import { Article } from '../models/article.model';
 import { LoggerService } from '../services/logger.service';
 import { environment } from '../../environments/environment';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-add-article',
@@ -19,6 +21,8 @@ import { environment } from '../../environments/environment';
     MatIconModule,
     MatTooltipModule,
     InputFieldComponent,
+    MatFormFieldModule,
+    MatInputModule
   ],
   templateUrl: './add-article.component.html'
 })
