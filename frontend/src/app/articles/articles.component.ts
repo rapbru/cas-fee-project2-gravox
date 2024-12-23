@@ -57,6 +57,7 @@ export class ArticlesComponent implements OnInit {
     this.http.get<Article[]>(`${environment.apiUrl}/article`)
       .subscribe({
         next: (articles) => {
+          console.log('Raw API response:', articles);
           this.articles = articles;
           if (this.enableLogging) {
             this.loggerService.log('Articles loaded successfully:', articles);
@@ -70,9 +71,9 @@ export class ArticlesComponent implements OnInit {
       });
   }
 
-  public navigateToDetails(id: string | undefined) {
-    if (id) {
-      this.router.navigate(['/articles', id]);
+  public navigateToDetails(id: string | number | undefined) {
+    if (id !== undefined) {
+      this.router.navigate(['/articles', id.toString()]);
     } else {
       if (this.enableLogging) {
         this.loggerService.error('Cannot navigate: Article ID is undefined');

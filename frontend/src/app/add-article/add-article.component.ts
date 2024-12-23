@@ -55,14 +55,14 @@ export class AddArticleComponent {
     }
     
     const articleData: Article = {
-      title: { value: this.article.name },
-      number: { value: this.article.number },
-      customer: { value: this.article.customer },
-      area: { value: this.article.surface },
-      drainage: { value: this.article.dripOff },
-      anodic: { value: this.article.anodic },
-      note: { value: this.article.comment },
-      createdBy: { value: 'system' },
+      title: this.article.name,
+      number: this.article.number,
+      customer: this.article.customer,
+      area: this.article.surface,
+      drainage: this.article.dripOff,
+      anodic: this.article.anodic,
+      note: this.article.comment,
+      createdBy: 'system',
       sequence: []
     };
 

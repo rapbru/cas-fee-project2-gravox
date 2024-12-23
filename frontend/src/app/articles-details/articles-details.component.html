@@ -3,19 +3,19 @@
 <div *ngIf="article">
   <h1>Article Details</h1>
   
-  <p>Title: {{ article.title?.value }}</p>
-  <p>Number: {{ article.number?.value }}</p>
-  <p>Customer: {{ article.customer?.value }}</p>
-  <p>Area: {{ article.area?.value }}</p>
-  <p>Drainage: {{ article.drainage?.value }}</p>
-  <p>Anodic: {{ article.anodic?.value }}</p>
-  <p>Note: {{ article.note?.value }}</p>
+  <p>Title: {{ article.title }}</p>
+  <p>Number: {{ article.number }}</p>
+  <p>Customer: {{ article.customer }}</p>
+  <p>Area: {{ article.area }}</p>
+  <p>Drainage: {{ article.drainage }}</p>
+  <p>Anodic: {{ article.anodic }}</p>
+  <p>Note: {{ article.note }}</p>
   
   <p>Created: {{ article.createdDate }}</p>
-  <p>Created By: {{ article.createdBy?.value }}</p>
+  <p>Created By: {{ article.createdBy }}</p>
   
   <p>Modified: {{ article.modifiedDate }}</p>
-  <p>Modified By: {{ article.modifiedBy?.value }}</p>
+  <p>Modified By: {{ article.modifiedBy }}</p>
 
   <div *ngIf="article.sequence && article.sequence.length > 0">
     <h2>Sequences</h2>
