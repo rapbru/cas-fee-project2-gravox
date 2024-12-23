@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute } from '@angular/router';
@@ -15,7 +15,7 @@ import { Article } from '../articles/articles.component';
   templateUrl: './articles-details.component.html',
   styleUrls: ['./articles-details.component.scss']
 })
-export class ArticlesDetailsComponent {
+export class ArticlesDetailsComponent implements OnInit {
 
   articleId: string | null = null;
   article: Article | null = null;
