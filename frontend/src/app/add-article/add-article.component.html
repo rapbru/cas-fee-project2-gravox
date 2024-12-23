@@ -26,81 +26,68 @@
 
 <div class="scrollable-content" aria-label="Scrollbarer Inhalt" i18n-aria-label="@@ScrollableContent">
 
-  <app-input-field
-    [(ngModel)]="article.name"
-    name="articleName"
-    [maxLength]="maxLengthName"
-    [placeholder]="'max. ' + maxLengthName + ' Zeichen'"
-    [ariaLabel]="'Bezeichnung Artikel max. ' + maxLengthName + ' Zeichen'"
-    label="Bezeichnung"
-    fieldId="InputFieldNameArticle">
-  </app-input-field>
+  <form (ngSubmit)="onSave()">
+    <div class="form-group">
+      <app-input-field
+        [(ngModel)]="article.name"
+        name="articleName"
+        [label]="'Name'"
+        [maxLength]="maxLengthName"
+        [required]="true">
+      </app-input-field>
 
-  <div class="input-field-group">
-    <app-input-field
-      [(ngModel)]="article.number"
-      name="articleNumber"
-      [maxLength]="maxLengthNumber"
-      [placeholder]="'max. ' + maxLengthNumber + ' Zeichen'"
-      [ariaLabel]="'Nummer Artikel max. ' + maxLengthNumber + ' Zeichen'"
-      label="Nummer"
-      fieldId="InputFieldNumberArticle">
-    </app-input-field>
+      <app-input-field
+        [(ngModel)]="article.number"
+        name="articleNumber"
+        [label]="'Nummer'"
+        [maxLength]="maxLengthNumber"
+        [required]="true">
+      </app-input-field>
 
-    <app-input-field
-      [(ngModel)]="article.customer"
-      name="articleCustomer"
-      [maxLength]="maxLengthCustomer"
-      [placeholder]="'max. ' + maxLengthCustomer + ' Zeichen'"
-      [ariaLabel]="'Kunde Artikel max. ' + maxLengthCustomer + ' Zeichen'"
-      label="Kunde"
-      fieldId="InputFieldCustomerArticle">
-    </app-input-field>
-  </div>
+      <app-input-field
+        [(ngModel)]="article.customer"
+        name="articleCustomer"
+        [label]="'Kunde'"
+        [maxLength]="maxLengthCustomer"
+        [required]="true">
+      </app-input-field>
 
-  <div class="input-field-group">
+      <app-input-field
+        [(ngModel)]="article.surface"
+        name="articleSurface"
+        [label]="'Fläche'"
+        [maxLength]="maxLengthSurface"
+        [required]="true">
+      </app-input-field>
 
-  <app-input-field
-    [(ngModel)]="article.surface"
-    name="articleSurface"
-    [maxLength]="maxLengthSurface"
-    [placeholder]="'max. ' + maxLengthSurface + ' Zeichen'"
-    [ariaLabel]="'Fläche Artikel max. ' + maxLengthSurface + ' Zeichen'"
-    label="Fläche"
-    fieldId="InputFieldSurfaceArticle">
-  </app-input-field>
+      <app-input-field
+        [(ngModel)]="article.dripOff"
+        name="articleDripOff"
+        [label]="'Abtropfen'"
+        [maxLength]="maxLengthDripOff"
+        [required]="true">
+      </app-input-field>
 
-  <app-input-field
-    [(ngModel)]="article.dripOff"
-    name="articleDripOff"
-    [maxLength]="maxLengthDripOff"
-    [placeholder]="'max. ' + maxLengthDripOff + ' Zeichen'"
-    [ariaLabel]="'Abtropfen Artikel max. ' + maxLengthDripOff + ' Zeichen'"
-    label="Abtropfen"
-    fieldId="InputFieldDripoffArticle">
-  </app-input-field>
+      <app-input-field
+        [(ngModel)]="article.anodic"
+        name="articleAnodic"
+        [label]="'Anodisch'"
+        [maxLength]="maxLengthAnodic"
+        [required]="true">
+      </app-input-field>
 
-  <app-input-field
-    [(ngModel)]="article.anodic"
-    name="articleAnodic"
-    [maxLength]="maxLengthAnodic"
-    [placeholder]="'max. ' + maxLengthAnodic + ' Zeichen'"
-    [ariaLabel]="'Anodisch Artikel max. ' + maxLengthAnodic + ' Zeichen'"
-    label="Anodisch"
-    fieldId="InputFieldAnodicArticle">
-  </app-input-field>
+      <app-input-field
+        [(ngModel)]="article.comment"
+        name="articleComment"
+        [label]="'Bemerkung'"
+        [maxLength]="maxLengthComment">
+      </app-input-field>
+    </div>
 
-  </div>
-
-  <app-input-field
-    [(ngModel)]="article.comment"
-    name="articleComment"
-    [maxLength]="maxLengthComment"
-    [placeholder]="'max. ' + maxLengthComment + ' Zeichen'"
-    [ariaLabel]="'Kommentar Artikel max. ' + maxLengthComment + ' Zeichen'"
-    label="Bemerkung"
-    fieldId="InputFieldCommentArticle">
-  </app-input-field>
+    <div class="form-actions">
+      <button type="submit" mat-raised-button color="primary">Speichern</button>
+    </div>
+  </form>
 
 </div>
 

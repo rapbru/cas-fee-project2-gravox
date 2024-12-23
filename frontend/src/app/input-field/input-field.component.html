@@ -1,16 +1,14 @@
-<div class="input-field">
-  <div class="input-field-header">
-    <label [for]="fieldId" class="input-field-label">{{ label }}</label>
-  </div>
-  <input
-    [id]="fieldId"
-    class="input-field-value"
-    type="text"
-    [placeholder]="placeholder"
-    [attr.maxlength]="maxLength"
-    [attr.aria-label]="ariaLabel"
-    [value]="value"
-    [disabled]="disabled"
-    (input)="onInputChange($event)"
-    (blur)="onTouched()">
-</div>
+<mat-form-field>
+  <mat-label>{{ label }}</mat-label>
+  <input matInput
+         [id]="fieldId"
+         [attr.aria-label]="ariaLabel"
+         [placeholder]="placeholder"
+         [required]="required"
+         [maxlength]="maxLength"
+         [disabled]="disabled"
+         [value]="value"
+         (input)="onInputChange($event)"
+         (blur)="markAsTouched()">
+  <mat-hint *ngIf="maxLength" align="end">{{value?.length || 0}}/{{maxLength}}</mat-hint>
+</mat-form-field>
