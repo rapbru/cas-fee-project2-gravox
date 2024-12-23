@@ -27,7 +27,8 @@
 <div class="scrollable-content" aria-label="Scrollbarer Inhalt" i18n-aria-label="@@ScrollableContent">
 
   <app-input-field
-    [(inputValue)]="articleName"
+    [(ngModel)]="article.name"
+    name="articleName"
     [maxLength]="maxLengthName"
     [placeholder]="'max. ' + maxLengthName + ' Zeichen'"
     [ariaLabel]="'Bezeichnung Artikel max. ' + maxLengthName + ' Zeichen'"
@@ -37,7 +38,8 @@
 
   <div class="input-field-group">
     <app-input-field
-      [(inputValue)]="articleNumber"
+      [(ngModel)]="article.number"
+      name="articleNumber"
       [maxLength]="maxLengthNumber"
       [placeholder]="'max. ' + maxLengthNumber + ' Zeichen'"
       [ariaLabel]="'Nummer Artikel max. ' + maxLengthNumber + ' Zeichen'"
@@ -46,7 +48,8 @@
     </app-input-field>
 
     <app-input-field
-      [(inputValue)]="articleCustomer"
+      [(ngModel)]="article.customer"
+      name="articleCustomer"
       [maxLength]="maxLengthCustomer"
       [placeholder]="'max. ' + maxLengthCustomer + ' Zeichen'"
       [ariaLabel]="'Kunde Artikel max. ' + maxLengthCustomer + ' Zeichen'"
@@ -58,7 +61,8 @@
   <div class="input-field-group">
 
   <app-input-field
-    [(inputValue)]="articleSurface"
+    [(ngModel)]="article.surface"
+    name="articleSurface"
     [maxLength]="maxLengthSurface"
     [placeholder]="'max. ' + maxLengthSurface + ' Zeichen'"
     [ariaLabel]="'Fläche Artikel max. ' + maxLengthSurface + ' Zeichen'"
@@ -67,7 +71,8 @@
   </app-input-field>
 
   <app-input-field
-    [(inputValue)]="articleDripOff"
+    [(ngModel)]="article.dripOff"
+    name="articleDripOff"
     [maxLength]="maxLengthDripOff"
     [placeholder]="'max. ' + maxLengthDripOff + ' Zeichen'"
     [ariaLabel]="'Abtropfen Artikel max. ' + maxLengthDripOff + ' Zeichen'"
@@ -76,7 +81,8 @@
   </app-input-field>
 
   <app-input-field
-    [(inputValue)]="articleAnodic"
+    [(ngModel)]="article.anodic"
+    name="articleAnodic"
     [maxLength]="maxLengthAnodic"
     [placeholder]="'max. ' + maxLengthAnodic + ' Zeichen'"
     [ariaLabel]="'Anodisch Artikel max. ' + maxLengthAnodic + ' Zeichen'"
@@ -87,7 +93,8 @@
   </div>
 
   <app-input-field
-    [(inputValue)]="articleComment"
+    [(ngModel)]="article.comment"
+    name="articleComment"
     [maxLength]="maxLengthComment"
     [placeholder]="'max. ' + maxLengthComment + ' Zeichen'"
     [ariaLabel]="'Kommentar Artikel max. ' + maxLengthComment + ' Zeichen'"
