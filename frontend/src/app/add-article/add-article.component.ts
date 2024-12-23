@@ -1,11 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AudioService } from '../services/audio.service';
 import { KeyEventService } from '../key-event.service';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { InputFieldComponent } from '../input-field/input-field.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
@@ -26,24 +26,30 @@ export interface Article {
   selector: 'app-add-article',
   standalone: true,
   imports: [
+    CommonModule,
+    FormsModule,
     MatIcon,
     MatTooltip,
-    FormsModule,
-    CommonModule,
     InputFieldComponent,
     HttpClientModule
   ],
   templateUrl: './add-article.component.html',
+  styleUrls: ['./add-article.component.scss']
 })
-export class AddArticleComponent implements OnInit, OnDestroy {
-  articleName = '';
-  articleSurface = '';
-  articleDripOff = '';
-  articleAnodic = '';
-  articleComment = '';
-  isFocused = false;
+export class AddArticleComponent {
+  article = {
+    name: '',
+    number: '',
+    customer: '',
+    surface: '',
+    dripOff: '',
+    anodic: '',
+    comment: ''
+  };
 
-  maxLengthName = 20;
+  maxLengthName = 50;
+  maxLengthNumber = 20;
+  maxLengthCustomer = 50;
   maxLengthSurface = 20;
   maxLengthDripOff = 20;
   maxLengthAnodic = 20;
@@ -51,11 +57,6 @@ export class AddArticleComponent implements OnInit, OnDestroy {
 
   articles: Article[] = [];
   private readonly currentUser = 'Current User';
-
-  articleNumber = '';
-  articleCustomer = '';
-  maxLengthNumber = 20;
-  maxLengthCustomer = 50;
 
   constructor(
     private http: HttpClient,
@@ -84,11 +85,11 @@ export class AddArticleComponent implements OnInit, OnDestroy {
   onSave(): void {
     const newArticle: Article = {
       id: Date.now().toString(),
-      title: { id: '', value: this.articleName },
-      area: { id: '', value: this.articleSurface },
-      drainage: { id: '', value: this.articleDripOff },
-      anodic: { id: '', value: this.articleAnodic },
-      note: { id: '', value: this.articleComment },
+      title: { id: '', value: this.article.name },
+      area: { id: '', value: this.article.surface },
+      drainage: { id: '', value: this.article.dripOff },
+      anodic: { id: '', value: this.article.anodic },
+      note: { id: '', value: this.article.comment },
       createdBy: { id: '', value: this.currentUser },
       createdDate: { id: '', value: new Date().toISOString() },
       modifiedBy: { id: '', value: this.currentUser },
@@ -105,9 +106,7 @@ export class AddArticleComponent implements OnInit, OnDestroy {
   }
 
   onEscapeKey(): void {
-    if (!this.isFocused) {
-      this.router.navigate(['/articles']);
-    }
+    this.router.navigate(['/articles']);
   }
 
   onSaveKey(): void {
