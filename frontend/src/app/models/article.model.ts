@@ -1,36 +1,18 @@
 export interface Article {
-  id?: string;
+  id?: string | number;
   selected?: boolean;
-  title: {
-    value: string;
-  };
-  number: {
-    value: string;
-  };
-  customer: {
-    value: string;
-  };
-  area: {
-    value: string;
-  };
-  drainage: {
-    value: string;
-  };
-  anodic: {
-    value: string;
-  };
-  createdBy: {
-    value: string;
-  };
-  note: {
-    value: string;
-  };
+  title: string;
+  number: string;
+  customer: string;
+  area: string;
+  drainage: string;
+  anodic: string;
+  note: string;
   sequence: Sequence[];
   createdDate?: string;
-  modifiedBy?: {
-    value: string;
-  };
+  createdBy?: string;
   modifiedDate?: string;
+  modifiedBy?: string;
 }
 
 export interface Sequence {
