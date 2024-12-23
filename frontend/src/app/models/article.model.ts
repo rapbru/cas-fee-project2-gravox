@@ -33,25 +33,3 @@ export interface Sequence {
   currentPreset: number;
   voltagePreset: number | null;
 }
-
-
-// export interface Article {
-//   title: string;
-//   number: string;
-//   customer: string;
-//   area: string;
-//   drainage: string;
-//   anodic: string;
-//   createdBy: string;
-//   note: string;
-//   sequence: Sequence[];
-// }
-//
-// export interface Sequence {
-//   positionId: number;
-//   orderNumber: number;
-//   timePreset: number;
-//   currentPreset: number;
-//   voltagePreset: number | null;
-// }
-//
