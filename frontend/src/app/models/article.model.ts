@@ -1,4 +1,6 @@
 export interface Article {
+  id?: string;
+  selected?: boolean;
   title: {
     value: string;
   };
@@ -24,6 +26,11 @@ export interface Article {
     value: string;
   };
   sequence: Sequence[];
+  createdDate?: string;
+  modifiedBy?: {
+    value: string;
+  };
+  modifiedDate?: string;
 }
 
 export interface Sequence {

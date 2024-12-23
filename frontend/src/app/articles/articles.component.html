@@ -1,15 +1,5 @@
 <h1 class="font-main" i18n="@@articlesHeader">Artikel</h1>
 
-<!--<header>-->
-<!--  <nav>-->
-<!--    <span>Text</span>-->
-<!--    <span class="spacer"></span>-->
-<!--    <button mat-button routerLink="/home">Home</button>-->
-<!--    <button mat-button routerLink="/articles">Articles</button>-->
-<!--    <button mat-button routerLink="/about">About</button>-->
-<!--  </nav>-->
-<!--</header>-->
-
 <app-toolbar></app-toolbar>
 
 <div class="article-actions">
@@ -31,7 +21,7 @@
         class="article-checkbox">
       </mat-checkbox>
       <mat-card-title class="article-pair-header">
-        {{ article.title }}
+        {{ article.title?.value }}
       </mat-card-title>
     </mat-card-header>
     <mat-card-content class="article-card">
@@ -47,14 +37,14 @@
           <div class="article-column-label">Bemerkung:</div>
         </div>
         <div class="article-column-values">
-          <div class="article-column-value">{{ article.number }}</div>
-          <div class="article-column-value">{{ article.customer }}</div>
+          <div class="article-column-value">{{ article.number?.value }}</div>
+          <div class="article-column-value">{{ article.customer?.value }}</div>
           <div class="article-column-spacer"></div>
-          <div class="article-column-value">{{ article.area }}</div>
-          <div class="article-column-value">{{ article.drainage }}</div>
-          <div class="article-column-value">{{ article.anodic }}</div>
+          <div class="article-column-value">{{ article.area?.value }}</div>
+          <div class="article-column-value">{{ article.drainage?.value }}</div>
+          <div class="article-column-value">{{ article.anodic?.value }}</div>
           <div class="article-column-spacer"></div>
-          <div class="article-column-value">{{ article.note }}</div>
+          <div class="article-column-value">{{ article.note?.value }}</div>
         </div>
       </div>
     </mat-card-content>

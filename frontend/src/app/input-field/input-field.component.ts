@@ -1,62 +1,43 @@
-import { Component, Input, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-input-field',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputFieldComponent),
-      multi: true
-    }
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   templateUrl: './input-field.component.html'
 })
-export class InputFieldComponent implements ControlValueAccessor {
+export class InputFieldComponent {
   @Input() label = '';
+  @Input() value = '';
+  @Input() maxLength?: number;
+  @Input() required = false;
   @Input() placeholder = '';
-  @Input() maxLength = 100;
-  @Input() ariaLabel = '';
   @Input() fieldId = '';
+  @Input() ariaLabel = '';
+  @Input() disabled = false;
 
-  value: string = '';
-  disabled: boolean = false;
+  @Output() valueChange = new EventEmitter<string>();
+  @Output() touched = new EventEmitter<void>();
 
-  // Function to call when the input changes
-  onChange = (_: any) => { };
-  
-  // Function to call when the input is touched
-  onTouched = () => { };
-
-  // Write a new value to the element
-  writeValue(value: any): void {
-    if (value !== undefined) {
-      this.value = value;
-    }
+  onInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.valueChange.emit(input.value);
   }
 
-  // Register a function to call when the value changes
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
+  onInputChange(event: Event): void {
+    this.onInput(event);
   }
 
-  // Register a function to call when the input is touched
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
-
-  // Set the disabled state
-  setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
-  }
-
-  // Update the value and call the change function
-  onInputChange(event: any): void {
-    this.value = event.target.value;
-    this.onChange(this.value);
-    this.onTouched();
+  onTouched(): void {
+    this.touched.emit();
   }
 }

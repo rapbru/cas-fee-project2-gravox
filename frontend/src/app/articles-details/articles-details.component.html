@@ -1,36 +1,34 @@
 <p>articles-details works!</p>
 
-<div class="article-details" *ngIf="article">
-  <h2>{{ article.title.value }}</h2>
-  <div class="article-columns">
-    <div class="article-column-label">Nummer:</div>
-    <div>{{ article.number.value }}</div>
+<div *ngIf="article">
+  <h1>Article Details</h1>
+  
+  <p>Title: {{ article.title?.value }}</p>
+  <p>Number: {{ article.number?.value }}</p>
+  <p>Customer: {{ article.customer?.value }}</p>
+  <p>Area: {{ article.area?.value }}</p>
+  <p>Drainage: {{ article.drainage?.value }}</p>
+  <p>Anodic: {{ article.anodic?.value }}</p>
+  <p>Note: {{ article.note?.value }}</p>
+  
+  <p>Created: {{ article.createdDate }}</p>
+  <p>Created By: {{ article.createdBy?.value }}</p>
+  
+  <p>Modified: {{ article.modifiedDate }}</p>
+  <p>Modified By: {{ article.modifiedBy?.value }}</p>
 
-    <div class="article-column-label">Kunde:</div>
-    <div>{{ article.customer.value }}</div>
-
-    <div class="article-column-label">Fläche:</div>
-    <div>{{ article.area.value }}</div>
-
-    <div class="article-column-label">Abtropfen:</div>
-    <div>{{ article.drainage.value }}</div>
-
-    <div class="article-column-label">Anodisch:</div>
-    <div>{{ article.anodic.value }}</div>
-
-    <div class="article-column-label">Erstellt:</div>
-    <div>{{ article.createdBy.value }}</div>
-
-    <div class="article-column-label">Datum:</div>
-    <div>{{ article.createdDate || '-' }}</div>
-
-    <div class="article-column-label">Geändert:</div>
-    <div>{{ article.modifiedBy?.value || '-' }}</div>
-
-    <div class="article-column-label">Datum:</div>
-    <div>{{ article.modifiedDate || '-' }}</div>
-
-    <div class="article-column-label">Bemerkung:</div>
-    <div>{{ article.note.value }}</div>
+  <div *ngIf="article.sequence && article.sequence.length > 0">
+    <h2>Sequences</h2>
+    <div *ngFor="let seq of article.sequence">
+      <p>Position ID: {{ seq.positionId }}</p>
+      <p>Order Number: {{ seq.orderNumber }}</p>
+      <p>Time Preset: {{ seq.timePreset }}</p>
+      <p>Current Preset: {{ seq.currentPreset }}</p>
+      <p>Voltage Preset: {{ seq.voltagePreset }}</p>
+    </div>
   </div>
+</div>
+
+<div *ngIf="!article">
+  Loading article details...
 </div>
