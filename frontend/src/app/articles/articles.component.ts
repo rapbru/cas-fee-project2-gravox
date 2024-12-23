@@ -9,33 +9,8 @@ import { LoggerService } from '../services/logger.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-
-
-export interface Article {
-  id: string;
-  title: { value: string };
-  number: { value: string };
-  customer: { value: string };
-  area: { value: string };
-  drainage: { value: string };
-  anodic: { value: string };
-  createdBy: { value: string };
-  createdDate?: string;
-  note: { value: string };
-  sequence?: SequenceItem[];
-  modifiedBy?: { value: string };
-  modifiedDate?: string;
-  selected?: boolean;
-}
-
-interface SequenceItem {
-  positionId: number;
-  orderNumber: number;
-  timePreset: number;
-  currentPreset: number;
-  voltagePreset: number | null;
-}
-
+import { environment } from '../../environments/environment';
+import { Article } from '../models/article.model';
 
 @Component({
   selector: 'app-articles',
@@ -62,6 +37,7 @@ interface SequenceItem {
   `
 })
 export class ArticlesComponent implements OnInit {
+  private enableLogging = environment.enableLogging;
   articles: Article[] = [];
   error = '';
   loading = true;
@@ -73,29 +49,35 @@ export class ArticlesComponent implements OnInit {
     private loggerService: LoggerService
   ) {}
 
-
-ngOnInit() {
+  ngOnInit() {
     this.loadArticles();
   }
 
   public loadArticles() {
-    this.http.get<Article[]>('http://localhost:3001/article')
+    this.http.get<Article[]>(`${environment.apiUrl}/article`)
       .subscribe({
-        next: (data) => {
-          this.loggerService.log('Articles loaded successfully:', data);
-          this.articles = data;
-          this.loading = false;
+        next: (articles) => {
+          this.articles = articles;
+          if (this.enableLogging) {
+            this.loggerService.log('Articles loaded successfully:', articles);
+          }
         },
-        error: (err) => {
-          this.error = 'Failed to load articles';
-          this.loading = false;
-          this.loggerService.error('Error loading articles:', err);
+        error: (error) => {
+          if (this.enableLogging) {
+            this.loggerService.error('Error loading articles:', error);
+          }
         }
       });
   }
 
-  public navigateToDetails(articleId: string) {
-    this.router.navigate(['/articles', articleId]);
+  public navigateToDetails(id: string | undefined) {
+    if (id) {
+      this.router.navigate(['/articles', id]);
+    } else {
+      if (this.enableLogging) {
+        this.loggerService.error('Cannot navigate: Article ID is undefined');
+      }
+    }
   }
 
   // isMobile(): boolean {
@@ -114,7 +96,7 @@ ngOnInit() {
     if (confirm(`Are you sure you want to delete ${selectedArticles.length} articles?`)) {
       // Implement deletion logic here
       selectedArticles.forEach(article => {
-        this.http.delete(`http://localhost:3001/article/${article.id}`)
+        this.http.delete(`${environment.apiUrl}/article/${article.id}`)
           .subscribe({
             next: () => {
               this.loggerService.log(`Article ${article.id} deleted successfully`);

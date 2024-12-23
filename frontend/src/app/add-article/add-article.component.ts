@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { LoggerService } from '../services/logger.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { InputFieldComponent } from '../input-field/input-field.component';
 import { Article } from '../models/article.model';
+import { LoggerService } from '../services/logger.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-add-article',
@@ -19,10 +20,11 @@ import { Article } from '../models/article.model';
     MatTooltipModule,
     InputFieldComponent,
   ],
-  templateUrl: './add-article.component.html',
-  styleUrls: ['./add-article.component.scss']
+  templateUrl: './add-article.component.html'
 })
 export class AddArticleComponent {
+  private enableLogging = environment.enableLogging;
+
   article = {
     name: '',
     number: '',
@@ -48,7 +50,9 @@ export class AddArticleComponent {
   ) {}
 
   onSave() {
-    this.loggerService.log('Saving article:', this.article);
+    if (this.enableLogging) {
+      this.loggerService.log('Saving article:', this.article);
+    }
     
     const articleData: Article = {
       title: { value: this.article.name },
@@ -58,18 +62,22 @@ export class AddArticleComponent {
       drainage: { value: this.article.dripOff },
       anodic: { value: this.article.anodic },
       note: { value: this.article.comment },
-      createdBy: { value: 'system' }, // You might want to get this from a user service
-      sequence: [] // Empty array for new articles
+      createdBy: { value: 'system' },
+      sequence: []
     };
 
-    this.http.post<Article>('http://localhost:3001/article', articleData)
+    this.http.post<Article>(`${environment.apiUrl}/article`, articleData)
       .subscribe({
         next: (response) => {
-          this.loggerService.log('Article saved successfully:', response);
+          if (this.enableLogging) {
+            this.loggerService.log('Article saved successfully:', response);
+          }
           this.router.navigate(['/articles']);
         },
         error: (error) => {
-          this.loggerService.error('Error saving article:', error);
+          if (this.enableLogging) {
+            this.loggerService.error('Error saving article:', error);
+          }
         }
       });
   }

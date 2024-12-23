@@ -1,18 +1,27 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class LoggerService {
-  log(message: string, data?: unknown): void {
-    console.log(`[LOG]: ${message}`, data);
+  private enableLogging = environment.enableLogging;
+
+  log(message: string, ...args: unknown[]) {
+    if (this.enableLogging) {
+      console.log(message, ...args);
+    }
   }
 
-  warn(message: string, data?: unknown): void {
-    console.warn(`[WARN]: ${message}`, data);
+  error(message: string, ...args: unknown[]) {
+    if (this.enableLogging) {
+      console.error(message, ...args);
+    }
   }
 
-  error(message: string, data?: unknown): void {
-    console.error(`[ERROR]: ${message}`, data);
+  warn(message: string, ...args: unknown[]) {
+    if (this.enableLogging) {
+      console.warn(message, ...args);
+    }
   }
 }
