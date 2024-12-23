@@ -36,6 +36,26 @@
   </app-input-field>
 
   <div class="input-field-group">
+    <app-input-field
+      [(inputValue)]="articleNumber"
+      [maxLength]="maxLengthNumber"
+      [placeholder]="'max. ' + maxLengthNumber + ' Zeichen'"
+      [ariaLabel]="'Nummer Artikel max. ' + maxLengthNumber + ' Zeichen'"
+      label="Nummer"
+      fieldId="InputFieldNumberArticle">
+    </app-input-field>
+
+    <app-input-field
+      [(inputValue)]="articleCustomer"
+      [maxLength]="maxLengthCustomer"
+      [placeholder]="'max. ' + maxLengthCustomer + ' Zeichen'"
+      [ariaLabel]="'Kunde Artikel max. ' + maxLengthCustomer + ' Zeichen'"
+      label="Kunde"
+      fieldId="InputFieldCustomerArticle">
+    </app-input-field>
+  </div>
+
+  <div class="input-field-group">
 
   <app-input-field
     [(inputValue)]="articleSurface"

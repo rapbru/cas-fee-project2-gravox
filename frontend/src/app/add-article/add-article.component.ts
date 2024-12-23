@@ -52,6 +52,11 @@ export class AddArticleComponent implements OnInit, OnDestroy {
   articles: Article[] = [];
   private readonly currentUser = 'Current User';
 
+  articleNumber = '';
+  articleCustomer = '';
+  maxLengthNumber = 20;
+  maxLengthCustomer = 50;
+
   constructor(
     private http: HttpClient,
     private audioService: AudioService,
