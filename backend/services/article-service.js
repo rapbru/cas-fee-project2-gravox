@@ -110,6 +110,10 @@ class ArticleService {
             drainage: article.drainage,
             anodic: article.anodic,
             note: article.note,
+            createdDate: article.created_date,
+            createdBy: article.created_by,
+            modifiedDate: article.modified_date,
+            modifiedBy: article.modified_by,
             sequence: article.sequence
         }));
     }

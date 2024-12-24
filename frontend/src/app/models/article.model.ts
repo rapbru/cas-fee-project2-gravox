@@ -1,24 +1,24 @@
 export interface Article {
-  id?: string | number;
-  selected?: boolean;
+  id?: number;
   title: string;
   number: string;
   customer: string;
   area: string;
   drainage: string;
   anodic: string;
-  note: string;
-  sequence: Sequence[];
-  createdDate?: string;
+  note?: string;
+  createdDate?: Date;
   createdBy?: string;
-  modifiedDate?: string;
+  modifiedDate?: Date;
   modifiedBy?: string;
+  sequence?: Sequence[];
+  selected?: boolean;
 }
 
 export interface Sequence {
-  positionId: number;
+  positionId: string;
   orderNumber: number;
-  timePreset: number;
-  currentPreset: number;
-  voltagePreset: number | null;
+  timePreset: string;
+  currentPreset: string;
+  voltagePreset: string;
 }

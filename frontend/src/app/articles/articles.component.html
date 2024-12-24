@@ -7,55 +7,68 @@
           color="warn"
           [disabled]="!hasSelectedArticles()"
           (click)="deleteSelectedArticles()">
+    <mat-icon>delete</mat-icon>
     Löschen
   </button>
   <button mat-raised-button 
           color="accent"
           [disabled]="!hasExactlyOneSelected()"
           (click)="loadSelectedArticle()">
+    <mat-icon>download</mat-icon>
     Laden
   </button>
 </div>
 
-<div *ngFor="let article of articles" class="article-card">
-  <mat-card (click)="navigateToDetails(article.id)">
-    <mat-card-header class="article-card">
+<div class="articles-grid">
+  <div *ngFor="let article of articles" class="article-container">
+    <div class="article-header">
       <mat-checkbox 
-        [(ngModel)]="article.selected" 
-        (click)="$event.stopPropagation()"
-        class="article-checkbox">
+        [(ngModel)]="article.selected"
+        (click)="$event.stopPropagation()">
       </mat-checkbox>
-      <mat-card-title class="article-pair-header">
-        {{ article.title }}
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content class="article-card">
-      <div class="article-columns">
-        <div class="article-column-labels">
-          <div class="article-column-label">Nummer:</div>
-          <div class="article-column-label">Kunde:</div>
-          <div class="article-column-spacer"></div>
-          <div class="article-column-label">Fläche:</div>
-          <div class="article-column-label">Abtropfen:</div>
-          <div class="article-column-label">Anodisch:</div>
-          <div class="article-column-spacer"></div>
-          <div class="article-column-label">Bemerkung:</div>
-        </div>
-        <div class="article-column-values">
-          <div class="article-column-value">{{ article.number }}</div>
-          <div class="article-column-value">{{ article.customer }}</div>
-          <div class="article-column-spacer"></div>
-          <div class="article-column-value">{{ article.area }}</div>
-          <div class="article-column-value">{{ article.drainage }}</div>
-          <div class="article-column-value">{{ article.anodic }}</div>
-          <div class="article-column-spacer"></div>
-          <div class="article-column-value">{{ article.note }}</div>
-        </div>
-      </div>
-    </mat-card-content>
-  </mat-card>
+      <h2>{{ article.title }}</h2>
+    </div>
+
+    <div class="article-details" (click)="navigateToDetails(article.id)">
+      <p>
+        <mat-icon>tag</mat-icon>
+        Number: {{ article.number }}
+      </p>
+      <p>
+        <mat-icon>person</mat-icon>
+        Customer: {{ article.customer }}
+      </p>
+      <p>
+        <mat-icon>square</mat-icon>
+        Area: {{ article.area }}
+      </p>
+      <p>
+        <mat-icon>water_drop</mat-icon>
+        Drainage: {{ article.drainage }}
+      </p>
+      <p>
+        <mat-icon>battery_charging_full</mat-icon>
+        Anodic: {{ article.anodic }}
+      </p>
+      <p>
+        <mat-icon>note</mat-icon>
+        Note: {{ article.note }}
+      </p>
+      
+      <p>
+        <mat-icon>calendar_today</mat-icon>
+        Created: {{ article.createdDate }}, {{ article.createdBy }}
+      </p>
+      
+      <p>
+        <mat-icon>calendar_today</mat-icon>
+        Modified: {{ article.modifiedDate }}, {{ article.modifiedBy }}
+      </p>
+    </div>
+  </div>
 </div>
 
 <footer class="footer">
-  <span>VONESCO </span>
+  <span>VONESCO</span>
 </footer>
+
