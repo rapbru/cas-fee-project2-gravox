@@ -20,6 +20,21 @@
   </div>
 
   <div class="article-details">
+    <!-- Timestamps at the top -->
+    <div class="timestamps-grid">
+      <div class="detail-row">
+        <mat-icon>calendar_today</mat-icon>
+        <span class="label">Created:</span>
+        <span class="value">{{ article.createdDate }}, {{ article.createdBy }}</span>
+      </div>
+      
+      <div class="detail-row">
+        <mat-icon>calendar_today</mat-icon>
+        <span class="label">Modified:</span>
+        <span class="value">{{ article.modifiedDate }}, {{ article.modifiedBy }}</span>
+      </div>
+    </div>
+
     <div class="details-grid">
       <!-- First Column -->
       <div class="detail-group">
@@ -57,22 +72,6 @@
           <span class="label">Anodic:</span>
           <span class="value">{{ article.anodic }}</span>
         </div>
-      </div>
-    </div>
-
-    <div class="separator"></div>
-
-    <div class="timestamps">
-      <div class="detail-row">
-        <mat-icon>calendar_today</mat-icon>
-        <span class="label">Created:</span>
-        <span class="value">{{ article.createdDate }}, {{ article.createdBy }}</span>
-      </div>
-      
-      <div class="detail-row">
-        <mat-icon>calendar_today</mat-icon>
-        <span class="label">Modified:</span>
-        <span class="value">{{ article.modifiedDate }}, {{ article.modifiedBy }}</span>
       </div>
     </div>
   </div>
