@@ -1,25 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ArticlesDetailsComponent } from './articles-details.component';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { Article } from '../articles/articles.component'; // Import the Article interface
+import { of } from 'rxjs';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
-@Component({
-  selector: 'app-articles-details',
-  templateUrl: './articles-details.component.html',
-  styleUrls: ['./articles-details.component.scss']
-})
-export class ArticlesDetailsComponent implements OnInit {
-  article: Article | undefined; // Article object
-  articleId: string | null = null; // Article ID from route
+describe('ArticlesDetailsComponent', () => {
+  let component: ArticlesDetailsComponent;
+  let fixture: ComponentFixture<ArticlesDetailsComponent>;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule,
+        MatIconModule,
+        MatButtonModule
+      ],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            paramMap: of(new Map([['id', '1']]))
+          }
+        }
+      ]
+    }).compileComponents();
 
-  ngOnInit(): void {
-    this.articleId = this.route.snapshot.paramMap.get('id'); // Get articleId from route params
+    fixture = TestBed.createComponent(ArticlesDetailsComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-    // Fetch article data from JSON or API based on the articleId
-    this.http.get<{ articles: Article[] }>('/assets/articles-data.json').subscribe((data) => {
-      this.article = data.articles.find(article => article.id === this.articleId); // Find article by id
-    });
-  }
-}
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
