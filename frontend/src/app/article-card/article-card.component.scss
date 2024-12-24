@@ -31,12 +31,28 @@
 }
 
 .article-details {
+  .details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+
+    @media (min-width: 600px) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .detail-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
   .detail-row {
     display: grid;
     grid-template-columns: 24px 100px 1fr;
     align-items: center;
     gap: 8px;
-    margin: 8px 0;
+    margin: 4px 0;
 
     mat-icon {
       color: #666;
@@ -56,4 +72,14 @@
   height: 1px;
   background-color: #ddd;
   margin: 16px 0;
+}
+
+.timestamps {
+  .detail-row {
+    display: grid;
+    grid-template-columns: 24px 100px 1fr;
+    align-items: center;
+    gap: 8px;
+    margin: 4px 0;
+  }
 }
