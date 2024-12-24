@@ -1,4 +1,9 @@
-<div class="article-container">
+<div class="article-container"
+     tabindex="0"
+     role="button"
+     (click)="onCardClick()"
+     (keydown.enter)="onCardClick()"
+     (keydown.space)="onCardClick()">
   <div class="article-header" *ngIf="showHeader">
     <mat-checkbox *ngIf="showCheckbox"
       [(ngModel)]="article.selected"
@@ -8,13 +13,13 @@
     <button *ngIf="!showCheckbox" 
             mat-raised-button 
             color="primary" 
-            (click)="loadClick.emit()">
+            (click)="loadClick.emit(); $event.stopPropagation()">
       <mat-icon>download</mat-icon>
       Laden
     </button>
   </div>
 
-  <div class="article-details" (click)="onCardClick()">
+  <div class="article-details">
     <div class="detail-row">
       <mat-icon>tag</mat-icon>
       <span class="label">Number:</span>
