@@ -1,8 +1,13 @@
-<p>articles-details works!</p>
-
 <div *ngIf="article">
   <h1>Article Details</h1>
   
+  <button mat-raised-button 
+          color="primary" 
+          (click)="onLoad()">
+    <mat-icon>download</mat-icon>
+    Laden
+  </button>
+
   <p>Title: {{ article.title }}</p>
   <p>Number: {{ article.number }}</p>
   <p>Customer: {{ article.customer }}</p>

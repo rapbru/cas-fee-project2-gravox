@@ -5,11 +5,17 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Article } from '../models/article.model';
 import { LoggerService } from '../services/logger.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-articles-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule
+  ],
   templateUrl: './articles-details.component.html',
   styleUrls: ['./articles-details.component.scss']
 })
@@ -50,5 +56,10 @@ export class ArticlesDetailsComponent implements OnInit {
           }
         }
       });
+  }
+
+  onLoad() {
+    // Here you can add your load logic
+    console.log('Loading article:', this.article);
   }
 }
