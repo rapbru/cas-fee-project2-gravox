@@ -27,6 +27,13 @@
   h2 {
     margin: 0;
     flex-grow: 1;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #1976d2;
+    }
   }
 }
 
@@ -82,16 +89,17 @@
   }
 
   .value {
-    color: #000;
+    color: var(--color-text);
     line-height: 1.4;
     white-space: normal;
     word-break: break-word;
 
     .details-grid & {
-      color: #1976d2;
       cursor: pointer;
+      transition: color 0.2s ease;
 
       &:hover {
+        color: #1976d2;
         text-decoration: underline;
       }
     }
