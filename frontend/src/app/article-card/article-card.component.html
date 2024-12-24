@@ -1,0 +1,53 @@
+<div class="article-container">
+  <div class="article-header" *ngIf="showHeader">
+    <mat-checkbox *ngIf="showCheckbox"
+      [(ngModel)]="article.selected"
+      (click)="$event.stopPropagation()">
+    </mat-checkbox>
+    <h2>{{ article.title }}</h2>
+    <button *ngIf="!showCheckbox" 
+            mat-raised-button 
+            color="primary" 
+            (click)="loadClick.emit()">
+      <mat-icon>download</mat-icon>
+      Laden
+    </button>
+  </div>
+
+  <div class="article-details" (click)="onCardClick()">
+    <p>
+      <mat-icon>tag</mat-icon>
+      Number: {{ article.number }}
+    </p>
+    <p>
+      <mat-icon>person</mat-icon>
+      Customer: {{ article.customer }}
+    </p>
+    <p>
+      <mat-icon>square</mat-icon>
+      Area: {{ article.area }}
+    </p>
+    <p>
+      <mat-icon>water_drop</mat-icon>
+      Drainage: {{ article.drainage }}
+    </p>
+    <p>
+      <mat-icon>battery_charging_full</mat-icon>
+      Anodic: {{ article.anodic }}
+    </p>
+    <p>
+      <mat-icon>note</mat-icon>
+      Note: {{ article.note }}
+    </p>
+    
+    <p>
+      <mat-icon>calendar_today</mat-icon>
+      Created: {{ article.createdDate }}, {{ article.createdBy }}
+    </p>
+    
+    <p>
+      <mat-icon>calendar_today</mat-icon>
+      Modified: {{ article.modifiedDate }}, {{ article.modifiedBy }}
+    </p>
+  </div>
+</div>
