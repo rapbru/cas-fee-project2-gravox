@@ -10,50 +10,21 @@
     </button>
   </div>
 
-  <div class="article-details">
-    <p>
-      <mat-icon>tag</mat-icon>
-      Number: {{ article.number }}
-    </p>
-    <p>
-      <mat-icon>person</mat-icon>
-      Customer: {{ article.customer }}
-    </p>
-    <p>
-      <mat-icon>square</mat-icon>
-      Area: {{ article.area }}
-    </p>
-    <p>
-      <mat-icon>water_drop</mat-icon>
-      Drainage: {{ article.drainage }}
-    </p>
-    <p>
-      <mat-icon>battery_charging_full</mat-icon>
-      Anodic: {{ article.anodic }}
-    </p>
-    <p>
-      <mat-icon>note</mat-icon>
-      Note: {{ article.note }}
-    </p>
-    
-    <p>
-      <mat-icon>calendar_today</mat-icon>
-      Created: {{ article.createdDate }}, {{ article.createdBy }}
-    </p>
-    
-    <p>
-      <mat-icon>calendar_today</mat-icon>
-      Modified: {{ article.modifiedDate }}, {{ article.modifiedBy }}
-    </p>
-  </div>
+  <div class="article-content">
+    <app-article-card
+      [article]="article"
+      [showCheckbox]="false"
+      [showHeader]="false">
+    </app-article-card>
 
-  <div *ngIf="article.sequence && article.sequence.length > 0" class="sequences-container">
-    <div *ngFor="let seq of article.sequence" class="sequence-item">
-      <p>Position ID: {{ seq.positionId }}</p>
-      <p>Order Number: {{ seq.orderNumber }}</p>
-      <p>Time Preset: {{ seq.timePreset }}</p>
-      <p>Current Preset: {{ seq.currentPreset }}</p>
-      <p>Voltage Preset: {{ seq.voltagePreset }}</p>
+    <div *ngIf="article.sequence && article.sequence.length > 0" class="sequences-container">
+      <div *ngFor="let seq of article.sequence" class="sequence-item">
+        <p>Position ID: {{ seq.positionId }}</p>
+        <p>Order Number: {{ seq.orderNumber }}</p>
+        <p>Time Preset: {{ seq.timePreset }}</p>
+        <p>Current Preset: {{ seq.currentPreset }}</p>
+        <p>Voltage Preset: {{ seq.voltagePreset }}</p>
+      </div>
     </div>
   </div>
 </div>

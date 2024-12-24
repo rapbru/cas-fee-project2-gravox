@@ -7,6 +7,7 @@ import { Article } from '../models/article.model';
 import { LoggerService } from '../services/logger.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { ArticleCardComponent } from '../article-card/article-card.component';
 
 @Component({
   selector: 'app-articles-details',
@@ -14,7 +15,8 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [
     CommonModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    ArticleCardComponent
   ],
   templateUrl: './articles-details.component.html',
   styleUrls: ['./articles-details.component.scss']

@@ -3,10 +3,9 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { MatTableModule } from '@angular/material/table';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { ArticleCardComponent } from '../article-card/article-card.component';
 import { LoggerService } from '../services/logger.service';
 import { environment } from '../../environments/environment';
 import { Article } from '../models/article.model';
@@ -18,10 +17,9 @@ import { ToolbarComponent } from '../toolbar/toolbar.component';
   imports: [
     CommonModule,
     FormsModule,
-    MatTableModule,
-    MatCheckboxModule,
     MatIconModule,
     MatButtonModule,
+    ArticleCardComponent,
     ToolbarComponent
   ],
   templateUrl: './articles.component.html',
