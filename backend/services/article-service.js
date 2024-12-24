@@ -5,12 +5,23 @@ class ArticleService {
     static async getArticles() {
         try {
             const query = `
-                SELECT a.*, 
-                       json_agg(s.*) as sequence
+                SELECT 
+                    a.*,
+                    json_agg(
+                        json_build_object(
+                            'positionId', s.position_id,
+                            'orderNumber', s.order_number,
+                            'timePreset', s.time_preset,
+                            'currentPreset', s.current_preset,
+                            'voltagePreset', s.voltage_preset,
+                            'positionName', p.position_name
+                        ) ORDER BY s.order_number
+                    ) FILTER (WHERE s.id IS NOT NULL) as sequence
                 FROM article a
                 LEFT JOIN sequence s ON a.id = s.article_id
+                LEFT JOIN position p ON s.position_id = p.id
                 GROUP BY a.id
-            `;
+                ORDER BY a.id`;
             const result = await pool.query(query);
             return ArticleService.transformArticleData(result.rows);
         } catch (error) {
