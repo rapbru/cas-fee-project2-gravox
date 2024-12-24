@@ -15,39 +15,55 @@
   </div>
 
   <div class="article-details" (click)="onCardClick()">
-    <p>
+    <div class="detail-row">
       <mat-icon>tag</mat-icon>
-      Number: {{ article.number }}
-    </p>
-    <p>
+      <span class="label">Number:</span>
+      <span class="value">{{ article.number }}</span>
+    </div>
+    <div class="detail-row">
       <mat-icon>person</mat-icon>
-      Customer: {{ article.customer }}
-    </p>
-    <p>
+      <span class="label">Customer:</span>
+      <span class="value">{{ article.customer }}</span>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="detail-row">
       <mat-icon>square</mat-icon>
-      Area: {{ article.area }}
-    </p>
-    <p>
+      <span class="label">Area:</span>
+      <span class="value">{{ article.area }}</span>
+    </div>
+    <div class="detail-row">
       <mat-icon>water_drop</mat-icon>
-      Drainage: {{ article.drainage }}
-    </p>
-    <p>
+      <span class="label">Drainage:</span>
+      <span class="value">{{ article.drainage }}</span>
+    </div>
+    <div class="detail-row">
       <mat-icon>battery_charging_full</mat-icon>
-      Anodic: {{ article.anodic }}
-    </p>
-    <p>
+      <span class="label">Anodic:</span>
+      <span class="value">{{ article.anodic }}</span>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="detail-row">
       <mat-icon>note</mat-icon>
-      Note: {{ article.note }}
-    </p>
+      <span class="label">Note:</span>
+      <span class="value">{{ article.note }}</span>
+    </div>
     
-    <p>
+    <div class="separator"></div>
+
+    <div class="detail-row">
       <mat-icon>calendar_today</mat-icon>
-      Created: {{ article.createdDate }}, {{ article.createdBy }}
-    </p>
+      <span class="label">Created:</span>
+      <span class="value">{{ article.createdDate }}, {{ article.createdBy }}</span>
+    </div>
     
-    <p>
+    <div class="detail-row">
       <mat-icon>calendar_today</mat-icon>
-      Modified: {{ article.modifiedDate }}, {{ article.modifiedBy }}
-    </p>
+      <span class="label">Modified:</span>
+      <span class="value">{{ article.modifiedDate }}, {{ article.modifiedBy }}</span>
+    </div>
   </div>
 </div>
