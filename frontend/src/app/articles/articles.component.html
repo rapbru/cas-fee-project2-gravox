@@ -10,13 +10,6 @@
     <mat-icon>delete</mat-icon>
     Löschen
   </button>
-  <button mat-raised-button 
-          color="accent"
-          [disabled]="!hasExactlyOneSelected()"
-          (click)="loadSelectedArticle()">
-    <mat-icon>download</mat-icon>
-    Laden
-  </button>
 </div>
 
 <div class="articles-grid">
@@ -24,7 +17,10 @@
     *ngFor="let article of articles"
     [article]="article"
     [showCheckbox]="true"
-    (cardClick)="navigateToDetails($event)">
+    [showHeader]="true"
+    [isArticleView]="false"
+    (cardClick)="navigateToDetails($event)"
+    (loadClick)="loadSelectedArticle()">
   </app-article-card>
 </div>
 

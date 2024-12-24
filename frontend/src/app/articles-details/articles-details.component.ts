@@ -35,7 +35,7 @@ export class ArticlesDetailsComponent implements OnInit {
     this.route.params.subscribe(params => {
       const id = params['id'];
       if (id) {
-        this.loadArticle(id);
+        this.loadArticleDetails(id);
       }
     });
 
@@ -43,7 +43,7 @@ export class ArticlesDetailsComponent implements OnInit {
     window.scrollTo(0, 0);
   }
 
-  private loadArticle(id: string) {
+  private loadArticleDetails(id: string) {
     this.http.get<Article>(`${environment.apiUrl}/article/${id}`)
       .subscribe({
         next: (article) => {
@@ -60,8 +60,7 @@ export class ArticlesDetailsComponent implements OnInit {
       });
   }
 
-  onLoad() {
-    // Here you can add your load logic
+  public loadArticle() {
     console.log('Loading article:', this.article);
   }
 }

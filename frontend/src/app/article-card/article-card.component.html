@@ -1,4 +1,5 @@
 <div class="article-container"
+     [class.article-view]="isArticleView"
      tabindex="0"
      role="button"
      (click)="onCardClick()"
@@ -10,10 +11,13 @@
       (click)="$event.stopPropagation()">
     </mat-checkbox>
     <h2>{{ article.title }}</h2>
-    <button *ngIf="!showCheckbox" 
-            mat-raised-button 
-            color="primary" 
-            (click)="loadClick.emit(); $event.stopPropagation()">
+    <button mat-raised-button 
+            color="primary"
+            matTooltip="Artikel laden"
+            matTooltipPosition="above"
+            (click)="loadClick.emit(); $event.stopPropagation()"
+            (keydown.enter)="loadClick.emit(); $event.stopPropagation()"
+            (keydown.space)="loadClick.emit(); $event.stopPropagation()">
       <mat-icon>download</mat-icon>
       Laden
     </button>
