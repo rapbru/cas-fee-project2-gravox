@@ -1,6 +1,6 @@
 <div *ngIf="article" class="article-container">
   <div class="article-header">
-    <h1>Article Details</h1>
+    <h1>{{ article.title }}</h1>
     
     <button mat-raised-button 
             color="primary" 
@@ -11,19 +11,40 @@
   </div>
 
   <div class="article-details">
-    <p>Title: {{ article.title }}</p>
-    <p>Number: {{ article.number }}</p>
-    <p>Customer: {{ article.customer }}</p>
-    <p>Area: {{ article.area }}</p>
-    <p>Drainage: {{ article.drainage }}</p>
-    <p>Anodic: {{ article.anodic }}</p>
-    <p>Note: {{ article.note }}</p>
+    <p>
+      <mat-icon>tag</mat-icon>
+      Number: {{ article.number }}
+    </p>
+    <p>
+      <mat-icon>person</mat-icon>
+      Customer: {{ article.customer }}
+    </p>
+    <p>
+      <mat-icon>square</mat-icon>
+      Area: {{ article.area }}
+    </p>
+    <p>
+      <mat-icon>water_drop</mat-icon>
+      Drainage: {{ article.drainage }}
+    </p>
+    <p>
+      <mat-icon>battery_charging_full</mat-icon>
+      Anodic: {{ article.anodic }}
+    </p>
+    <p>
+      <mat-icon>note</mat-icon>
+      Note: {{ article.note }}
+    </p>
     
-    <p>Created: {{ article.createdDate }}</p>
-    <p>Created By: {{ article.createdBy }}</p>
+    <p>
+      <mat-icon>calendar_today</mat-icon>
+      Created: {{ article.createdDate }}, {{ article.createdBy }}
+    </p>
     
-    <p>Modified: {{ article.modifiedDate }}</p>
-    <p>Modified By: {{ article.modifiedBy }}</p>
+    <p>
+      <mat-icon>calendar_today</mat-icon>
+      Modified: {{ article.modifiedDate }}, {{ article.modifiedBy }}
+    </p>
   </div>
 
   <div *ngIf="article.sequence && article.sequence.length > 0" class="sequences-container">

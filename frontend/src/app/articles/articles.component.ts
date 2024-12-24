@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { MatTableModule } from '@angular/material/table';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { LoggerService } from '../services/logger.service';
 import { environment } from '../../environments/environment';
 import { Article } from '../models/article.model';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
 
 @Component({
@@ -16,9 +17,10 @@ import { ToolbarComponent } from '../toolbar/toolbar.component';
   standalone: true,
   imports: [
     CommonModule,
-    MatCardModule,
-    MatCheckboxModule,
     FormsModule,
+    MatTableModule,
+    MatCheckboxModule,
+    MatIconModule,
     MatButtonModule,
     ToolbarComponent
   ],
@@ -28,6 +30,16 @@ import { ToolbarComponent } from '../toolbar/toolbar.component';
 export class ArticlesComponent implements OnInit {
   private enableLogging = environment.enableLogging;
   articles: Article[] = [];
+  displayedColumns: string[] = [
+    'select',
+    'title',
+    'number',
+    'customer',
+    'area',
+    'drainage',
+    'anodic',
+    'note'
+  ];
 
   constructor(
     private http: HttpClient,
