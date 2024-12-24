@@ -25,8 +25,9 @@
 }
 
 .article-details {
-  p {
-    display: flex;
+  .detail-row {
+    display: grid;
+    grid-template-columns: 24px 100px 1fr;
     align-items: center;
     gap: 8px;
     margin: 8px 0;
@@ -34,5 +35,19 @@
     mat-icon {
       color: #666;
     }
+
+    .label {
+      color: #666;
+    }
+
+    .value {
+      color: #000;
+    }
   }
+}
+
+.separator {
+  height: 1px;
+  background-color: #ddd;
+  margin: 16px 0;
 }
