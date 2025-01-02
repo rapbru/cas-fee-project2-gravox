@@ -407,6 +407,9 @@ input {
     align-items: center !important;
     justify-content: center !important;
     margin-right: var(--button-gap) !important;
+    font-size: var(--icon-size);
+    width: var(--icon-size);
+    height: var(--icon-size);
   }
 
   &:hover {
@@ -417,27 +420,4 @@ input {
     transform: var(--button-transform) !important;
     filter: brightness(94%) !important;
   }
-}
-
-border-radius: var(--button-border-radius);
-padding: var(--button-padding);
-
-mat-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: var(--button-gap);
-  font-size: var(--icon-size);
-  width: var(--icon-size);
-  height: var(--icon-size);
-}
-
-&:hover {
-  filter: brightness(103%);
-}
-
-&:active {
-  transform: var(--button-transform);
-  filter: brightness(94%);
-}
 }
