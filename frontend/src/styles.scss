@@ -385,10 +385,48 @@ input {
   display: flex;
   gap: 16px;
   margin-bottom: 20px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: flex-start;
+
+    button {
+      min-width: 120px;  // Minimum width for buttons
+      width: auto;       // Let button width be determined by content
+    }
+  }
 }
 
 .article-container {
   margin-bottom: 20px;
+}
+
+.article-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: flex-start;
+
+    h1, h2 {
+      margin-bottom: 16px;
+    }
+
+    button {
+      min-width: 120px;
+      width: auto;
+    }
+  }
+}
+
+body { 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #f5f5f5;
 }
 
 
