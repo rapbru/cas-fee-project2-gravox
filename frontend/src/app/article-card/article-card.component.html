@@ -10,10 +10,9 @@
       (click)="$event.stopPropagation()">
     </mat-checkbox>
     <h2>{{ article.title }}</h2>
-    <button *ngIf="!showCheckbox" 
-            mat-raised-button 
-            color="primary" 
-            (click)="loadClick.emit(); $event.stopPropagation()">
+    <button mat-raised-button 
+            color="accent" 
+            (click)="onLoad(); $event.stopPropagation()">
       <mat-icon>download</mat-icon>
       Laden
     </button>
