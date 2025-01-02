@@ -28,6 +28,10 @@
     margin: 0;
     flex-grow: 1;
   }
+
+  button {
+    min-width: 100px;
+  }
 }
 
 .article-details {

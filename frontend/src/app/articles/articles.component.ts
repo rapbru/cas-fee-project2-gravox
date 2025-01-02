@@ -2,25 +2,29 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { ArticleCardComponent } from '../article-card/article-card.component';
 import { LoggerService } from '../services/logger.service';
 import { environment } from '../../environments/environment';
 import { Article } from '../models/article.model';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
+import { ArticleCardComponent } from '../article-card/article-card.component';
 
 @Component({
   selector: 'app-articles',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule,
-    MatIconModule,
+    MatCardModule,
+    MatCheckboxModule,
     MatButtonModule,
-    ArticleCardComponent,
-    ToolbarComponent
+    MatIconModule,
+    FormsModule,
+    ToolbarComponent,
+    ArticleCardComponent
   ],
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.scss']

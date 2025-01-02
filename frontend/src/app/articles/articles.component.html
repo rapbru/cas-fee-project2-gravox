@@ -7,24 +7,22 @@
           color="warn"
           [disabled]="!hasSelectedArticles()"
           (click)="deleteSelectedArticles()">
-    <mat-icon>delete</mat-icon>
     Löschen
   </button>
   <button mat-raised-button 
           color="accent"
           [disabled]="!hasExactlyOneSelected()"
           (click)="loadSelectedArticle()">
-    <mat-icon>download</mat-icon>
     Laden
   </button>
 </div>
 
-<div class="articles-grid">
-  <app-article-card
-    *ngFor="let article of articles"
+<div *ngFor="let article of articles">
+  <app-article-card 
     [article]="article"
     [showCheckbox]="true"
-    (cardClick)="navigateToDetails($event)">
+    (cardClick)="navigateToDetails($event)"
+    (loadClick)="navigateToDetails(article.id)">
   </app-article-card>
 </div>
 

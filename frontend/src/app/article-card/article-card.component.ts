@@ -31,4 +31,8 @@ export class ArticleCardComponent {
       this.cardClick.emit(this.article.id);
     }
   }
+
+  onLoad() {
+    this.loadClick.emit();
+  }
 }
