@@ -96,9 +96,20 @@ export class ArticlesComponent implements OnInit {
   }
 
   deleteSelectedArticles() {
-    // TODO: Implement deletion logic
     if (this.enableLogging) {
       this.loggerService.log('Delete action triggered for selected articles');
+    }
+  }
+
+  isLoadButtonDisabled(currentArticle: Article): boolean {
+    const selectedArticles = this.articles.filter(article => article.selected);
+    
+    if (selectedArticles.length === 0) {
+      return false;
+    } else if (selectedArticles.length === 1) {
+      return !currentArticle.selected;
+    } else {
+      return true;
     }
   }
 }

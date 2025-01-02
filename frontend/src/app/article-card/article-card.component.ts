@@ -23,6 +23,7 @@ export class ArticleCardComponent {
   @Input() article!: Article;
   @Input() showCheckbox = false;
   @Input() showHeader = true;
+  @Input() isLoadButtonDisabled = false;
   @Output() cardClick = new EventEmitter<number>();
   @Output() loadClick = new EventEmitter<void>();
 

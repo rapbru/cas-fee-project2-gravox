@@ -23,6 +23,7 @@
       *ngFor="let article of articles"
       [article]="article"
       [showCheckbox]="true"
+      [isLoadButtonDisabled]="isLoadButtonDisabled(article)"
       (cardClick)="navigateToDetails($event)"
       (loadClick)="navigateToDetails(article.id)">
     </app-article-card>

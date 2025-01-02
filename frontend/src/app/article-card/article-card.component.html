@@ -12,6 +12,7 @@
     <h2>{{ article.title }}</h2>
     <button mat-raised-button 
             color="accent" 
+            [disabled]="isLoadButtonDisabled"
             (click)="onLoad(); $event.stopPropagation()">
       <mat-icon>download</mat-icon>
       Laden
