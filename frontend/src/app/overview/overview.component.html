@@ -19,7 +19,9 @@
     <mat-icon>reorder</mat-icon>
     Reihenfolge
   </button>
-  <button class="button" *ngIf="enableEdit()" 
+  <button class="button danger" 
+    [disabled]="!hasSelectedPositions()"
+    *ngIf="enableEdit()" 
     (click)="deletePositions()">
     <mat-icon>delete</mat-icon>
     löschen

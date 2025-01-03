@@ -18,6 +18,7 @@ html {
   --color-main: #FFFFFF;
   --color-sub-1: #838388;
   --color-sub-2: #A4A4A9;
+  --color-sub-3: #E1E1E7;
   --color-green: #207F35;
   --color-red: #D20015;
   --color-vonesco: #FF6228;
@@ -182,6 +183,11 @@ button.navbar-item {
   font-size: var(--font-size);
   min-height: 40px;
   cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+    color: var(--color-sub-3);
+  }
 }
 
 .button.primary {
@@ -208,7 +214,7 @@ button.navbar-item {
 
 .button:disabled {
   cursor: not-allowed;
-  color: var(--color-sub-1);
+  color: var(--color-sub-3);
 }
 
 .scrollable-content {
@@ -462,8 +468,21 @@ a.button {
 }
 
 .button.vonesco {
-  background-color: var(--color-vonesco-sub-2);
-  color: var(--color-inverted);
+  background-color: var(--color-main);
+  color: var(--color-vonesco);
+
+  &:disabled {
+    color: var(--color-sub-3);
+  }
+}
+
+.button.danger {
+  background-color: var(--color-main);
+  color: var(--color-red);
+
+  &:disabled {
+    color: var(--color-sub-3);
+  }
 }
 
 

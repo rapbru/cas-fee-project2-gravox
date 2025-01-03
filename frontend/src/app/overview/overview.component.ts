@@ -125,4 +125,9 @@ export class OverviewComponent implements OnDestroy, OnInit {
   public deletePositions() {
     this.positionService.markPositionsForDeletion();
   }
+
+  hasSelectedPositions(): boolean {
+    return !this.overviewStateService.enableOrder() && 
+           this.positionService.editPositions().some(pos => pos.isSelected);
+  }
 }
