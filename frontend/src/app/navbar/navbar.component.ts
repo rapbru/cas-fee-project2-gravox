@@ -46,6 +46,14 @@ export class NavbarComponent {
     });
   }
 
+  isOverviewActive(): boolean {
+    return this.currentRoute === '/overview';
+  }
+
+  isArticlesActive(): boolean {
+    return this.currentRoute === '/articles';
+  }
+
   shouldShowOverviewButton(): boolean {
     if (!this.deviceDetectionService.isMobileSignal()) return true;
     return !this.currentRoute.includes('/overview');
