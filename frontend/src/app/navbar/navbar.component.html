@@ -1,37 +1,33 @@
 <nav class="navbar">
   <div class="left-section">
-    <ul class="navbar-list">
-      <li class="navbar-item">
-        <a class="navbar-link" routerLink="/overview">
-          <mat-icon>view_list</mat-icon>
-          Übersicht
-        </a>
-      </li>
-      <li class="navbar-item">
-        <a class="navbar-link" routerLink="/articles">
-          <mat-icon>article</mat-icon>
-          Artikel
-        </a>
-      </li>
-    </ul>
+    <div class="navbar-list">
+      <a class="button" routerLink="/overview">
+        <mat-icon>view_list</mat-icon>
+        Übersicht
+      </a>
+      <a class="button" routerLink="/articles">
+        <mat-icon>deployed_code</mat-icon>
+        Artikel
+      </a>
+    </div>
   </div>
   <div class="right-section">
     @if (!enableEdit()) {
-      <button mat-raised-button color="primary" (click)="toggleEdit()">
+      <button class="button" (click)="toggleEdit()">
         <mat-icon>edit</mat-icon>
         Bearbeiten
       </button>
     } @else {
-      <button mat-raised-button color="primary" (click)="saveChanges()">
+      <button class="button primary" (click)="saveChanges()">
         <mat-icon>check</mat-icon>
         Speichern
       </button>
-      <button mat-raised-button (click)="cancelChanges()">
+      <button class="button warning" (click)="cancelChanges()">
         <mat-icon>close</mat-icon>
         Abbrechen
       </button>
     }
-    <button mat-raised-button (click)="logout()">
+    <button class="button" (click)="logout()">
       <mat-icon>logout</mat-icon>
       Logout
     </button>
