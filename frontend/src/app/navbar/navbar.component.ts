@@ -33,4 +33,15 @@ export class NavbarComponent {
       this.positionService.cancelEditing();
     }
   }
+
+  saveChanges() {
+    // Add any save logic here
+    this.overviewStateService.toggleEdit();
+    this.positionService.saveEditing();
+  }
+
+  cancelChanges() {
+    this.overviewStateService.toggleEdit();
+    this.positionService.cancelEditing();
+  }
 }
