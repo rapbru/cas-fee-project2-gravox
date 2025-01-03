@@ -11,12 +11,21 @@
 
 .button {
   &.inactive {
-    opacity: 0.5;
+    opacity: 0.7;
     cursor: default;
     pointer-events: none;
     
     &:hover {
       transform: none;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      opacity: 0.8;
+      color: var(--color-sub-1) !important;
+      
+      mat-icon {
+        color: var(--color-sub-1) !important;
+      }
     }
   }
 }
