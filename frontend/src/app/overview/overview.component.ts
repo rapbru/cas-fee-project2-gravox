@@ -11,6 +11,7 @@ import { AddPositionComponent } from '../position/add-position/add-position.comp
 import { ErrorHandlingService } from '../services/error-handling.service';
 import { ColumnManagementService } from '../services/column-management.service';
 import { PositionDragDropService } from '../services/position-drag-drop.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-overview',
@@ -20,7 +21,8 @@ import { PositionDragDropService } from '../services/position-drag-drop.service'
     PositionComponent, 
     DragDropModule, 
     MatIconModule, 
-    AddPositionComponent
+    AddPositionComponent,
+    MatTooltipModule
   ],
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss']
