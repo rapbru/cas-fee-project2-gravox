@@ -1,17 +1,23 @@
 import { Component, computed } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../authentication/auth.service';
+import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { OverviewStateService } from '../services/overview-state.service';
 import { PositionService } from '../services/position.service';
-import { CommonModule } from '@angular/common';
 import { DeviceDetectionService } from '../services/device-detection.service';
+import { DialogService } from '../services/dialog.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterLink, MatIconModule, MatButtonModule],
+  imports: [
+    CommonModule, 
+    RouterLink, 
+    MatIconModule, 
+    MatButtonModule
+  ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
@@ -26,18 +32,42 @@ export class NavbarComponent {
     private router: Router, 
     private overviewStateService: OverviewStateService, 
     private positionService: PositionService,
-    private deviceDetectionService: DeviceDetectionService
+    private deviceDetectionService: DeviceDetectionService,
+    private dialogService: DialogService
   ) {}
 
-  logout() {
+  async handleNavigationWithChanges(action: () => void): Promise<void> {
     if (this.enableEdit()) {
-      this.cancelChanges();
+      const confirmed = await this.dialogService.confirm({
+        title: 'Änderungen speichern?',
+        confirmText: 'Speichern',
+        cancelText: 'Abbrechen',
+        confirmClass: 'vonesco'
+      });
+      
+      if (confirmed) {
+        this.saveChanges();
+      } else {
+        this.cancelChanges();
+      }
+      action();
+    } else {
+      action();
     }
-    this.authService.logout();
-    this.router.navigate(['/login']);
   }
 
-  toggleEdit() {
+  navigateTo(path: string): void {
+    this.handleNavigationWithChanges(() => this.router.navigate([path]));
+  }
+
+  logout() {
+    this.handleNavigationWithChanges(() => {
+      this.authService.logout();
+      this.router.navigate(['/login']);
+    });
+  }
+
+  toggleEdit(): void {
     this.overviewStateService.toggleEdit();
 
     if (this.overviewStateService.enableEdit()) {
@@ -47,21 +77,13 @@ export class NavbarComponent {
     }
   }
 
-  saveChanges() {
-    // Add any save logic here
+  saveChanges(): void {
     this.overviewStateService.toggleEdit();
     this.positionService.saveEditing();
   }
 
-  cancelChanges() {
+  cancelChanges(): void {
     this.overviewStateService.toggleEdit();
     this.positionService.cancelEditing();
-  }
-
-  navigateTo(path: string): void {
-    if (this.enableEdit()) {
-      this.cancelChanges();
-    }
-    this.router.navigate([path]);
   }
 }
