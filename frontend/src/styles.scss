@@ -85,7 +85,6 @@ input {
   gap: var(--button-gap);
   margin: var(--button-margin);
   padding: var(--button-padding);
-  color: var(--color-text);
   width: 100%;
   flex: 1;
 }
@@ -99,27 +98,48 @@ input {
   align-items: center;
   padding: var(--button-padding);
   background-color: var(--color-main);
+  color: var(--color-text);
+  border: none;
+  cursor: pointer;
+}
+
+button.navbar-item {
+  background-color: var(--color-main);
+  color: var(--color-text);
+}
+
+.navbar-item.primary {
+  background-color: var(--color-primary);
+  color: var(--color-inverted);
+}
+
+.navbar-item.warning {
+  background-color: var(--color-warning);
+  color: var(--color-inverted);
 }
 
 .navbar-link {
   text-decoration: none;
   color: inherit;
-  background: none;
-  border-style: none;
   font-style: inherit;
   font-size: var(--font-size);
   display: flex;
   align-items: center;
+  gap: 8px;
+}
+
+.navbar-link:not(a) {
+  width: 100%;
+  height: 100%;
+  background: none;
+  border: none;
 }
 
 .article-card {
-  .article-card {
-    border: 1px solid var(--color-main);
-    border-radius: var(--button-border-radius);
-    background-color: var(--color-main);
-    color: var(--color-text);
-  }
-
+  border: 1px solid var(--color-main);
+  border-radius: var(--button-border-radius);
+  background-color: var(--color-main);
+  color: var(--color-text);
 }
 
 .flex-spacer {
@@ -135,6 +155,7 @@ input {
 .button {
   display: flex;
   align-items: center;
+  justify-content: center;
   border-radius: var(--button-border-radius);
   border-style: none;
   background-color: var(--color-main);
@@ -143,25 +164,17 @@ input {
   gap: 0.4em;
   font-variation-settings: "wght" 320;
   font-size: var(--font-size);
+  cursor: pointer;
 }
 
-.button-label {
-  display: flex;
-  align-items: center;
-  padding-right: 1.2em;
-  gap: 0.4em;
-  font-variation-settings: "wght" 320;
-}
-
-.button-highlight-main {
-  background-color: var(--color-vonesco-sub);
+.button.primary {
+  background-color: var(--color-primary);
   color: var(--color-inverted);
-  font-variation-settings: "wght" 400;
-  font-weight: 600;
 }
 
-.button-highlight-sub {
-  color: var(--color-vonesco-sub);
+.button.warning {
+  background-color: var(--color-warning);
+  color: var(--color-inverted);
 }
 
 .button:hover {
@@ -424,7 +437,6 @@ input {
   justify-content: space-between;
   align-items: center;
   height: 64px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   width: 100%;
 }
 
@@ -440,17 +452,16 @@ input {
   gap: 16px;
 }
 
-.logo {
-  height: 40px;
-  width: auto;
-}
-
 .overview-container {
   display: grid;
   grid-template-columns: repeat(var(--total-columns), 1fr);
   gap: var(--grid-gap);
   padding: var(--grid-padding);
   width: 100%;
+}
+
+a.button {
+  text-decoration: none;
 }
 
 
