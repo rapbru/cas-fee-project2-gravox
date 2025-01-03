@@ -46,11 +46,15 @@ html {
     --color-text: #E1E1E7;
     --color-inverted: black;
     --color-background: #171719;
-    --color-main: #272729;
+    --color-main: #766c6c;
     --color-sub-1: #717175;
     --color-sub-2: #3F3F41;
-    --color-green: #2ACB4E;
+    --color-sub-3: #272729;
+    --color-green: #000100;
     --color-red: #D20015;
+    --color-vonesco: #FFA786;
+  --color-vonesco-sub: #FF7442;
+  --color-vonesco-sub-2: #FF6228;
     --color-highlight-text: #171719;
 
 
@@ -611,11 +615,74 @@ a.button {
 }
 
 .mat-mdc-tooltip {
-  --mdc-plain-tooltip-container-color: var(--color-main);
-  --mdc-plain-tooltip-supporting-text-color: var(--color-text);
+  --mdc-plain-tooltip-container-color: var(--color-sub-3) !important;
+  --mdc-plain-tooltip-supporting-text-color: var(--color-text) !important;
   font-size: calc(var(--font-size) * 0.9);
   max-width: 200px;
   text-align: center;
+
+  .mdc-tooltip__surface {
+    border-radius: var(--button-border-radius) !important;
+    padding: calc(var(--button-padding) * 1.5) calc(var(--button-padding) * 2) !important;
+    background-color: var(--color-sub-3) !important;
+  }
+
+  .mdc-tooltip__content {
+    color: var(--color-text) !important;
+    font-variation-settings: "wght" 320;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    --mdc-plain-tooltip-container-color: var(--color-sub-2) !important;
+    
+    .mdc-tooltip__surface {
+      background-color: var(--color-sub-2) !important;
+    }
+
+    .mdc-tooltip__content {
+      color: var(--color-text) !important;
+    }
+  }
+}
+
+.mat-mdc-tooltip-panel {
+  .mdc-tooltip__surface {
+    background-color: var(--color-sub-3) !important;
+
+    @media (prefers-color-scheme: dark) {
+      background-color: var(--color-sub-2) !important;
+    }
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-vonesco-sub-2) !important;
+  outline-offset: 2px !important;
+  border-radius: var(--button-border-radius) !important;
+}
+
+button:focus-visible {
+  outline: 2px solid var(--color-vonesco-sub-2) !important;
+  outline-offset: 2px !important;
+  border-radius: var(--button-border-radius) !important;
+}
+
+.mat-mdc-button:focus-visible,
+.mat-mdc-raised-button:focus-visible,
+.mat-mdc-outlined-button:focus-visible {
+  outline: 2px solid var(--color-vonesco-sub-2) !important;
+  outline-offset: 2px !important;
+  border-radius: var(--button-border-radius) !important;
+}
+
+* {
+  &:focus {
+    outline: none;
+  }
+  
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
 }
 
 
