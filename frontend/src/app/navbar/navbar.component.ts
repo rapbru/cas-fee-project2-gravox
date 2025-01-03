@@ -4,6 +4,7 @@ import { AuthService } from '../authentication/auth.service';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { OverviewStateService } from '../services/overview-state.service';
 import { PositionService } from '../services/position.service';
 import { DeviceDetectionService } from '../services/device-detection.service';
@@ -16,7 +17,8 @@ import { filter } from 'rxjs/operators';
   imports: [
     CommonModule, 
     MatIconModule, 
-    MatButtonModule
+    MatButtonModule,
+    MatTooltipModule
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'

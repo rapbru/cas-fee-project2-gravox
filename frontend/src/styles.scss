@@ -606,9 +606,16 @@ a.button {
   }
 }
 
-// Force horizontal button layout
 ::ng-deep .mat-mdc-dialog-actions {
   flex-direction: row !important;
+}
+
+.mat-mdc-tooltip {
+  --mdc-plain-tooltip-container-color: var(--color-main);
+  --mdc-plain-tooltip-supporting-text-color: var(--color-text);
+  font-size: calc(var(--font-size) * 0.9);
+  max-width: 200px;
+  text-align: center;
 }
 
 
