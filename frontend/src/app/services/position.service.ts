@@ -9,6 +9,7 @@ import { ColumnManagementService } from './column-management.service';
 import { ErrorHandlingService } from './error-handling.service';
 import { PositionOrderService } from './position-order.service';
 import { ApiConfigService } from '../services/api-config.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,9 @@ export class PositionService {
 
   private updateInterval = 1000;
   private intervalSubscription!: Subscription;
+
+  private positionsSubject = new BehaviorSubject<Position[]>([]);
+  public positions$ = this.positionsSubject.asObservable();
 
   constructor(
     private http: HttpClient, 
@@ -74,11 +78,19 @@ export class PositionService {
   }
 
   public startEditing(): void {
+    console.log('Started editing positions');
     this.editPositions.set([...this.orderedPositions()]);
   }
 
+  public saveEditing(): void {
+    console.log('Saving position changes');
+    this.saveAllChanges();
+  }
+
   public cancelEditing(): void {
+    console.log('Cancelled position editing');
     this.editPositions.set([]);
+    this.cancelAllChanges();
   }
 
   private transformData(data: Position[]): Position[] {

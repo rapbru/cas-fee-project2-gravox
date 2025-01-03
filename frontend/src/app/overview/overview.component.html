@@ -6,8 +6,6 @@
   <button *ngIf="enableEdit()" (click)="addPosition()">hinzufügen</button>
   <button *ngIf="enableEdit()" (click)="orderPositions()">Reihenfolge</button>
   <button *ngIf="enableEdit()" (click)="deletePositions()">löschen</button>
-  <button *ngIf="enableEdit()" (click)="saveChanges()">Speichern</button>
-  <button *ngIf="enableEdit()" (click)="cancelChanges()">Abbrechen</button>
 </div>
 
 <div *ngIf="!(isMobile() && newPosition)" cdkDropListGroup>
