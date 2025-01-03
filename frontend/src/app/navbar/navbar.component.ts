@@ -44,4 +44,8 @@ export class NavbarComponent {
     this.overviewStateService.toggleEdit();
     this.positionService.cancelEditing();
   }
+
+  navigateTo(path: string): void {
+    this.router.navigate([path]);
+  }
 }
