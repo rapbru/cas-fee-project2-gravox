@@ -1,14 +1,29 @@
 <div class="button-container" *ngIf="enableEdit() && !(isMobile() && newPosition)">
-  <button class="button button-label" *ngIf="!isMobile() && enableEdit()" 
-    (click)="increaseColumns()">Linie hinzufügen</button>
-  <button class="button button-label" *ngIf="(columns().length > 1) && !isMobile() && enableEdit()" 
-    (click)="decreaseColumns()">Linie löschen</button>
-  <button class="button button-label" *ngIf="enableEdit()" 
-    (click)="addPosition()">hinzufügen</button>
-  <button class="button button-label" *ngIf="enableEdit()" 
-    (click)="orderPositions()">Reihenfolge</button>
-  <button class="button button-label warning" *ngIf="enableEdit()" 
-    (click)="deletePositions()">löschen</button>
+  <button class="button" *ngIf="!isMobile() && enableEdit()" 
+    (click)="increaseColumns()">
+    <mat-icon>add</mat-icon>
+    Linie hinzufügen
+  </button>
+  <button class="button" *ngIf="(columns().length > 1) && !isMobile() && enableEdit()" 
+    (click)="decreaseColumns()">
+    <mat-icon>remove</mat-icon>
+    Linie löschen
+  </button>
+  <button class="button" *ngIf="enableEdit()" 
+    (click)="addPosition()">
+    <mat-icon>add_circle</mat-icon>
+    hinzufügen
+  </button>
+  <button class="button" *ngIf="enableEdit()" 
+    (click)="orderPositions()">
+    <mat-icon>reorder</mat-icon>
+    Reihenfolge
+  </button>
+  <button class="button" *ngIf="enableEdit()" 
+    (click)="deletePositions()">
+    <mat-icon>delete</mat-icon>
+    löschen
+  </button>
 </div>
 
 <div *ngIf="!(isMobile() && newPosition)" cdkDropListGroup>
