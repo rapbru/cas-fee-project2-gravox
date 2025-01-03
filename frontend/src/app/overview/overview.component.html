@@ -21,7 +21,7 @@
   </button>
   <button class="button danger" 
     [disabled]="!hasSelectedPositions()"
-    *ngIf="enableEdit()" 
+    *ngIf="enableEdit() && !overviewStateService.enableOrder()" 
     (click)="deletePositions()">
     <mat-icon>delete</mat-icon>
     löschen
