@@ -16,8 +16,8 @@
   </button>
   <button class="button" *ngIf="enableEdit()" 
     (click)="orderPositions()">
-    <mat-icon>reorder</mat-icon>
-    Reihenfolge
+    <mat-icon>{{ overviewStateService.enableOrder() ? 'radio_button_unchecked' : 'reorder' }}</mat-icon>
+    {{ overviewStateService.enableOrder() ? 'Positionen' : 'Reihenfolge' }}
   </button>
   <button class="button danger" 
     [disabled]="!hasSelectedPositions()"
