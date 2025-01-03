@@ -1,67 +1,64 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { Article } from '../models/article.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Article } from '../models/article.model';
-import { LoggerService } from '../services/logger.service';
-import { MatButtonModule } from '@angular/material/button';
+import { OverviewStateService } from '../services/overview-state.service';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { ArticleCardComponent } from '../article-card/article-card.component';
 
 @Component({
   selector: 'app-articles-details',
   standalone: true,
   imports: [
-    CommonModule,
-    MatButtonModule,
     MatIconModule,
+    MatButtonModule,
     ArticleCardComponent
   ],
   templateUrl: './articles-details.component.html',
   styleUrls: ['./articles-details.component.scss']
 })
 export class ArticlesDetailsComponent implements OnInit {
-  private enableLogging = environment.enableLogging;
-  article?: Article;
+  article: Article | null = null;
+  public readonly enableEdit = this.overviewStateService.enableEdit;
 
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private loggerService: LoggerService
+    private overviewStateService: OverviewStateService
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      const id = params['id'];
-      if (id) {
-        this.loadArticle(id);
-      }
-    });
-
-    // Scroll to top when component initializes
-    window.scrollTo(0, 0);
+    this.loadArticle();
   }
 
-  private loadArticle(id: string) {
-    this.http.get<Article>(`${environment.apiUrl}/article/${id}`)
-      .subscribe({
-        next: (article) => {
-          this.article = article;
-          if (this.enableLogging) {
-            this.loggerService.log('Article loaded successfully:', article);
+  private loadArticle() {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.http.get<Article>(`${environment.apiUrl}/article/${id}`)
+        .subscribe({
+          next: (article) => {
+            this.article = article;
+          },
+          error: (error) => {
+            console.error('Error loading article:', error);
           }
-        },
-        error: (error) => {
-          if (this.enableLogging) {
-            this.loggerService.error('Error loading article:', error);
-          }
-        }
-      });
+        });
+    }
   }
 
   onLoad() {
-    // Here you can add your load logic
-    console.log('Loading article:', this.article);
+    // Existing load functionality
+  }
+
+  onSave() {
+    // Save changes
+    this.overviewStateService.toggleEdit();
+  }
+
+  onCancel() {
+    // Cancel changes
+    this.overviewStateService.toggleEdit();
   }
 }

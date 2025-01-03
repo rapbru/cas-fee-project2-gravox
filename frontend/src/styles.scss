@@ -83,12 +83,13 @@ input {
   padding: var(--button-padding);
   color: var(--color-text);
   background-color: var(--color-background);
+  width: 100%;
+  flex: 1;
 }
 
 .navbar-item {
   list-style: none;
   text-decoration: none;
-  //border-style: solid;
   border-radius: var(--button-border-radius);
   font-style: inherit;
   display: flex;

@@ -24,6 +24,7 @@ export class ArticleCardComponent {
   @Input() showCheckbox = false;
   @Input() showHeader = true;
   @Input() isLoadButtonDisabled = false;
+  @Input() isEditable = false;
   @Output() cardClick = new EventEmitter<number>();
   @Output() loadClick = new EventEmitter<void>();
 
