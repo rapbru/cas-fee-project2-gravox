@@ -34,7 +34,7 @@ export class NavbarComponent {
     private router: Router, 
     private overviewStateService: OverviewStateService, 
     private positionService: PositionService,
-    private deviceDetectionService: DeviceDetectionService,
+    public deviceDetectionService: DeviceDetectionService,
     private dialogService: DialogService
   ) {
     this.currentRoute = this.router.url;
