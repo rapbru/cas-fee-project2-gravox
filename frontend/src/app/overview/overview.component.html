@@ -1,4 +1,4 @@
-<div *ngIf="enableEdit() && !(isMobile() && newPosition)"> 
+<div class="button-container" *ngIf="enableEdit() && !(isMobile() && newPosition)">
   <button *ngIf="!isMobile() && enableEdit()" 
     (click)="increaseColumns()">Linie hinzufügen</button>
   <button *ngIf="(columns().length > 1) && !isMobile() && enableEdit()" 

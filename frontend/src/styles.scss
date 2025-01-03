@@ -1,6 +1,10 @@
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
-body { margin: 0; font-family: 'Inter', 'Roboto', sans-serif; height: 100%; width: 100%; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: var(--color-background);
+}
 
 html {
   background-color: var(--color-background);
@@ -82,7 +86,6 @@ input {
   margin: var(--button-margin);
   padding: var(--button-padding);
   color: var(--color-text);
-  background-color: var(--color-background);
   width: 100%;
   flex: 1;
 }
@@ -370,9 +373,10 @@ input {
 }
 
 .content-container {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .card-grid {
@@ -384,18 +388,9 @@ input {
 
 .button-container {
   display: flex;
-  gap: 16px;
-  margin-bottom: 20px;
-
-  @media (max-width: 600px) {
-    flex-direction: column;
-    align-items: flex-start;
-
-    button {
-      min-width: 120px;  // Minimum width for buttons
-      width: auto;       // Let button width be determined by content
-    }
-  }
+  gap: var(--button-gap);
+  padding: var(--button-padding);
+  width: 100%;
 }
 
 .article-container {
@@ -424,18 +419,11 @@ input {
   }
 }
 
-body { 
-  margin: 0; 
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-color: #f5f5f5;
-}
-
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 64px;
-  background-color: var(--color-background);
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   width: 100%;
 }
@@ -455,6 +443,14 @@ body {
 .logo {
   height: 40px;
   width: auto;
+}
+
+.overview-container {
+  display: grid;
+  grid-template-columns: repeat(var(--total-columns), 1fr);
+  gap: var(--grid-gap);
+  padding: var(--grid-padding);
+  width: 100%;
 }
 
 
