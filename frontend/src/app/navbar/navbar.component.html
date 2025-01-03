@@ -1,14 +1,14 @@
 <nav class="navbar">
   <div class="left-section">
     <div class="navbar-list">
-      <a class="button" routerLink="/overview">
+      <button class="button" (click)="navigateTo('/overview')">
         <mat-icon>view_list</mat-icon>
         Übersicht
-      </a>
-      <a class="button" routerLink="/articles">
+      </button>
+      <button class="button" (click)="navigateTo('/articles')">
         <mat-icon>deployed_code</mat-icon>
         Artikel
-      </a>
+      </button>
     </div>
   </div>
   <div class="right-section">
