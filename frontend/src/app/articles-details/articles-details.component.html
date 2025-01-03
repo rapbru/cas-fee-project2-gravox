@@ -1,36 +1,57 @@
 <div class="content-container">
-  <div *ngIf="article">
+  @if (article) {
     <div class="article-header">
       <h1>{{ article.title }}</h1>
       
-      <button mat-raised-button 
-              color="primary" 
-              (click)="onLoad()">
-        <mat-icon>download</mat-icon>
-        Laden
-      </button>
+      @if (!enableEdit()) {
+        <button mat-raised-button 
+                color="primary" 
+                (click)="onLoad()">
+          <mat-icon>download</mat-icon>
+          Laden
+        </button>
+      }
+
+      @if (enableEdit()) {
+        <div class="edit-buttons">
+          <button mat-raised-button 
+                  color="primary" 
+                  (click)="onSave()">
+            <mat-icon>save</mat-icon>
+            Speichern
+          </button>
+          <button mat-raised-button 
+                  (click)="onCancel()">
+            Abbrechen
+          </button>
+        </div>
+      }
     </div>
 
     <div class="card-grid">
       <app-article-card
         [article]="article"
         [showCheckbox]="false"
-        [showHeader]="false">
+        [showHeader]="false"
+        [isEditable]="enableEdit()">
       </app-article-card>
 
-      <div *ngIf="article.sequence && article.sequence.length > 0" class="sequences-container">
-        <div *ngFor="let seq of article.sequence" class="sequence-item">
-          <p>Position ID: {{ seq.positionId }}</p>
-          <p>Order Number: {{ seq.orderNumber }}</p>
-          <p>Time Preset: {{ seq.timePreset }}</p>
-          <p>Current Preset: {{ seq.currentPreset }}</p>
-          <p>Voltage Preset: {{ seq.voltagePreset }}</p>
+      @if (article.sequence && article.sequence.length > 0) {
+        <div class="sequences-container">
+          @for (seq of article.sequence; track seq.positionId) {
+            <div class="sequence-item"
+                 [class.editable]="enableEdit()">
+              <p>Position ID: {{ seq.positionId }}</p>
+              <p>Order Number: {{ seq.orderNumber }}</p>
+              <p>Time Preset: {{ seq.timePreset }}</p>
+              <p>Current Preset: {{ seq.currentPreset }}</p>
+              <p>Voltage Preset: {{ seq.voltagePreset }}</p>
+            </div>
+          }
         </div>
-      </div>
+      }
     </div>
-  </div>
-
-  <div *ngIf="!article">
-    Loading article details...
-  </div>
+  } @else {
+    <div>Loading article details...</div>
+  }
 </div>
