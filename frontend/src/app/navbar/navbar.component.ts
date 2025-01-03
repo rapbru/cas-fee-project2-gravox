@@ -1,5 +1,5 @@
 import { Component, computed } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { AuthService } from '../authentication/auth.service';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,6 +8,7 @@ import { OverviewStateService } from '../services/overview-state.service';
 import { PositionService } from '../services/position.service';
 import { DeviceDetectionService } from '../services/device-detection.service';
 import { DialogService } from '../services/dialog.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -26,6 +27,8 @@ export class NavbarComponent {
     !this.enableEdit() || !this.deviceDetectionService.isMobileSignal()
   );
   
+  currentRoute: string = '';
+  
   constructor(
     private authService: AuthService, 
     private router: Router, 
@@ -33,7 +36,25 @@ export class NavbarComponent {
     private positionService: PositionService,
     private deviceDetectionService: DeviceDetectionService,
     private dialogService: DialogService
-  ) {}
+  ) {
+    this.currentRoute = this.router.url;
+    
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      this.currentRoute = event.url;
+    });
+  }
+
+  shouldShowOverviewButton(): boolean {
+    if (!this.deviceDetectionService.isMobileSignal()) return true;
+    return !this.currentRoute.includes('/overview');
+  }
+
+  shouldShowArticlesButton(): boolean {
+    if (!this.deviceDetectionService.isMobileSignal()) return true;
+    return this.currentRoute.includes('/overview');
+  }
 
   async handleNavigationWithChanges(action: () => void): Promise<void> {
     if (this.enableEdit()) {
