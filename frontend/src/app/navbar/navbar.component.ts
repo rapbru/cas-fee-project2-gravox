@@ -78,11 +78,26 @@ export class NavbarComponent {
     this.handleNavigationWithChanges(() => this.router.navigate([path]));
   }
 
-  logout() {
-    this.handleNavigationWithChanges(() => {
-      this.authService.logout();
-      this.router.navigate(['/login']);
-    });
+  async logout() {
+    if (this.enableEdit()) {
+      await this.handleNavigationWithChanges(() => this.performLogout());
+    } else {
+      const confirmed = await this.dialogService.confirm({
+        title: 'Person ausloggen',
+        confirmText: 'Ausloggen',
+        cancelText: 'Abbrechen',
+        confirmClass: 'danger'
+      });
+
+      if (confirmed) {
+        this.performLogout();
+      }
+    }
+  }
+
+  private performLogout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
   toggleEdit(): void {

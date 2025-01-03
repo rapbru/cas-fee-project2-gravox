@@ -539,4 +539,76 @@ a.button {
   position: fixed !important;
 }
 
+// Dialog styles
+.mat-mdc-dialog-container {
+  --mdc-dialog-container-color: var(--color-main) !important;
+  
+  .mdc-dialog__surface {
+    border-radius: var(--button-border-radius) !important;
+    padding: calc(var(--button-padding) * 3) calc(var(--button-padding) * 4) !important;
+    color: var(--color-text) !important;
+    width: auto !important;
+    min-width: unset !important;
+  }
+
+  .mat-mdc-dialog-content {
+    margin: 0 !important;
+    padding: calc(var(--button-padding) * 2) 0 !important;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .mat-mdc-dialog-title {
+    color: var(--color-text);
+    font-size: calc(var(--font-size) * 0.9);
+    font-variation-settings: "wght" 320;
+    text-align: center;
+    padding: 0 !important;
+    margin: 0 !important;
+    white-space: nowrap;
+  }
+
+  .mat-mdc-dialog-actions {
+    padding: calc(var(--button-padding) * 2) 0 0 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    gap: var(--button-gap);
+    min-height: unset !important;
+    flex-wrap: nowrap !important;
+
+    button {
+      margin: 0 !important;
+      flex: 0 0 auto !important;
+      width: auto !important;
+      min-width: 100px !important;
+      
+      &.danger {
+        --mdc-protected-button-container-color: var(--color-red);
+        --mdc-protected-button-label-text-color: var(--color-text);
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    .mdc-dialog__surface {
+      margin: var(--button-padding);
+      padding: calc(var(--button-padding) * 2) !important;
+    }
+
+    .mat-mdc-dialog-actions {
+      flex-direction: row !important;
+      button {
+        min-width: 90px !important;
+      }
+    }
+  }
+}
+
+// Force horizontal button layout
+::ng-deep .mat-mdc-dialog-actions {
+  flex-direction: row !important;
+}
+
 
