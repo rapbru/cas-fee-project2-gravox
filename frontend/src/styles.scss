@@ -164,6 +164,7 @@ button.navbar-item {
   gap: 0.4em;
   font-variation-settings: "wght" 320;
   font-size: var(--font-size);
+  min-height: 40px;
   cursor: pointer;
 }
 
@@ -173,7 +174,7 @@ button.navbar-item {
 }
 
 .button.warning {
-  background-color: var(--color-warning);
+  background-color: var(--color-red);
   color: var(--color-inverted);
 }
 
@@ -462,6 +463,11 @@ input {
 
 a.button {
   text-decoration: none;
+}
+
+.button.vonesco {
+  background-color: var(--color-vonesco-sub-2);
+  color: var(--color-inverted);
 }
 
 
