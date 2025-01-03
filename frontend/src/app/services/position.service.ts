@@ -212,9 +212,13 @@ export class PositionService {
     this.positionOrderService.savePositionOrder(editPositions.map(pos => pos.id)).subscribe({
         next: () => {
             this.clearModifiedPositions();
-            this.errorHandlingService.showSuccess('Alle Änderungen erfolgreich gespeichert');
+            this.errorHandlingService.showSuccess('Änderungen gespeichert');
         },
-        error: (error) => this.errorHandlingService.showError('Fehler beim Speichern der Reihenfolge', error)
+        error: (error) => {
+            this.errorHandlingService.showError('Speichern fehlgeschlagen', error);
+            // Optionally revert changes here if needed
+            this.cancelAllChanges();
+        }
     });
   }
 

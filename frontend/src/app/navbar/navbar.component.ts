@@ -1,5 +1,5 @@
 import { Component, computed } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../authentication/auth.service';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,7 +14,6 @@ import { DialogService } from '../services/dialog.service';
   standalone: true,
   imports: [
     CommonModule, 
-    RouterLink, 
     MatIconModule, 
     MatButtonModule
   ],
@@ -47,10 +46,8 @@ export class NavbarComponent {
       
       if (confirmed) {
         this.saveChanges();
-      } else {
-        this.cancelChanges();
+        action();
       }
-      action();
     } else {
       action();
     }
