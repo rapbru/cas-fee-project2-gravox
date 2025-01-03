@@ -1,11 +1,15 @@
 <nav class="navbar">
   <div class="left-section">
     <div class="navbar-list">
-      <button class="button" (click)="navigateTo('/overview')">
+      <button class="button" 
+        *ngIf="shouldShowNavigationButtons()"
+        (click)="navigateTo('/overview')">
         <mat-icon>view_list</mat-icon>
         Übersicht
       </button>
-      <button class="button" (click)="navigateTo('/articles')">
+      <button class="button" 
+        *ngIf="shouldShowNavigationButtons()"
+        (click)="navigateTo('/articles')">
         <mat-icon>deployed_code</mat-icon>
         Artikel
       </button>
@@ -27,7 +31,9 @@
         Abbrechen
       </button>
     }
-    <button class="button" (click)="logout()">
+    <button class="button" 
+      *ngIf="shouldShowNavigationButtons()"
+      (click)="logout()">
       <mat-icon>logout</mat-icon>
       Logout
     </button>
