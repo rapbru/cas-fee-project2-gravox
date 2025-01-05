@@ -24,7 +24,9 @@ export class ToolbarComponent {
   @Input() showReorder = false;
   @Input() showDelete = false;
   @Input() showNavigateAdd = false;
+  @Input() showLoad = false;
   @Input() deleteDisabled = true;
+  @Input() loadDisabled = true;
   @Input() isReorderMode = false;
 
   @Output() addLine = new EventEmitter<void>();
@@ -32,6 +34,7 @@ export class ToolbarComponent {
   @Output() add = new EventEmitter<void>();
   @Output() reorder = new EventEmitter<void>();
   @Output() delete = new EventEmitter<void>();
+  @Output() load = new EventEmitter<void>();
 
   constructor(private router: Router) {}
 

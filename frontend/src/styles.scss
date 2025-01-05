@@ -272,6 +272,22 @@ button.navbar-item {
       }
     }
   }
+
+  &.vonesco {
+    color: var(--color-vonesco);
+
+    &:disabled {
+      color: var(--color-sub-3);
+    }
+  }
+
+  &.danger {
+    color: var(--color-red);
+
+    &:disabled {
+      color: var(--color-sub-3);
+    }
+  }
 }
 
 .button.primary {

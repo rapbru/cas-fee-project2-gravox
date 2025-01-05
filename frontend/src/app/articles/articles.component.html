@@ -2,29 +2,15 @@
 
 <app-toolbar
   [showNavigateAdd]="true"
-  [showReorder]="false"
-  [showAddLine]="false"
-  [showDeleteLine]="false"
-  [showAdd]="false"
-  [showDelete]="false">
+  [showDelete]="true"
+  [showLoad]="true"
+  [deleteDisabled]="!hasSelectedArticles()"
+  [loadDisabled]="!hasExactlyOneSelected()"
+  (delete)="deleteSelectedArticles()"
+  (load)="loadSelectedArticle()">
 </app-toolbar>
 
 <div class="content-container">
-  <div class="button-container">
-    <button mat-raised-button 
-            color="warn"
-            [disabled]="!hasSelectedArticles()"
-            (click)="deleteSelectedArticles()">
-      Löschen
-    </button>
-    <button mat-raised-button 
-            color="accent"
-            [disabled]="!hasExactlyOneSelected()"
-            (click)="loadSelectedArticle()">
-      Laden
-    </button>
-  </div>
-
   <div class="card-grid">
     <app-article-card 
       *ngFor="let article of articles"
