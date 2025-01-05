@@ -1,72 +1,74 @@
 <nav class="navbar" role="navigation" aria-label="Hauptnavigation">
-  <div class="left-section">
-    <div class="navbar-list">
+  <div class="app-container">
+    <div class="left-section">
+      <div class="navbar-list">
+        <button class="button" 
+          *ngIf="shouldShowNavigationButtons() && shouldShowOverviewButton()"
+          [disabled]="isOverviewActive()"
+          [class.inactive]="isOverviewActive()"
+          (click)="navigateTo('/overview')"
+          tabindex="1"
+          aria-label="Zur Übersicht navigieren"
+          matTooltip="Zur Übersicht"
+          matTooltipPosition="below">
+          <mat-icon>view_list</mat-icon>
+          Übersicht
+        </button>
+        <button class="button" 
+          *ngIf="shouldShowNavigationButtons() && shouldShowArticlesButton()"
+          [disabled]="isArticlesActive()"
+          [class.inactive]="isArticlesActive()"
+          (click)="navigateTo('/articles')"
+          tabindex="2"
+          aria-label="Zu Artikeln navigieren"
+          matTooltip="Zu Artikeln"
+          matTooltipPosition="below">
+          <mat-icon>deployed_code</mat-icon>
+          Artikel
+        </button>
+      </div>
+    </div>
+    <div class="right-section">
+      @if (!enableEdit()) {
+        <button class="button" 
+          (click)="toggleEdit()"
+          tabindex="3"
+          aria-label="Bearbeitungsmodus aktivieren"
+          matTooltip="Bearbeitungsmodus aktivieren"
+          matTooltipPosition="below">
+          <mat-icon>edit</mat-icon>
+          Bearbeiten
+        </button>
+      } @else {
+        <button class="button vonesco" 
+          (click)="saveChanges()"
+          tabindex="3"
+          aria-label="Änderungen speichern"
+          matTooltip="Änderungen speichern"
+          matTooltipPosition="below">
+          <mat-icon>check</mat-icon>
+          Speichern
+        </button>
+        <button class="button" 
+          (click)="cancelChanges()"
+          tabindex="4"
+          aria-label="Änderungen verwerfen"
+          matTooltip="Änderungen verwerfen"
+          matTooltipPosition="below">
+          <mat-icon>close</mat-icon>
+          Abbrechen
+        </button>
+      }
       <button class="button" 
-        *ngIf="shouldShowNavigationButtons() && shouldShowOverviewButton()"
-        [disabled]="isOverviewActive()"
-        [class.inactive]="isOverviewActive()"
-        (click)="navigateTo('/overview')"
-        tabindex="1"
-        aria-label="Zur Übersicht navigieren"
-        matTooltip="Zur Übersicht"
+        *ngIf="shouldShowNavigationButtons()"
+        (click)="logout()"
+        tabindex="5"
+        aria-label="Ausloggen"
+        matTooltip="Ausloggen"
         matTooltipPosition="below">
-        <mat-icon>view_list</mat-icon>
-        Übersicht
-      </button>
-      <button class="button" 
-        *ngIf="shouldShowNavigationButtons() && shouldShowArticlesButton()"
-        [disabled]="isArticlesActive()"
-        [class.inactive]="isArticlesActive()"
-        (click)="navigateTo('/articles')"
-        tabindex="2"
-        aria-label="Zu Artikeln navigieren"
-        matTooltip="Zu Artikeln"
-        matTooltipPosition="below">
-        <mat-icon>deployed_code</mat-icon>
-        Artikel
+        <mat-icon>logout</mat-icon>
+        <span [class.mobile-hidden]="deviceDetectionService.isMobileSignal()">Logout</span>
       </button>
     </div>
-  </div>
-  <div class="right-section">
-    @if (!enableEdit()) {
-      <button class="button" 
-        (click)="toggleEdit()"
-        tabindex="3"
-        aria-label="Bearbeitungsmodus aktivieren"
-        matTooltip="Bearbeitungsmodus aktivieren"
-        matTooltipPosition="below">
-        <mat-icon>edit</mat-icon>
-        Bearbeiten
-      </button>
-    } @else {
-      <button class="button vonesco" 
-        (click)="saveChanges()"
-        tabindex="3"
-        aria-label="Änderungen speichern"
-        matTooltip="Änderungen speichern"
-        matTooltipPosition="below">
-        <mat-icon>check</mat-icon>
-        Speichern
-      </button>
-      <button class="button" 
-        (click)="cancelChanges()"
-        tabindex="4"
-        aria-label="Änderungen verwerfen"
-        matTooltip="Änderungen verwerfen"
-        matTooltipPosition="below">
-        <mat-icon>close</mat-icon>
-        Abbrechen
-      </button>
-    }
-    <button class="button" 
-      *ngIf="shouldShowNavigationButtons()"
-      (click)="logout()"
-      tabindex="5"
-      aria-label="Ausloggen"
-      matTooltip="Ausloggen"
-      matTooltipPosition="below">
-      <mat-icon>logout</mat-icon>
-      <span [class.mobile-hidden]="deviceDetectionService.isMobileSignal()">Logout</span>
-    </button>
   </div>
 </nav>
