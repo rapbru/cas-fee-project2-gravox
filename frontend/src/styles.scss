@@ -235,42 +235,35 @@ button.navbar-item {
 }
 
 .button {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
+  gap: var(--button-gap);
+  height: 36px;
+  padding: var(--button-padding);
+  box-sizing: border-box;
+  border: none;
   border-radius: var(--button-border-radius);
-  border-style: none;
   background-color: var(--color-main);
   color: var(--color-text);
-  padding: 0.4em 0.6em;
-  gap: 0.4em;
-  font-variation-settings: "wght" 320;
-  font-size: var(--font-size);
-  min-height: 40px;
   cursor: pointer;
-
-  &:disabled {
-    cursor: not-allowed;
-    color: var(--color-sub-3);
+  text-decoration: none;
+  font-size: var(--font-size);
+  
+  mat-icon {
+    margin: 0;
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
   }
 
-  &.inactive {
-    opacity: 0.7;
-    cursor: default;
-    pointer-events: none;
-    
-    &:hover {
-      transform: none;
-    }
+  span {
+    white-space: nowrap;
+    line-height: 24px;
+  }
 
-    @media (prefers-color-scheme: dark) {
-      opacity: 0.8;
-      color: var(--color-sub-1) !important;
-      
-      mat-icon {
-        color: var(--color-sub-1) !important;
-      }
-    }
+  &:hover {
+    filter: brightness(103%);
   }
 
   &.vonesco {
@@ -847,6 +840,25 @@ app-navbar {
 .content-container {
   display: block;
   width: 100%;
+}
+
+// Navbar and toolbar container styles
+.navbar,
+.toolbar {
+  display: flex;
+  gap: var(--button-gap);
+  align-items: center;
+
+  .toolbar-group {
+    display: flex;
+    gap: var(--button-gap);
+    align-items: center;
+  }
+}
+
+// Specific toolbar margin
+.toolbar {
+  margin-bottom: 20px;
 }
 
 
