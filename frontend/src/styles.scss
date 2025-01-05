@@ -194,43 +194,15 @@ button.navbar-item {
   display: flex;
   gap: var(--button-gap);
   align-items: center;
-  margin: 1rem 0;
+  margin-top: var(--button-gap);
+  margin-bottom: var(--button-gap);
+  min-height: 36px;
+  box-sizing: border-box;
 
-  .button {
-    display: inline-flex;
-    align-items: center;
+  .toolbar-group {
+    display: flex;
     gap: var(--button-gap);
-    height: 36px;
-    padding: var(--button-padding);
-    box-sizing: border-box;
-    border: none;
-    border-radius: var(--button-border-radius);
-    background-color: var(--color-main);
-    color: var(--color-text);
-    cursor: pointer;
-    text-decoration: none;
-    font-size: var(--font-size);
-    
-    mat-icon {
-      margin: 0;
-      font-size: 24px;
-      width: 24px;
-      height: 24px;
-      line-height: 24px;
-    }
-
-    span {
-      white-space: nowrap;
-      line-height: 24px;
-    }
-
-    &:hover {
-      filter: brightness(103%);
-    }
-
-    &.danger {
-      color: var(--color-red);
-    }
+    align-items: center;
   }
 }
 
