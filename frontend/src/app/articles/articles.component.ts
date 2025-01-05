@@ -32,6 +32,8 @@ import { ArticleCardComponent } from '../article-card/article-card.component';
 export class ArticlesComponent implements OnInit {
   private enableLogging = environment.enableLogging;
   articles: Article[] = [];
+  isReorderMode = false;
+
   displayedColumns: string[] = [
     'select',
     'title',
@@ -111,6 +113,34 @@ export class ArticlesComponent implements OnInit {
     } else {
       return true;
     }
+  }
+
+  enableEdit(): boolean {
+    return true; // Or implement your edit state logic
+  }
+
+  enableOrder(): boolean {
+    return this.isReorderMode;
+  }
+
+  onAddLine() {
+    // Implement if needed or remove from template
+  }
+
+  onDeleteLine() {
+    // Implement if needed or remove from template
+  }
+
+  onAdd() {
+    this.router.navigate(['/articles/add']);
+  }
+
+  onReorder() {
+    this.isReorderMode = !this.isReorderMode;
+  }
+
+  onDelete() {
+    this.deleteSelectedArticles();
   }
 }
 

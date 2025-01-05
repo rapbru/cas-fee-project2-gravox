@@ -1,62 +1,20 @@
 <h1 class="font-main" i18n="@@overviewHeader">Übersicht</h1>
 
-<div class="button-container" *ngIf="enableEdit() && !(isMobile() && newPosition)">
-  <button class="button" 
-    *ngIf="!isMobile() && enableEdit()" 
-    (click)="increaseColumns()"
-    tabindex="10"
-    aria-label="Neue Linie hinzufügen"
-    matTooltip="Neue Linie für Positionen hinzufügen"
-    matTooltipPosition="below">
-    <mat-icon>add</mat-icon>
-    Linie hinzufügen
-  </button>
-  
-  <button class="button" 
-    *ngIf="(columns().length > 1) && !isMobile() && enableEdit()" 
-    (click)="decreaseColumns()"
-    tabindex="11"
-    aria-label="Letzte Linie löschen"
-    matTooltip="Letzte Linie entfernen"
-    matTooltipPosition="below">
-    <mat-icon>remove</mat-icon>
-    Linie löschen
-  </button>
-  
-  <button class="button" 
-    *ngIf="enableEdit()" 
-    (click)="addPosition()"
-    tabindex="12"
-    aria-label="Neue Position hinzufügen"
-    matTooltip="Neue Position erstellen"
-    matTooltipPosition="below">
-    <mat-icon>add_circle</mat-icon>
-    hinzufügen
-  </button>
-  
-  <button class="button" 
-    *ngIf="enableEdit()" 
-    (click)="orderPositions()"
-    tabindex="13"
-    [attr.aria-label]="overviewStateService.enableOrder() ? 'Positionsansicht aktivieren' : 'Reihenfolge bearbeiten'"
-    [matTooltip]="overviewStateService.enableOrder() ? 'Zurück zur Positionsansicht' : 'Reihenfolge der Positionen bearbeiten'"
-    matTooltipPosition="below">
-    <mat-icon>{{ overviewStateService.enableOrder() ? 'radio_button_unchecked' : 'reorder' }}</mat-icon>
-    {{ overviewStateService.enableOrder() ? 'Positionen' : 'Reihenfolge' }}
-  </button>
-  
-  <button class="button danger" 
-    [disabled]="!hasSelectedPositions()"
-    *ngIf="enableEdit() && !overviewStateService.enableOrder()" 
-    (click)="deletePositions()"
-    tabindex="14"
-    aria-label="Ausgewählte Positionen löschen"
-    [matTooltip]="hasSelectedPositions() ? 'Ausgewählte Positionen löschen' : 'Keine Positionen ausgewählt'"
-    matTooltipPosition="below">
-    <mat-icon>delete</mat-icon>
-    löschen
-  </button>
-</div>
+<app-toolbar
+  [showNavigateAdd]="false"
+  [showAddLine]="enableEdit()"
+  [showDeleteLine]="enableEdit()"
+  [showAdd]="enableEdit()"
+  [showReorder]="enableEdit()"
+  [showDelete]="enableEdit()"
+  [deleteDisabled]="!hasSelectedPositions()"
+  [isReorderMode]="enableOrder()"
+  (addLine)="onAddLine()"
+  (deleteLine)="onDeleteLine()"
+  (add)="onAdd()"
+  (reorder)="onReorder()"
+  (delete)="onDelete()">
+</app-toolbar>
 
 <div *ngIf="!(isMobile() && newPosition)" cdkDropListGroup>
   <div class="overview-container" [style.--total-columns]="columnManagementService.getColumnCount()">
