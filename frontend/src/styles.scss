@@ -83,31 +83,33 @@ input {
   background-color: var(--color-main);
 }
 
+// Navbar styles
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 64px;
   width: 100%;
-}
+  padding: 0.25rem 0; // Reduced padding
 
-.navbar-list {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: var(--button-gap);
-}
+  .app-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-.left-section {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
+  .left-section {
+    display: flex;
+    align-items: center;
+    gap: var(--button-gap);
+  }
 
-.right-section {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+  .right-section {
+    display: flex;
+    align-items: center;
+    gap: var(--button-gap);
+  }
+
+  .navbar-list {
+    display: flex;
+    gap: var(--button-gap);
+  }
 }
 
 .navbar-item {
@@ -683,6 +685,22 @@ button:focus-visible {
   &:focus:not(:focus-visible) {
     outline: none;
   }
+}
+
+.app-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  width: 100%;
+  box-sizing: border-box;
+
+  @media (max-width: 600px) {
+    padding: 0 0.5rem;
+  }
+}
+
+h1.font-main {
+  margin: 1rem 0;
 }
 
 
