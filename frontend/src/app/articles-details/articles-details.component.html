@@ -28,7 +28,7 @@
       }
     </div>
 
-    <div class="card-grid">
+    <div>
       <app-article-card
         [article]="article"
         [showCheckbox]="false"
@@ -37,18 +37,16 @@
       </app-article-card>
 
       @if (article.sequence && article.sequence.length > 0) {
-        <div class="sequences-container">
-          @for (seq of article.sequence; track seq.positionId) {
-            <div class="sequence-item"
-                 [class.editable]="enableEdit()">
-              <p>Position ID: {{ seq.positionId }}</p>
-              <p>Order Number: {{ seq.orderNumber }}</p>
-              <p>Time Preset: {{ seq.timePreset }}</p>
-              <p>Current Preset: {{ seq.currentPreset }}</p>
-              <p>Voltage Preset: {{ seq.voltagePreset }}</p>
-            </div>
-          }
-        </div>
+        @for (seq of article.sequence; track seq.positionId) {
+          <div class="sequence-item"
+               [class.editable]="enableEdit()">
+            <p>Position ID: {{ seq.positionId }}</p>
+            <p>Order Number: {{ seq.orderNumber }}</p>
+            <p>Time Preset: {{ seq.timePreset }}</p>
+            <p>Current Preset: {{ seq.currentPreset }}</p>
+            <p>Voltage Preset: {{ seq.voltagePreset }}</p>
+          </div>
+        }
       }
     </div>
   } @else {

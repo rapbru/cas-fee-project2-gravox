@@ -4,6 +4,8 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background-color: var(--color-background);
+  min-height: 100vh;
+  -webkit-overflow-scrolling: touch;
 }
 
 html {
@@ -735,6 +737,47 @@ app-navbar {
   @media (max-width: 600px) {
     display: none;
   }
+}
+
+.sequences-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--button-gap);
+  width: 100%;
+  margin-top: 20px;
+}
+
+.sequence-item {
+  display: block;
+  background-color: var(--color-main);
+  border-radius: var(--button-border-radius);
+  padding: calc(var(--button-padding) * 2);
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: var(--button-gap);
+  
+  &:first-of-type {
+    margin-top: var(--button-gap);
+  }
+  
+  &.editable {
+    cursor: move;
+    
+    &:hover {
+      filter: brightness(103%);
+    }
+  }
+
+  p {
+    margin: calc(var(--button-padding) * 0.5) 0;
+    color: var(--color-text);
+  }
+}
+
+.card-grid,
+.content-container {
+  display: block;
+  width: 100%;
 }
 
 
