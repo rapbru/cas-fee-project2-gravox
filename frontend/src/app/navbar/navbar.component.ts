@@ -20,8 +20,7 @@ import { filter } from 'rxjs/operators';
     MatButtonModule,
     MatTooltipModule
   ],
-  templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss'
+  templateUrl: './navbar.component.html'
 })
 export class NavbarComponent {
   public readonly enableEdit = this.overviewStateService.enableEdit;

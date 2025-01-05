@@ -86,7 +86,7 @@ input {
 // Navbar styles
 .navbar {
   width: 100%;
-  padding: 0.25rem 0; // Reduced padding
+  padding: 0.25rem 0;
 
   .app-container {
     display: flex;
@@ -109,6 +109,10 @@ input {
   .navbar-list {
     display: flex;
     gap: var(--button-gap);
+  }
+
+  @media (max-width: 600px) {
+    padding: 0.25rem 0;
   }
 }
 
@@ -193,6 +197,25 @@ button.navbar-item {
   &:disabled {
     cursor: not-allowed;
     color: var(--color-sub-3);
+  }
+
+  &.inactive {
+    opacity: 0.7;
+    cursor: default;
+    pointer-events: none;
+    
+    &:hover {
+      transform: none;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      opacity: 0.8;
+      color: var(--color-sub-1) !important;
+      
+      mat-icon {
+        color: var(--color-sub-1) !important;
+      }
+    }
   }
 }
 
@@ -701,6 +724,17 @@ button:focus-visible {
 
 h1.font-main {
   margin: 1rem 0;
+}
+
+app-navbar {
+  display: block;
+  width: 100%;
+}
+
+.mobile-hidden {
+  @media (max-width: 600px) {
+    display: none;
+  }
 }
 
 
