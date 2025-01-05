@@ -12,6 +12,8 @@ import { ErrorHandlingService } from '../services/error-handling.service';
 import { ColumnManagementService } from '../services/column-management.service';
 import { PositionDragDropService } from '../services/position-drag-drop.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
+import { ToolbarComponent } from '../toolbar/toolbar.component';
 
 @Component({
   selector: 'app-overview',
@@ -22,7 +24,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     DragDropModule, 
     MatIconModule, 
     AddPositionComponent,
-    MatTooltipModule
+    MatTooltipModule,
+    MatButtonModule,
+    ToolbarComponent
   ],
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss']
@@ -131,5 +135,25 @@ export class OverviewComponent implements OnDestroy, OnInit {
   hasSelectedPositions(): boolean {
     return !this.overviewStateService.enableOrder() && 
            this.positionService.editPositions().some(pos => pos.isSelected);
+  }
+
+  onAddLine() {
+    this.increaseColumns();
+  }
+
+  onDeleteLine() {
+    this.decreaseColumns();
+  }
+
+  onAdd() {
+    this.addPosition();
+  }
+
+  onReorder() {
+    this.orderPositions();
+  }
+
+  onDelete() {
+    this.deletePositions();
   }
 }

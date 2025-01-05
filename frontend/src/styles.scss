@@ -68,8 +68,19 @@ html {
   }
 }
 
-h1  {
+// Common header styles
+h1 {
   color: var(--color-text);
+  font-size: 32px;
+  font-weight: 500;
+  margin: 1rem 0;
+  line-height: 1.2;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+
+  &.font-main {
+    font-weight: 500;
+    font-size: 32px;
+  }
 }
 
 .background {
@@ -115,6 +126,10 @@ input {
 
   @media (max-width: 600px) {
     padding: 0.25rem 0;
+  }
+
+  .button {
+    // Any navbar-specific button styles (if needed)
   }
 }
 
@@ -177,8 +192,46 @@ button.navbar-item {
 
 .toolbar {
   display: flex;
-  justify-content: space-between;
-  max-width: 400px;
+  gap: var(--button-gap);
+  align-items: center;
+  margin: 1rem 0;
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--button-gap);
+    height: 36px;
+    padding: var(--button-padding);
+    box-sizing: border-box;
+    border: none;
+    border-radius: var(--button-border-radius);
+    background-color: var(--color-main);
+    color: var(--color-text);
+    cursor: pointer;
+    text-decoration: none;
+    font-size: var(--font-size);
+    
+    mat-icon {
+      margin: 0;
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+    }
+
+    span {
+      white-space: nowrap;
+      line-height: 24px;
+    }
+
+    &:hover {
+      filter: brightness(103%);
+    }
+
+    &.danger {
+      color: var(--color-red);
+    }
+  }
 }
 
 .button {

@@ -1,6 +1,13 @@
 <h1 class="font-main" i18n="@@articlesHeader">Artikel</h1>
 
-<app-toolbar></app-toolbar>
+<app-toolbar
+  [showNavigateAdd]="true"
+  [showReorder]="false"
+  [showAddLine]="false"
+  [showDeleteLine]="false"
+  [showAdd]="false"
+  [showDelete]="false">
+</app-toolbar>
 
 <div class="content-container">
   <div class="button-container">
