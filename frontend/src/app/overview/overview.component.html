@@ -6,7 +6,7 @@
   [showDeleteLine]="enableEdit()"
   [showAdd]="enableEdit()"
   [showReorder]="enableEdit()"
-  [showDelete]="enableEdit()"
+  [showDelete]="enableEdit() && !enableOrder()"
   [deleteDisabled]="!hasSelectedPositions()"
   [isReorderMode]="enableOrder()"
   (addLine)="onAddLine()"
