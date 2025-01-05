@@ -10,36 +10,6 @@
       </button>
     }
 
-    @if (showAddLine && isReorderMode) {
-      <button class="button"
-              (click)="addLine.emit()"
-              aria-label="Linie hinzufügen" i18n-aria-label="@@ButtonAddLineAriaLabel"
-              matTooltip="Linie hinzufügen" i18n-matTooltip="@@ButtonAddLineTooltip">
-        <mat-icon>add_circle</mat-icon>
-        <span i18n="@@ButtonAddLine">Linie hinzufügen</span>
-      </button>
-    }
-
-    @if (showDeleteLine && isReorderMode) {
-      <button class="button danger"
-              (click)="deleteLine.emit()"
-              aria-label="Linie löschen" i18n-aria-label="@@ButtonDeleteLineAriaLabel"
-              matTooltip="Linie löschen" i18n-matTooltip="@@ButtonDeleteLineTooltip">
-        <mat-icon>remove_circle</mat-icon>
-        <span i18n="@@ButtonDeleteLine">Linie löschen</span>
-      </button>
-    }
-
-    @if (showAdd && !isReorderMode) {
-      <button class="button"
-              (click)="add.emit()"
-              aria-label="Hinzufügen" i18n-aria-label="@@ButtonAddAriaLabel"
-              matTooltip="Hinzufügen" i18n-matTooltip="@@ButtonAddTooltip">
-        <mat-icon>add</mat-icon>
-        <span i18n="@@ButtonAdd">Hinzufügen</span>
-      </button>
-    }
-
     @if (showNavigateAdd) {
       <button class="button"
              (click)="onNavigateToAddArticle()"
