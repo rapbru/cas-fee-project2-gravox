@@ -36,8 +36,8 @@ describe('PositionService', () => {
   const mockServerResponse = {
     ...mockPosition,
     time: {
-      actual: 600, // 10 Minuten in Sekunden
-      preset: 1200 // 20 Minuten in Sekunden
+      actual: 600,
+      preset: 1200
     }
   };
 
