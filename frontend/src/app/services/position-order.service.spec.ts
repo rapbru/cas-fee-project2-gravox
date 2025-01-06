@@ -49,6 +49,7 @@ describe('PositionOrderService', () => {
   const mockPositionOrder: PositionOrder[] = [
     { position_id: 2, order_index: 1 },
     { position_id: 1, order_index: 2 },
+    { position_id: 3, order_index: 3 },
   ];
 
   beforeEach(async () => {
