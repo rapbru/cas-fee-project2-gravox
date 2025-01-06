@@ -1,10 +1,9 @@
-<h1 class="font-main" i18n="@@overviewHeader">Übersicht</h1>
+<h1 class="font-main" i18n="@@OverviewHeader">Übersicht</h1>
 
 <app-toolbar
-  [showNavigateAdd]="false"
   [showAddLine]="enableEdit()"
   [showDeleteLine]="enableEdit()"
-  [showAdd]="enableEdit()"
+  [showAdd]="enableEdit() && !enableOrder()"
   [showReorder]="enableEdit()"
   [showDelete]="enableEdit() && !enableOrder()"
   [deleteDisabled]="!hasSelectedPositions()"
