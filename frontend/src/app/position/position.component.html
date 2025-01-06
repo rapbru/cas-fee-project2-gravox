@@ -75,7 +75,7 @@
         <ng-template #collapsedTemperature>
             <ng-container *ngIf="enableEdit(); else showActualValue">
                 <div class="metric" *ngIf="!enableOrder() && !enableMultiSelect()">
-                    <button mat-icon-button (click)="toggleIsPresent('temperature')">
+                    <button mat-icon-button (click)="toggleMetric('temperature')">
                         <mat-icon [ngClass]="{'present': position.temperature.isPresent, 'not-present': !position.temperature.isPresent}">thermostat</mat-icon>
                     </button>
                 </div>
@@ -102,15 +102,17 @@
             </ng-template>
         </ng-container>
         <ng-template #collapsedCurrent>
-            <ng-container *ngIf="enableEdit(); else noCurrent">
+            <ng-container *ngIf="enableEdit(); else showActualValue">
                 <div class="metric" *ngIf="!enableOrder() && !enableMultiSelect()">
-                    <button mat-icon-button (click)="toggleIsPresent('current')">
+                    <button mat-icon-button (click)="toggleMetric('current')">
                         <mat-icon [ngClass]="{'present': position.current.isPresent, 'not-present': !position.current.isPresent}">bolt</mat-icon>
                     </button>
                 </div>
             </ng-container>
-            <ng-template #noCurrent>
-                <div class="metric"></div>
+            <ng-template #showActualValue>
+                <div class="metric">
+                    <span *ngIf="position.current.isPresent">{{ position.current.actual }}</span>
+                </div>
             </ng-template>            
         </ng-template>
 
@@ -129,15 +131,17 @@
             </ng-template>  
         </ng-container>
         <ng-template #collapsedVoltage>
-            <ng-container *ngIf="enableEdit(); else noVoltage">
+            <ng-container *ngIf="enableEdit(); else showActualValue">
                 <div class="metric" *ngIf="!enableOrder() && !enableMultiSelect()">
-                    <button mat-icon-button (click)="toggleIsPresent('voltage')">
+                    <button mat-icon-button (click)="toggleMetric('voltage')">
                         <mat-icon [ngClass]="{'present': position.voltage.isPresent, 'not-present': !position.voltage.isPresent}" class="mat-icon-dark">bolt</mat-icon>
                     </button>
                 </div>
             </ng-container>
-            <ng-template #noVoltage>
-                <div class="metric"></div>
+            <ng-template #showActualValue>
+                <div class="metric">
+                    <span *ngIf="position.voltage.isPresent">{{ position.voltage.actual }}</span>
+                </div>
             </ng-template>            
         </ng-template>
     </div>
