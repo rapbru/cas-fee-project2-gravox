@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
-import { provideHttpClientTesting } from '@angular/common/http/testing'; // Neuer Ansatz für HttpClient
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { AuthService } from '../authentication/auth.service';
 import { LoginComponent } from './login.component';
 
