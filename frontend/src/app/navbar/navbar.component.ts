@@ -24,9 +24,6 @@ import { filter } from 'rxjs/operators';
 })
 export class NavbarComponent {
   public readonly enableEdit = this.overviewStateService.enableEdit;
-  public readonly shouldShowNavigationButtons = computed(() => 
-    !this.enableEdit() || !this.deviceDetectionService.isMobileSignal()
-  );
   
   currentRoute: string = '';
   
@@ -56,13 +53,11 @@ export class NavbarComponent {
   }
 
   shouldShowOverviewButton(): boolean {
-    if (!this.deviceDetectionService.isMobileSignal()) return true;
-    return !this.currentRoute.includes('/overview');
+    return !this.deviceDetectionService.isMobileSignal() || !this.currentRoute.includes('/overview');
   }
 
   shouldShowArticlesButton(): boolean {
-    if (!this.deviceDetectionService.isMobileSignal()) return true;
-    return this.currentRoute.includes('/overview');
+    return !this.deviceDetectionService.isMobileSignal() || this.currentRoute.includes('/overview');
   }
 
   navigateTo(path: string): void {
