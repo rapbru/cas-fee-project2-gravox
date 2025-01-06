@@ -39,7 +39,9 @@
         <mat-icon>{{ enableEdit() ? 'edit_off' : 'edit' }}</mat-icon>
         Bearbeiten
       </button>
-      <button class="button theme-toggle" 
+      <button class="button"
+        [disabled]="enableEdit()"
+        [class.inactive]="enableEdit()"
         (click)="toggleTheme()"
         tabindex="4"
         [attr.aria-label]="isDarkMode() ? 'Zu hellem Modus wechseln' : 'Zu dunklem Modus wechseln'"

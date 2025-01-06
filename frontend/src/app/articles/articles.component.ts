@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
 import { ArticleCardComponent } from '../article-card/article-card.component';
+import { OverviewStateService } from '../services/overview-state.service';
 
 @Component({
   selector: 'app-articles',
@@ -33,6 +34,7 @@ export class ArticlesComponent implements OnInit {
   private enableLogging = environment.enableLogging;
   articles: Article[] = [];
   isReorderMode = false;
+  public readonly enableEdit = this.overviewStateService.enableEdit;
 
   displayedColumns: string[] = [
     'select',
@@ -48,7 +50,8 @@ export class ArticlesComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private loggerService: LoggerService
+    private loggerService: LoggerService,
+    private overviewStateService: OverviewStateService
   ) {}
 
   ngOnInit() {
@@ -113,10 +116,6 @@ export class ArticlesComponent implements OnInit {
     } else {
       return true;
     }
-  }
-
-  enableEdit(): boolean {
-    return true; // Or implement your edit state logic
   }
 
   enableOrder(): boolean {

@@ -1,6 +1,7 @@
 <h1 class="font-main" i18n="@@OverviewHeader">Übersicht</h1>
 
 <app-toolbar
+  *ngIf="enableEdit()"
   [showAddLine]="enableEdit()"
   [showDeleteLine]="enableEdit()"
   [showAdd]="enableEdit() && !enableOrder()"

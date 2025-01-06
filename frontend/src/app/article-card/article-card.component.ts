@@ -16,8 +16,7 @@ import { Article } from '../models/article.model';
     MatCheckboxModule,
     MatButtonModule
   ],
-  templateUrl: './article-card.component.html',
-  styleUrls: ['./article-card.component.scss']
+  templateUrl: './article-card.component.html'
 })
 export class ArticleCardComponent {
   @Input() article!: Article;
