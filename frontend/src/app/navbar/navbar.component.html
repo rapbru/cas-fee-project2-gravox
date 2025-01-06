@@ -3,7 +3,7 @@
     <div class="left-section">
       <div class="navbar-list">
         <button class="button" 
-          *ngIf="shouldShowNavigationButtons() && shouldShowOverviewButton()"
+          *ngIf="shouldShowOverviewButton()"
           [disabled]="isOverviewActive() || enableEdit()"
           [class.inactive]="isOverviewActive() || enableEdit()"
           (click)="navigateTo('/overview')"
@@ -15,7 +15,7 @@
           Übersicht
         </button>
         <button class="button" 
-          *ngIf="shouldShowNavigationButtons() && shouldShowArticlesButton()"
+          *ngIf="shouldShowArticlesButton()"
           [disabled]="isArticlesActive() || enableEdit()"
           [class.inactive]="isArticlesActive() || enableEdit()"
           (click)="navigateTo('/articles')"
@@ -40,7 +40,6 @@
         Bearbeiten
       </button>
       <button class="button" 
-        *ngIf="shouldShowNavigationButtons()"
         [disabled]="enableEdit()"
         [class.inactive]="enableEdit()"
         (click)="logout()"

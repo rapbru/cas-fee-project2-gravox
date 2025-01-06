@@ -30,10 +30,18 @@
   }
 
   &.edit-active {
-    color: var(--color-vonesco-sub-2);
+    color: var(--color-vonesco-sub-2) !important;
+
+    mat-icon {
+      color: var(--color-vonesco-sub-2) !important;
+    }
 
     @media (prefers-color-scheme: dark) {
-      color: var(--color-vonesco-sub);
+      color: var(--color-vonesco-sub) !important;
+
+      mat-icon {
+        color: var(--color-vonesco-sub) !important;
+      }
     }
   }
 }
