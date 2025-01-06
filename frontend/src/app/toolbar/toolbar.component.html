@@ -10,28 +10,37 @@
       </button>
     }
 
-    @if (showNavigateAdd) {
+    @if (showAdd && !isReorderMode) {
       <button class="button"
-             (click)="onNavigateToAddArticle()"
-             aria-label="Artikel hinzufügen" i18n-aria-label="@@ButtonAddArticleAriaLabel"
-             matTooltip="Artikel hinzufügen" i18n-matTooltip="@@ButtonAddArticleTooltip">
+              (click)="add.emit()"
+              aria-label="Hinzufügen" i18n-aria-label="@@ButtonAddAriaLabel"
+              matTooltip="Hinzufügen" i18n-matTooltip="@@ButtonAddTooltip">
         <mat-icon>add</mat-icon>
-        <span i18n="@@ButtonAddArticle">Artikel hinzufügen</span>
+        <span i18n="@@ButtonAdd">Hinzufügen</span>
       </button>
     }
 
-    @if (showLoad) {
-      <button class="button vonesco"
-              [disabled]="loadDisabled"
-              (click)="load.emit()"
-              aria-label="Laden" i18n-aria-label="@@ButtonLoadAriaLabel"
-              matTooltip="Laden" i18n-matTooltip="@@ButtonLoadTooltip">
-        <mat-icon>download</mat-icon>
-        <span i18n="@@ButtonLoad">Laden</span>
+    @if (showAddLine && isReorderMode) {
+      <button class="button"
+              (click)="addLine.emit()"
+              aria-label="Linie hinzufügen" i18n-aria-label="@@ButtonAddLineAriaLabel"
+              matTooltip="Linie hinzufügen" i18n-matTooltip="@@ButtonAddLineTooltip">
+        <mat-icon>add_circle</mat-icon>
+        <span i18n="@@ButtonAddLine">Linie hinzufügen</span>
       </button>
     }
 
-    @if (showDelete) {
+    @if (showDeleteLine && isReorderMode) {
+      <button class="button danger"
+              (click)="deleteLine.emit()"
+              aria-label="Linie löschen" i18n-aria-label="@@ButtonDeleteLineAriaLabel"
+              matTooltip="Linie löschen" i18n-matTooltip="@@ButtonDeleteLineTooltip">
+        <mat-icon>remove_circle</mat-icon>
+        <span i18n="@@ButtonDeleteLine">Linie löschen</span>
+      </button>
+    }
+
+    @if (showDelete && !isReorderMode) {
       <button class="button danger"
               [disabled]="deleteDisabled"
               (click)="delete.emit()"
