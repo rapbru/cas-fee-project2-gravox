@@ -32,7 +32,6 @@ describe('PositionService', () => {
     voltage: { actual: 220, preset: 230, isPresent: true }
   };
 
-  // Server-Response mit Sekunden
   const mockServerResponse = {
     ...mockPosition,
     time: {
