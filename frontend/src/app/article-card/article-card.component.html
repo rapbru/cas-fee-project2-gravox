@@ -10,12 +10,11 @@
       (click)="$event.stopPropagation()">
     </mat-checkbox>
     <h2>{{ article.title }}</h2>
-    <button mat-raised-button 
-            color="accent" 
+    <button class="button vonesco card-button"
             [disabled]="isLoadButtonDisabled"
             (click)="onLoad(); $event.stopPropagation()">
       <mat-icon>download</mat-icon>
-      Laden
+      <span>Laden</span>
     </button>
   </div>
 

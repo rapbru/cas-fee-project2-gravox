@@ -5,7 +5,7 @@
   cursor: pointer;
   transition: transform 0.2s;
   outline: none;
-  background-color: white;
+  background-color: var(--color-main);
 
   &:hover, &:focus {
     transform: translateY(-2px);

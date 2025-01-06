@@ -1,13 +1,11 @@
 <h1 class="font-main" i18n="@@articlesHeader">Artikel</h1>
 
 <app-toolbar
+  *ngIf="enableEdit()"
   [showNavigateAdd]="true"
   [showDelete]="true"
-  [showLoad]="true"
   [deleteDisabled]="!hasSelectedArticles()"
-  [loadDisabled]="!hasExactlyOneSelected()"
-  (delete)="deleteSelectedArticles()"
-  (load)="loadSelectedArticle()">
+  (delete)="deleteSelectedArticles()">
 </app-toolbar>
 
 <div class="content-container">
@@ -15,8 +13,7 @@
     <app-article-card 
       *ngFor="let article of articles"
       [article]="article"
-      [showCheckbox]="true"
-      [isLoadButtonDisabled]="isLoadButtonDisabled(article)"
+      [showCheckbox]="enableEdit()"
       (cardClick)="navigateToDetails($event)"
       (loadClick)="navigateToDetails(article.id)">
     </app-article-card>
