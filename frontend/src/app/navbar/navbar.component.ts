@@ -65,42 +65,24 @@ export class NavbarComponent {
     return this.currentRoute.includes('/overview');
   }
 
-  async handleNavigationWithChanges(action: () => void): Promise<void> {
-    if (this.enableEdit()) {
-      const confirmed = await this.dialogService.confirm({
-        title: 'Änderungen speichern?',
-        confirmText: 'Speichern',
-        cancelText: 'Abbrechen',
-        confirmClass: 'vonesco'
-      });
-      
-      if (confirmed) {
-        this.saveChanges();
-        action();
-      }
-    } else {
-      action();
-    }
-  }
-
   navigateTo(path: string): void {
-    this.handleNavigationWithChanges(() => this.router.navigate([path]));
+    if (this.enableEdit()) {
+      this.overviewStateService.toggleEdit();
+      this.positionService.saveEditing();
+    }
+    this.router.navigate([path]);
   }
 
   async logout() {
-    if (this.enableEdit()) {
-      await this.handleNavigationWithChanges(() => this.performLogout());
-    } else {
-      const confirmed = await this.dialogService.confirm({
-        title: 'Person ausloggen',
-        confirmText: 'Ausloggen',
-        cancelText: 'Abbrechen',
-        confirmClass: 'danger'
-      });
+    const confirmed = await this.dialogService.confirm({
+      title: 'Person ausloggen',
+      confirmText: 'Ausloggen',
+      cancelText: 'Abbrechen',
+      confirmClass: 'danger'
+    });
 
-      if (confirmed) {
-        this.performLogout();
-      }
+    if (confirmed) {
+      this.performLogout();
     }
   }
 
@@ -115,17 +97,7 @@ export class NavbarComponent {
     if (this.overviewStateService.enableEdit()) {
       this.positionService.startEditing();
     } else {
-      this.positionService.cancelEditing();
+      this.positionService.saveEditing();
     }
-  }
-
-  saveChanges(): void {
-    this.overviewStateService.toggleEdit();
-    this.positionService.saveEditing();
-  }
-
-  cancelChanges(): void {
-    this.overviewStateService.toggleEdit();
-    this.positionService.cancelEditing();
   }
 }

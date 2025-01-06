@@ -4,8 +4,8 @@
       <div class="navbar-list">
         <button class="button" 
           *ngIf="shouldShowNavigationButtons() && shouldShowOverviewButton()"
-          [disabled]="isOverviewActive()"
-          [class.inactive]="isOverviewActive()"
+          [disabled]="isOverviewActive() || enableEdit()"
+          [class.inactive]="isOverviewActive() || enableEdit()"
           (click)="navigateTo('/overview')"
           tabindex="1"
           aria-label="Zur Übersicht navigieren"
@@ -16,8 +16,8 @@
         </button>
         <button class="button" 
           *ngIf="shouldShowNavigationButtons() && shouldShowArticlesButton()"
-          [disabled]="isArticlesActive()"
-          [class.inactive]="isArticlesActive()"
+          [disabled]="isArticlesActive() || enableEdit()"
+          [class.inactive]="isArticlesActive() || enableEdit()"
           (click)="navigateTo('/articles')"
           tabindex="2"
           aria-label="Zu Artikeln navigieren"
@@ -29,40 +29,22 @@
       </div>
     </div>
     <div class="right-section">
-      @if (!enableEdit()) {
-        <button class="button" 
-          (click)="toggleEdit()"
-          tabindex="3"
-          aria-label="Bearbeitungsmodus aktivieren"
-          matTooltip="Bearbeitungsmodus aktivieren"
-          matTooltipPosition="below">
-          <mat-icon>edit</mat-icon>
-          Bearbeiten
-        </button>
-      } @else {
-        <button class="button vonesco" 
-          (click)="saveChanges()"
-          tabindex="3"
-          aria-label="Änderungen speichern"
-          matTooltip="Änderungen speichern"
-          matTooltipPosition="below">
-          <mat-icon>check</mat-icon>
-          Speichern
-        </button>
-        <button class="button" 
-          (click)="cancelChanges()"
-          tabindex="4"
-          aria-label="Änderungen verwerfen"
-          matTooltip="Änderungen verwerfen"
-          matTooltipPosition="below">
-          <mat-icon>close</mat-icon>
-          Abbrechen
-        </button>
-      }
+      <button class="button" 
+        [class.edit-active]="enableEdit()"
+        (click)="toggleEdit()"
+        tabindex="3"
+        [attr.aria-label]="enableEdit() ? 'Bearbeitungsmodus deaktivieren' : 'Bearbeitungsmodus aktivieren'"
+        [matTooltip]="enableEdit() ? 'Bearbeitungsmodus deaktivieren' : 'Bearbeitungsmodus aktivieren'"
+        matTooltipPosition="below">
+        <mat-icon>{{ enableEdit() ? 'edit_off' : 'edit' }}</mat-icon>
+        Bearbeiten
+      </button>
       <button class="button" 
         *ngIf="shouldShowNavigationButtons()"
+        [disabled]="enableEdit()"
+        [class.inactive]="enableEdit()"
         (click)="logout()"
-        tabindex="5"
+        tabindex="4"
         aria-label="Ausloggen"
         matTooltip="Ausloggen"
         matTooltipPosition="below">
