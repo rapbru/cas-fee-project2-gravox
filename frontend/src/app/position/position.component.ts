@@ -8,11 +8,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DeviceDetectionService } from '../services/device-detection.service';
-import { OverviewStateService } from '../services/overview-state.service';
+import { EditStateService } from '../services/edit-state.service';
 import { PositionService } from '../services/position.service';
 import { PlcService } from '../services/plc.service';
 import { ErrorHandlingService } from '../services/error-handling.service';
-
 
 @Component({
   selector: 'app-position',
@@ -24,10 +23,11 @@ import { ErrorHandlingService } from '../services/error-handling.service';
 export class PositionComponent {
   @Input() position!: Position;
   public isCollapsed = false;
+  public readonly enableEdit = this.editStateService.enableEdit;
 
   constructor(
     private deviceDetectionService: DeviceDetectionService,
-    private overviewStateService: OverviewStateService,
+    private editStateService: EditStateService,
     private errorHandlingService: ErrorHandlingService,
     private positionService: PositionService,
     private plcService: PlcService
@@ -67,6 +67,7 @@ export class PositionComponent {
     }
     
     this.positionService.trackModification(this.position);
+    this.editStateService.setHasChanges(true);
   }  
 
   get collapsed(): boolean {
@@ -86,6 +87,7 @@ export class PositionComponent {
         break;
     }
     this.positionService.trackModification(this.position);
+    this.editStateService.setHasChanges(true);
   }
 
   toggleCollapsed() {
@@ -95,6 +97,7 @@ export class PositionComponent {
   toggleSelection() {
     this.position.isSelected = !this.position.isSelected;
     this.positionService.trackModification(this.position);
+    this.editStateService.setHasChanges(true);
   }
 
   get isSelected(): boolean {
@@ -105,16 +108,12 @@ export class PositionComponent {
     return this.deviceDetectionService.isMobileSignal();
   }
 
-  enableEdit(): boolean {
-    return this.overviewStateService.enableEdit();
-  }
-
   enableOrder(): boolean {
-    return this.overviewStateService.enableOrder();
+    return false; // TODO: Implement if needed
   }
 
   enableMultiSelect(): boolean {
-    return this.overviewStateService.enableMultiSelect();
+    return false; // TODO: Implement if needed
   }
 
   selectInputContent(event: Event): void {

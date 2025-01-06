@@ -40,7 +40,6 @@
     }
   </div>
 </div>
-
 <app-add-position 
   *ngIf="newPosition" 
   [ngClass]="{'position-edit-overlay': !isMobile(),'position-edit-mobile': isMobile()}" 
@@ -48,3 +47,4 @@
   (savePosition)="savePosition($event)" 
   (cancelEdit)="closeAddPosition()">
 </app-add-position>
+

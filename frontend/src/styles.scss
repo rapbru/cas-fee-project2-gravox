@@ -41,22 +41,31 @@ html {
 
   --icon-size: 2.2em;
   --button-font-size: 1.4em;
+
+  --content-padding: 20px;
+  --shadow-small: 0 2px 4px rgba(0,0,0,0.1);
+  --shadow-medium: 0 4px 8px rgba(0,0,0,0.2);
+  --transition-transform: transform 0.2s;
+  --color-focus: #1976d2;
+  --button-height: 36px;
+  --icon-size: 24px;
+  --hover-brightness: brightness(103%);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --color-text: #E1E1E7;
     --color-inverted: black;
-    --color-background: #171719;
-    --color-main: #312e2e;
+    --color-background: #2a2a2e;
+    --color-main: #38383c;
     --color-sub-1: #717175;
     --color-sub-2: #3F3F41;
     --color-sub-3: #272729;
     --color-green: #000100;
     --color-red: #D20015;
-    --color-vonesco: #FFA786;
+    --color-vonesco: #FF6228;
   --color-vonesco-sub: #FF7442;
-  --color-vonesco-sub-2: #FF6228;
+  --color-vonesco-sub-2: #FFA786;
     --color-highlight-text: #171719;
 
 
@@ -210,48 +219,55 @@ button.navbar-item {
   display: inline-flex;
   align-items: center;
   gap: var(--button-gap);
-  height: 36px;
+  height: var(--button-height);
   padding: var(--button-padding);
-  box-sizing: border-box;
   border: none;
   border-radius: var(--button-border-radius);
-  background-color: var(--color-main);
+  background-color: var(--color-background);
   color: var(--color-text);
   cursor: pointer;
-  text-decoration: none;
+  font-family: var(--font-family);
   font-size: var(--font-size);
-  
-  mat-icon {
-    margin: 0;
-    font-size: 24px;
-    width: 24px;
-    height: 24px;
-    line-height: 24px;
-  }
 
-  span {
-    white-space: nowrap;
-    line-height: 24px;
-  }
+  &.inactive,
+  &:disabled {
+    color: var(--color-sub-1) !important;
+    cursor: default;
+    pointer-events: none;
 
-  &:hover {
-    filter: brightness(103%);
+    mat-icon {
+      color: var(--color-sub-1) !important;
+    }
   }
 
   &.vonesco {
     color: var(--color-vonesco);
 
     &:disabled {
-      color: var(--color-sub-3);
+      color: var(--color-sub-1) !important;
+      cursor: default;
+
+      mat-icon {
+        color: var(--color-sub-1) !important;
+      }
     }
   }
 
-  &.danger {
-    color: var(--color-red);
+  &:hover:not(:disabled):not(.inactive) {
+    filter: var(--hover-brightness);
+  }
 
-    &:disabled {
-      color: var(--color-sub-3);
-    }
+  mat-icon {
+    margin: 0;
+    font-size: var(--icon-size);
+    width: var(--icon-size);
+    height: var(--icon-size);
+    line-height: var(--icon-size);
+  }
+
+  span {
+    white-space: nowrap;
+    line-height: var(--icon-size);
   }
 }
 
@@ -831,6 +847,28 @@ app-navbar {
 // Specific toolbar margin
 .toolbar {
   margin-bottom: 20px;
+}
+
+// Article Card Styles
+.article-container {
+  border-radius: var(--button-border-radius);
+  padding: var(--content-padding);
+  box-shadow: var(--shadow-small);
+  cursor: pointer;
+  transition: var(--transition-transform);
+  outline: none;
+  background-color: var(--color-main);
+  color: var(--color-text);
+
+  &:hover, &:focus {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
 }
 
 
