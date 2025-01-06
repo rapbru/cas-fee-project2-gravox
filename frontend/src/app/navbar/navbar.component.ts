@@ -5,10 +5,10 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { OverviewStateService } from '../services/overview-state.service';
 import { PositionService } from '../services/position.service';
 import { DeviceDetectionService } from '../services/device-detection.service';
 import { DialogService } from '../services/dialog.service';
+import { EditStateService } from '../services/edit-state.service';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -23,7 +23,7 @@ import { filter } from 'rxjs/operators';
   templateUrl: './navbar.component.html'
 })
 export class NavbarComponent {
-  public readonly enableEdit = this.overviewStateService.enableEdit;
+  public readonly enableEdit = this.editStateService.enableEdit;
   public readonly shouldShowNavigationButtons = computed(() => 
     !this.enableEdit() || !this.deviceDetectionService.isMobileSignal()
   );
@@ -33,7 +33,7 @@ export class NavbarComponent {
   constructor(
     private authService: AuthService, 
     private router: Router, 
-    private overviewStateService: OverviewStateService, 
+    private editStateService: EditStateService,
     private positionService: PositionService,
     public deviceDetectionService: DeviceDetectionService,
     private dialogService: DialogService
@@ -109,23 +109,20 @@ export class NavbarComponent {
     this.router.navigate(['/login']);
   }
 
-  toggleEdit(): void {
-    this.overviewStateService.toggleEdit();
-
-    if (this.overviewStateService.enableEdit()) {
-      this.positionService.startEditing();
+  async toggleEdit(): Promise<void> {
+    if (this.enableEdit()) {
+      await this.editStateService.cancelEdit();
     } else {
-      this.positionService.cancelEditing();
+      this.editStateService.startEdit();
     }
   }
 
-  saveChanges(): void {
-    this.overviewStateService.toggleEdit();
-    this.positionService.saveEditing();
+  async saveChanges(): Promise<void> {
+    this.editStateService.finishEdit();
+    // Add any additional save logic here
   }
 
-  cancelChanges(): void {
-    this.overviewStateService.toggleEdit();
-    this.positionService.cancelEditing();
+  async cancelChanges(): Promise<void> {
+    await this.editStateService.cancelEdit();
   }
 }

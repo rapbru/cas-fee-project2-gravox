@@ -1,19 +1,21 @@
 <h1 class="font-main" i18n="@@OverviewHeader">Übersicht</h1>
 
-<app-toolbar
-  [showAddLine]="enableEdit()"
-  [showDeleteLine]="enableEdit()"
-  [showAdd]="enableEdit() && !enableOrder()"
-  [showReorder]="enableEdit()"
-  [showDelete]="enableEdit() && !enableOrder()"
-  [deleteDisabled]="!hasSelectedPositions()"
-  [isReorderMode]="enableOrder()"
-  (addLine)="onAddLine()"
-  (deleteLine)="onDeleteLine()"
-  (add)="onAdd()"
-  (reorder)="onReorder()"
-  (delete)="onDelete()">
-</app-toolbar>
+@if (enableEdit()) {
+  <app-toolbar
+    [showAddLine]="true"
+    [showDeleteLine]="true"
+    [showAdd]="!enableOrder()"
+    [showReorder]="true"
+    [showDelete]="!enableOrder()"
+    [deleteDisabled]="!hasSelectedPositions()"
+    [isReorderMode]="enableOrder()"
+    (addLine)="onAddLine()"
+    (deleteLine)="onDeleteLine()"
+    (add)="onAdd()"
+    (reorder)="onReorder()"
+    (delete)="onDelete()">
+  </app-toolbar>
+}
 
 <div *ngIf="!(isMobile() && newPosition)" cdkDropListGroup>
   <div class="overview-container" [style.--total-columns]="columnManagementService.getColumnCount()">

@@ -1,21 +1,23 @@
 <h1 class="font-main" i18n="@@articlesHeader">Artikel</h1>
 
-<app-toolbar
-  [showNavigateAdd]="true"
-  [showDelete]="true"
-  [showLoad]="true"
-  [deleteDisabled]="!hasSelectedArticles()"
-  [loadDisabled]="!hasExactlyOneSelected()"
-  (delete)="deleteSelectedArticles()"
-  (load)="loadSelectedArticle()">
-</app-toolbar>
+@if (enableEdit()) {
+  <app-toolbar
+    [showNavigateAdd]="true"
+    [showDelete]="true"
+    [showLoad]="true"
+    [deleteDisabled]="!hasSelectedArticles()"
+    [loadDisabled]="!hasExactlyOneSelected()"
+    (delete)="deleteSelectedArticles()"
+    (load)="loadSelectedArticle()">
+  </app-toolbar>
+}
 
 <div class="content-container">
   <div class="card-grid">
     <app-article-card 
       *ngFor="let article of articles"
       [article]="article"
-      [showCheckbox]="true"
+      [showCheckbox]="enableEdit()"
       [isLoadButtonDisabled]="isLoadButtonDisabled(article)"
       (cardClick)="navigateToDetails($event)"
       (loadClick)="navigateToDetails(article.id)">

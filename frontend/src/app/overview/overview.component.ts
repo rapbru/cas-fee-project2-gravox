@@ -14,6 +14,7 @@ import { PositionDragDropService } from '../services/position-drag-drop.service'
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
+import { EditStateService } from '../services/edit-state.service';
 
 @Component({
   selector: 'app-overview',
@@ -35,8 +36,8 @@ export class OverviewComponent implements OnDestroy, OnInit {
   public newPosition: Position | null = null;
 
   public readonly isMobile = this.deviceDetectionService.isMobileSignal;
-  public readonly enableEdit = this.overviewStateService.enableEdit;
-  public readonly enableOrder = this.overviewStateService.enableOrder;
+  public readonly enableEdit = this.editStateService.enableEdit;
+  public readonly enableOrder = this.editStateService.enableOrder;
   public readonly enableMultiSelect = this.overviewStateService.enableMultiSelect;
 
   columns = computed(() => {
@@ -50,7 +51,8 @@ export class OverviewComponent implements OnDestroy, OnInit {
     private deviceDetectionService: DeviceDetectionService,
     private positionDragDropService: PositionDragDropService,
     public overviewStateService: OverviewStateService,
-    private errorHandlingService: ErrorHandlingService
+    private errorHandlingService: ErrorHandlingService,
+    private editStateService: EditStateService
   ) {
     this.columnManagementService.columnsChanged.subscribe(() => {
       this.positionService.refreshPositions();
@@ -150,10 +152,23 @@ export class OverviewComponent implements OnDestroy, OnInit {
   }
 
   onReorder() {
-    this.orderPositions();
+    this.editStateService.toggleOrder();
   }
 
   onDelete() {
     this.deletePositions();
+  }
+
+  onEdit(): void {
+    this.editStateService.startEdit();
+  }
+
+  onCancel(): void {
+    this.editStateService.cancelEdit();
+  }
+
+  onSave(): void {
+    // Implement save logic here
+    this.editStateService.finishEdit();
   }
 }

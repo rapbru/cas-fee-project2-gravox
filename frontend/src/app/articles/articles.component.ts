@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
 import { ArticleCardComponent } from '../article-card/article-card.component';
+import { EditStateService } from '../services/edit-state.service';
 
 @Component({
   selector: 'app-articles',
@@ -48,8 +49,11 @@ export class ArticlesComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private loggerService: LoggerService
+    private loggerService: LoggerService,
+    private editStateService: EditStateService
   ) {}
+
+  public readonly enableEdit = this.editStateService.enableEdit;
 
   ngOnInit() {
     this.loadArticles();
@@ -115,10 +119,6 @@ export class ArticlesComponent implements OnInit {
     }
   }
 
-  enableEdit(): boolean {
-    return true; // Or implement your edit state logic
-  }
-
   enableOrder(): boolean {
     return this.isReorderMode;
   }
@@ -141,6 +141,19 @@ export class ArticlesComponent implements OnInit {
 
   onDelete() {
     this.deleteSelectedArticles();
+  }
+
+  onEdit(): void {
+    this.editStateService.startEdit();
+  }
+
+  onCancel(): void {
+    this.editStateService.cancelEdit();
+  }
+
+  onSave(): void {
+    // Implement save logic here
+    this.editStateService.finishEdit();
   }
 }
 
