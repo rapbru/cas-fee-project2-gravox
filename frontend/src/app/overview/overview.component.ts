@@ -14,6 +14,7 @@ import { PositionDragDropService } from '../services/position-drag-drop.service'
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
+import { HeaderService } from '../services/header.service';
 
 @Component({
   selector: 'app-overview',
@@ -50,7 +51,8 @@ export class OverviewComponent implements OnDestroy, OnInit {
     private deviceDetectionService: DeviceDetectionService,
     private positionDragDropService: PositionDragDropService,
     public overviewStateService: OverviewStateService,
-    private errorHandlingService: ErrorHandlingService
+    private errorHandlingService: ErrorHandlingService,
+    private headerService: HeaderService
   ) {
     this.columnManagementService.columnsChanged.subscribe(() => {
       this.positionService.refreshPositions();
@@ -58,6 +60,7 @@ export class OverviewComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit() {  
+    this.headerService.setTitle('Übersicht');
     this.columnManagementService.loadColumnSettings().subscribe();
     this.positionService.startFetching();
   }
