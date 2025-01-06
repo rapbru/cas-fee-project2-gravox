@@ -1,8 +1,6 @@
 <div class="content-container">
   @if (article) {
-    <div class="article-header">
-      <h1>{{ article.title }}</h1>
-      
+    <div class="article-actions">
       @if (!enableEdit()) {
         <button mat-raised-button 
                 color="primary" 

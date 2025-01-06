@@ -2,9 +2,10 @@
 
 body {
   margin: 0;
+  padding: 0;
+  height: 100vh;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background-color: var(--color-background);
-  min-height: 100vh;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -119,6 +120,9 @@ input {
 
 // Navbar styles
 .navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   width: 100%;
   padding: 0.25rem 0;
 
@@ -393,12 +397,9 @@ button.navbar-item {
 }
 
 .scrollable-content {
-  width: 100%;
-  max-height: 800px;
+  flex: 1;
   overflow-y: auto;
-  overflow-x: hidden;
-  border-radius: var(--button-border-radius);
-  padding: 1em;
+  padding: 20px;
 }
 
 
@@ -1079,6 +1080,42 @@ app-navbar {
     background-color: var(--color-vonesco-sub-2) !important;
     opacity: 0.12;
   }
+}
+
+// Layout structure
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--color-main);
+  border-bottom: 1px solid var(--color-sub-3);
+}
+
+.navbar {
+  background-color: var(--color-main);
+}
+
+.header-toolbar-container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-main);
+
+  h1 {
+    margin: 0;
+    padding: 16px 20px;
+  }
+}
+
+.scrollable-content {
+  flex: 1;
+  overflow-y: auto;
+  background-color: var(--color-background);
 }
 
 

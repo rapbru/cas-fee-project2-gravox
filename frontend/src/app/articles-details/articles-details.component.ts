@@ -7,6 +7,7 @@ import { OverviewStateService } from '../services/overview-state.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ArticleCardComponent } from '../article-card/article-card.component';
+import { HeaderService } from '../services/header.service';
 
 @Component({
   selector: 'app-articles-details',
@@ -26,7 +27,8 @@ export class ArticlesDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private overviewStateService: OverviewStateService
+    private overviewStateService: OverviewStateService,
+    private headerService: HeaderService
   ) {}
 
   ngOnInit() {
@@ -40,6 +42,7 @@ export class ArticlesDetailsComponent implements OnInit {
         .subscribe({
           next: (article) => {
             this.article = article;
+            this.headerService.setTitle(article.title);
           },
           error: (error) => {
             console.error('Error loading article:', error);

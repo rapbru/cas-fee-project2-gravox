@@ -1,5 +1,14 @@
-<app-navbar *ngIf="authService.isLoggedIn()"></app-navbar>
-<main class="app-container" *ngIf="authService.isLoggedIn()">
-  <router-outlet></router-outlet>
-</main>
-<router-outlet *ngIf="!authService.isLoggedIn()"></router-outlet>
+<div class="app-layout">
+  <div class="sticky-header">
+    <app-navbar *ngIf="authService.isLoggedIn()" class="navbar"></app-navbar>
+    <div class="header-toolbar-container" *ngIf="authService.isLoggedIn()">
+      <h1 class="font-main">{{ headerService.title() }}</h1>
+      <app-toolbar *ngIf="showToolbar"></app-toolbar>
+    </div>
+  </div>
+  
+  <main class="scrollable-content" *ngIf="authService.isLoggedIn()">
+    <router-outlet></router-outlet>
+  </main>
+  <router-outlet *ngIf="!authService.isLoggedIn()"></router-outlet>
+</div>

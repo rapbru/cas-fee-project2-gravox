@@ -16,6 +16,7 @@ import { OverviewStateService } from '../services/overview-state.service';
 import { ArticleService } from '../services/article.service';
 import { DialogService } from '../services/dialog.service';
 import { forkJoin } from 'rxjs';
+import { HeaderService } from '../services/header.service';
 
 @Component({
   selector: 'app-articles',
@@ -55,10 +56,12 @@ export class ArticlesComponent implements OnInit {
     private router: Router,
     private loggerService: LoggerService,
     private overviewStateService: OverviewStateService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private headerService: HeaderService
   ) {}
 
   ngOnInit() {
+    this.headerService.setTitle('Artikel');
     this.loadArticles();
   }
 

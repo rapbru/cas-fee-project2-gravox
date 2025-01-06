@@ -5,6 +5,8 @@ import { NavbarComponent } from "./navbar/navbar.component";
 import { CommonModule } from '@angular/common';
 import { MatIconRegistry } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { HeaderService } from './services/header.service';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @Component({
   selector: 'app-root',
@@ -13,17 +15,20 @@ import { MatDialogModule } from '@angular/material/dialog';
     RouterOutlet, 
     NavbarComponent, 
     CommonModule,
-    MatDialogModule
+    MatDialogModule,
+    ToolbarComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
   title = 'gravox';
+  showToolbar = false;
 
   constructor(
     public authService: AuthService, 
-    private matIconReg: MatIconRegistry
+    private matIconReg: MatIconRegistry,
+    public headerService: HeaderService
   ) {}
 
   ngOnInit(): void {
