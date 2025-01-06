@@ -25,8 +25,10 @@ import { filter } from 'rxjs/operators';
 export class NavbarComponent {
   public readonly enableEdit = this.editStateService.enableEdit;
   public readonly shouldShowNavigationButtons = computed(() => 
-    !this.enableEdit() || !this.deviceDetectionService.isMobileSignal()
+    !this.deviceDetectionService.isMobileSignal()
   );
+  
+  public readonly shouldShowNavButtons = () => this.shouldShowNavigationButtons();
   
   currentRoute: string = '';
   
@@ -84,13 +86,13 @@ export class NavbarComponent {
   }
 
   navigateTo(path: string): void {
-    this.handleNavigationWithChanges(() => this.router.navigate([path]));
+    if (!this.enableEdit()) {
+      this.router.navigate([path]);
+    }
   }
 
   async logout() {
-    if (this.enableEdit()) {
-      await this.handleNavigationWithChanges(() => this.performLogout());
-    } else {
+    if (!this.enableEdit()) {
       const confirmed = await this.dialogService.confirm({
         title: 'Person ausloggen',
         confirmText: 'Ausloggen',
@@ -123,6 +125,6 @@ export class NavbarComponent {
   }
 
   async cancelChanges(): Promise<void> {
-    await this.editStateService.cancelEdit();
+    this.editStateService.finishEdit();
   }
 }
