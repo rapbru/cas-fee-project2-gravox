@@ -10,6 +10,16 @@
       </button>
     }
 
+    @if (showNavigateAdd) {
+      <button class="button"
+             (click)="onNavigateToAddArticle()"
+             aria-label="Artikel hinzufügen" i18n-aria-label="@@ButtonAddArticleAriaLabel"
+             matTooltip="Artikel hinzufügen" i18n-matTooltip="@@ButtonAddArticleTooltip">
+        <mat-icon>add</mat-icon>
+        <span i18n="@@ButtonAddArticle">Artikel hinzufügen</span>
+      </button>
+    }
+
     @if (showAdd && !isReorderMode) {
       <button class="button"
               (click)="add.emit()"
@@ -27,6 +37,17 @@
               matTooltip="Linie hinzufügen" i18n-matTooltip="@@ButtonAddLineTooltip">
         <mat-icon>add_circle</mat-icon>
         <span i18n="@@ButtonAddLine">Linie hinzufügen</span>
+      </button>
+    }
+
+    @if (showLoad) {
+      <button class="button vonesco"
+              [disabled]="loadDisabled"
+              (click)="load.emit()"
+              aria-label="Laden" i18n-aria-label="@@ButtonLoadAriaLabel"
+              matTooltip="Laden" i18n-matTooltip="@@ButtonLoadTooltip">
+        <mat-icon>download</mat-icon>
+        <span i18n="@@ButtonLoad">Laden</span>
       </button>
     }
 
