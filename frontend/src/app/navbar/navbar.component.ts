@@ -24,11 +24,7 @@ import { filter } from 'rxjs/operators';
 })
 export class NavbarComponent {
   public readonly enableEdit = this.editStateService.enableEdit;
-  public readonly shouldShowNavigationButtons = computed(() => 
-    !this.deviceDetectionService.isMobileSignal()
-  );
-  
-  public readonly shouldShowNavButtons = () => this.shouldShowNavigationButtons();
+  public readonly shouldShowNavButtons = () => true;
   
   currentRoute: string = '';
   
