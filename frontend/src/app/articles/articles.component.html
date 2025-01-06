@@ -4,11 +4,9 @@
   <app-toolbar
     [showNavigateAdd]="true"
     [showDelete]="true"
-    [showLoad]="true"
+    [showLoad]="false"
     [deleteDisabled]="!hasSelectedArticles()"
-    [loadDisabled]="!hasExactlyOneSelected()"
-    (delete)="deleteSelectedArticles()"
-    (load)="loadSelectedArticle()">
+    (delete)="deleteSelectedArticles()">
   </app-toolbar>
 }
 

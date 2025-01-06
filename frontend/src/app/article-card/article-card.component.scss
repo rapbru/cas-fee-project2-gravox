@@ -1,11 +1,11 @@
 .article-container {
-  border-radius: 8px;
+  border-radius: var(--button-border-radius);
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   cursor: pointer;
   transition: transform 0.2s;
   outline: none;
-  background-color: white;
+  background-color: var(--color-main);
 
   &:hover, &:focus {
     transform: translateY(-2px);
@@ -15,6 +15,47 @@
   &:focus {
     outline: 2px solid #1976d2;
     outline-offset: 2px;
+  }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--button-gap);
+    height: 36px;
+    padding: var(--button-padding);
+    border: none;
+    border-radius: var(--button-border-radius);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: var(--font-size);
+
+    mat-icon {
+      margin: 0;
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+    }
+
+    span {
+      white-space: nowrap;
+      line-height: 24px;
+    }
+
+    &.vonesco {
+      color: var(--color-vonesco);
+
+      &:disabled {
+        color: var(--color-sub-3);
+        cursor: default;
+      }
+    }
+
+    &:hover:not(:disabled) {
+      filter: brightness(103%);
+    }
   }
 }
 
