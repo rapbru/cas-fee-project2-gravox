@@ -13,6 +13,9 @@ import { FormsModule } from '@angular/forms';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
 import { ArticleCardComponent } from '../article-card/article-card.component';
 import { OverviewStateService } from '../services/overview-state.service';
+import { ArticleService } from '../services/article.service';
+import { DialogService } from '../services/dialog.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-articles',
@@ -48,10 +51,11 @@ export class ArticlesComponent implements OnInit {
   ];
 
   constructor(
-    private http: HttpClient,
+    private articleService: ArticleService,
     private router: Router,
     private loggerService: LoggerService,
-    private overviewStateService: OverviewStateService
+    private overviewStateService: OverviewStateService,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit() {
@@ -59,20 +63,14 @@ export class ArticlesComponent implements OnInit {
   }
 
   loadArticles() {
-    this.http.get<Article[]>(`${environment.apiUrl}/article`)
-      .subscribe({
-        next: (articles) => {
-          this.articles = articles;
-          if (this.enableLogging) {
-            this.loggerService.log('Articles loaded successfully:', articles);
-          }
-        },
-        error: (error) => {
-          if (this.enableLogging) {
-            this.loggerService.error('Error loading articles:', error);
-          }
-        }
-      });
+    this.articleService.getArticles().subscribe({
+      next: (articles) => {
+        this.articles = articles;
+      },
+      error: (error) => {
+        this.loggerService.error('Error loading articles:', error);
+      }
+    });
   }
 
   navigateToDetails(id: string | number | undefined) {
@@ -100,10 +98,36 @@ export class ArticlesComponent implements OnInit {
     }
   }
 
-  deleteSelectedArticles() {
-    if (this.enableLogging) {
-      this.loggerService.log('Delete action triggered for selected articles');
-    }
+  async deleteSelectedArticles() {
+    const selectedArticles = this.articles.filter(article => article.selected);
+    
+    if (selectedArticles.length === 0) return;
+
+    const confirmed = await this.dialogService.showConfirmDialog({
+      title: 'Artikel löschen',
+      message: selectedArticles.length === 1 
+        ? 'Möchten Sie diesen Artikel wirklich löschen?' 
+        : `Möchten Sie diese ${selectedArticles.length} Artikel wirklich löschen?`,
+      confirmText: 'Löschen',
+      cancelText: 'Abbrechen',
+      confirmClass: 'danger'
+    });
+
+    if (!confirmed) return;
+
+    const deleteObservables = selectedArticles
+      .filter(article => article.id)
+      .map(article => this.articleService.deleteArticle(article.id!));
+
+    forkJoin(deleteObservables).subscribe({
+      next: () => {
+        this.loggerService.log('Articles deleted successfully');
+        this.loadArticles();
+      },
+      error: (error) => {
+        this.loggerService.error('Error deleting articles:', error);
+      }
+    });
   }
 
   isLoadButtonDisabled(currentArticle: Article): boolean {
