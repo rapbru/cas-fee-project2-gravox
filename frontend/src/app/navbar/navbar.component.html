@@ -39,11 +39,19 @@
         <mat-icon>{{ enableEdit() ? 'edit_off' : 'edit' }}</mat-icon>
         Bearbeiten
       </button>
+      <button class="button theme-toggle" 
+        (click)="toggleTheme()"
+        tabindex="4"
+        [attr.aria-label]="isDarkMode() ? 'Zu hellem Modus wechseln' : 'Zu dunklem Modus wechseln'"
+        [matTooltip]="isDarkMode() ? 'Zu hellem Modus wechseln' : 'Zu dunklem Modus wechseln'"
+        matTooltipPosition="below">
+        <mat-icon>{{ isDarkMode() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      </button>
       <button class="button" 
         [disabled]="enableEdit()"
         [class.inactive]="enableEdit()"
         (click)="logout()"
-        tabindex="4"
+        tabindex="5"
         aria-label="Ausloggen"
         matTooltip="Ausloggen"
         matTooltipPosition="below">

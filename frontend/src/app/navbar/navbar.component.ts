@@ -9,6 +9,7 @@ import { OverviewStateService } from '../services/overview-state.service';
 import { PositionService } from '../services/position.service';
 import { DeviceDetectionService } from '../services/device-detection.service';
 import { DialogService } from '../services/dialog.service';
+import { ThemeService } from '../services/theme.service';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -24,6 +25,7 @@ import { filter } from 'rxjs/operators';
 })
 export class NavbarComponent {
   public readonly enableEdit = this.overviewStateService.enableEdit;
+  public readonly isDarkMode = computed(() => this.themeService.getCurrentTheme() === 'dark');
   
   currentRoute: string = '';
   
@@ -33,7 +35,8 @@ export class NavbarComponent {
     private overviewStateService: OverviewStateService, 
     private positionService: PositionService,
     public deviceDetectionService: DeviceDetectionService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private themeService: ThemeService
   ) {
     this.currentRoute = this.router.url;
     
@@ -68,6 +71,20 @@ export class NavbarComponent {
     this.router.navigate([path]);
   }
 
+  toggleEdit(): void {
+    this.overviewStateService.toggleEdit();
+
+    if (this.overviewStateService.enableEdit()) {
+      this.positionService.startEditing();
+    } else {
+      this.positionService.saveEditing();
+    }
+  }
+
+  toggleTheme(): void {
+    this.themeService.toggleTheme();
+  }
+
   async logout() {
     const confirmed = await this.dialogService.confirm({
       title: 'Person ausloggen',
@@ -77,22 +94,8 @@ export class NavbarComponent {
     });
 
     if (confirmed) {
-      this.performLogout();
-    }
-  }
-
-  private performLogout(): void {
-    this.authService.logout();
-    this.router.navigate(['/login']);
-  }
-
-  toggleEdit(): void {
-    this.overviewStateService.toggleEdit();
-
-    if (this.overviewStateService.enableEdit()) {
-      this.positionService.startEditing();
-    } else {
-      this.positionService.saveEditing();
+      this.authService.logout();
+      this.router.navigate(['/login']);
     }
   }
 }
