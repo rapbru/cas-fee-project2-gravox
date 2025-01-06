@@ -43,8 +43,30 @@ html {
   --button-font-size: 1.4em;
 }
 
+.dark-theme {
+  --color-text: #E1E1E7;
+  --color-inverted: black;
+  --color-background: #171719;
+  --color-main: #312e2e;
+  --color-sub-1: #717175;
+  --color-sub-2: #3F3F41;
+  --color-sub-3: #272729;
+  --color-green: #000100;
+  --color-red: #D20015;
+  --color-vonesco: #FFA786;
+  --color-vonesco-sub: #FF7442;
+  --color-vonesco-sub-2: #FF6228;
+  --color-highlight-text: #171719;
+
+  --button-bg-color: #3F3F41;
+  --button-hover-color: #717175;
+  --button-active-color: #272729;
+  --button-border-color: #3F3F41;
+  --button-text-color: #E1E1E7;
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.light-theme) {
     --color-text: #E1E1E7;
     --color-inverted: black;
     --color-background: #171719;
@@ -55,10 +77,9 @@ html {
     --color-green: #000100;
     --color-red: #D20015;
     --color-vonesco: #FFA786;
-  --color-vonesco-sub: #FF7442;
-  --color-vonesco-sub-2: #FF6228;
+    --color-vonesco-sub: #FF7442;
+    --color-vonesco-sub-2: #FF6228;
     --color-highlight-text: #171719;
-
 
     --button-bg-color: #3F3F41;
     --button-hover-color: #717175;
@@ -295,6 +316,16 @@ button.navbar-item {
 
     &:disabled {
       color: var(--color-sub-3);
+    }
+  }
+
+  &.theme-toggle {
+    mat-icon {
+      transition: transform 0.3s ease;
+    }
+
+    &:hover mat-icon {
+      transform: rotate(15deg);
     }
   }
 }
