@@ -19,6 +19,11 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   login() {
+    if (!this.username || !this.password) {
+      this.errorMessage = 'Invalid username or password';
+      return;
+    }
+
     this.authService.login(this.username, this.password).subscribe({
       next: (response) => {
         this.authService.saveToken(response.token);
