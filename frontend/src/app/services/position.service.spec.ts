@@ -114,31 +114,20 @@ describe('PositionService', () => {
 
   describe('saveAllChanges', () => {
     it('should save new positions first', (done) => {
-      // Setze eine neue Position in den editPositions-Signal
       service.editPositions.set([mockNewPosition]);
 
-      // Mock die fetchPositions-Methode
       spyOn(service, 'fetchPositions');
 
       service.saveAllChanges();
 
-      // Erwarte POST-Request für neue Position
       const req = httpMock.expectOne(mockApiUrl);
       expect(req.request.method).toBe('POST');
-      req.flush({ ...mockNewPosition, id: 100 }); // Simuliere Server-Response mit neuer ID
+      req.flush({ ...mockNewPosition, id: 100 });
 
-      // Warte auf asynchrone Operationen
       setTimeout(() => {
-        // Überprüfe, ob die Spalteneinstellungen gespeichert wurden
         expect(columnManagementServiceSpy.saveColumnSettings).toHaveBeenCalled();
-
-        // Überprüfe, ob die Positionsreihenfolge gespeichert wurde
         expect(positionOrderServiceSpy.savePositionOrder).toHaveBeenCalled();
-
-        // Überprüfe Erfolgsmeldung
         expect(errorHandlingServiceSpy.showSuccess).toHaveBeenCalledWith('Alle Änderungen erfolgreich gespeichert');
-
-        // Überprüfe, ob fetchPositions aufgerufen wurde
         expect(service.fetchPositions).toHaveBeenCalled();
 
         done();
@@ -148,7 +137,6 @@ describe('PositionService', () => {
     it('should handle errors when saving new positions', () => {
       service.editPositions.set([mockNewPosition]);
 
-      // Mock die fetchPositions-Methode
       spyOn(service, 'fetchPositions');
 
       service.saveAllChanges();
@@ -163,21 +151,14 @@ describe('PositionService', () => {
     });
 
     it('should save position order and column settings when no new positions exist', () => {
-      // Setze eine existierende Position in den editPositions-Signal
       service.editPositions.set([mockPosition]);
 
-      // Mock die fetchPositions-Methode
       spyOn(service, 'fetchPositions');
 
       service.saveAllChanges();
 
-      // Überprüfe, ob die Spalteneinstellungen gespeichert wurden
       expect(columnManagementServiceSpy.saveColumnSettings).toHaveBeenCalled();
-
-      // Überprüfe, ob die Positionsreihenfolge gespeichert wurde
       expect(positionOrderServiceSpy.savePositionOrder).toHaveBeenCalledWith([mockPosition.id]);
-
-      // Überprüfe, ob fetchPositions aufgerufen wurde
       expect(service.fetchPositions).toHaveBeenCalled();
     });
   });
