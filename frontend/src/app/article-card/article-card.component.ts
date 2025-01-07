@@ -72,4 +72,30 @@ export class ArticleCardComponent {
       this.router.navigate(['/articles', this.article.id]);
     }
   }
+
+  updateArticleInfo(event: Event, field: string) {
+    const inputElement = event.target as HTMLInputElement;
+    const newValue = inputElement.value;
+
+    switch (field) {
+      case 'title':
+        this.article.title = newValue;
+        break;
+      case 'number':
+        this.article.number = newValue;
+        break;
+      case 'customer':
+        this.article.customer = newValue;
+        break;
+      // Add other fields as needed
+    }
+    
+    // TODO: Add service to track modifications
+    // this.articleService.trackModification(this.article);
+  }
+
+  selectInputContent(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    input.select();
+  }
 }

@@ -23,7 +23,17 @@
     <div class="detail-row" *ngIf="isInDetails">
       <mat-icon>deployed_code</mat-icon>
       <span class="label">Name</span>
-      <span class="value">{{ article.title }}</span>
+      <ng-container *ngIf="!isEditable; else editTitle">
+        <span class="value">{{ article.title }}</span>
+      </ng-container>
+      <ng-template #editTitle>
+        <input class="value-input"
+               type="text"
+               [value]="article.title"
+               (focus)="selectInputContent($event)"
+               (click)="selectInputContent($event)"
+               (input)="updateArticleInfo($event, 'title')" />
+      </ng-template>
     </div>
 
     <!-- Timestamps at the top -->
@@ -47,7 +57,17 @@
         <div class="detail-row">
           <mat-icon>tag</mat-icon>
           <span class="label">Nummer</span>
-          <span class="value">{{ article.number }}</span>
+          <ng-container *ngIf="!isEditable; else editNumber">
+            <span class="value">{{ article.number }}</span>
+          </ng-container>
+          <ng-template #editNumber>
+            <input class="value-input"
+                   type="text"
+                   [value]="article.number"
+                   (focus)="selectInputContent($event)"
+                   (click)="selectInputContent($event)"
+                   (input)="updateArticleInfo($event, 'number')" />
+          </ng-template>
         </div>
         <div class="detail-row">
           <mat-icon>person</mat-icon>
