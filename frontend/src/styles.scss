@@ -880,15 +880,11 @@ button:focus-visible {
 }
 
 .app-container {
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 20px;
   width: 100%;
   box-sizing: border-box;
-
-  @media (max-width: 600px) {
-    padding: 0 0.5rem;
-  }
 }
 
 h1.font-main {
@@ -1330,4 +1326,86 @@ app-navbar {
   .value {
     color: var(--color-text);
   }
+}
+
+// Update header styles
+.header-container {
+  background-color: var(--color-main);
+  border-bottom: 1px solid var(--color-border);
+
+  .app-container {
+    padding: 16px 20px;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 24px;
+    color: var(--color-text);
+  }
+}
+
+// Update scrollable content styles
+.scrollable-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  .app-container {
+    padding: 20px;
+  }
+}
+
+// Base layout container
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 20px;
+}
+
+// Layout wrapper for full-width backgrounds
+.full-width-wrapper {
+  width: 100%;
+  background-color: var(--color-main);
+
+  &.header-container {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  &.navbar-container {
+    border-top: 1px solid var(--color-border);
+  }
+}
+
+// Header styles
+.header-container {
+  .app-container {
+    padding: 16px 20px;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 24px;
+    color: var(--color-text);
+  }
+}
+
+// Main content area
+.main-content {
+  flex: 1;
+  width: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  
+  .app-container {
+    padding: 20px;
+  }
+}
+
+// Navbar styles
+.navbar-container {
+  position: sticky;
+  bottom: 0;
+  z-index: 100;
 }
