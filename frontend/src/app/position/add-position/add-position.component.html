@@ -11,10 +11,15 @@
       <input id="position-name" type="text" [(ngModel)]="position.name" name="positionName" />
     </div>
     
-    <!-- Buttons -->
     <div class="buttons">
-      <button mat-button (click)="confirmChanges()">Bestätigen</button>
-      <button mat-button (click)="cancelChanges()">Abbrechen</button>
+      <button class="button" (click)="confirmChanges()">
+        <mat-icon>check</mat-icon>
+        <span>Bestätigen</span>
+      </button>
+      <button class="button danger" (click)="cancelChanges()">
+        <mat-icon>close</mat-icon>
+        <span>Abbrechen</span>
+      </button>
     </div>
   </form>
 </div>
