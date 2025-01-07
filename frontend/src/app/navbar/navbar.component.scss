@@ -1,4 +1,53 @@
-.navbar {
-    display: flex;
-    overflow-x: auto;
+:host {
+  display: block;
+  width: 100%;
+}
+
+.mobile-hidden {
+  @media (max-width: 600px) {
+    display: none;
+  }
+}
+
+.button {
+  &.inactive {
+    opacity: 0.7;
+    cursor: default;
+    pointer-events: none;
+    
+    &:hover {
+      transform: none;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      opacity: 0.8;
+      color: var(--color-sub-1) !important;
+      
+      mat-icon {
+        color: var(--color-sub-1) !important;
+      }
+    }
+  }
+
+  &.edit-active {
+    color: var(--color-vonesco-sub-2) !important;
+
+    mat-icon {
+      color: var(--color-vonesco-sub-2) !important;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      color: var(--color-vonesco-sub) !important;
+
+      mat-icon {
+        color: var(--color-vonesco-sub) !important;
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    padding: 0.25rem 0;
+  }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -11,6 +11,7 @@ import { LoggerService } from '../services/logger.service';
 import { environment } from '../../environments/environment';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { HeaderService } from '../services/header.service';
 
 @Component({
   selector: 'app-add-article',
@@ -26,7 +27,7 @@ import { MatInputModule } from '@angular/material/input';
   ],
   templateUrl: './add-article.component.html'
 })
-export class AddArticleComponent {
+export class AddArticleComponent implements OnInit {
   private enableLogging = environment.enableLogging;
 
   article = {
@@ -50,8 +51,13 @@ export class AddArticleComponent {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private loggerService: LoggerService
+    private loggerService: LoggerService,
+    private headerService: HeaderService
   ) {}
+
+  ngOnInit() {
+    this.headerService.setTitle('Artikeldaten');
+  }
 
   onSave() {
     if (this.enableLogging) {

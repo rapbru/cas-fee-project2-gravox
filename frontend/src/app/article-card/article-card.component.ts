@@ -1,10 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
 import { Article } from '../models/article.model';
 
 @Component({
@@ -12,20 +11,19 @@ import { Article } from '../models/article.model';
   standalone: true,
   imports: [
     CommonModule,
-    MatIconModule,
-    MatButtonModule,
-    MatCheckboxModule,
     FormsModule,
-    MatTooltipModule
+    MatIconModule,
+    MatCheckboxModule,
+    MatButtonModule
   ],
-  templateUrl: './article-card.component.html',
-  styleUrls: ['./article-card.component.scss']
+  templateUrl: './article-card.component.html'
 })
 export class ArticleCardComponent {
   @Input() article!: Article;
   @Input() showCheckbox = false;
   @Input() showHeader = true;
-  @Input() isArticleView = false;
+  @Input() isLoadButtonDisabled = false;
+  @Input() isEditable = false;
   @Output() cardClick = new EventEmitter<number>();
   @Output() loadClick = new EventEmitter<void>();
 
@@ -33,5 +31,9 @@ export class ArticleCardComponent {
     if (this.article.id) {
       this.cardClick.emit(this.article.id);
     }
+  }
+
+  onLoad() {
+    this.loadClick.emit();
   }
 }

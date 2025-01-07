@@ -11,6 +11,10 @@ import { AddPositionComponent } from '../position/add-position/add-position.comp
 import { ErrorHandlingService } from '../services/error-handling.service';
 import { ColumnManagementService } from '../services/column-management.service';
 import { PositionDragDropService } from '../services/position-drag-drop.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
+import { ToolbarComponent } from '../toolbar/toolbar.component';
+import { HeaderService } from '../services/header.service';
 
 @Component({
   selector: 'app-overview',
@@ -20,7 +24,10 @@ import { PositionDragDropService } from '../services/position-drag-drop.service'
     PositionComponent, 
     DragDropModule, 
     MatIconModule, 
-    AddPositionComponent
+    AddPositionComponent,
+    MatTooltipModule,
+    MatButtonModule,
+    ToolbarComponent
   ],
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss']
@@ -44,7 +51,8 @@ export class OverviewComponent implements OnDestroy, OnInit {
     private deviceDetectionService: DeviceDetectionService,
     private positionDragDropService: PositionDragDropService,
     public overviewStateService: OverviewStateService,
-    private errorHandlingService: ErrorHandlingService
+    private errorHandlingService: ErrorHandlingService,
+    private headerService: HeaderService
   ) {
     this.columnManagementService.columnsChanged.subscribe(() => {
       this.positionService.refreshPositions();
@@ -52,6 +60,7 @@ export class OverviewComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit() {  
+    this.headerService.setTitle('Übersicht');
     this.columnManagementService.loadColumnSettings().subscribe();
     this.positionService.startFetching();
   }
@@ -124,5 +133,30 @@ export class OverviewComponent implements OnDestroy, OnInit {
 
   public deletePositions() {
     this.positionService.markPositionsForDeletion();
+  }
+
+  hasSelectedPositions(): boolean {
+    return !this.overviewStateService.enableOrder() && 
+           this.positionService.editPositions().some(pos => pos.isSelected);
+  }
+
+  onAddLine() {
+    this.increaseColumns();
+  }
+
+  onDeleteLine() {
+    this.decreaseColumns();
+  }
+
+  onAdd() {
+    this.addPosition();
+  }
+
+  onReorder() {
+    this.orderPositions();
+  }
+
+  onDelete() {
+    this.deletePositions();
   }
 }
