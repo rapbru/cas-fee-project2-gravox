@@ -1,6 +1,5 @@
-<h1 class="font-main" i18n="@@OverviewHeader">Übersicht</h1>
-
 <app-toolbar
+  header-toolbar
   *ngIf="enableEdit()"
   [showAddLine]="enableEdit()"
   [showDeleteLine]="enableEdit()"
@@ -43,7 +42,8 @@
 <app-add-position 
   *ngIf="newPosition" 
   [ngClass]="{'position-edit-overlay': !isMobile(),'position-edit-mobile': isMobile()}" 
-  class="position-edit-overlay" [position]="newPosition" 
+  class="position-edit-overlay" 
+  [position]="newPosition" 
   (savePosition)="savePosition($event)" 
   (cancelEdit)="closeAddPosition()">
 </app-add-position>
