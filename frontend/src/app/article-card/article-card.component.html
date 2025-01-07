@@ -4,7 +4,7 @@
      (click)="onCardClick()"
      (keydown.enter)="onCardClick()"
      (keydown.space)="onCardClick()">
-  <div class="article-header" *ngIf="showHeader">
+  <div class="article-header" *ngIf="!isInDetails">
     <mat-checkbox *ngIf="showCheckbox"
       [(ngModel)]="article.selected"
       (click)="$event.stopPropagation()">
@@ -19,6 +19,13 @@
   </div>
 
   <div class="article-details">
+    <!-- Show name as first detail when in details view -->
+    <div class="detail-row" *ngIf="isInDetails">
+      <mat-icon>deployed_code</mat-icon>
+      <span class="label">Name</span>
+      <span class="value">{{ article.title }}</span>
+    </div>
+
     <!-- Timestamps at the top -->
     <div class="timestamps-grid">
       <div class="detail-row">
@@ -39,7 +46,7 @@
       <div class="detail-group">
         <div class="detail-row">
           <mat-icon>tag</mat-icon>
-          <span class="label">Number:</span>
+          <span class="label">Nummer</span>
           <span class="value">{{ article.number }}</span>
         </div>
         <div class="detail-row">

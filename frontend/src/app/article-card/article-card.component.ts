@@ -20,7 +20,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatCheckboxModule
   ],
   templateUrl: './article-card.component.html',
-  styleUrls: ['./article-card.component.scss']
+  styleUrls: ['./article-card.component.scss'],
+  host: {
+    '[attr.isInDetails]': 'isInDetails',
+    '[attr.isEditable]': 'isEditable'
+  }
 })
 export class ArticleCardComponent {
   @Input() article!: Article;
@@ -29,6 +33,7 @@ export class ArticleCardComponent {
   @Input() isSelected: boolean = false;
   @Input() isEditable: boolean = false;
   @Input() isLoadButtonDisabled: boolean = false;
+  @Input() isInDetails: boolean = false;
   @Output() selectionChange = new EventEmitter<boolean>();
   @Output() cardClick = new EventEmitter<number>();
 

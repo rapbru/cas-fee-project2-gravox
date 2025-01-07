@@ -39,10 +39,47 @@
     color: var(--color-text);
     cursor: pointer;
     transition: color 0.2s ease;
+  }
 
-    &:hover {
-      color: #1976d2;
+  :host([isInDetails="true"]) {
+    h2:hover {
+      color: var(--color-vonesco-sub);
     }
+
+    .value {
+      &:hover {
+        color: var(--color-vonesco-sub);
+        text-decoration: underline;
+      }
+    }
+  }
+
+  :host([isInDetails="true"][isEditable="true"]) {
+    .value {
+      color: var(--color-vonesco-sub);
+      cursor: pointer;
+    }
+
+    .label {
+      color: var(--color-vonesco-sub);
+      cursor: pointer;
+    }
+  }
+
+  .value {
+    color: var(--color-text);
+    line-height: 1.4;
+    white-space: normal;
+    word-break: break-word;
+    transition: color 0.3s ease;
+
+    .details-grid & {
+      cursor: pointer;
+    }
+  }
+
+  .label {
+    transition: color 0.3s ease;
   }
 
   button {
@@ -111,8 +148,8 @@
       cursor: pointer;
       transition: color 0.2s ease;
 
-      &:hover {
-        color: #1976d2;
+      :host-context(.is-in-details) &:hover {
+        color: var(--color-vonesco-sub);
         text-decoration: underline;
       }
     }
