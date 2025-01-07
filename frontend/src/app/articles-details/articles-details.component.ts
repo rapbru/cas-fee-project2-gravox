@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Article } from '../models/article.model';
 import { HttpClient } from '@angular/common/http';
@@ -26,7 +26,7 @@ import { finalize } from 'rxjs/operators';
   templateUrl: './articles-details.component.html',
   styleUrls: ['./articles-details.component.scss']
 })
-export class ArticlesDetailsComponent implements OnInit {
+export class ArticlesDetailsComponent implements OnInit, OnDestroy {
   article: Article | null = null;
   public readonly enableEdit = this.overviewStateService.enableEdit;
 
@@ -47,6 +47,11 @@ export class ArticlesDetailsComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    // Reset header when leaving the component
+    this.headerService.setTitle('');
+  }
+
   private getArticle(id: string) {
     console.log('Fetching article:', id);
     this.http.get<Article>(`${environment.apiUrl}/article/${id}`)
@@ -54,11 +59,19 @@ export class ArticlesDetailsComponent implements OnInit {
         next: (article) => {
           console.log('Article loaded:', article);
           this.article = article;
+          // Update header with article title
+          this.updateHeader();
         },
         error: (error) => {
           console.error('Error loading article:', error);
         }
       });
+  }
+
+  private updateHeader() {
+    if (this.article) {
+      this.headerService.setTitle(this.article.title);
+    }
   }
 
   public onLoad() {
@@ -80,14 +93,12 @@ export class ArticlesDetailsComponent implements OnInit {
       const originalArticle = JSON.parse(JSON.stringify(this.article));
       const articleId = this.article.id;
 
-      // Update the array order
       moveItemInArray(
         this.article.sequence,
         event.previousIndex,
         event.currentIndex
       );
 
-      // Update order numbers
       this.article.sequence = this.article.sequence.map((seq, index) => ({
         ...seq,
         orderNumber: index + 1
@@ -98,7 +109,6 @@ export class ArticlesDetailsComponent implements OnInit {
       this.articleService.updateArticle(this.article)
         .pipe(
           finalize(() => {
-            // Always refresh the article data after update attempt
             if (articleId) {
               console.log('Refreshing article data');
               this.getArticle(articleId.toString());
@@ -112,6 +122,7 @@ export class ArticlesDetailsComponent implements OnInit {
           error: (error) => {
             console.error('Error updating sequence order:', error);
             this.article = originalArticle;
+            this.updateHeader(); // Update header if we revert to original
           }
         });
     }
