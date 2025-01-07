@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
       <div class="input-field-header">
         <label class="input-field-label" [for]="name">{{ label }}</label>
         <span class="input-field-counter" [class.visible]="showCounter" [class.flash-limit]="isAtLimit">
-          {{ value?.length || 0 }}/{{ maxLength }}
+          {{ value.length || 0 }}/{{ maxLength }}
         </span>
       </div>
       <input
