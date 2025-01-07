@@ -1,10 +1,13 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
+import { Article } from '../models/article.model';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatButtonModule } from '@angular/material/button';
-import { Article } from '../models/article.model';
 
 @Component({
   selector: 'app-article-card',
@@ -12,28 +15,56 @@ import { Article } from '../models/article.model';
   imports: [
     CommonModule,
     FormsModule,
+    MatButtonModule,
     MatIconModule,
-    MatCheckboxModule,
-    MatButtonModule
+    MatCheckboxModule
   ],
-  templateUrl: './article-card.component.html'
+  templateUrl: './article-card.component.html',
+  styleUrls: ['./article-card.component.scss']
 })
 export class ArticleCardComponent {
   @Input() article!: Article;
-  @Input() showCheckbox = false;
-  @Input() showHeader = true;
-  @Input() isLoadButtonDisabled = false;
-  @Input() isEditable = false;
+  @Input() showHeader: boolean = true;
+  @Input() showCheckbox: boolean = false;
+  @Input() isSelected: boolean = false;
+  @Input() isEditable: boolean = false;
+  @Input() isLoadButtonDisabled: boolean = false;
+  @Output() selectionChange = new EventEmitter<boolean>();
   @Output() cardClick = new EventEmitter<number>();
-  @Output() loadClick = new EventEmitter<void>();
+
+  constructor(
+    private router: Router,
+    private http: HttpClient
+  ) {}
 
   onCardClick() {
-    if (this.article.id) {
+    if (this.article) {
       this.cardClick.emit(this.article.id);
     }
   }
 
+  onCheckboxChange(event: any) {
+    this.isSelected = event.checked;
+    this.selectionChange.emit(this.isSelected);
+  }
+
   onLoad() {
-    this.loadClick.emit();
+    if (this.article) {
+      this.http.post(`${environment.apiUrl}/article/${this.article.id}/load`, {})
+        .subscribe({
+          next: () => {
+            console.log('Article loaded successfully');
+          },
+          error: (error) => {
+            console.error('Error loading article:', error);
+          }
+        });
+    }
+  }
+
+  editArticle() {
+    if (this.article) {
+      this.router.navigate(['/articles', this.article.id]);
+    }
   }
 }

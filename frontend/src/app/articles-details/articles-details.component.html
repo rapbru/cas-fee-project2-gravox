@@ -1,29 +1,10 @@
 <div class="content-container">
   @if (article) {
     <div class="article-actions">
-      @if (!enableEdit()) {
-        <button mat-raised-button 
-                color="primary" 
-                (click)="onLoad()">
-          <mat-icon>download</mat-icon>
-          Laden
-        </button>
-      }
-
-      @if (enableEdit()) {
-        <div class="edit-buttons">
-          <button mat-raised-button 
-                  color="primary" 
-                  (click)="onSave()">
-            <mat-icon>save</mat-icon>
-            Speichern
-          </button>
-          <button mat-raised-button 
-                  (click)="onCancel()">
-            Abbrechen
-          </button>
-        </div>
-      }
+      <button class="button vonesco card-button" (click)="onLoad()">
+        <mat-icon>download</mat-icon>
+        <span>Laden</span>
+      </button>
     </div>
 
     <div>

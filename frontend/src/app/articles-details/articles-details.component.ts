@@ -32,36 +32,40 @@ export class ArticlesDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.loadArticle();
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      if (id) {
+        this.getArticle(id);
+      }
+    });
+
+    window.scrollTo(0, 0);
   }
 
-  private loadArticle() {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.http.get<Article>(`${environment.apiUrl}/article/${id}`)
+  private getArticle(id: string) {
+    this.http.get<Article>(`${environment.apiUrl}/article/${id}`)
+      .subscribe({
+        next: (article) => {
+          this.article = article;
+          console.log('Article loaded successfully:', article);
+        },
+        error: (error) => {
+          console.error('Error loading article:', error);
+        }
+      });
+  }
+
+  public onLoad() {
+    if (this.article) {
+      this.http.post(`${environment.apiUrl}/article/${this.article.id}/load`, {})
         .subscribe({
-          next: (article) => {
-            this.article = article;
-            this.headerService.setTitle(article.title);
+          next: () => {
+            console.log('Article loaded to PLC successfully');
           },
           error: (error) => {
-            console.error('Error loading article:', error);
+            console.error('Error loading article to PLC:', error);
           }
         });
     }
-  }
-
-  onLoad() {
-    // Existing load functionality
-  }
-
-  onSave() {
-    // Save changes
-    this.overviewStateService.toggleEdit();
-  }
-
-  onCancel() {
-    // Cancel changes
-    this.overviewStateService.toggleEdit();
   }
 }
