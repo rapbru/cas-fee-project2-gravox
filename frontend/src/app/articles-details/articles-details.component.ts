@@ -9,6 +9,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { ArticleCardComponent } from '../article-card/article-card.component';
 import { HeaderService } from '../services/header.service';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import { SequenceCardComponent } from '../sequence-card/sequence-card.component';
+import { ArticleService } from '../services/article.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-articles-details',
@@ -17,7 +20,8 @@ import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-
     MatIconModule,
     MatButtonModule,
     ArticleCardComponent,
-    DragDropModule
+    DragDropModule,
+    SequenceCardComponent
   ],
   templateUrl: './articles-details.component.html',
   styleUrls: ['./articles-details.component.scss']
@@ -30,7 +34,8 @@ export class ArticlesDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private overviewStateService: OverviewStateService,
-    private headerService: HeaderService
+    private headerService: HeaderService,
+    private articleService: ArticleService
   ) {}
 
   ngOnInit() {
@@ -40,16 +45,15 @@ export class ArticlesDetailsComponent implements OnInit {
         this.getArticle(id);
       }
     });
-
-    window.scrollTo(0, 0);
   }
 
   private getArticle(id: string) {
+    console.log('Fetching article:', id);
     this.http.get<Article>(`${environment.apiUrl}/article/${id}`)
       .subscribe({
         next: (article) => {
+          console.log('Article loaded:', article);
           this.article = article;
-          console.log('Article loaded successfully:', article);
         },
         error: (error) => {
           console.error('Error loading article:', error);
@@ -73,11 +77,43 @@ export class ArticlesDetailsComponent implements OnInit {
 
   onDrop(event: CdkDragDrop<any[]>) {
     if (this.article?.sequence) {
+      const originalArticle = JSON.parse(JSON.stringify(this.article));
+      const articleId = this.article.id;
+
+      // Update the array order
       moveItemInArray(
         this.article.sequence,
         event.previousIndex,
         event.currentIndex
       );
+
+      // Update order numbers
+      this.article.sequence = this.article.sequence.map((seq, index) => ({
+        ...seq,
+        orderNumber: index + 1
+      }));
+
+      console.log('Sending updated article:', this.article);
+
+      this.articleService.updateArticle(this.article)
+        .pipe(
+          finalize(() => {
+            // Always refresh the article data after update attempt
+            if (articleId) {
+              console.log('Refreshing article data');
+              this.getArticle(articleId.toString());
+            }
+          })
+        )
+        .subscribe({
+          next: () => {
+            console.log('Update successful');
+          },
+          error: (error) => {
+            console.error('Error updating sequence order:', error);
+            this.article = originalArticle;
+          }
+        });
     }
   }
 }

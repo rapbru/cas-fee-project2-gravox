@@ -6,7 +6,6 @@
 }
 
 .sequence-item {
-  background-color: #FFFFFF;
   background-color: var(--color-main);
   border: 1px solid var(--color-border);
   border-radius: 8px;
@@ -17,22 +16,23 @@
   align-items: flex-start;
   gap: 12px;
 
+  .drag-handle {
+    cursor: move;
+    margin-right: 8px;
+    
+    mat-icon {
+      color: var(--color-text-sub);
+    }
+  }
+
   &:hover {
     cursor: pointer;
     border-color: var(--color-vonesco-sub-2);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
 
-    .detail-row {
-      &:hover {
-        background-color: var(--color-vonesco-sub-2);
-        color: var(--color-text-light);
-        border-radius: 4px;
-        
-        mat-icon {
-          color: var(--color-text-light);
-        }
-      }
-    }
+  &.editable {
+    cursor: move;
   }
 
   .detail-row {
@@ -57,14 +57,6 @@
 
     .value {
       color: var(--color-text);
-    }
-  }
-
-  .drag-handle {
-    cursor: move;
-    
-    mat-icon {
-      color: var(--color-text-sub);
     }
   }
 }
