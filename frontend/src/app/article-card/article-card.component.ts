@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ArticleService } from '../services/article.service';
 
 @Component({
   selector: 'app-article-card',
@@ -39,7 +40,8 @@ export class ArticleCardComponent {
 
   constructor(
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private articleService: ArticleService
   ) {}
 
   onCardClick() {
@@ -77,21 +79,31 @@ export class ArticleCardComponent {
     const inputElement = event.target as HTMLInputElement;
     const newValue = inputElement.value;
 
+    // Log the change
+    console.log(`Updating ${field} to:`, newValue);
+
+    // Create a new article object with the updated value
+    const updatedArticle = { ...this.article };
+    
     switch (field) {
       case 'title':
-        this.article.title = newValue;
+        updatedArticle.title = newValue;
         break;
       case 'number':
-        this.article.number = newValue;
+        updatedArticle.number = newValue;
         break;
       case 'customer':
-        this.article.customer = newValue;
+        updatedArticle.customer = newValue;
         break;
       // Add other fields as needed
     }
+
+    // Update the article reference
+    this.article = updatedArticle;
     
-    // TODO: Add service to track modifications
-    // this.articleService.trackModification(this.article);
+    // Track the modification
+    console.log('Tracking modification for article:', this.article);
+    this.articleService.trackModification(this.article);
   }
 
   selectInputContent(event: Event): void {

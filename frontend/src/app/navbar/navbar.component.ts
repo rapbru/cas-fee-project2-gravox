@@ -11,6 +11,7 @@ import { DeviceDetectionService } from '../services/device-detection.service';
 import { DialogService } from '../services/dialog.service';
 import { ThemeService } from '../services/theme.service';
 import { filter } from 'rxjs/operators';
+import { ArticleService } from '../services/article.service';
 
 @Component({
   selector: 'app-navbar',
@@ -34,6 +35,7 @@ export class NavbarComponent {
     private router: Router, 
     private overviewStateService: OverviewStateService, 
     private positionService: PositionService,
+    private articleService: ArticleService,
     public deviceDetectionService: DeviceDetectionService,
     private dialogService: DialogService,
     private themeService: ThemeService
@@ -72,12 +74,24 @@ export class NavbarComponent {
   }
 
   toggleEdit(): void {
-    this.overviewStateService.toggleEdit();
-
-    if (this.overviewStateService.enableEdit()) {
-      this.positionService.startEditing();
+    if (this.enableEdit()) {
+      this.articleService.saveModifications().subscribe({
+        next: () => {
+          this.overviewStateService.toggleEdit();
+          this.positionService.saveEditing();
+          
+          const currentUrl = this.router.url;
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+            this.router.navigate([currentUrl]);
+          });
+        },
+        error: (error) => {
+          console.error('Error saving article modifications:', error);
+        }
+      });
     } else {
-      this.positionService.saveEditing();
+      this.overviewStateService.toggleEdit();
+      this.positionService.startEditing();
     }
   }
 

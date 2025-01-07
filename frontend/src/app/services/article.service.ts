@@ -11,6 +11,7 @@ import { Article } from '../models/article.model';
 })
 export class ArticleService {
   private apiUrl: string;
+  private modifiedArticles: Set<Article> = new Set();
 
   constructor(
     private http: HttpClient,
@@ -19,6 +20,32 @@ export class ArticleService {
     private apiConfig: ApiConfigService
   ) {
     this.apiUrl = this.apiConfig.getUrl('article');
+  }
+
+  trackModification(article: Article): void {
+    this.modifiedArticles.add(article);
+    this.logger.log('Tracked modification for article:', article);
+  }
+
+  saveModifications(): Observable<any> {
+    const updates = Array.from(this.modifiedArticles).map(article => 
+      this.updateArticle(article)
+    );
+    
+    this.modifiedArticles.clear();
+    
+    return new Observable(subscriber => {
+      Promise.all(updates.map(obs => obs.toPromise()))
+        .then(() => {
+          this.logger.log('Saved all article modifications');
+          subscriber.next();
+          subscriber.complete();
+        })
+        .catch(error => {
+          this.logger.error('Error saving article modifications:', error);
+          subscriber.error(error);
+        });
+    });
   }
 
   getArticles(): Observable<Article[]> {
