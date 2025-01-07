@@ -1,14 +1,19 @@
-<div *ngIf="enableEdit() && !(isMobile() && newPosition)"> 
-  <button *ngIf="!isMobile() && enableEdit()" 
-    (click)="increaseColumns()">Linie hinzufügen</button>
-  <button *ngIf="(columns().length > 1) && !isMobile() && enableEdit()" 
-    (click)="decreaseColumns()">Linie löschen</button>
-  <button *ngIf="enableEdit()" (click)="addPosition()">hinzufügen</button>
-  <button *ngIf="enableEdit()" (click)="orderPositions()">Reihenfolge</button>
-  <button *ngIf="enableEdit()" (click)="deletePositions()">löschen</button>
-  <button *ngIf="enableEdit()" (click)="saveChanges()">Speichern</button>
-  <button *ngIf="enableEdit()" (click)="cancelChanges()">Abbrechen</button>
-</div>
+<app-toolbar
+  header-toolbar
+  *ngIf="enableEdit()"
+  [showAddLine]="enableEdit()"
+  [showDeleteLine]="enableEdit()"
+  [showAdd]="enableEdit() && !enableOrder()"
+  [showReorder]="enableEdit()"
+  [showDelete]="enableEdit() && !enableOrder()"
+  [deleteDisabled]="!hasSelectedPositions()"
+  [isReorderMode]="enableOrder()"
+  (addLine)="onAddLine()"
+  (deleteLine)="onDeleteLine()"
+  (add)="onAdd()"
+  (reorder)="onReorder()"
+  (delete)="onDelete()">
+</app-toolbar>
 
 <div *ngIf="!(isMobile() && newPosition)" cdkDropListGroup>
   <div class="overview-container" [style.--total-columns]="columnManagementService.getColumnCount()">
@@ -37,7 +42,8 @@
 <app-add-position 
   *ngIf="newPosition" 
   [ngClass]="{'position-edit-overlay': !isMobile(),'position-edit-mobile': isMobile()}" 
-  class="position-edit-overlay" [position]="newPosition" 
+  class="position-edit-overlay" 
+  [position]="newPosition" 
   (savePosition)="savePosition($event)" 
   (cancelEdit)="closeAddPosition()">
 </app-add-position>

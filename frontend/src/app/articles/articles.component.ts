@@ -2,25 +2,34 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { ArticleCardComponent } from '../article-card/article-card.component';
 import { LoggerService } from '../services/logger.service';
 import { environment } from '../../environments/environment';
 import { Article } from '../models/article.model';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
+import { ArticleCardComponent } from '../article-card/article-card.component';
+import { OverviewStateService } from '../services/overview-state.service';
+import { ArticleService } from '../services/article.service';
+import { DialogService } from '../services/dialog.service';
+import { forkJoin } from 'rxjs';
+import { HeaderService } from '../services/header.service';
 
 @Component({
   selector: 'app-articles',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule,
-    MatIconModule,
+    MatCardModule,
+    MatCheckboxModule,
     MatButtonModule,
-    ArticleCardComponent,
-    ToolbarComponent
+    MatIconModule,
+    FormsModule,
+    ToolbarComponent,
+    ArticleCardComponent
   ],
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.scss']
@@ -28,6 +37,9 @@ import { ToolbarComponent } from '../toolbar/toolbar.component';
 export class ArticlesComponent implements OnInit {
   private enableLogging = environment.enableLogging;
   articles: Article[] = [];
+  isReorderMode = false;
+  public readonly enableEdit = this.overviewStateService.enableEdit;
+
   displayedColumns: string[] = [
     'select',
     'title',
@@ -40,30 +52,28 @@ export class ArticlesComponent implements OnInit {
   ];
 
   constructor(
-    private http: HttpClient,
+    private articleService: ArticleService,
     private router: Router,
-    private loggerService: LoggerService
+    private loggerService: LoggerService,
+    private overviewStateService: OverviewStateService,
+    private dialogService: DialogService,
+    private headerService: HeaderService
   ) {}
 
   ngOnInit() {
+    this.headerService.setTitle('Artikel');
     this.loadArticles();
   }
 
   loadArticles() {
-    this.http.get<Article[]>(`${environment.apiUrl}/article`)
-      .subscribe({
-        next: (articles) => {
-          this.articles = articles;
-          if (this.enableLogging) {
-            this.loggerService.log('Articles loaded successfully:', articles);
-          }
-        },
-        error: (error) => {
-          if (this.enableLogging) {
-            this.loggerService.error('Error loading articles:', error);
-          }
-        }
-      });
+    this.articleService.getArticles().subscribe({
+      next: (articles) => {
+        this.articles = articles;
+      },
+      error: (error) => {
+        this.loggerService.error('Error loading articles:', error);
+      }
+    });
   }
 
   navigateToDetails(id: string | number | undefined) {
@@ -91,11 +101,72 @@ export class ArticlesComponent implements OnInit {
     }
   }
 
-  deleteSelectedArticles() {
-    // TODO: Implement deletion logic
-    if (this.enableLogging) {
-      this.loggerService.log('Delete action triggered for selected articles');
+  async deleteSelectedArticles() {
+    const selectedArticles = this.articles.filter(article => article.selected);
+    
+    if (selectedArticles.length === 0) return;
+
+    const confirmed = await this.dialogService.showConfirmDialog({
+      title: 'Artikel löschen',
+      message: selectedArticles.length === 1 
+        ? 'Möchten Sie diesen Artikel wirklich löschen?' 
+        : `Möchten Sie diese ${selectedArticles.length} Artikel wirklich löschen?`,
+      confirmText: 'Löschen',
+      cancelText: 'Abbrechen',
+      confirmClass: 'danger'
+    });
+
+    if (!confirmed) return;
+
+    const deleteObservables = selectedArticles
+      .filter(article => article.id)
+      .map(article => this.articleService.deleteArticle(article.id!));
+
+    forkJoin(deleteObservables).subscribe({
+      next: () => {
+        this.loggerService.log('Articles deleted successfully');
+        this.loadArticles();
+      },
+      error: (error) => {
+        this.loggerService.error('Error deleting articles:', error);
+      }
+    });
+  }
+
+  isLoadButtonDisabled(currentArticle: Article): boolean {
+    const selectedArticles = this.articles.filter(article => article.selected);
+    
+    if (selectedArticles.length === 0) {
+      return false;
+    } else if (selectedArticles.length === 1) {
+      return !currentArticle.selected;
+    } else {
+      return true;
     }
+  }
+
+  enableOrder(): boolean {
+    return this.isReorderMode;
+  }
+
+  onAddLine() {
+    // Implement if needed or remove from template
+  }
+
+  onDeleteLine() {
+    // Implement if needed or remove from template
+  }
+
+  onAdd() {
+    this.router.navigate(['/articles/add']);
+  }
+
+  onReorder() {
+    this.isReorderMode = !this.isReorderMode;
+  }
+
+  onDelete() {
+    this.deleteSelectedArticles();
   }
 }
 

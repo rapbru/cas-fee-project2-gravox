@@ -1,36 +1,101 @@
-import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component, computed } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { AuthService } from '../authentication/auth.service';
+import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { OverviewStateService } from '../services/overview-state.service';
 import { PositionService } from '../services/position.service';
-
+import { DeviceDetectionService } from '../services/device-detection.service';
+import { DialogService } from '../services/dialog.service';
+import { ThemeService } from '../services/theme.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, MatIconModule, MatButtonModule],
-  templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss'
+  imports: [
+    CommonModule, 
+    MatIconModule, 
+    MatButtonModule,
+    MatTooltipModule
+  ],
+  templateUrl: './navbar.component.html'
 })
 export class NavbarComponent {
   public readonly enableEdit = this.overviewStateService.enableEdit;
+  public readonly isDarkMode = computed(() => this.themeService.getCurrentTheme() === 'dark');
   
-  constructor(private authService: AuthService, private router: Router, private overviewStateService: OverviewStateService, private positionService: PositionService) {}
-
-  logout() {
-    this.authService.logout();
-    this.router.navigate(['/login']);
+  currentRoute: string = '';
+  
+  constructor(
+    private authService: AuthService, 
+    private router: Router, 
+    private overviewStateService: OverviewStateService, 
+    private positionService: PositionService,
+    public deviceDetectionService: DeviceDetectionService,
+    private dialogService: DialogService,
+    private themeService: ThemeService
+  ) {
+    this.currentRoute = this.router.url;
+    
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      this.currentRoute = event.url;
+    });
   }
 
-  toggleEdit() {
+  isOverviewActive(): boolean {
+    return this.currentRoute === '/overview';
+  }
+
+  isArticlesActive(): boolean {
+    return this.currentRoute === '/articles';
+  }
+
+  shouldShowOverviewButton(): boolean {
+    return !this.deviceDetectionService.isMobileSignal() || !this.currentRoute.includes('/overview');
+  }
+
+  shouldShowArticlesButton(): boolean {
+    return !this.deviceDetectionService.isMobileSignal() || this.currentRoute.includes('/overview');
+  }
+
+  navigateTo(path: string): void {
+    if (this.enableEdit()) {
+      this.overviewStateService.toggleEdit();
+      this.positionService.saveEditing();
+    }
+    this.router.navigate([path]);
+  }
+
+  toggleEdit(): void {
     this.overviewStateService.toggleEdit();
 
     if (this.overviewStateService.enableEdit()) {
       this.positionService.startEditing();
     } else {
-      this.positionService.cancelEditing();
+      this.positionService.saveEditing();
+    }
+  }
+
+  toggleTheme(): void {
+    this.themeService.toggleTheme();
+  }
+
+  async logout() {
+    const confirmed = await this.dialogService.confirm({
+      title: 'Person ausloggen',
+      confirmText: 'Ausloggen',
+      cancelText: 'Abbrechen',
+      confirmClass: 'danger'
+    });
+
+    if (confirmed) {
+      this.authService.logout();
+      this.router.navigate(['/login']);
     }
   }
 }

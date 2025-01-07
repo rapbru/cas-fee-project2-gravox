@@ -1,27 +1,21 @@
-<h1 class="font-main" i18n="@@articlesHeader">Artikel</h1>
+<app-toolbar
+  *ngIf="enableEdit()"
+  [showNavigateAdd]="true"
+  [showDelete]="true"
+  [deleteDisabled]="!hasSelectedArticles()"
+  (delete)="deleteSelectedArticles()">
+</app-toolbar>
 
-<app-toolbar></app-toolbar>
-
-<div class="button-container">
-  <button mat-raised-button 
-          color="warn"
-          [disabled]="!hasSelectedArticles()"
-          (click)="deleteSelectedArticles()">
-    <mat-icon>delete</mat-icon>
-    Löschen
-  </button>
-</div>
-
-<div class="articles-grid">
-  <app-article-card
-    *ngFor="let article of articles"
-    [article]="article"
-    [showCheckbox]="true"
-    [showHeader]="true"
-    [isArticleView]="false"
-    (cardClick)="navigateToDetails($event)"
-    (loadClick)="loadSelectedArticle()">
-  </app-article-card>
+<div class="content-container">
+  <div class="card-grid">
+    <app-article-card 
+      *ngFor="let article of articles"
+      [article]="article"
+      [showCheckbox]="enableEdit()"
+      (cardClick)="navigateToDetails($event)"
+      (loadClick)="navigateToDetails(article.id)">
+    </app-article-card>
+  </div>
 </div>
 
 <footer class="footer">

@@ -1,29 +1,65 @@
-<nav class="navbar">
-  <ul class="navbar-list">
-    <li class="navbar-item">
-      <a routerLink="/overview" class="navbar-link">
-        <mat-icon>dashboard</mat-icon> Übersicht
-      </a>
-    </li>
-
-    <li class="navbar-item">
-      <a routerLink="/articles" class="navbar-link">
-        <mat-icon>deployed_code</mat-icon> Artikel
-      </a>
-    </li>
-
-    <span class="flex-spacer"></span>
-
-    <li class="navbar-item">
-      <button (click)="toggleEdit()" class="navbar-link">
-        <mat-icon>{{ enableEdit() ? 'edit_off' : 'edit' }}</mat-icon>Bearbeiten
+<nav class="navbar" role="navigation" aria-label="Hauptnavigation">
+  <div class="app-container">
+    <div class="left-section">
+      <div class="navbar-list">
+        <button class="button" 
+          *ngIf="shouldShowOverviewButton()"
+          [disabled]="isOverviewActive() || enableEdit()"
+          [class.inactive]="isOverviewActive() || enableEdit()"
+          (click)="navigateTo('/overview')"
+          tabindex="1"
+          aria-label="Zur Übersicht navigieren"
+          matTooltip="Zur Übersicht"
+          matTooltipPosition="below">
+          <mat-icon>view_list</mat-icon>
+          Übersicht
+        </button>
+        <button class="button" 
+          *ngIf="shouldShowArticlesButton()"
+          [disabled]="isArticlesActive() || enableEdit()"
+          [class.inactive]="isArticlesActive() || enableEdit()"
+          (click)="navigateTo('/articles')"
+          tabindex="2"
+          aria-label="Zu Artikeln navigieren"
+          matTooltip="Zu Artikeln"
+          matTooltipPosition="below">
+          <mat-icon>deployed_code</mat-icon>
+          Artikel
+        </button>
+      </div>
+    </div>
+    <div class="right-section">
+      <button class="button" 
+        [class.edit-active]="enableEdit()"
+        (click)="toggleEdit()"
+        tabindex="3"
+        [attr.aria-label]="enableEdit() ? 'Bearbeitungsmodus deaktivieren' : 'Bearbeitungsmodus aktivieren'"
+        [matTooltip]="enableEdit() ? 'Bearbeitungsmodus deaktivieren' : 'Bearbeitungsmodus aktivieren'"
+        matTooltipPosition="below">
+        <mat-icon>{{ enableEdit() ? 'edit_off' : 'edit' }}</mat-icon>
+        Bearbeiten
       </button>
-    </li>
-
-    <li class="navbar-item">
-      <a (click)="logout()" (keydown.enter)="logout()" tabindex="0" class="navbar-link">
-        <mat-icon>logout</mat-icon> Logout
-      </a>
-    </li>
-  </ul>
+      <button class="button"
+        [disabled]="enableEdit()"
+        [class.inactive]="enableEdit()"
+        (click)="toggleTheme()"
+        tabindex="4"
+        [attr.aria-label]="isDarkMode() ? 'Zu hellem Modus wechseln' : 'Zu dunklem Modus wechseln'"
+        [matTooltip]="isDarkMode() ? 'Zu hellem Modus wechseln' : 'Zu dunklem Modus wechseln'"
+        matTooltipPosition="below">
+        <mat-icon>{{ isDarkMode() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      </button>
+      <button class="button" 
+        [disabled]="enableEdit()"
+        [class.inactive]="enableEdit()"
+        (click)="logout()"
+        tabindex="5"
+        aria-label="Ausloggen"
+        matTooltip="Ausloggen"
+        matTooltipPosition="below">
+        <mat-icon>logout</mat-icon>
+        <span [class.mobile-hidden]="deviceDetectionService.isMobileSignal()">Logout</span>
+      </button>
+    </div>
+  </div>
 </nav>
