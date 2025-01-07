@@ -155,3 +155,15 @@
     }
   }
 }
+
+.value-input {
+  border: none;
+  background: transparent;
+  color: var(--color-vonesco-sub);
+  font-size: inherit;
+  font-style: inherit;
+  width: 100%;
+  outline: none;
+  padding: 0;
+  margin: 0;
+}
