@@ -1,79 +1,70 @@
 import { Component, Input, forwardRef } from '@angular/core';
-import { CommonModule, NgIf } from '@angular/common';
-import { FormsModule, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { MatFormField, MatLabel, MatHint } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-input-field',
   standalone: true,
-  imports: [
-    NgIf,
-    MatFormField,
-    MatLabel,
-    MatHint,
-    MatInput
-  ],
+  imports: [CommonModule, FormsModule],
+  template: `
+    <div class="input-field">
+      <div class="input-field-header">
+        <label class="input-field-label" [for]="name">{{ label }}</label>
+        <span class="input-field-counter" [class.visible]="showCounter" [class.flash-limit]="isAtLimit">
+          {{ value?.length || 0 }}/{{ maxLength }}
+        </span>
+      </div>
+      <input
+        [id]="name"
+        [name]="name"
+        [type]="type"
+        [required]="required"
+        [maxlength]="maxLength"
+        [placeholder]="placeholder"
+        [disabled]="disabled"
+        [class.flash-limit]="isAtLimit"
+        class="input-field-value"
+        [ngModel]="value"
+        (ngModelChange)="onInputChange($event)"
+        (blur)="onBlur()"
+      />
+    </div>
+  `,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => InputFieldComponent),
       multi: true
     }
-  ],
-  template: `
-    <mat-form-field>
-      <mat-label>{{ label }}</mat-label>
-      <input matInput
-             [id]="fieldId"
-             [attr.aria-label]="ariaLabel"
-             [placeholder]="placeholder"
-             [required]="required"
-             [attr.maxlength]="maxLength"
-             [disabled]="disabled"
-             [value]="value"
-             (input)="onInputChange($event)"
-             (blur)="markAsTouched()">
-      <mat-hint *ngIf="maxLength" align="end">{{value.length || 0}}/{{maxLength}}</mat-hint>
-    </mat-form-field>
-  `,
-  styleUrls: ['./input-field.component.scss']
+  ]
 })
 export class InputFieldComponent implements ControlValueAccessor {
-  @Input() label = '';
-  @Input() maxLength?: number;
-  @Input() required = false;
-  @Input() placeholder = '';
-  @Input() fieldId = '';
-  @Input() ariaLabel = '';
-  @Input() disabled = false;
+  @Input() label: string = '';
+  @Input() name: string = '';
+  @Input() type: string = 'text';
+  @Input() required: boolean = false;
+  @Input() maxLength: number = 0;
+  @Input() placeholder: string = '';
+  @Input() disabled: boolean = false;
 
-  private _value = '';
-  private onChange: (value: string) => void = () => { /* will be set by registerOnChange */ };
-  private onTouched = (): void => { /* will be set by registerOnTouched */ };
+  value: string = '';
+  isAtLimit: boolean = false;
+  showCounter: boolean = false;
 
-  get value(): string {
-    return this._value;
-  }
-
-  set value(val: string) {
-    if (val !== this._value) {
-      this._value = val;
-      this.onChange(val);
-    }
-  }
+  private onChange: any = () => {};
+  private onTouched: any = () => {};
 
   writeValue(value: string): void {
-    if (value !== this._value) {
-      this._value = value;
-    }
+    this.value = value;
+    this.checkLimit();
   }
 
-  registerOnChange(fn: (value: string) => void): void {
+  registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: () => void): void {
+  registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
 
@@ -81,12 +72,20 @@ export class InputFieldComponent implements ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
-  onInputChange(event: Event): void {
-    const value = (event.target as HTMLInputElement).value;
+  onInputChange(value: string): void {
     this.value = value;
+    this.onChange(value);
+    this.checkLimit();
   }
 
-  markAsTouched(): void {
+  onBlur(): void {
     this.onTouched();
+  }
+
+  private checkLimit(): void {
+    if (this.maxLength > 0) {
+      this.showCounter = true;
+      this.isAtLimit = (this.value?.length || 0) >= this.maxLength;
+    }
   }
 }
