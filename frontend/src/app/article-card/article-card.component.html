@@ -19,7 +19,6 @@
   </div>
 
   <div class="article-details">
-    <!-- Show name as first detail when in details view -->
     <div class="detail-row" *ngIf="isInDetails">
       <mat-icon>deployed_code</mat-icon>
       <span class="label">Name</span>
@@ -36,7 +35,6 @@
       </ng-template>
     </div>
 
-    <!-- Timestamps at the top -->
     <div class="timestamps-grid">
       <div class="detail-row">
         <mat-icon>calendar_today</mat-icon>
@@ -52,7 +50,6 @@
     </div>
 
     <div class="details-grid">
-      <!-- First Column -->
       <div class="detail-group">
         <div class="detail-row">
           <mat-icon>tag</mat-icon>
@@ -70,33 +67,82 @@
           </ng-template>
         </div>
         <div class="detail-row">
-          <mat-icon>person</mat-icon>
-          <span class="label">Customer:</span>
-          <span class="value">{{ article.customer }}</span>
+          <mat-icon>business</mat-icon>
+          <span class="label">Kunde</span>
+          <ng-container *ngIf="!isEditable; else editCustomer">
+            <span class="value">{{ article.customer }}</span>
+          </ng-container>
+          <ng-template #editCustomer>
+            <input class="value-input"
+                   type="text"
+                   [value]="article.customer"
+                   (focus)="selectInputContent($event)"
+                   (click)="selectInputContent($event)"
+                   (input)="updateArticleInfo($event, 'customer')" />
+          </ng-template>
         </div>
         <div class="detail-row">
           <mat-icon>note</mat-icon>
-          <span class="label">Note:</span>
-          <span class="value">{{ article.note }}</span>
+          <span class="label">Bemerkung</span>
+          <ng-container *ngIf="!isEditable; else editNote">
+            <span class="value">{{ article.note }}</span>
+          </ng-container>
+          <ng-template #editNote>
+            <input class="value-input"
+                   type="text"
+                   [value]="article.note"
+                   (focus)="selectInputContent($event)"
+                   (click)="selectInputContent($event)"
+                   (input)="updateArticleInfo($event, 'note')" />
+          </ng-template>
         </div>
       </div>
 
-      <!-- Second Column -->
       <div class="detail-group">
         <div class="detail-row">
-          <mat-icon>square</mat-icon>
-          <span class="label">Area:</span>
-          <span class="value">{{ article.area }}</span>
+          <mat-icon>square_foot</mat-icon>
+          <span class="label">Fläche</span>
+          <ng-container *ngIf="!isEditable; else editArea">
+            <span class="value">{{ article.area }}</span>
+          </ng-container>
+          <ng-template #editArea>
+            <input class="value-input"
+                   type="text"
+                   [value]="article.area"
+                   (focus)="selectInputContent($event)"
+                   (click)="selectInputContent($event)"
+                   (input)="updateArticleInfo($event, 'area')" />
+          </ng-template>
         </div>
         <div class="detail-row">
           <mat-icon>water_drop</mat-icon>
-          <span class="label">Drainage:</span>
-          <span class="value">{{ article.drainage }}</span>
+          <span class="label">Abtropfen</span>
+          <ng-container *ngIf="!isEditable; else editDrainage">
+            <span class="value">{{ article.drainage }}</span>
+          </ng-container>
+          <ng-template #editDrainage>
+            <input class="value-input"
+                   type="text"
+                   [value]="article.drainage"
+                   (focus)="selectInputContent($event)"
+                   (click)="selectInputContent($event)"
+                   (input)="updateArticleInfo($event, 'drainage')" />
+          </ng-template>
         </div>
         <div class="detail-row">
-          <mat-icon>battery_charging_full</mat-icon>
-          <span class="label">Anodic:</span>
-          <span class="value">{{ article.anodic }}</span>
+          <mat-icon>bolt</mat-icon>
+          <span class="label">Anodisch</span>
+          <ng-container *ngIf="!isEditable; else editAnodic">
+            <span class="value">{{ article.anodic }}</span>
+          </ng-container>
+          <ng-template #editAnodic>
+            <input class="value-input"
+                   type="text"
+                   [value]="article.anodic"
+                   (focus)="selectInputContent($event)"
+                   (click)="selectInputContent($event)"
+                   (input)="updateArticleInfo($event, 'anodic')" />
+          </ng-template>
         </div>
       </div>
     </div>

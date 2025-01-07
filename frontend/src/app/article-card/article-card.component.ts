@@ -79,10 +79,8 @@ export class ArticleCardComponent {
     const inputElement = event.target as HTMLInputElement;
     const newValue = inputElement.value;
 
-    // Log the change
     console.log(`Updating ${field} to:`, newValue);
 
-    // Create a new article object with the updated value
     const updatedArticle = { ...this.article };
     
     switch (field) {
@@ -95,13 +93,21 @@ export class ArticleCardComponent {
       case 'customer':
         updatedArticle.customer = newValue;
         break;
-      // Add other fields as needed
+      case 'area':
+        updatedArticle.area = newValue;
+        break;
+      case 'drainage':
+        updatedArticle.drainage = newValue;
+        break;
+      case 'anodic':
+        updatedArticle.anodic = newValue;
+        break;
+      case 'note':
+        updatedArticle.note = newValue;
+        break;
     }
 
-    // Update the article reference
     this.article = updatedArticle;
-    
-    // Track the modification
     console.log('Tracking modification for article:', this.article);
     this.articleService.trackModification(this.article);
   }
