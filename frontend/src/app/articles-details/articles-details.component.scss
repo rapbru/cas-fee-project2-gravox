@@ -13,6 +13,9 @@
   padding: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: all 0.2s ease;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
 
   &:hover {
     cursor: pointer;
@@ -56,6 +59,14 @@
       color: var(--color-text);
     }
   }
+
+  .drag-handle {
+    cursor: move;
+    
+    mat-icon {
+      color: var(--color-text-sub);
+    }
+  }
 }
 
 .content-container {
@@ -87,4 +98,24 @@
       background-color: var(--color-accent-hover);
     }
   }
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.sequences-container.cdk-drop-list-dragging .sequence-item:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

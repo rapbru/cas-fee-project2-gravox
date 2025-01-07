@@ -16,16 +16,22 @@
       </app-article-card>
 
       @if (article.sequence && article.sequence.length > 0) {
-        @for (seq of article.sequence; track seq.positionId) {
-          <div class="sequence-item"
-               [class.editable]="enableEdit()">
-            <p>Position ID: {{ seq.positionId }}</p>
-            <p>Order Number: {{ seq.orderNumber }}</p>
-            <p>Time Preset: {{ seq.timePreset }}</p>
-            <p>Current Preset: {{ seq.currentPreset }}</p>
-            <p>Voltage Preset: {{ seq.voltagePreset }}</p>
-          </div>
-        }
+        <div cdkDropList (cdkDropListDropped)="onDrop($event)" class="sequences-container">
+          @for (seq of article.sequence; track seq.positionId) {
+            <div class="sequence-item"
+                 [class.editable]="enableEdit()"
+                 cdkDrag>
+              <div class="drag-handle" cdkDragHandle>
+                <mat-icon>drag_indicator</mat-icon>
+              </div>
+              <p>Position ID: {{ seq.positionId }}</p>
+              <p>Order Number: {{ seq.orderNumber }}</p>
+              <p>Time Preset: {{ seq.timePreset }}</p>
+              <p>Current Preset: {{ seq.currentPreset }}</p>
+              <p>Voltage Preset: {{ seq.voltagePreset }}</p>
+            </div>
+          }
+        </div>
       }
     </div>
   } @else {
