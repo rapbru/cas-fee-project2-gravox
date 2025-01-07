@@ -36,8 +36,8 @@ class ArticleController {
         try {
             const articleId = req.params.id;
             const articleData = req.body;
-            await ArticleService.updateArticle(articleId, articleData);
-            return res.status(200).json({ message: 'Article updated successfully' });
+            const updatedArticle = await ArticleService.updateArticle(articleId, articleData);
+            return res.status(200).json(updatedArticle);
         } catch (error) {
             return res.status(500).json({ error: error.message });
         }

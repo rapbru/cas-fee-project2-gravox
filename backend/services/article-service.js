@@ -112,21 +112,26 @@ class ArticleService {
     }
 
     static transformArticleData(articles) {
-        return articles.map(article => ({
-            id: article.id,
-            title: article.title,
-            number: article.number, 
-            customer: article.customer,
-            area: article.area,
-            drainage: article.drainage,
-            anodic: article.anodic,
-            note: article.note,
-            createdDate: article.created_date,
-            createdBy: article.created_by,
-            modifiedDate: article.modified_date,
-            modifiedBy: article.modified_by,
-            sequence: article.sequence
-        }));
+        return articles.map(article => {
+            console.log('Transforming article:', article); // Debug log
+            const transformed = {
+                id: article.id,
+                title: article.title,
+                number: article.number, 
+                customer: article.customer,
+                area: article.area,
+                drainage: article.drainage,
+                anodic: article.anodic,
+                note: article.note,
+                createdDate: article.created_date,
+                createdBy: article.created_by,
+                modifiedDate: article.modified_date,
+                modifiedBy: article.modified_by,
+                sequence: article.sequence || []
+            };
+            console.log('Transformed article:', transformed); // Debug log
+            return transformed;
+        });
     }
 
     static async getArticleById(id) {

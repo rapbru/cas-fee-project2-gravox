@@ -43,6 +43,17 @@ export class ArticleService {
     );
   }
 
+  updateArticle(article: Article): Observable<Article> {
+    const headers = this.getAuthHeaders();
+    return this.http.put<Article>(`${this.apiUrl}/${article.id}`, article, { headers }).pipe(
+      tap(updatedArticle => this.logger.log('Updated article:', updatedArticle)),
+      catchError(error => {
+        this.logger.error('Error updating article:', error);
+        throw error;
+      })
+    );
+  }
+
   private getAuthHeaders(): HttpHeaders {
     const authToken = this.authService.getToken();
     if (!authToken) {

@@ -915,30 +915,65 @@ app-navbar {
 }
 
 .sequence-item {
-  display: block;
   background-color: var(--color-main);
-  border-radius: var(--button-border-radius);
-  padding: calc(var(--button-padding) * 2);
-  width: 100%;
-  box-sizing: border-box;
-  margin-bottom: var(--button-gap);
-  
-  &:first-of-type {
-    margin-top: var(--button-gap);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+
+  .sequence-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
   }
-  
-  &.editable {
+
+  .sequence-details {
+    flex: 1;
+  }
+
+  .drag-handle {
     cursor: move;
+    display: flex;
+    align-items: center;
+    padding: 4px;
     
-    &:hover {
-      filter: brightness(103%);
+    mat-icon {
+      color: var(--color-sub-3);
     }
   }
 
-  p {
-    margin: calc(var(--button-padding) * 0.5) 0;
-    color: var(--color-text);
+  &:hover {
+    cursor: pointer;
+    border-color: var(--color-vonesco-sub-2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
+
+  &.editable {
+    cursor: move;
+  }
+}
+
+// Drag and drop animation styles
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.sequences-container.cdk-drop-list-dragging .sequence-item:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
 .card-grid,
@@ -1040,13 +1075,13 @@ app-navbar {
 
     .detail-row {
       display: grid;
-      grid-template-columns: 24px 100px 1fr;
+      grid-template-columns: 24px 120px 1fr;
       gap: 8px;
       margin: 2px 0;
       min-height: 24px;
 
       mat-icon {
-        color: var(--color-sub-1);
+        color: var(--color-text-sub);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1056,7 +1091,7 @@ app-navbar {
       }
 
       .label {
-        color: var(--color-sub-1);
+        color: var(--color-text-sub);
         white-space: nowrap;
       }
 
@@ -1271,4 +1306,28 @@ app-navbar {
 
 .mdc-icon-button__touch {
   display: none;
+}
+
+.sequence-wrapper {
+  width: 100%;
+}
+
+.sequence-details {
+  flex: 1;
+}
+
+.detail-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0;
+
+  .label {
+    color: var(--color-text-sub);
+    min-width: 120px;
+  }
+
+  .value {
+    color: var(--color-text);
+  }
 }
