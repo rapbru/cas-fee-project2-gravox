@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ArticleCardComponent } from '../article-card/article-card.component';
 import { HeaderService } from '../services/header.service';
+import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-articles-details',
@@ -15,7 +16,8 @@ import { HeaderService } from '../services/header.service';
   imports: [
     MatIconModule,
     MatButtonModule,
-    ArticleCardComponent
+    ArticleCardComponent,
+    DragDropModule
   ],
   templateUrl: './articles-details.component.html',
   styleUrls: ['./articles-details.component.scss']
@@ -66,6 +68,16 @@ export class ArticlesDetailsComponent implements OnInit {
             console.error('Error loading article to PLC:', error);
           }
         });
+    }
+  }
+
+  onDrop(event: CdkDragDrop<any[]>) {
+    if (this.article?.sequence) {
+      moveItemInArray(
+        this.article.sequence,
+        event.previousIndex,
+        event.currentIndex
+      );
     }
   }
 }
