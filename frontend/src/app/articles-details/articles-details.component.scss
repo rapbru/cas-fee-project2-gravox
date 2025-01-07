@@ -6,13 +6,55 @@
 }
 
 .sequence-item {
-  background-color: #e8f0fe;
+  background-color: #FFFFFF;
+  background-color: var(--color-main);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 16px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
 
-  p {
-    margin: 8px 0;
+  &:hover {
+    cursor: pointer;
+    border-color: var(--color-vonesco-sub-2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+
+    .detail-row {
+      &:hover {
+        background-color: var(--color-vonesco-sub-2);
+        color: var(--color-text-light);
+        border-radius: 4px;
+        
+        mat-icon {
+          color: var(--color-text-light);
+        }
+      }
+    }
+  }
+
+  .detail-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px;
+    margin: 4px 0;
+    transition: all 0.2s ease;
+
+    mat-icon {
+      color: var(--color-text-sub);
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+
+    .label {
+      color: var(--color-text-sub);
+      min-width: 80px;
+    }
+
+    .value {
+      color: var(--color-text);
+    }
   }
 }
 
