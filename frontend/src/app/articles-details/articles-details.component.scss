@@ -24,11 +24,25 @@
 
 .article-actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 10px;
 }
 
 .edit-buttons {
   display: flex;
   gap: 10px;
+}
+
+.mat-mdc-button {
+  &.mdc-button {
+    min-width: 90px;
+    padding: 0 16px;
+    height: 36px;
+    background-color: var(--color-accent);
+    color: var(--color-text-light);
+    
+    &:hover {
+      background-color: var(--color-accent-hover);
+    }
+  }
 }

@@ -64,6 +64,17 @@ html {
   --button-active-color: #272729;
   --button-border-color: #3F3F41;
   --button-text-color: #E1E1E7;
+
+  .button, .navbar-item {
+    &:disabled, &.inactive {
+      opacity: 0.5;
+      color: var(--color-sub-1) !important;
+      
+      mat-icon, span {
+        color: var(--color-sub-1) !important;
+      }
+    }
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -87,6 +98,17 @@ html {
     --button-active-color: #272729;
     --button-border-color: #3F3F41;
     --button-text-color: #E1E1E7;
+
+    .button, .navbar-item {
+      &:disabled, &.inactive {
+        opacity: 0.5;
+        color: var(--color-sub-1) !important;
+        
+        mat-icon, span {
+          color: var(--color-sub-1) !important;
+        }
+      }
+    }
   }
 }
 
@@ -1174,4 +1196,79 @@ app-navbar {
     transform: var(--button-transform) !important;
     filter: brightness(94%) !important;
   }
+}
+
+// Button Styles
+.mat-mdc-button {
+  &.mdc-button {
+    min-width: 90px;
+    padding: 0 16px;
+    height: 36px;
+    border-radius: 4px;
+    
+    &.primary {
+      background-color: var(--color-accent);
+      color: var(--color-text-light);
+      
+      &:hover {
+        background-color: var(--color-accent-hover);
+      }
+    }
+
+    &.secondary {
+      background-color: var(--color-background);
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
+      
+      &:hover {
+        background-color: var(--color-background-hover);
+      }
+    }
+  }
+}
+
+// Action Container Styles
+.article-actions, .card-actions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 16px 0;
+}
+
+.edit-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+// Icon Button Styles (keeping your recent adjustments)
+.mat-mdc-icon-button {
+  --mdc-icon-button-state-layer-size: 32px;
+  padding: 3px !important;
+  width: 32px !important;
+  height: 32px !important;
+
+  .mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+  }
+}
+
+.mat-mdc-icon-button.small {
+  --mdc-icon-button-state-layer-size: 26px;
+  padding: 2px !important;
+  width: 26px !important;
+  height: 26px !important;
+
+  .mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+  }
+}
+
+.mdc-icon-button__touch {
+  display: none;
 }
