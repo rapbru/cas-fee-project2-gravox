@@ -1,4 +1,4 @@
-import { TagGroup } from 'st-ethernet-ip';
+import { TagGroup, Tag, EthernetIP } from 'st-ethernet-ip';
 import logger from '../utils/logger.js';
 
 export default class TagService {
@@ -155,5 +155,144 @@ export default class TagService {
     async getTagsForPosition(positionNumber) {
         const tagsForPosition = this.tags.filter(tag => tag.name.includes(`POS[${positionNumber}]`));
         return tagsForPosition.map(tag => ({ "tag": tag.name, "value": tag.value }));
+    }
+
+    async writeTagDirect(tagName, value) {
+        try {
+            const tag = this.plcConnection.controller.PLC.newTag(tagName);
+            tag.value = value;
+            await this.plcConnection.controller.PLC.writeTag(tag);
+            return true;
+        } catch (error) {
+            logger.error(`Error writing tag ${tagName} directly:`, error);
+            throw error;
+        }
+    }
+
+    async writeTagGroupDirect(tags) {
+        try {
+            const group = new TagGroup();
+            const { DINT } = EthernetIP.CIP.DataTypes.Types;
+            
+            tags.forEach(({ tagName, value }) => {
+                const tag = new Tag(tagName, null, DINT);
+                tag.value = value;
+                group.add(tag);
+            });
+
+            await this.plcConnection.controller.PLC.writeTagGroup(group);
+            return true;
+        } catch (error) {
+            logger.error('Error writing tag group directly:', error);
+            throw error;
+        }
+    }
+
+    async resetWTArray(wtNumber) {
+        try {
+            const group = new TagGroup();
+            const { DINT } = EthernetIP.CIP.DataTypes.Types;
+            
+            for (let i = 0; i < 1000; i++) {
+                const tag = new Tag(`WT[${wtNumber},${i}]`, null, DINT);
+                tag.value = 0;
+                group.add(tag);
+            }
+
+            await this.plcConnection.controller.PLC.writeTagGroup(group);
+            logger.info(`WT[${wtNumber}] Array erfolgreich zurückgesetzt`);
+            return true;
+        } catch (error) {
+            logger.error(`Error resetting WT[${wtNumber}] array:`, error);
+            throw error;
+        }
+    }
+
+    async writeMultipleBits(tagName, bits) {
+        try {
+            const { DINT } = EthernetIP.CIP.DataTypes.Types;
+            
+            const tag = new Tag(tagName, null, DINT);
+            await this.plcConnection.controller.PLC.readTag(tag);
+            
+            const binaryStr = (tag.value || 0).toString(2).padStart(32, '0');
+            const binaryArr = binaryStr.split('');
+            
+            bits.forEach(({ bitNumber, value: bitValue }) => {
+                binaryArr[31 - bitNumber] = bitValue ? '1' : '0';
+            });
+            
+            const newValue = parseInt(binaryArr.join(''), 2);
+            
+            tag.value = newValue;
+            await this.plcConnection.controller.PLC.writeTag(tag);
+            
+            logger.info(`Bits ${bits.map(b => b.bitNumber).join(', ')} von ${tagName} gesetzt, neuer Wert: ${newValue}`);
+            return true;
+        } catch (error) {
+            logger.error(`Error writing bits of ${tagName}:`, error);
+            throw error;
+        }
+    }
+
+    async writeBit(tagName, bitNumber, value) {
+        return this.writeMultipleBits(tagName, [{ bitNumber, value }]);
+    }
+
+    async getAllWTNumbers() {
+        try {
+            const group = new TagGroup();
+            const { DINT } = EthernetIP.CIP.DataTypes.Types;
+            
+            for (let i = 0; i <= 104; i++) {
+                const tag = new Tag(`POS[${i}].FB.NBR`, null, DINT);
+                group.add(tag);
+            }
+
+            await this.plcConnection.controller.PLC.readTagGroup(group);
+            
+            const activeWTNumbers = new Set();
+            group.forEach(tag => {
+                if (tag.value > 0 && tag.value <= 30) {
+                    activeWTNumbers.add(tag.value);
+                }
+            });
+
+            return Array.from(activeWTNumbers);
+        } catch (error) {
+            logger.error('Error reading WT numbers:', error);
+            throw error;
+        }
+    }
+
+    async findFreeWTNumber() {
+        try {
+            const activeWTNumbers = await this.getAllWTNumbers();
+            
+            for (let i = 1; i <= 30; i++) {
+                if (!activeWTNumbers.includes(i)) {
+                    return i;
+                }
+            }
+            
+            throw new Error('Keine freie WT-Nummer verfügbar (1-30 sind alle belegt)');
+        } catch (error) {
+            logger.error('Error finding free WT number:', error);
+            throw error;
+        }
+    }
+
+    async writeWTNumber(positionNumber, wtNumber) {
+        try {
+            const { DINT } = EthernetIP.CIP.DataTypes.Types;
+            const tag = new Tag(`POS[${positionNumber}].FB.NBR`, null, DINT);
+            tag.value = wtNumber;
+            await this.plcConnection.controller.PLC.writeTag(tag);
+            logger.info(`WT-Nummer ${wtNumber} in Position ${positionNumber} geschrieben`);
+            return true;
+        } catch (error) {
+            logger.error(`Error writing WT number to position ${positionNumber}:`, error);
+            throw error;
+        }
     }
 }

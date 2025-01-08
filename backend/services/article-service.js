@@ -141,7 +141,9 @@ class ArticleService {
                             'timePreset', s.time_preset,
                             'currentPreset', s.current_preset,
                             'voltagePreset', s.voltage_preset,
-                            'positionName', p.position_name
+                            'positionName', p.position_name,
+                            'presetCurrentAddress', p.preset_current,
+                            'presetVoltageAddress', p.preset_voltage
                         ) ORDER BY s.order_number
                     ) FILTER (WHERE s.id IS NOT NULL) as sequence
                 FROM article a

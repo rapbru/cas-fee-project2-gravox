@@ -91,9 +91,13 @@ export default class PLCService {
             // Hole die komplette Tag-Liste vom Controller
             await this.plcConnection.controller.PLC.getControllerTagList(tagList);
 
+            logger.info(`TagList: ${tagList}`);
+
             // Erstelle und lese die Struktur
             const structureTag = new Structure(tagName, tagList);
             await this.plcConnection.controller.PLC.readTag(structureTag);
+
+            logger.info(`StructureTag: ${structureTag}`);
 
             // Ermöglicht direktes Ändern der Werte
             structureTag.value = new Proxy(structureTag.value, {
