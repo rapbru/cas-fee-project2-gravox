@@ -1208,6 +1208,7 @@ app-navbar {
     height: 18px;
     line-height: 18px;
   }
+
 }
 
 .mdc-icon-button__touch {
@@ -1502,15 +1503,19 @@ app-add-article {
 
 .positions-grid {
   display: grid;
-  gap: 16px;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 12px;
+  grid-template-columns: 1fr;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .position-card {
   background-color: var(--color-main);
-  border: 1px solid var(--color-main);
   border-radius: var(--border-radius);
-  padding: 16px;
+  padding: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
   color: var(--color-text);
   transition: background-color 0.3s ease;
 
@@ -1573,4 +1578,10 @@ app-add-article {
       margin: 0;
     }
   }
+}
+
+// Ensure all elements respect container width
+* {
+  box-sizing: border-box;
+  max-width: 100%;
 }
