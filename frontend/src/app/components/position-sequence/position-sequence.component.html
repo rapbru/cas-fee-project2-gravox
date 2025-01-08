@@ -1,92 +1,107 @@
 <div class="positions-container">
-  <div class="positions-header">
-    <h3>Verfügbare Positionen</h3>
-  </div>
-
   <!-- Selected Positions -->
-  <div *ngIf="selectedPositions.length > 0" class="selected-positions">
-    <h4>Ausgewählte Positionen</h4>
-    <div class="positions-grid">
-      <div *ngFor="let position of selectedPositions" class="position-card">
-        <div class="position-header">
-          <span class="position-name">{{ position.name }}</span>
-          <button class="button button-label button-highlight-sub" (click)="onRemovePosition(position)">
-            <mat-icon>remove</mat-icon>
-            <span>Entfernen</span>
-          </button>
-        </div>
-        <div class="position-details">
-          <div *ngIf="position.flightbar">
-            <span>Flightbar</span>
-            <span>{{ position.flightbar }}</span>
+  <div class="selected-positions-container">
+    <div class="positions-header">
+      <h3>Ausgewählte Positionen</h3>
+      <button class="button button-label button-highlight-main" (click)="togglePositionSelector()">
+        <mat-icon>add</mat-icon>
+        <span>Position hinzufügen</span>
+      </button>
+    </div>
+
+    <div class="selected-positions">
+      <div class="positions-grid">
+        <div *ngFor="let position of selectedPositions" class="position-card">
+          <div class="position-header">
+            <span class="position-name">{{ position.name }}</span>
+            <button class="button button-label button-highlight-sub" (click)="onRemovePosition(position)">
+              <mat-icon>remove</mat-icon>
+              <span>Entfernen</span>
+            </button>
           </div>
-          <div>
-            <span>Temperatur</span>
-            <span>{{ position.hasTemperature ? 'Ja' : 'Nein' }}</span>
-          </div>
-          <div>
-            <span>Strom</span>
-            <span>{{ position.hasCurrent ? 'Ja' : 'Nein' }}</span>
-          </div>
-          <div>
-            <span>Spannung</span>
-            <span>{{ position.hasVoltage ? 'Ja' : 'Nein' }}</span>
-          </div>
-          <div *ngIf="position.presetCurrent">
-            <span>Vorgabe Strom</span>
-            <span>{{ position.presetCurrent }}</span>
-          </div>
-          <div *ngIf="position.presetVoltage">
-            <span>Vorgabe Spannung</span>
-            <span>{{ position.presetVoltage }}</span>
+          <div class="position-details">
+            <div *ngIf="position.flightbar">
+              <span>Flightbar</span>
+              <span>{{ position.flightbar }}</span>
+            </div>
+            <div>
+              <span>Temperatur</span>
+              <span>{{ position.hasTemperature ? 'Ja' : 'Nein' }}</span>
+            </div>
+            <div>
+              <span>Strom</span>
+              <span>{{ position.hasCurrent ? 'Ja' : 'Nein' }}</span>
+            </div>
+            <div>
+              <span>Spannung</span>
+              <span>{{ position.hasVoltage ? 'Ja' : 'Nein' }}</span>
+            </div>
+            <div *ngIf="position.presetCurrent">
+              <span>Vorgabe Strom</span>
+              <span>{{ position.presetCurrent }}</span>
+            </div>
+            <div *ngIf="position.presetVoltage">
+              <span>Vorgabe Spannung</span>
+              <span>{{ position.presetVoltage }}</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Divider -->
-  <div *ngIf="selectedPositions.length > 0" class="positions-divider"></div>
+  <!-- Position Selector (Sidebar/Bottom Sheet) -->
+  <div class="position-selector" [class.show]="showPositionSelector" [class.mobile]="isMobile">
+    <div class="selector-header">
+      <h3>Verfügbare Positionen</h3>
+      <button class="button button-label button-highlight-sub" (click)="togglePositionSelector()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
 
-  <!-- Available Positions -->
-  <div class="available-positions">
-    <div class="positions-grid">
-      <div *ngFor="let position of positionService.orderedPositions()" class="position-card" 
-           [class.hidden]="isPositionSelected(position)">
-        <div class="position-header">
-          <span class="position-name">{{ position.name }}</span>
-          <button class="button button-label button-highlight-main" (click)="onAddPosition(position)">
-            <mat-icon>add</mat-icon>
-            <span>Hinzufügen</span>
-          </button>
-        </div>
-        <div class="position-details">
-          <div *ngIf="position.flightbar">
-            <span>Flightbar</span>
-            <span>{{ position.flightbar }}</span>
+    <div class="available-positions">
+      <div class="positions-grid">
+        <div *ngFor="let position of positionService.orderedPositions()" 
+             class="position-card"
+             [class.hidden]="isPositionSelected(position)">
+          <div class="position-header">
+            <span class="position-name">{{ position.name }}</span>
+            <button class="button button-label button-highlight-main" (click)="onAddPosition(position)">
+              <mat-icon>add</mat-icon>
+              <span>Hinzufügen</span>
+            </button>
           </div>
-          <div>
-            <span>Temperatur</span>
-            <span>{{ position.hasTemperature ? 'Ja' : 'Nein' }}</span>
-          </div>
-          <div>
-            <span>Strom</span>
-            <span>{{ position.hasCurrent ? 'Ja' : 'Nein' }}</span>
-          </div>
-          <div>
-            <span>Spannung</span>
-            <span>{{ position.hasVoltage ? 'Ja' : 'Nein' }}</span>
-          </div>
-          <div *ngIf="position.presetCurrent">
-            <span>Vorgabe Strom</span>
-            <span>{{ position.presetCurrent }}</span>
-          </div>
-          <div *ngIf="position.presetVoltage">
-            <span>Vorgabe Spannung</span>
-            <span>{{ position.presetVoltage }}</span>
+          <div class="position-details">
+            <div *ngIf="position.flightbar">
+              <span>Flightbar</span>
+              <span>{{ position.flightbar }}</span>
+            </div>
+            <div>
+              <span>Temperatur</span>
+              <span>{{ position.hasTemperature ? 'Ja' : 'Nein' }}</span>
+            </div>
+            <div>
+              <span>Strom</span>
+              <span>{{ position.hasCurrent ? 'Ja' : 'Nein' }}</span>
+            </div>
+            <div>
+              <span>Spannung</span>
+              <span>{{ position.hasVoltage ? 'Ja' : 'Nein' }}</span>
+            </div>
+            <div *ngIf="position.presetCurrent">
+              <span>Vorgabe Strom</span>
+              <span>{{ position.presetCurrent }}</span>
+            </div>
+            <div *ngIf="position.presetVoltage">
+              <span>Vorgabe Spannung</span>
+              <span>{{ position.presetVoltage }}</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Backdrop for mobile -->
+  <div class="backdrop" [class.show]="showPositionSelector && isMobile" (click)="togglePositionSelector()"></div>
 </div>

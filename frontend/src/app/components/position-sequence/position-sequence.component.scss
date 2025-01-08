@@ -1,3 +1,75 @@
+:host {
+  display: block;
+  position: relative;
+  height: 100%;
+}
+
+.selected-positions-container {
+  width: 100%;
+}
+
+.position-selector {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 100vh;
+  background-color: var(--color-background);
+  box-shadow: var(--shadow);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  padding: 24px;
+  overflow-y: auto;
+
+  &.show {
+    transform: translateX(0);
+  }
+
+  &.mobile {
+    top: auto;
+    bottom: 0;
+    width: 100%;
+    height: 80vh;
+    transform: translateY(100%);
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+
+    &.show {
+      transform: translateY(0);
+    }
+  }
+}
+
+.selector-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  
+  h3 {
+    margin: 0;
+  }
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 999;
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
 .positions-divider {
   height: 2px;
   background-color: var(--color-vonesco);
@@ -22,4 +94,11 @@
 
 .available-positions {
   margin-top: 24px;
+}
+
+// Responsive adjustments
+@media (max-width: 767px) {
+  .position-selector {
+    padding-bottom: 80px; // Space for bottom navigation
+  }
 }
