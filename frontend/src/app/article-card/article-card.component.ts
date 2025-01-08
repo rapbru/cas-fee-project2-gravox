@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ArticleService } from '../services/article.service';
+import { HeaderService } from '../services/header.service';
 
 @Component({
   selector: 'app-article-card',
@@ -41,7 +42,8 @@ export class ArticleCardComponent {
   constructor(
     private router: Router,
     private http: HttpClient,
-    private articleService: ArticleService
+    private articleService: ArticleService,
+    private headerService: HeaderService
   ) {}
 
   onCardClick() {
@@ -77,15 +79,25 @@ export class ArticleCardComponent {
 
   updateArticleInfo(event: Event, field: string) {
     const inputElement = event.target as HTMLInputElement;
-    const newValue = inputElement.value;
+    let newValue = inputElement.value;
 
-    console.log(`Updating ${field} to:`, newValue);
+    // Strip units from values before saving
+    switch (field) {
+      case 'area':
+        newValue = newValue.replace(/\s*dm2\s*$/i, '').trim();
+        break;
+      case 'drainage':
+      case 'anodic':
+        newValue = newValue.replace(/\s*%\s*$/i, '').trim();
+        break;
+    }
 
     const updatedArticle = { ...this.article };
     
     switch (field) {
       case 'title':
         updatedArticle.title = newValue;
+        this.headerService.setTitle(newValue);
         break;
       case 'number':
         updatedArticle.number = newValue;
@@ -108,12 +120,26 @@ export class ArticleCardComponent {
     }
 
     this.article = updatedArticle;
-    console.log('Tracking modification for article:', this.article);
     this.articleService.trackModification(this.article);
   }
 
   selectInputContent(event: Event): void {
     const input = event.target as HTMLInputElement;
     input.select();
+  }
+
+  // Helper method to display values with units
+  formatValue(value: string | undefined, field: string): string {
+    if (!value) return '';
+    
+    switch (field) {
+      case 'area':
+        return `${value} dm²`;
+      case 'drainage':
+      case 'anodic':
+        return `${value} %`;
+      default:
+        return value;
+    }
   }
 }

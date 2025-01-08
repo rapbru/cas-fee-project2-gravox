@@ -12,6 +12,7 @@ import { Article } from '../models/article.model';
 export class ArticleService {
   private apiUrl: string;
   private modifiedArticles: Set<Article> = new Set();
+  private currentArticle: Article | null = null;
 
   constructor(
     private http: HttpClient,
@@ -79,6 +80,14 @@ export class ArticleService {
         throw error;
       })
     );
+  }
+
+  setCurrentArticle(article: Article) {
+    this.currentArticle = article;
+  }
+
+  getCurrentArticle(): Article | null {
+    return this.currentArticle;
   }
 
   private getAuthHeaders(): HttpHeaders {
