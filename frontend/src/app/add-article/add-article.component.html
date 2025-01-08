@@ -83,7 +83,22 @@
     </div>
   </form>
 
-  <app-overview [showToolbar]="false"></app-overview>
+  <div class="positions-list">
+    <h3>Verfügbare Positionen:</h3>
+    <div class="positions-grid">
+      <div *ngFor="let position of positionService.orderedPositions()" class="position-card">
+        <div class="position-header">
+          <span class="position-number">{{ position.number }}</span>
+          <span class="position-name">{{ position.name }}</span>
+        </div>
+        <div class="position-details" *ngIf="position.flightbar">
+          <div>Flightbar: {{ position.flightbar }}</div>
+          <div>Artikel: {{ position.articleName }}</div>
+          <div>Kunde: {{ position.customerName }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>
 

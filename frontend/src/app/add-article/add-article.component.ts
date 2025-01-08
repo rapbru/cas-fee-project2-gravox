@@ -14,7 +14,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { HeaderService } from '../services/header.service';
 import { PositionService } from '../services/position.service';
-import { OverviewComponent } from '../overview/overview.component';
 
 @Component({
   selector: 'app-add-article',
@@ -26,15 +25,14 @@ import { OverviewComponent } from '../overview/overview.component';
     MatTooltipModule,
     InputFieldComponent,
     MatFormFieldModule,
-    MatInputModule,
-    OverviewComponent
+    MatInputModule
   ],
-  templateUrl: './add-article.component.html'
+  templateUrl: './add-article.component.html',
+  styleUrls: ['./add-article.component.scss']
 })
 export class AddArticleComponent implements OnInit {
   private enableLogging = environment.enableLogging;
-  positions: Position[] = [];
-
+  
   article = {
     name: '',
     number: '',
@@ -58,28 +56,19 @@ export class AddArticleComponent implements OnInit {
     private router: Router,
     private loggerService: LoggerService,
     private headerService: HeaderService,
-    private positionService: PositionService
-  ) {}
-
-  ngOnInit() {
-    this.headerService.setTitle('Artikeldaten');
-    this.loadPositions();
+    public positionService: PositionService
+  ) {
+    this.loggerService.log('AddArticleComponent constructed');
   }
 
-  private loadPositions() {
-    this.positionService.positions$.subscribe({
-      next: (positions) => {
-        this.positions = positions;
-        if (this.enableLogging) {
-          this.loggerService.log('Loaded positions:', positions);
-        }
-      },
-      error: (error) => {
-        if (this.enableLogging) {
-          this.loggerService.error('Error loading positions:', error);
-        }
-      }
-    });
+  ngOnInit() {
+    this.loggerService.log('AddArticleComponent initialized');
+    this.headerService.setTitle('Artikeldaten');
+    this.positionService.startFetching();
+  }
+
+  ngOnDestroy() {
+    this.positionService.stopFetching();
   }
 
   onSave() {
