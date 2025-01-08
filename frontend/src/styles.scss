@@ -1409,3 +1409,67 @@ app-navbar {
   bottom: 0;
   z-index: 100;
 }
+
+// Toolbar styles
+.spacer {
+  flex: 1 1 auto;
+}
+
+.icon-button {
+  width: auto;
+  padding: 0 8px;
+  border-radius: 12px;
+  background-color: var(--color-main);
+  color: var(--color-text);
+}
+
+.sequence-card {
+  background: var(--color-background-light);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .position-number {
+    font-weight: bold;
+  }
+
+  .position-name {
+    color: var(--color-text-secondary);
+  }
+
+  .card-content {
+    .detail-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+
+      mat-icon {
+        color: var(--color-accent);
+      }
+    }
+  }
+}
+
+// Add-Article Component Styles
+app-add-article {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .scrollable-content {
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  app-overview {
+    margin-top: 24px;
+  }
+}
