@@ -6,21 +6,16 @@
   <div class="positions-grid">
     <div *ngFor="let position of positionService.orderedPositions()" class="position-card">
       <div class="position-header">
-        <span class="position-number">{{ position.number }}</span>
         <span class="position-name">{{ position.name }}</span>
+        <button class="button button-label button-highlight-main">
+          <mat-icon>add</mat-icon>
+          <span>Hinzufügen</span>
+        </button>
       </div>
       <div class="position-details">
         <div *ngIf="position.flightbar">
           <span>Flightbar</span>
           <span>{{ position.flightbar }}</span>
-        </div>
-        <div *ngIf="position.articleName">
-          <span>Artikel</span>
-          <span>{{ position.articleName }}</span>
-        </div>
-        <div *ngIf="position.customerName">
-          <span>Kunde</span>
-          <span>{{ position.customerName }}</span>
         </div>
         <div>
           <span>Temperatur</span>
