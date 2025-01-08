@@ -12,6 +12,7 @@ import { DialogService } from '../services/dialog.service';
 import { ThemeService } from '../services/theme.service';
 import { filter } from 'rxjs/operators';
 import { ArticleService } from '../services/article.service';
+import { HeaderService } from '../services/header.service';
 
 @Component({
   selector: 'app-navbar',
@@ -36,6 +37,7 @@ export class NavbarComponent {
     private overviewStateService: OverviewStateService, 
     private positionService: PositionService,
     private articleService: ArticleService,
+    private headerService: HeaderService,
     public deviceDetectionService: DeviceDetectionService,
     private dialogService: DialogService,
     private themeService: ThemeService
@@ -79,11 +81,6 @@ export class NavbarComponent {
         next: () => {
           this.overviewStateService.toggleEdit();
           this.positionService.saveEditing();
-          
-          const currentUrl = this.router.url;
-          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-            this.router.navigate([currentUrl]);
-          });
         },
         error: (error) => {
           console.error('Error saving article modifications:', error);

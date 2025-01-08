@@ -1,4 +1,4 @@
-import { Component, computed, OnDestroy, OnInit } from '@angular/core';
+import { Component, computed, OnDestroy, OnInit, Input } from '@angular/core';
 import { Position } from '../models/position.model';
 import { PositionService } from '../services/position.service';
 import { CommonModule } from '@angular/common';
@@ -33,6 +33,7 @@ import { HeaderService } from '../services/header.service';
   styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent implements OnDestroy, OnInit {
+  @Input() showToolbar: boolean = true;
   public newPosition: Position | null = null;
 
   public readonly isMobile = this.deviceDetectionService.isMobileSignal;

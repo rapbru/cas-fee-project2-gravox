@@ -103,12 +103,12 @@
           <mat-icon>square_foot</mat-icon>
           <span class="label">Fläche</span>
           <ng-container *ngIf="!isEditable; else editArea">
-            <span class="value">{{ article.area }}</span>
+            <span class="value">{{ formatValue(article.area, 'area') }}</span>
           </ng-container>
           <ng-template #editArea>
             <input class="value-input"
                    type="text"
-                   [value]="article.area"
+                   [value]="formatValue(article.area, 'area')"
                    (focus)="selectInputContent($event)"
                    (click)="selectInputContent($event)"
                    (input)="updateArticleInfo($event, 'area')" />

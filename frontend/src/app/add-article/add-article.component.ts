@@ -7,11 +7,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { InputFieldComponent } from '../input-field/input-field.component';
 import { Article } from '../models/article.model';
+import { Position } from '../models/position.model';
 import { LoggerService } from '../services/logger.service';
 import { environment } from '../../environments/environment';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { HeaderService } from '../services/header.service';
+import { PositionService } from '../services/position.service';
+import { OverviewComponent } from '../overview/overview.component';
 
 @Component({
   selector: 'app-add-article',
@@ -23,12 +26,14 @@ import { HeaderService } from '../services/header.service';
     MatTooltipModule,
     InputFieldComponent,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    OverviewComponent
   ],
   templateUrl: './add-article.component.html'
 })
 export class AddArticleComponent implements OnInit {
   private enableLogging = environment.enableLogging;
+  positions: Position[] = [];
 
   article = {
     name: '',
@@ -52,11 +57,29 @@ export class AddArticleComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private loggerService: LoggerService,
-    private headerService: HeaderService
+    private headerService: HeaderService,
+    private positionService: PositionService
   ) {}
 
   ngOnInit() {
     this.headerService.setTitle('Artikeldaten');
+    this.loadPositions();
+  }
+
+  private loadPositions() {
+    this.positionService.positions$.subscribe({
+      next: (positions) => {
+        this.positions = positions;
+        if (this.enableLogging) {
+          this.loggerService.log('Loaded positions:', positions);
+        }
+      },
+      error: (error) => {
+        if (this.enableLogging) {
+          this.loggerService.error('Error loading positions:', error);
+        }
+      }
+    });
   }
 
   onSave() {

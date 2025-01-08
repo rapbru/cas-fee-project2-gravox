@@ -1,19 +1,21 @@
-<app-toolbar
-  header-toolbar
-  *ngIf="enableEdit()"
-  [showAddLine]="enableEdit()"
-  [showDeleteLine]="enableEdit()"
-  [showAdd]="enableEdit() && !enableOrder()"
-  [showReorder]="enableEdit()"
-  [showDelete]="enableEdit() && !enableOrder()"
-  [deleteDisabled]="!hasSelectedPositions()"
-  [isReorderMode]="enableOrder()"
-  (addLine)="onAddLine()"
-  (deleteLine)="onDeleteLine()"
-  (add)="onAdd()"
-  (reorder)="onReorder()"
-  (delete)="onDelete()">
-</app-toolbar>
+<div class="toolbar" *ngIf="showToolbar">
+  <app-toolbar
+    header-toolbar
+    *ngIf="enableEdit()"
+    [showAddLine]="enableEdit()"
+    [showDeleteLine]="enableEdit()"
+    [showAdd]="enableEdit() && !enableOrder()"
+    [showReorder]="enableEdit()"
+    [showDelete]="enableEdit() && !enableOrder()"
+    [deleteDisabled]="!hasSelectedPositions()"
+    [isReorderMode]="enableOrder()"
+    (addLine)="onAddLine()"
+    (deleteLine)="onDeleteLine()"
+    (add)="onAdd()"
+    (reorder)="onReorder()"
+    (delete)="onDelete()">
+  </app-toolbar>
+</div>
 
 <div *ngIf="!(isMobile() && newPosition)" cdkDropListGroup>
   <div class="overview-container" [style.--total-columns]="columnManagementService.getColumnCount()">
