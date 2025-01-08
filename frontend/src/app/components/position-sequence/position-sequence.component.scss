@@ -1,0 +1,25 @@
+.positions-divider {
+  height: 2px;
+  background-color: var(--color-vonesco);
+  margin: 24px 0;
+  opacity: 0.5;
+}
+
+.selected-positions {
+  margin-bottom: 24px;
+
+  h4 {
+    color: var(--color-vonesco);
+    margin-bottom: 16px;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.available-positions {
+  margin-top: 24px;
+}

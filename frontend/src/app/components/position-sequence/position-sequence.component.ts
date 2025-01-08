@@ -16,6 +16,8 @@ import { LoggerService } from '../../services/logger.service';
   styleUrls: ['./position-sequence.component.scss']
 })
 export class PositionSequenceComponent {
+  selectedPositions: Position[] = [];
+
   constructor(
     public positionService: PositionService,
     private logger: LoggerService
@@ -28,5 +30,24 @@ export class PositionSequenceComponent {
 
   ngOnDestroy() {
     this.positionService.stopFetching();
+  }
+
+  onAddPosition(position: Position) {
+    if (!this.selectedPositions.includes(position)) {
+      this.selectedPositions.push(position);
+      this.logger.log('Position added to sequence:', position);
+    }
+  }
+
+  onRemovePosition(position: Position) {
+    const index = this.selectedPositions.indexOf(position);
+    if (index > -1) {
+      this.selectedPositions.splice(index, 1);
+      this.logger.log('Position removed from sequence:', position);
+    }
+  }
+
+  isPositionSelected(position: Position): boolean {
+    return this.selectedPositions.includes(position);
   }
 }
