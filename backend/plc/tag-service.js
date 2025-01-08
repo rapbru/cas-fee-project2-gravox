@@ -157,18 +157,6 @@ export default class TagService {
         return tagsForPosition.map(tag => ({ "tag": tag.name, "value": tag.value }));
     }
 
-    async writeTagDirect(tagName, value) {
-        try {
-            const tag = this.plcConnection.controller.PLC.newTag(tagName);
-            tag.value = value;
-            await this.plcConnection.controller.PLC.writeTag(tag);
-            return true;
-        } catch (error) {
-            logger.error(`Error writing tag ${tagName} directly:`, error);
-            throw error;
-        }
-    }
-
     async writeTagGroupDirect(tags) {
         try {
             const group = new TagGroup();

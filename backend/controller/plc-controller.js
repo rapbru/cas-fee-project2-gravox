@@ -189,6 +189,14 @@ export class PLCController {
                     { bitNumber: 12, value: true }, // WT existiert Bit
                     { bitNumber: 13, value: true }  // Automat Bit
                 ]);
+
+                // SEQ auf 1 setzen
+                await this.plcService.tagService.writeTagGroupDirect([
+                    {
+                        tagName: `POS[50].FB.SEQ`,
+                        value: 1
+                    }
+                ]);
                 
                 return res.json({
                     message: 'Artikel erfolgreich in die Steuerung geladen',
