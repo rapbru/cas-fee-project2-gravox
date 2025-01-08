@@ -75,8 +75,8 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
   }
 
   public onLoad() {
-    if (this.article) {
-      this.http.post(`${environment.apiUrl}/article/${this.article.id}/load`, {})
+    if (this.article?.id) {
+      this.articleService.loadArticleToPlc(this.article.id)
         .subscribe({
           next: () => {
             console.log('Article loaded to PLC successfully');

@@ -58,14 +58,14 @@ export class ArticleCardComponent {
   }
 
   onLoad() {
-    if (this.article) {
-      this.http.post(`${environment.apiUrl}/article/${this.article.id}/load`, {})
+    if (this.article?.id) {
+      this.articleService.loadArticleToPlc(this.article.id)
         .subscribe({
           next: () => {
-            console.log('Article loaded successfully');
+            console.log('Article loaded to PLC successfully');
           },
           error: (error) => {
-            console.error('Error loading article:', error);
+            console.error('Error loading article to PLC:', error);
           }
         });
     }

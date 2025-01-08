@@ -5,6 +5,7 @@ import { AuthService } from '../authentication/auth.service';
 import { LoggerService } from './logger.service';
 import { ApiConfigService } from './api-config.service';
 import { Article } from '../models/article.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -88,6 +89,10 @@ export class ArticleService {
 
   getCurrentArticle(): Article | null {
     return this.currentArticle;
+  }
+
+  loadArticleToPlc(articleId: number) {
+    return this.http.post(`${environment.apiUrl}/plc/load/${articleId}`, {});
   }
 
   private getAuthHeaders(): HttpHeaders {
