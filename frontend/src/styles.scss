@@ -1480,3 +1480,89 @@ app-add-article {
     }
   }
 }
+
+.positions-list {
+  margin-top: 24px;
+  
+  h3 {
+    color: var(--color-vonesco);
+    margin-bottom: 16px;
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+}
+
+.positions-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.position-card {
+  background-color: var(--color-main);
+  border: 1px solid var(--color-main);
+  border-radius: var(--border-radius);
+  padding: 16px;
+  color: var(--color-text);
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: var(--color-main-hover);
+  }
+
+  .position-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--color-vonesco);
+
+    .position-number {
+      font-weight: 600;
+      color: var(--color-vonesco);
+      min-width: 48px;
+    }
+
+    .position-name {
+      font-weight: 500;
+      flex: 1;
+    }
+  }
+
+  .position-details {
+    display: grid;
+    gap: 8px;
+    font-size: 0.9rem;
+
+    > div {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 0;
+
+      &:not(:last-child) {
+        border-bottom: 1px solid var(--color-background);
+      }
+    }
+  }
+}
+
+// Add a container style for grouping positions
+.positions-container {
+  background-color: var(--color-background);
+  border-radius: var(--border-radius);
+  padding: 24px;
+  margin-top: 24px;
+  box-shadow: var(--shadow);
+
+  .positions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    h3 {
+      margin: 0;
+    }
+  }
+}

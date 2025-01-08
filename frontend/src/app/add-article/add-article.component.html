@@ -83,18 +83,50 @@
     </div>
   </form>
 
-  <div class="positions-list">
-    <h3>Verfügbare Positionen:</h3>
+  <div class="positions-container">
+    <div class="positions-header">
+      <h3>Verfügbare Positionen</h3>
+    </div>
+    
     <div class="positions-grid">
       <div *ngFor="let position of positionService.orderedPositions()" class="position-card">
         <div class="position-header">
           <span class="position-number">{{ position.number }}</span>
           <span class="position-name">{{ position.name }}</span>
         </div>
-        <div class="position-details" *ngIf="position.flightbar">
-          <div>Flightbar: {{ position.flightbar }}</div>
-          <div>Artikel: {{ position.articleName }}</div>
-          <div>Kunde: {{ position.customerName }}</div>
+        <div class="position-details">
+          <div *ngIf="position.flightbar">
+            <span>Flightbar</span>
+            <span>{{ position.flightbar }}</span>
+          </div>
+          <div *ngIf="position.articleName">
+            <span>Artikel</span>
+            <span>{{ position.articleName }}</span>
+          </div>
+          <div *ngIf="position.customerName">
+            <span>Kunde</span>
+            <span>{{ position.customerName }}</span>
+          </div>
+          <div>
+            <span>Temperatur</span>
+            <span>{{ position.hasTemperature ? 'Ja' : 'Nein' }}</span>
+          </div>
+          <div>
+            <span>Strom</span>
+            <span>{{ position.hasCurrent ? 'Ja' : 'Nein' }}</span>
+          </div>
+          <div>
+            <span>Spannung</span>
+            <span>{{ position.hasVoltage ? 'Ja' : 'Nein' }}</span>
+          </div>
+          <div *ngIf="position.presetCurrent">
+            <span>Vorgabe Strom</span>
+            <span>{{ position.presetCurrent }}</span>
+          </div>
+          <div *ngIf="position.presetVoltage">
+            <span>Vorgabe Spannung</span>
+            <span>{{ position.presetVoltage }}</span>
+          </div>
         </div>
       </div>
     </div>
