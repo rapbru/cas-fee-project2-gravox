@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { HeaderService } from '../services/header.service';
 import { PositionService } from '../services/position.service';
+import { PositionSequenceComponent } from '../components/position-sequence/position-sequence.component';
 
 @Component({
   selector: 'app-add-article',
@@ -25,7 +26,8 @@ import { PositionService } from '../services/position.service';
     MatTooltipModule,
     InputFieldComponent,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    PositionSequenceComponent
   ],
   templateUrl: './add-article.component.html',
   styleUrls: ['./add-article.component.scss']
