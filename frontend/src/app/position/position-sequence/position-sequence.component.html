@@ -16,15 +16,15 @@
              cdkDrag
              [cdkDragData]="position">
           <div class="position-header">
-            <div class="drag-handle" cdkDragHandle>
-              <mat-icon>drag_indicator</mat-icon>
-            </div>
             <span class="position-number">{{ i + 1 }}</span>
             <span class="position-name">{{ position.name }}</span>
             <button class="button button-label button-highlight-sub" (click)="onRemovePosition(position)">
               <mat-icon>remove</mat-icon>
               <span>Entfernen</span>
             </button>
+            <div class="drag-handle" cdkDragHandle>
+              <mat-icon>drag_indicator</mat-icon>
+            </div>
           </div>
           <div class="position-details">
             <div *ngIf="position.flightbar">

@@ -187,11 +187,22 @@
   align-items: center;
   gap: 8px;
 
+  .position-number {
+    font-weight: 600;
+    color: var(--color-vonesco);
+    min-width: 32px;
+  }
+
+  .position-name {
+    flex: 1;
+  }
+
   .drag-handle {
     cursor: move;
     color: var(--color-sub-2);
     display: flex;
     align-items: center;
+    margin-left: 8px;
     
     &:hover {
       color: var(--color-sub-1);
@@ -202,16 +213,6 @@
       width: 20px;
       height: 20px;
     }
-  }
-
-  .position-number {
-    font-weight: 600;
-    color: var(--color-vonesco);
-    min-width: 32px;
-  }
-
-  .position-name {
-    flex: 1;
   }
 }
 
