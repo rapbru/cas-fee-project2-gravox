@@ -187,6 +187,23 @@
   align-items: center;
   gap: 8px;
 
+  .check-circle {
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+    
+    .check-circle-icon {
+      color: var(--color-sub-2);
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+      
+      &.selected {
+        color: var(--color-vonesco);
+      }
+    }
+  }
+
   .position-number {
     font-weight: 600;
     color: var(--color-vonesco);

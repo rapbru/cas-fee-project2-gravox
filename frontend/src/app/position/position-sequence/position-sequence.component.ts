@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { CdkDragDrop, DragDropModule, CdkDrag, CdkDragHandle, CdkDropList } from '@angular/cdk/drag-drop';
+import { MatButtonModule } from '@angular/material/button';
 import { Position } from '../../models/position.model';
 import { PositionService } from '../../services/position.service';
 import { LoggerService } from '../../services/logger.service';
@@ -14,6 +15,7 @@ import { PositionDragDropService } from '../../services/position-drag-drop.servi
   imports: [
     CommonModule,
     MatIconModule,
+    MatButtonModule,
     SidebarSheetComponent,
     DragDropModule,
     CdkDrag,
@@ -84,6 +86,11 @@ export class PositionSequenceComponent {
 
   onCloseSheet() {
     this.showPositionSelector = false;
+  }
+
+  toggleSelection(position: Position) {
+    position.isSelected = !position.isSelected;
+    this.positionService.trackModification(position);
   }
 
   onDrop(event: CdkDragDrop<Position[]>) {

@@ -16,6 +16,11 @@
              cdkDrag
              [cdkDragData]="position">
           <div class="position-header">
+            <button mat-icon-button class="check-circle" (click)="toggleSelection(position)">
+              <mat-icon class="check-circle-icon" [ngClass]="{ 'selected': position.isSelected }">
+                {{ position.isSelected ? 'check_circle' : 'radio_button_unchecked' }}
+              </mat-icon>
+            </button>
             <span class="position-number">{{ i + 1 }}</span>
             <span class="position-name">{{ position.name }}</span>
             <button class="button button-label button-highlight-sub" (click)="onRemovePosition(position)">
