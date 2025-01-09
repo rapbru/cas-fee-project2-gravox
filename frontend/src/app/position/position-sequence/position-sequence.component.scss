@@ -17,11 +17,14 @@
   background-color: var(--color-background);
   box-shadow: var(--shadow);
   transform: translateX(100%);
-  transition: transform 0.3s ease;
   z-index: 1000;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+
+  &.enable-transitions {
+    transition: transform 0.3s ease;
+  }
 
   &.show {
     transform: translateX(0);

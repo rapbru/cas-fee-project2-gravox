@@ -51,7 +51,10 @@
   </div>
 
   <!-- Position Selector (Sidebar/Bottom Sheet) -->
-  <div class="position-selector" [class.show]="showPositionSelector" [class.mobile]="isMobile">
+  <div class="position-selector" 
+       [class.show]="showPositionSelector" 
+       [class.mobile]="isMobile"
+       [class.enable-transitions]="enableTransitions">
     <div class="selector-header">
       <h3>Verfügbare Positionen</h3>
       <button class="button button-label button-highlight-sub" (click)="togglePositionSelector()">

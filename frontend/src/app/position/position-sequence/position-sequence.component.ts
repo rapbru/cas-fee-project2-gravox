@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBottomSheetModule, MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -17,17 +17,27 @@ import { LoggerService } from '../../services/logger.service';
   templateUrl: './position-sequence.component.html',
   styleUrls: ['./position-sequence.component.scss']
 })
-export class PositionSequenceComponent {
+export class PositionSequenceComponent implements OnInit {
   selectedPositions: Position[] = [];
-  isMobile: boolean = false;
+  isMobile: boolean = window.innerWidth < 768;
   showPositionSelector: boolean = false;
+  enableTransitions: boolean = false;
 
   constructor(
     public positionService: PositionService,
     private logger: LoggerService,
     private bottomSheet: MatBottomSheet
-  ) {
+  ) {}
+
+  ngOnInit() {
+    this.logger.log('PositionSequenceComponent initialized');
+    this.positionService.startFetching();
     this.checkScreenSize();
+    
+    // Enable transitions after a short delay
+    setTimeout(() => {
+      this.enableTransitions = true;
+    }, 100);
   }
 
   @HostListener('window:resize')
@@ -36,12 +46,12 @@ export class PositionSequenceComponent {
   }
 
   private checkScreenSize() {
+    const wasMobile = this.isMobile;
     this.isMobile = window.innerWidth < 768;
-  }
-
-  ngOnInit() {
-    this.logger.log('PositionSequenceComponent initialized');
-    this.positionService.startFetching();
+    
+    if (wasMobile !== this.isMobile && this.showPositionSelector) {
+      this.showPositionSelector = false;
+    }
   }
 
   ngOnDestroy() {
