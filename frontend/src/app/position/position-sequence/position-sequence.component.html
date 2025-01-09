@@ -13,7 +13,8 @@
       <div class="positions-grid" cdkDropList (cdkDropListDropped)="onDrop($event)">
         <div *ngFor="let position of selectedPositions; let i = index" 
              class="position-card"
-             cdkDrag>
+             cdkDrag
+             [cdkDragData]="position">
           <div class="position-header">
             <div class="drag-handle" cdkDragHandle>
               <mat-icon>drag_indicator</mat-icon>
