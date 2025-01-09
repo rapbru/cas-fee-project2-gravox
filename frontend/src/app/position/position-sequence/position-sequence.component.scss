@@ -181,3 +181,11 @@
     color: var(--color-text);
   }
 }
+
+.position-header {
+  .position-number {
+    font-weight: 600;
+    color: var(--color-vonesco);
+    min-width: 48px;
+  }
+}

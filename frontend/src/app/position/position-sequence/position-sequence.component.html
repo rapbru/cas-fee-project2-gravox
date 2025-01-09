@@ -11,8 +11,9 @@
 
     <div class="selected-positions">
       <div class="positions-grid">
-        <div *ngFor="let position of selectedPositions" class="position-card">
+        <div *ngFor="let position of selectedPositions; let i = index" class="position-card">
           <div class="position-header">
+            <span class="position-number">{{ i + 1 }}</span>
             <span class="position-name">{{ position.name }}</span>
             <button class="button button-label button-highlight-sub" (click)="onRemovePosition(position)">
               <mat-icon>remove</mat-icon>
