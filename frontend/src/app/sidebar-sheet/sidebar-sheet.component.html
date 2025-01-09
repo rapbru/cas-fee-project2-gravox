@@ -16,5 +16,9 @@
 <div *ngIf="enableBackdrop" 
      class="backdrop" 
      [class.show]="show && isMobile" 
-     (click)="close()">
+     (click)="close()"
+     (keydown.escape)="close()"
+     tabindex="0"
+     role="button"
+     [attr.aria-label]="'Close ' + title">
 </div>

@@ -35,22 +35,18 @@ export class PositionSequenceComponent {
     this.positionService.stopFetching();
   }
 
-  onAddPosition(position: Position) {
-    if (!this.selectedPositions.includes(position)) {
-      this.selectedPositions.push(position);
-      this.logger.log('Position added to sequence:', position);
+  onAddPosition(position: Position, event?: Event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
     }
+    
+    this.selectedPositions = [...this.selectedPositions, position];
+    this.logger.log('Position added to sequence:', position);
   }
 
   onRemovePosition(position: Position) {
-    const index = this.selectedPositions.indexOf(position);
-    if (index > -1) {
-      this.selectedPositions.splice(index, 1);
-      this.logger.log('Position removed from sequence:', position);
-    }
-  }
-
-  isPositionSelected(position: Position): boolean {
-    return this.selectedPositions.includes(position);
+    this.selectedPositions = this.selectedPositions.filter(p => p !== position);
+    this.logger.log('Position removed from sequence:', position);
   }
 }

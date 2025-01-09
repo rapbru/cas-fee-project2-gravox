@@ -90,9 +90,19 @@
   padding: var(--content-padding);
   background-color: var(--color-main);
   border-bottom: 1px solid var(--color-sub-3);
+  color: var(--color-text);
   
   h3 {
     margin: 0;
+    color: var(--color-text);
+  }
+
+  button {
+    color: var(--color-text);
+    
+    mat-icon {
+      color: var(--color-text);
+    }
   }
 }
 

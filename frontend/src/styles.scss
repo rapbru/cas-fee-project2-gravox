@@ -54,7 +54,7 @@ html {
   --color-main: #272729;
   --color-sub-1: #717175;
   --color-sub-2: #3F3F41;
-  --color-sub-3: #272729;
+  --color-sub-3: #717175;
   --color-green: #000100;
   --color-red: #D20015;
   --color-vonesco: #FFA786;
@@ -90,7 +90,7 @@ html {
     --color-main: #272729;
     --color-sub-1: #717175;
     --color-sub-2: #3F3F41;
-    --color-sub-3: #272729;
+    --color-sub-3: #717175;
     --color-green: #000100;
     --color-red: #D20015;
     --color-vonesco: #FFA786;
@@ -244,6 +244,7 @@ input {
   color: var(--color-text);
   border: none;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 button.navbar-item {
@@ -320,6 +321,7 @@ button.navbar-item {
   cursor: pointer;
   text-decoration: none;
   font-size: var(--font-size);
+  transition: background-color 0.2s ease;
   
   mat-icon {
     margin: 0;
@@ -337,7 +339,11 @@ button.navbar-item {
   }
 
   &:hover {
-    filter: brightness(103%);
+    background-color: var(--color-sub-3);
+  }
+
+  &:active {
+    background-color: var(--color-sub-2);
   }
 
   // Inactive state
@@ -348,7 +354,7 @@ button.navbar-item {
     color: var(--color-text);
     
     &:hover {
-      transform: none;
+      background-color: var(--color-main);
     }
 
     @media (prefers-color-scheme: dark) {
@@ -363,7 +369,7 @@ button.navbar-item {
     font-weight: 500;
     
     &:hover {
-      filter: brightness(103%);
+      background-color: var(--color-sub-3);
     }
 
     @media (prefers-color-scheme: dark) {
@@ -395,6 +401,11 @@ button.navbar-item {
   &:disabled {
     cursor: not-allowed;
     color: var(--color-sub-3);
+    background-color: var(--color-main);
+    
+    &:hover {
+      background-color: var(--color-main);
+    }
   }
 }
 

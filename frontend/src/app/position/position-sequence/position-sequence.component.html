@@ -57,12 +57,10 @@
     
     <div class="available-positions">
       <div class="positions-grid">
-        <div *ngFor="let position of positionService.orderedPositions()" 
-             class="position-card"
-             [class.hidden]="isPositionSelected(position)">
+        <div *ngFor="let position of positionService.orderedPositions()" class="position-card">
           <div class="position-header">
             <span class="position-name">{{ position.name }}</span>
-            <button class="button button-label button-highlight-main" (click)="onAddPosition(position)">
+            <button class="button button-label button-highlight-main" (click)="onAddPosition(position, $event)">
               <mat-icon>add</mat-icon>
               <span>Hinzufügen</span>
             </button>

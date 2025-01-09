@@ -158,3 +158,16 @@
     padding-bottom: 80px; // Space for bottom navigation
   }
 }
+
+.positions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  color: var(--color-text);
+
+  h3 {
+    margin: 0;
+    color: var(--color-text);
+  }
+}
