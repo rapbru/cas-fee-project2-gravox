@@ -1,0 +1,20 @@
+<div class="sidebar-sheet" 
+     [class.show]="show" 
+     [class.mobile]="isMobile"
+     [class.enable-transitions]="enableTransitions">
+  <div class="sheet-header">
+    <h3>{{ title }}</h3>
+    <button class="button button-label button-highlight-sub" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="sheet-content">
+    <ng-content></ng-content>
+  </div>
+</div>
+
+<div *ngIf="enableBackdrop" 
+     class="backdrop" 
+     [class.show]="show && isMobile" 
+     (click)="close()">
+</div>

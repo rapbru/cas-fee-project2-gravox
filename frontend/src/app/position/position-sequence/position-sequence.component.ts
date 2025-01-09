@@ -1,10 +1,10 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { MatBottomSheetModule, MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Position } from '../../models/position.model';
 import { PositionService } from '../../services/position.service';
 import { LoggerService } from '../../services/logger.service';
+import { SidebarSheetComponent } from '../../sidebar-sheet/sidebar-sheet.component';
 
 @Component({
   selector: 'app-position-sequence',
@@ -12,54 +12,27 @@ import { LoggerService } from '../../services/logger.service';
   imports: [
     CommonModule,
     MatIconModule,
-    MatBottomSheetModule
+    SidebarSheetComponent
   ],
   templateUrl: './position-sequence.component.html',
   styleUrls: ['./position-sequence.component.scss']
 })
-export class PositionSequenceComponent implements OnInit {
+export class PositionSequenceComponent {
   selectedPositions: Position[] = [];
-  isMobile: boolean = window.innerWidth < 768;
   showPositionSelector: boolean = false;
-  enableTransitions: boolean = false;
 
   constructor(
     public positionService: PositionService,
-    private logger: LoggerService,
-    private bottomSheet: MatBottomSheet
+    private logger: LoggerService
   ) {}
 
   ngOnInit() {
     this.logger.log('PositionSequenceComponent initialized');
     this.positionService.startFetching();
-    this.checkScreenSize();
-    
-    // Enable transitions after a short delay
-    setTimeout(() => {
-      this.enableTransitions = true;
-    }, 100);
-  }
-
-  @HostListener('window:resize')
-  onResize() {
-    this.checkScreenSize();
-  }
-
-  private checkScreenSize() {
-    const wasMobile = this.isMobile;
-    this.isMobile = window.innerWidth < 768;
-    
-    if (wasMobile !== this.isMobile && this.showPositionSelector) {
-      this.showPositionSelector = false;
-    }
   }
 
   ngOnDestroy() {
     this.positionService.stopFetching();
-  }
-
-  togglePositionSelector() {
-    this.showPositionSelector = !this.showPositionSelector;
   }
 
   onAddPosition(position: Position) {

@@ -3,7 +3,7 @@
   <div class="selected-positions-container">
     <div class="positions-header">
       <h3>Ausgewählte Positionen</h3>
-      <button class="button button-label button-highlight-main" (click)="togglePositionSelector()">
+      <button class="button button-label button-highlight-main" (click)="showPositionSelector = true">
         <mat-icon>add</mat-icon>
         <span>Position hinzufügen</span>
       </button>
@@ -50,18 +50,11 @@
     </div>
   </div>
 
-  <!-- Position Selector (Sidebar/Bottom Sheet) -->
-  <div class="position-selector" 
-       [class.show]="showPositionSelector" 
-       [class.mobile]="isMobile"
-       [class.enable-transitions]="enableTransitions">
-    <div class="selector-header">
-      <h3>Verfügbare Positionen</h3>
-      <button class="button button-label button-highlight-sub" (click)="togglePositionSelector()">
-        <mat-icon>close</mat-icon>
-      </button>
-    </div>
-
+  <!-- Position Selector using new component -->
+  <app-sidebar-sheet 
+    title="Verfügbare Positionen"
+    [(show)]="showPositionSelector">
+    
     <div class="available-positions">
       <div class="positions-grid">
         <div *ngFor="let position of positionService.orderedPositions()" 
@@ -103,8 +96,5 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- Backdrop for mobile -->
-  <div class="backdrop" [class.show]="showPositionSelector && isMobile" (click)="togglePositionSelector()"></div>
+  </app-sidebar-sheet>
 </div>
