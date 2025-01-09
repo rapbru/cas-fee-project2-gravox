@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, HostBinding } from '@angular/core';
+import { Component, ViewChild, ElementRef, HostBinding, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { CdkDragDrop, DragDropModule, CdkDrag, CdkDragHandle, CdkDropList } from '@angular/cdk/drag-drop';
@@ -8,6 +8,7 @@ import { PositionService } from '../../services/position.service';
 import { LoggerService } from '../../services/logger.service';
 import { SidebarSheetComponent } from '../../sidebar-sheet/sidebar-sheet.component';
 import { PositionDragDropService } from '../../services/position-drag-drop.service';
+import { ToolbarComponent } from '../../toolbar/toolbar.component';
 
 @Component({
   selector: 'app-position-sequence',
@@ -20,7 +21,8 @@ import { PositionDragDropService } from '../../services/position-drag-drop.servi
     DragDropModule,
     CdkDrag,
     CdkDragHandle,
-    CdkDropList
+    CdkDropList,
+    ToolbarComponent
   ],
   templateUrl: './position-sequence.component.html',
   styleUrls: ['./position-sequence.component.scss']
@@ -31,6 +33,7 @@ export class PositionSequenceComponent {
   
   selectedPositions: Position[] = [];
   showPositionSelector: boolean = false;
+  @Output() selectedPositionsChange = new EventEmitter<Position[]>();
 
   constructor(
     public positionService: PositionService,
@@ -97,5 +100,19 @@ export class PositionSequenceComponent {
     const columns = [this.selectedPositions];
     this.positionDragDropService.handleDrop(event, columns, 0);
     this.selectedPositions = columns[0];
+  }
+
+  hasSelectedPositions(): boolean {
+    return this.selectedPositions.some(position => position.isSelected);
+  }
+
+  deleteSelectedPositions() {
+    if (!this.hasSelectedPositions()) return;
+    this.selectedPositions = this.selectedPositions.filter(position => !position.isSelected);
+    this.selectedPositionsChange.emit(this.selectedPositions);
+  }
+
+  openPositionSelector() {
+    this.showPositionSelector = true;
   }
 }

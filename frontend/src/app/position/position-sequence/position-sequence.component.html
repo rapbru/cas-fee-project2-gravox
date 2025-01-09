@@ -1,15 +1,20 @@
 <div class="positions-container">
   <!-- Selected Positions -->
   <div class="selected-positions-container" #selectedPositionsContainer>
-    <div class="positions-header">
-      <h3>Ausgewählte Positionen</h3>
-      <button class="button button-label button-highlight-main" (click)="showPositionSelector = true">
-        <mat-icon>add</mat-icon>
-        <span>Position hinzufügen</span>
-      </button>
-    </div>
-
     <div class="selected-positions">
+      <div class="positions-header">
+        <h3>Ausgewählte Positionen</h3>
+        <div class="toolbar-group">
+          <app-toolbar
+            [showDelete]="true"
+            [deleteDisabled]="!hasSelectedPositions()"
+            [showAdd]="true"
+            (delete)="deleteSelectedPositions()"
+            (add)="openPositionSelector()">
+          </app-toolbar>
+        </div>
+      </div>
+
       <div class="positions-grid" cdkDropList (cdkDropListDropped)="onDrop($event)">
         <div *ngFor="let position of selectedPositions; let i = index" 
              class="position-card"

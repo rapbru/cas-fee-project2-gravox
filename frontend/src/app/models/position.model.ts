@@ -15,4 +15,5 @@ export interface Position {
   presetCurrent?: number;
   presetVoltage?: number;
   isSelected?: boolean;
+  selected?: boolean;
 }

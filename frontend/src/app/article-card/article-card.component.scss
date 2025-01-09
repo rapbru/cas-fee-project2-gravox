@@ -167,3 +167,36 @@
   padding: 0;
   margin: 0;
 }
+
+::ng-deep .mat-mdc-checkbox {
+  .mdc-checkbox {
+    border-radius: 50% !important;
+    
+    .mdc-checkbox__background {
+      border-radius: 50% !important;
+    }
+  }
+
+  .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background,
+  .mdc-checkbox__native-control:enabled:indeterminate ~ .mdc-checkbox__background {
+    border-color: var(--color-vonesco) !important;
+    background-color: var(--color-vonesco) !important;
+  }
+
+  .mdc-checkbox__native-control:enabled ~ .mdc-checkbox__background {
+    border-width: 2px;
+    border-color: var(--color-sub-2);
+  }
+
+  &:hover .mdc-checkbox__native-control:enabled ~ .mdc-checkbox__background {
+    border-color: var(--color-vonesco-sub-2);
+  }
+
+  .mdc-checkbox__ripple {
+    border-radius: 50% !important;
+  }
+
+  .mdc-checkbox__native-control:focus ~ .mdc-checkbox__ripple {
+    border-radius: 50% !important;
+  }
+}
