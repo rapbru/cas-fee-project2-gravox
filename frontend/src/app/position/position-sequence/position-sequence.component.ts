@@ -5,6 +5,9 @@ import { Position } from '../../models/position.model';
 import { PositionService } from '../../services/position.service';
 import { LoggerService } from '../../services/logger.service';
 import { SidebarSheetComponent } from '../../sidebar-sheet/sidebar-sheet.component';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { PositionDragDropService } from '../../services/position-drag-drop.service';
 
 @Component({
   selector: 'app-position-sequence',
@@ -12,7 +15,8 @@ import { SidebarSheetComponent } from '../../sidebar-sheet/sidebar-sheet.compone
   imports: [
     CommonModule,
     MatIconModule,
-    SidebarSheetComponent
+    SidebarSheetComponent,
+    DragDropModule
   ],
   templateUrl: './position-sequence.component.html',
   styleUrls: ['./position-sequence.component.scss']
@@ -26,7 +30,8 @@ export class PositionSequenceComponent {
 
   constructor(
     public positionService: PositionService,
-    private logger: LoggerService
+    private logger: LoggerService,
+    private positionDragDropService: PositionDragDropService
   ) {}
 
   ngOnInit() {
@@ -77,5 +82,12 @@ export class PositionSequenceComponent {
 
   onCloseSheet() {
     this.showPositionSelector = false;
+  }
+
+  onDrop(event: CdkDragDrop<Position[]>) {
+    // We'll treat selected positions as a single column
+    const columns = [this.selectedPositions];
+    this.positionDragDropService.handleDrop(event, columns, 0);
+    this.selectedPositions = columns[0]; // Update the local array after reordering
   }
 }
