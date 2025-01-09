@@ -1517,11 +1517,8 @@ app-add-article {
   box-sizing: border-box;
   min-width: 0;
   color: var(--color-text);
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: var(--color-main-hover);
-  }
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
 
   .position-header {
     display: flex;
