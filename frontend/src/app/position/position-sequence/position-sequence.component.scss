@@ -44,21 +44,42 @@
 
     .selector-header {
       padding: 12px;
-      background-color: var(--color-main);
+      background-color: var(--color-sheet-background);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border-top-left-radius: var(--button-border-radius);
       border-top-right-radius: var(--button-border-radius);
       border-bottom: 1px solid var(--color-sub-3);
       position: sticky;
       top: 0;
       z-index: 2;
+      color: var(--color-text);
+
+      h3 {
+        margin: 0;
+        color: var(--color-text);
+      }
+
+      button {
+        color: var(--color-text);
+        
+        mat-icon {
+          color: var(--color-text);
+        }
+      }
     }
 
     .available-positions {
       padding: 12px;
       flex: 1;
       overflow-y: auto;
-      background-color: var(--color-main);
-      margin: 0;
+      background-color: var(--color-sheet-background);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      @media (prefers-color-scheme: dark) {
+        background-color: rgba(var(--color-background), 0.8);
+      }
     }
 
     &.show {

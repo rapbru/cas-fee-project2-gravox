@@ -44,6 +44,7 @@ html {
   --button-font-size: 1.4em;
 
   --content-padding: 24px;
+  --color-sheet-background: rgba(255, 255, 255, 0.8);
 }
 
 .dark-theme {
@@ -77,6 +78,8 @@ html {
       }
     }
   }
+
+  --color-sheet-background: rgba(23, 23, 25, 0.8);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -111,6 +114,8 @@ html {
         }
       }
     }
+
+    --color-sheet-background: rgba(23, 23, 25, 0.8);
   }
 }
 
