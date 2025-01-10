@@ -37,12 +37,13 @@
           </div>
           <div class="position-details">
             <div class="metric-column" *ngIf="position.timePreset !== undefined">
-              <mat-icon>timer</mat-icon>
-              <span class="label">Zeit</span>
-              <span class="unit">s</span>
+              <mat-icon [class.disabled]="position.timePreset === 0">timer</mat-icon>
+              <span class="label" [class.disabled]="position.timePreset === 0">Zeit</span>
+              <span class="unit" [class.disabled]="position.timePreset === 0">s</span>
               <span class="value" 
                     (click)="startEditing(position, 'timePreset')"
-                    *ngIf="!isEditing(position, 'timePreset')">
+                    *ngIf="!isEditing(position, 'timePreset')"
+                    [class.zero-value]="position.timePreset === 0">
                 {{ position.timePreset | number:'1.2-2' }}
               </span>
               <input #valueInput
@@ -58,12 +59,13 @@
                      inputmode="decimal">
             </div>
             <div class="metric-column" *ngIf="position.currentPreset !== undefined">
-              <mat-icon>bolt</mat-icon>
-              <span class="label">Strom</span>
-              <span class="unit">A</span>
+              <mat-icon [class.disabled]="position.currentPreset === 0">bolt</mat-icon>
+              <span class="label" [class.disabled]="position.currentPreset === 0">Strom</span>
+              <span class="unit" [class.disabled]="position.currentPreset === 0">A</span>
               <span class="value" 
                     (click)="startEditing(position, 'currentPreset')"
-                    *ngIf="!isEditing(position, 'currentPreset')">
+                    *ngIf="!isEditing(position, 'currentPreset')"
+                    [class.zero-value]="position.currentPreset === 0">
                 {{ position.currentPreset | number:'1.2-2' }}
               </span>
               <input #valueInput
@@ -79,12 +81,13 @@
                      inputmode="decimal">
             </div>
             <div class="metric-column" *ngIf="position.voltagePreset !== undefined">
-              <mat-icon class="mat-icon-filled">bolt</mat-icon>
-              <span class="label">Spannung</span>
-              <span class="unit">V</span>
+              <mat-icon class="mat-icon-filled" [class.disabled]="position.voltagePreset === 0">bolt</mat-icon>
+              <span class="label" [class.disabled]="position.voltagePreset === 0">Spannung</span>
+              <span class="unit" [class.disabled]="position.voltagePreset === 0">V</span>
               <span class="value" 
                     (click)="startEditing(position, 'voltagePreset')"
-                    *ngIf="!isEditing(position, 'voltagePreset')">
+                    *ngIf="!isEditing(position, 'voltagePreset')"
+                    [class.zero-value]="position.voltagePreset === 0">
                 {{ position.voltagePreset | number:'1.2-2' }}
               </span>
               <input #valueInput

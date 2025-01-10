@@ -333,8 +333,9 @@
       font-variation-settings: 'wght' 300, 'FILL' 1;
     }
 
-    .label, .unit {
+    .label, .unit, .value {
       font-size: 0.9rem;
+      font-weight: normal;
       color: var(--color-text);
       margin-bottom: 2px;
       width: 100%;
@@ -343,12 +344,52 @@
     }
 
     .value {
-      font-size: 1rem;
-      font-weight: 500;
       color: var(--color-vonesco);
-      width: 100%;
+      
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    .value-input {
+      font-size: 0.9rem;
+      font-weight: normal;
+      font-family: inherit;
+      color: var(--color-vonesco);
+      background: transparent;
+      border: none;
+      outline: none;
+      width: 70px;
       text-align: right;
-      padding-right: 8px;
+      padding: 0 8px 0 0;
+      margin: 0;
+      appearance: textfield;
+
+      &::-webkit-inner-spin-button, 
+      &::-webkit-outer-spin-button { 
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      &:focus {
+        outline: none;
+        border: none;
+        box-shadow: none;
+      }
+    }
+
+    mat-icon, .label, .unit {
+      transition: opacity 0.2s ease;
+      
+      &.disabled {
+        opacity: 0.5;
+      }
+    }
+
+    .value {
+      &:hover {
+        opacity: 0.8;
+      }
     }
   }
 }
