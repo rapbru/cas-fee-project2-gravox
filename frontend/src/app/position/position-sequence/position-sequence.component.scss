@@ -261,6 +261,7 @@
 .position-card {
   will-change: transform;
   transform: translateZ(0);
+  border-radius: var(--button-border-radius);
 }
 
 ::ng-deep .mat-mdc-checkbox {
@@ -305,6 +306,7 @@
   justify-content: space-around;
   padding: 12px;
   gap: 16px;
+  border-top: none;
 
   .metric-column {
     display: flex;
@@ -320,15 +322,9 @@
       margin-bottom: 4px;
     }
 
-    .label {
+    .label, .unit {
       font-size: 0.9rem;
       color: var(--color-text);
-      margin-bottom: 2px;
-    }
-
-    .unit {
-      font-size: 0.8rem;
-      color: var(--color-sub-2);
       margin-bottom: 2px;
     }
 
