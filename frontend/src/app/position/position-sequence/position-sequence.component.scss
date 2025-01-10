@@ -185,36 +185,13 @@
 .position-header {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-  padding-bottom: 4px;
-  border: none;
+  gap: 16px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-vonesco);
 
   .check-circle {
-    width: 32px;
-    height: 32px;
-    padding: 4px;
-    
-    .check-circle-icon {
-      color: var(--color-sub-2);
-      font-size: 24px;
-      width: 24px;
-      height: 24px;
-      
-      &.selected {
-        color: var(--color-vonesco);
-      }
-    }
-  }
-
-  .position-number {
-    font-weight: 600;
-    color: var(--color-text);
-    min-width: 32px;
-  }
-
-  .position-name {
-    flex: 1;
+    display: none;
   }
 
   .drag-handle {
@@ -222,7 +199,9 @@
     color: var(--color-sub-2);
     display: flex;
     align-items: center;
-    margin-left: 8px;
+    order: -1;
+    margin-left: 0;
+    margin-right: 8px;
     
     &:hover {
       color: var(--color-sub-1);
@@ -333,7 +312,7 @@
       font-variation-settings: 'wght' 300, 'FILL' 1;
     }
 
-    .label, .unit, .value {
+    .label {
       font-size: 0.9rem;
       font-weight: normal;
       color: var(--color-text);
@@ -345,9 +324,20 @@
 
     .value {
       color: var(--color-vonesco);
+      font-size: 0.9rem;
+      font-weight: normal;
+      width: 100%;
+      text-align: right;
+      padding-right: 8px;
       
       &:hover {
         opacity: 0.8;
+      }
+
+      .unit {
+        margin-left: 4px;
+        color: var(--color-vonesco);
+        display: inline-block;
       }
     }
 
