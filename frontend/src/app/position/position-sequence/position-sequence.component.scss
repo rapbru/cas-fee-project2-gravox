@@ -188,6 +188,7 @@
   gap: 8px;
   margin-bottom: 12px;
   padding-bottom: 8px;
+  border: none;
 
   .check-circle {
     width: 32px;
@@ -208,7 +209,7 @@
 
   .position-number {
     font-weight: 600;
-    color: var(--color-vonesco);
+    color: var(--color-text);
     min-width: 32px;
   }
 
@@ -264,6 +265,12 @@
   will-change: transform;
   transform: translateZ(0);
   border-radius: var(--button-border-radius);
+  border: none;
+  background-color: var(--color-main);
+  
+  &:not(:last-child) {
+    border-bottom: none;
+  }
 }
 
 ::ng-deep .mat-mdc-checkbox {
