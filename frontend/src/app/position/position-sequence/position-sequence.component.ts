@@ -9,6 +9,7 @@ import { LoggerService } from '../../services/logger.service';
 import { SidebarSheetComponent } from '../../sidebar-sheet/sidebar-sheet.component';
 import { PositionDragDropService } from '../../services/position-drag-drop.service';
 import { ToolbarComponent } from '../../toolbar/toolbar.component';
+import { Sequence } from '../../models/article.model';
 
 @Component({
   selector: 'app-position-sequence',
@@ -33,7 +34,7 @@ export class PositionSequenceComponent {
   
   selectedPositions: Position[] = [];
   showPositionSelector: boolean = false;
-  @Output() selectedPositionsChange = new EventEmitter<Position[]>();
+  @Output() selectedPositionsChange = new EventEmitter<Sequence[]>();
 
   constructor(
     public positionService: PositionService,
@@ -56,8 +57,28 @@ export class PositionSequenceComponent {
       event.stopPropagation();
     }
     
-    this.selectedPositions = [...this.selectedPositions, position];
-    this.logger.log('Position added to sequence:', position);
+    // Add sequence values to the position
+    const enrichedPosition: Position = {
+      ...position,
+      timePreset: 0,     // Default time preset
+      currentPreset: 0,  // Default current preset
+      voltagePreset: 0   // Default voltage preset
+    };
+    
+    // Add to selected positions with order number
+    const orderNumber = this.selectedPositions.length + 1;
+    this.selectedPositions = [...this.selectedPositions, enrichedPosition];
+    
+    // Emit the sequence data
+    this.selectedPositionsChange.emit(this.selectedPositions.map((pos, index) => ({
+      positionId: pos.id.toString(),
+      orderNumber: index + 1,
+      timePreset: pos.timePreset?.toString() || '0',
+      currentPreset: pos.currentPreset?.toString() || '0',
+      voltagePreset: pos.voltagePreset?.toString() || '0'
+    })));
+
+    this.logger.log('Position added to sequence:', enrichedPosition);
 
     // Scroll to the newly added position
     setTimeout(() => {
@@ -84,6 +105,16 @@ export class PositionSequenceComponent {
 
   onRemovePosition(position: Position) {
     this.selectedPositions = this.selectedPositions.filter(p => p !== position);
+    
+    // Transform positions to sequences before emitting
+    this.selectedPositionsChange.emit(this.selectedPositions.map((pos, index) => ({
+      positionId: pos.id.toString(),
+      orderNumber: index + 1,
+      timePreset: pos.timePreset?.toString() || '0',
+      currentPreset: pos.currentPreset?.toString() || '0',
+      voltagePreset: pos.voltagePreset?.toString() || '0'
+    })));
+    
     this.logger.log('Position removed from sequence:', position);
   }
 
@@ -109,7 +140,15 @@ export class PositionSequenceComponent {
   deleteSelectedPositions() {
     if (!this.hasSelectedPositions()) return;
     this.selectedPositions = this.selectedPositions.filter(position => !position.isSelected);
-    this.selectedPositionsChange.emit(this.selectedPositions);
+    
+    // Transform positions to sequences before emitting
+    this.selectedPositionsChange.emit(this.selectedPositions.map((pos, index) => ({
+      positionId: pos.id.toString(),
+      orderNumber: index + 1,
+      timePreset: pos.timePreset?.toString() || '0',
+      currentPreset: pos.currentPreset?.toString() || '0',
+      voltagePreset: pos.voltagePreset?.toString() || '0'
+    })));
   }
 
   openPositionSelector() {

@@ -61,6 +61,27 @@
               <span>Vorgabe Spannung</span>
               <span>{{ position.presetVoltage }}</span>
             </div>
+            <div *ngIf="position.timePreset !== undefined">
+              <span>
+                <mat-icon>timer</mat-icon>
+                Zeit
+              </span>
+              <span>{{ position.timePreset }} s</span>
+            </div>
+            <div *ngIf="position.currentPreset !== undefined">
+              <span>
+                <mat-icon>electric_bolt</mat-icon>
+                Strom
+              </span>
+              <span>{{ position.currentPreset }} A</span>
+            </div>
+            <div *ngIf="position.voltagePreset !== undefined">
+              <span>
+                <mat-icon fontSet="material-icons-outlined">electric_bolt</mat-icon>
+                Spannung
+              </span>
+              <span>{{ position.voltagePreset }} V</span>
+            </div>
           </div>
         </div>
       </div>
@@ -84,29 +105,26 @@
             </button>
           </div>
           <div class="position-details">
-            <div *ngIf="position.flightbar">
-              <span>Flightbar</span>
-              <span>{{ position.flightbar }}</span>
+            <div *ngIf="position.timePreset !== undefined">
+              <span>
+                <mat-icon>timer</mat-icon>
+                Zeit
+              </span>
+              <span>{{ position.timePreset }} s</span>
             </div>
-            <div>
-              <span>Temperatur</span>
-              <span>{{ position.hasTemperature ? 'Ja' : 'Nein' }}</span>
+            <div *ngIf="position.currentPreset !== undefined">
+              <span>
+                <mat-icon>electric_bolt</mat-icon>
+                Strom
+              </span>
+              <span>{{ position.currentPreset }} A</span>
             </div>
-            <div>
-              <span>Strom</span>
-              <span>{{ position.hasCurrent ? 'Ja' : 'Nein' }}</span>
-            </div>
-            <div>
-              <span>Spannung</span>
-              <span>{{ position.hasVoltage ? 'Ja' : 'Nein' }}</span>
-            </div>
-            <div *ngIf="position.presetCurrent">
-              <span>Vorgabe Strom</span>
-              <span>{{ position.presetCurrent }}</span>
-            </div>
-            <div *ngIf="position.presetVoltage">
-              <span>Vorgabe Spannung</span>
-              <span>{{ position.presetVoltage }}</span>
+            <div *ngIf="position.voltagePreset !== undefined">
+              <span>
+                <mat-icon fontSet="material-icons-outlined">electric_bolt</mat-icon>
+                Spannung
+              </span>
+              <span>{{ position.voltagePreset }} V</span>
             </div>
           </div>
         </div>

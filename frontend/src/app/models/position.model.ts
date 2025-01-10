@@ -16,4 +16,7 @@ export interface Position {
   presetVoltage?: number;
   isSelected?: boolean;
   selected?: boolean;
+  timePreset?: number;
+  currentPreset?: number;
+  voltagePreset?: number;
 }
