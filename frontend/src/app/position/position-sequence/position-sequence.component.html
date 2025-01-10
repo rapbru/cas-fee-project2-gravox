@@ -1,5 +1,4 @@
 <div class="positions-container">
-  <!-- Selected Positions -->
   <div class="selected-positions-container" #selectedPositionsContainer>
     <div class="selected-positions">
       <div class="positions-header">
@@ -41,19 +40,64 @@
               <mat-icon>timer</mat-icon>
               <span class="label">Zeit</span>
               <span class="unit">s</span>
-              <span class="value">{{ position.timePreset }}</span>
+              <span class="value" 
+                    (click)="startEditing(position, 'timePreset')"
+                    *ngIf="!isEditing(position, 'timePreset')">
+                {{ position.timePreset | number:'1.2-2' }}
+              </span>
+              <input #valueInput
+                     class="value-input" 
+                     *ngIf="isEditing(position, 'timePreset')"
+                     [value]="formatNumber(position.timePreset)"
+                     (keydown)="validateInput($event)"
+                     (keydown.enter)="confirmEdit(position, 'timePreset', valueInput.value)"
+                     (keydown.escape)="cancelEdit()"
+                     (blur)="confirmEdit(position, 'timePreset', valueInput.value)"
+                     (paste)="$event.preventDefault()"
+                     type="text"
+                     inputmode="decimal">
             </div>
             <div class="metric-column" *ngIf="position.currentPreset !== undefined">
               <mat-icon>bolt</mat-icon>
               <span class="label">Strom</span>
               <span class="unit">A</span>
-              <span class="value">{{ position.currentPreset }}</span>
+              <span class="value" 
+                    (click)="startEditing(position, 'currentPreset')"
+                    *ngIf="!isEditing(position, 'currentPreset')">
+                {{ position.currentPreset | number:'1.2-2' }}
+              </span>
+              <input #valueInput
+                     class="value-input" 
+                     *ngIf="isEditing(position, 'currentPreset')"
+                     [value]="formatNumber(position.currentPreset)"
+                     (keydown)="validateInput($event)"
+                     (keydown.enter)="confirmEdit(position, 'currentPreset', valueInput.value)"
+                     (keydown.escape)="cancelEdit()"
+                     (blur)="confirmEdit(position, 'currentPreset', valueInput.value)"
+                     (paste)="$event.preventDefault()"
+                     type="text"
+                     inputmode="decimal">
             </div>
             <div class="metric-column" *ngIf="position.voltagePreset !== undefined">
               <mat-icon class="mat-icon-filled">bolt</mat-icon>
               <span class="label">Spannung</span>
               <span class="unit">V</span>
-              <span class="value">{{ position.voltagePreset }}</span>
+              <span class="value" 
+                    (click)="startEditing(position, 'voltagePreset')"
+                    *ngIf="!isEditing(position, 'voltagePreset')">
+                {{ position.voltagePreset | number:'1.2-2' }}
+              </span>
+              <input #valueInput
+                     class="value-input" 
+                     *ngIf="isEditing(position, 'voltagePreset')"
+                     [value]="formatNumber(position.voltagePreset)"
+                     (keydown)="validateInput($event)"
+                     (keydown.enter)="confirmEdit(position, 'voltagePreset', valueInput.value)"
+                     (keydown.escape)="cancelEdit()"
+                     (blur)="confirmEdit(position, 'voltagePreset', valueInput.value)"
+                     (paste)="$event.preventDefault()"
+                     type="text"
+                     inputmode="decimal">
             </div>
           </div>
         </div>
@@ -61,7 +105,6 @@
     </div>
   </div>
 
-  <!-- Position Selector using new component -->
   <app-sidebar-sheet 
     title="Verfügbare Positionen"
     [(show)]="showPositionSelector"

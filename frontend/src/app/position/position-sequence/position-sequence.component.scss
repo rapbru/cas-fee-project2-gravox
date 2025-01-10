@@ -352,3 +352,30 @@
     }
   }
 }
+
+.value {
+  cursor: pointer;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.value-input {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-vonesco);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-vonesco);
+  width: 60px;
+  text-align: right;
+  padding-right: 8px;
+  outline: none;
+
+  &::-webkit-inner-spin-button, 
+  &::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
