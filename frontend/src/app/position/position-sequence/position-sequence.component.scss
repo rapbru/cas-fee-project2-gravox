@@ -158,8 +158,8 @@
 .available-positions {
   flex: 1;
   overflow-y: auto;
-  padding: var(--content-padding);
-  background-color: var(--color-main);
+  background-color: transparent;
+  padding: 0;
 }
 
 // Responsive adjustments
@@ -186,6 +186,8 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
 
   .check-circle {
     width: 32px;
@@ -306,7 +308,7 @@
   justify-content: space-around;
   padding: 12px;
   gap: 16px;
-  border-top: none;
+  border: none;
 
   .metric-column {
     display: flex;
@@ -314,6 +316,7 @@
     align-items: center;
     flex: 1;
     text-align: center;
+    border: none;
 
     mat-icon {
       font-size: 24px;
