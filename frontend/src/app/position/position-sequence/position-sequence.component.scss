@@ -185,13 +185,19 @@
 .position-header {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--color-vonesco);
+  gap: 8px;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
 
   .check-circle {
     display: none;
+  }
+
+  .position-number {
+    font-weight: 600;
+    color: var(--color-vonesco);
+    min-width: 24px;
+    text-align: left;
   }
 
   .drag-handle {
@@ -201,17 +207,22 @@
     align-items: center;
     order: -1;
     margin-left: 0;
-    margin-right: 8px;
+    margin-right: 4px;
     
     &:hover {
       color: var(--color-sub-1);
     }
     
     mat-icon {
-      font-size: 20px;
-      width: 20px;
-      height: 20px;
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
     }
+  }
+
+  .position-name {
+    flex: 1;
+    font-weight: 500;
   }
 }
 
@@ -237,10 +248,21 @@
 
 // Optimize dragging performance for all cards
 .position-card {
+  background-color: var(--color-main);
   border-radius: var(--button-border-radius);
-  border: none;
-  background-color: var(--color-sheet-background);
-  
+  padding: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+  color: var(--color-text);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-bottom: 12px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
   @media (prefers-color-scheme: dark) {
     border-color: var(--color-sub-3);
   }
@@ -368,7 +390,7 @@
       }
     }
 
-    mat-icon, .label, .unit {
+    mat-icon, .label {
       transition: opacity 0.2s ease;
       
       &.disabled {
@@ -436,3 +458,18 @@
     box-sizing: border-box;
   }
 }
+// Ensure correct background color in dark mode
+:host-context(.dark-theme) {
+  .position-card {
+    background-color: var(--color-main);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light-theme) {
+    .position-card {
+      background-color: var(--color-main);
+    }
+  }
+}
+
