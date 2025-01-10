@@ -164,6 +164,14 @@ export class PositionSequenceComponent {
 
   startEditing(position: Position, field: PresetField): void {
     this.editingState = { position, field };
+    requestAnimationFrame(() => {
+      const inputs = document.getElementsByClassName('value-input');
+      if (inputs.length > 0) {
+        const input = inputs[0] as HTMLInputElement;
+        input.focus();
+        input.select();
+      }
+    });
   }
 
   cancelEdit(): void {
