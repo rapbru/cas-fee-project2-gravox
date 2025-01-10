@@ -37,26 +37,23 @@
             </div>
           </div>
           <div class="position-details">
-            <div *ngIf="position.timePreset !== undefined">
-              <span>
-                <mat-icon>timer</mat-icon>
-                Zeit
-              </span>
-              <span>{{ position.timePreset }} s</span>
+            <div class="metric-column" *ngIf="position.timePreset !== undefined">
+              <mat-icon>timer</mat-icon>
+              <span class="label">Zeit</span>
+              <span class="unit">s</span>
+              <span class="value">{{ position.timePreset }}</span>
             </div>
-            <div *ngIf="position.currentPreset !== undefined">
-              <span>
-                <mat-icon>bolt</mat-icon>
-                Strom
-              </span>
-              <span>{{ position.currentPreset }} A</span>
+            <div class="metric-column" *ngIf="position.currentPreset !== undefined">
+              <mat-icon>bolt</mat-icon>
+              <span class="label">Strom</span>
+              <span class="unit">A</span>
+              <span class="value">{{ position.currentPreset }}</span>
             </div>
-            <div *ngIf="position.voltagePreset !== undefined">
-              <span>
-                <mat-icon class="mat-icon-filled">bolt</mat-icon>
-                Spannung
-              </span>
-              <span>{{ position.voltagePreset }} V</span>
+            <div class="metric-column" *ngIf="position.voltagePreset !== undefined">
+              <mat-icon class="mat-icon-filled">bolt</mat-icon>
+              <span class="label">Spannung</span>
+              <span class="unit">V</span>
+              <span class="value">{{ position.voltagePreset }}</span>
             </div>
           </div>
         </div>
