@@ -89,10 +89,6 @@
       background-color: var(--color-sheet-background);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-
-      @media (prefers-color-scheme: dark) {
-        background-color: rgba(var(--color-background), 0.8);
-      }
     }
 
     &.show {
@@ -148,6 +144,14 @@
     margin-bottom: 16px;
     font-size: 1rem;
     font-weight: 500;
+  }
+
+  .position-card {
+    background-color: var(--color-sheet-background);
+
+    @media (prefers-color-scheme: dark) {
+      background-color: var(--color-main);
+    }
   }
 }
 
@@ -237,15 +241,15 @@
 }
 
 .cdk-drag-preview {
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-  will-change: transform;
-  
-  box-sizing: border-box;
+  background-color: var(--color-sheet-background);
   border-radius: var(--button-border-radius);
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
               0 8px 10px 1px rgba(0, 0, 0, 0.14),
               0 3px 14px 2px rgba(0, 0, 0, 0.12);
+
+  @media (prefers-color-scheme: dark) {
+    background-color: var(--color-main);
+  }
 }
 
 .cdk-drag-placeholder {
@@ -262,14 +266,13 @@
 
 // Optimize dragging performance for all cards
 .position-card {
-  will-change: transform;
-  transform: translateZ(0);
   border-radius: var(--button-border-radius);
   border: none;
-  background-color: var(--color-main);
+  background-color: var(--color-sheet-background);
   
-  &:not(:last-child) {
-    border-bottom: none;
+  @media (prefers-color-scheme: dark) {
+    border-color: var(--color-sub-3);
+    background-color: var(--color-main);
   }
 }
 

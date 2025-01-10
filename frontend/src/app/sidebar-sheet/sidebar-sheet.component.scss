@@ -10,21 +10,12 @@
   right: 0;
   width: 400px;
   height: 100vh;
-  background-color: var(--color-background);
+  background-color: transparent;
   box-shadow: var(--shadow);
   transform: translateX(100%);
   z-index: 1000;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
-
-  &.enable-transitions {
-    transition: transform 0.3s ease;
-  }
-
-  &.show {
-    transform: translateX(0);
-  }
 
   &.mobile {
     top: auto;
@@ -38,47 +29,35 @@
     margin: 0;
     padding: 0;
     background-color: transparent;
-    display: flex;
-    flex-direction: column;
-
-    &.show {
-      transform: translateY(0);
-    }
 
     .sheet-header {
-      padding: 12px;
       background-color: var(--color-sheet-background);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border-top-left-radius: var(--button-border-radius);
       border-top-right-radius: var(--button-border-radius);
-      border-bottom: 1px solid var(--color-sub-3);
-      position: sticky;
-      top: 0;
-      z-index: 2;
-      color: var(--color-text);
-
-      h3 {
-        margin: 0;
-        color: var(--color-text);
-      }
-
-      button {
-        color: var(--color-text);
-        
-        mat-icon {
-          color: var(--color-text);
-        }
-      }
     }
 
     .sheet-content {
-      padding: 12px;
-      flex: 1;
-      overflow-y: auto;
       background-color: var(--color-sheet-background);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .sheet-header, .sheet-content {
+      background-color: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+  }
+
+  &.show {
+    transform: translateX(0);
+    
+    &.mobile {
+      transform: translateY(0);
     }
   }
 }
@@ -128,5 +107,29 @@
   &.show {
     opacity: 1;
     visibility: visible;
+  }
+}
+
+// Dark theme styles
+:host-context(.dark-theme) {
+  .sidebar-sheet.mobile {
+    .sheet-header, .sheet-content {
+      background-color: rgba(23, 23, 25, 0.8);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+  }
+}
+
+// System dark mode styles
+@media (prefers-color-scheme: dark) {
+  :root:not(.light-theme) {
+    .sidebar-sheet.mobile {
+      .sheet-header, .sheet-content {
+        background-color: rgba(23, 23, 25, 0.8);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+    }
   }
 }
