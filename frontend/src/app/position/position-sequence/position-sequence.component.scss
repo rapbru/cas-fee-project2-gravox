@@ -186,8 +186,8 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 12px;
-  padding-bottom: 8px;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
   border: none;
 
   .check-circle {
@@ -307,7 +307,7 @@
 .position-details {
   display: flex;
   justify-content: space-around;
-  padding: 12px;
+  padding: 12px 12px 8px;
   gap: 16px;
   border: none;
 
@@ -320,11 +320,17 @@
     border: none;
 
     mat-icon {
-      font-size: 24px;
-      height: 24px;
-      width: 24px;
+      font-size: 32px;
+      height: 32px;
+      width: 32px;
       margin-bottom: 4px;
       padding-right: 8px;
+      font-weight: 300;
+      font-variation-settings: 'wght' 300, 'FILL' 0;
+    }
+
+    .mat-icon-filled {
+      font-variation-settings: 'wght' 300, 'FILL' 1;
     }
 
     .label, .unit {
