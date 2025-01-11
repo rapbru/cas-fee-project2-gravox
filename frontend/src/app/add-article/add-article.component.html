@@ -82,8 +82,25 @@
     </div>
   </form>
 
-  <app-position-sequence 
-    (selectedPositionsChange)="onSequenceChange($event)">
-  </app-position-sequence>
+  <div class="positions-section">
+    <div class="selected-positions">
+      <h3>Ausgewählte Positionen</h3>
+      <div cdkDropList (cdkDropListDropped)="onDrop($event)" class="positions-container">
+        @for (position of selectedPositions; track position.id) {
+          <app-sequence-card
+            [position]="position"
+            [index]="$index"
+            [editingPosition]="editingPosition"
+            [editingField]="editingField"
+            (toggleSelection)="toggleSelection($event)"
+            (remove)="removePosition($event)"
+            (startEditing)="startEditing($event)"
+            (confirmEdit)="confirmEdit($event)"
+            (cancelEdit)="cancelEdit()">
+          </app-sequence-card>
+        }
+      </div>
+    </div>
+  </div>
 </div>
 

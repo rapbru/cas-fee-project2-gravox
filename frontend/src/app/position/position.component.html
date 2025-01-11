@@ -44,7 +44,6 @@
     </div>
   
     <div *ngIf="!enableMultiSelect() && !enableOrder()" class="position-metrics">
-        <!-- Time -->
         <ng-container *ngIf="!collapsed && !enableEdit(); else collapsedTime">
             <div class="metric">
                 <mat-icon>timer</mat-icon>
@@ -58,7 +57,6 @@
             </div>
         </ng-template>
         
-        <!-- Temperature -->
         <ng-container *ngIf="!collapsed && !enableEdit(); else collapsedTemperature">
             <ng-container *ngIf="position.temperature.isPresent; else noTemperature">
                 <div class="metric">
@@ -87,7 +85,6 @@
             </ng-template>            
         </ng-template>
         
-        <!-- Current -->
         <ng-container *ngIf="!collapsed && !enableEdit(); else collapsedCurrent">
             <ng-container *ngIf="position.current.isPresent; else noCurrent">
                 <div class="metric">
@@ -114,7 +111,6 @@
             </ng-template>            
         </ng-template>
 
-        <!-- Voltage -->
         <ng-container *ngIf="!collapsed && !enableEdit(); else collapsedVoltage">
             <ng-container *ngIf="position.voltage.isPresent; else noVoltage">
                 <div class="metric">
