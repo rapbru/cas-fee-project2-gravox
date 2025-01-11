@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { PositionService } from './position.service';
-import { ErrorHandlingService } from './error-handling.service';
+import { ErrorHandlingService } from './snackbar.service';
 import { ApiConfigService } from './api-config.service';
 import { OverviewStateService } from './overview-state.service';
 import { ColumnManagementService } from './column-management.service';

@@ -12,6 +12,7 @@ import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-
 import { SequenceCardComponent } from '../sequence-card/sequence-card.component';
 import { ArticleService } from '../services/article.service';
 import { finalize } from 'rxjs/operators';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-articles-details',
@@ -21,7 +22,8 @@ import { finalize } from 'rxjs/operators';
     MatButtonModule,
     ArticleCardComponent,
     DragDropModule,
-    SequenceCardComponent
+    SequenceCardComponent, 
+    MatProgressSpinnerModule
   ],
   templateUrl: './articles-details.component.html',
   styleUrls: ['./articles-details.component.scss']
@@ -29,6 +31,7 @@ import { finalize } from 'rxjs/operators';
 export class ArticlesDetailsComponent implements OnInit, OnDestroy {
   article: Article | null = null;
   public readonly enableEdit = this.overviewStateService.enableEdit;
+  isLoading = this.articleService.getIsLoading();
 
   constructor(
     private route: ActivatedRoute,
@@ -76,15 +79,7 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
 
   public onLoad() {
     if (this.article?.id) {
-      this.articleService.loadArticleToPlc(this.article.id)
-        .subscribe({
-          next: () => {
-            console.log('Article loaded to PLC successfully');
-          },
-          error: (error) => {
-            console.error('Error loading article to PLC:', error);
-          }
-        });
+      this.articleService.loadArticleToPlc(this.article.id);
     }
   }
 

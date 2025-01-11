@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ArticleService } from '../services/article.service';
 import { HeaderService } from '../services/header.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-article-card',
@@ -19,7 +20,8 @@ import { HeaderService } from '../services/header.service';
     FormsModule,
     MatButtonModule,
     MatIconModule,
-    MatCheckboxModule
+    MatCheckboxModule, 
+    MatProgressSpinnerModule
   ],
   templateUrl: './article-card.component.html',
   styleUrls: ['./article-card.component.scss'],
@@ -38,6 +40,8 @@ export class ArticleCardComponent {
   @Input() isInDetails: boolean = false;
   @Output() selectionChange = new EventEmitter<boolean>();
   @Output() cardClick = new EventEmitter<number>();
+
+  isLoading = this.articleService.getIsLoading();
 
   constructor(
     private router: Router,
@@ -59,15 +63,7 @@ export class ArticleCardComponent {
 
   onLoad() {
     if (this.article?.id) {
-      this.articleService.loadArticleToPlc(this.article.id)
-        .subscribe({
-          next: () => {
-            console.log('Article loaded to PLC successfully');
-          },
-          error: (error) => {
-            console.error('Error loading article to PLC:', error);
-          }
-        });
+      this.articleService.loadArticleToPlc(this.article.id);
     }
   }
 

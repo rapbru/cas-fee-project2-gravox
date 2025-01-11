@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { DeviceDetectionService } from '../services/device-detection.service';
 import { OverviewStateService } from '../services/overview-state.service';
 import { AddPositionComponent } from '../position/add-position/add-position.component';
-import { ErrorHandlingService } from '../services/error-handling.service';
+import { SnackbarService } from '../services/snackbar.service';
 import { ColumnManagementService } from '../services/column-management.service';
 import { PositionDragDropService } from '../services/position-drag-drop.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -52,7 +52,7 @@ export class OverviewComponent implements OnDestroy, OnInit {
     private deviceDetectionService: DeviceDetectionService,
     private positionDragDropService: PositionDragDropService,
     public overviewStateService: OverviewStateService,
-    private errorHandlingService: ErrorHandlingService,
+    private snackbarService: SnackbarService,
     private headerService: HeaderService
   ) {
     this.columnManagementService.columnsChanged.subscribe(() => {
@@ -108,7 +108,7 @@ export class OverviewComponent implements OnDestroy, OnInit {
 
   public savePosition(position: Position) {
     if (!position.number || position.number === 0 || !position.name || position.name.trim().length === 0) {
-      this.errorHandlingService.showError('Positionsnummer und Name sind erforderlich');
+      this.snackbarService.showError('Positionsnummer und Name sind erforderlich');
       return;
     }
     

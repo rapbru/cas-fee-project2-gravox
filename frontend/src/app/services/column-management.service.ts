@@ -2,12 +2,11 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { ColumnSettings, ColumnSettingsDTO } from '../models/column-settings.model';
 import { Position } from '../models/position.model';
 import { HttpClient } from '@angular/common/http';
-import { ErrorHandlingService } from './error-handling.service';
+import { SnackbarService } from './snackbar.service';
 import { Observable, of } from 'rxjs';
 import { tap, catchError, map } from 'rxjs/operators';
 import { PositionIndex } from '../models/position-index.model';
 import { ApiConfigService } from '../services/api-config.service';
-import { DeviceDetectionService } from './device-detection.service';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +31,7 @@ export class ColumnManagementService {
 
   constructor(
     private http: HttpClient,
-    private errorHandlingService: ErrorHandlingService,
+    private snackbarService: SnackbarService,
     private apiConfig: ApiConfigService
   ) {
     this.apiUrl = this.apiConfig.getUrl('settings/columns');
@@ -57,7 +56,7 @@ export class ColumnManagementService {
         this.updateColumnDistribution();
       }),
       catchError(error => {
-        this.errorHandlingService.showError('Fehler beim Laden der Spalteneinstellungen', error);
+        this.snackbarService.showError('Fehler beim Laden der Spalteneinstellungen', error);
         const defaultSettings = this.getDefaultColumnSettings();
         this.originalSettings = { ...defaultSettings };
         this.applySettings(defaultSettings); 
@@ -68,7 +67,7 @@ export class ColumnManagementService {
 
   public increaseColumns(): void {
     if (this.columnCount >= this.COLUMN_MAX_COUNT) {
-      this.errorHandlingService.showError(
+      this.snackbarService.showError(
         `Maximale Spaltenanzahl (${this.COLUMN_MAX_COUNT}) erreicht. Bildschirm zu klein für weitere Spalten.`
       );
       return;
@@ -175,7 +174,7 @@ export class ColumnManagementService {
         this.updateColumnDistribution();
       }),
       catchError(error => {
-        this.errorHandlingService.showError('Fehler beim Speichern der Spalteneinstellungen');
+        this.snackbarService.showError('Fehler beim Speichern der Spalteneinstellungen');
         throw error;
       })
     );

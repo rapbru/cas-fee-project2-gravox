@@ -135,6 +135,43 @@ export default class PLCService {
         }
     }
 
+    async findFreeFBNumber() {
+        const fbNumber = await this.tagService.findFreeFBNumber();
+        logger.info(`Free flightbar number found: ${fbNumber}`);
+        return fbNumber;
+    }
+
+    async writeFBNumber(positionNumber, fbNumber) {
+        return this.tagService.writeFBNumber(positionNumber, fbNumber);
+    }
+
+    async resetFBArray(fbNumber) {
+        try {
+            return await this.tagService.resetFBArray(fbNumber);
+        } catch (error) {
+            logger.error(`Error resetting FB array for FB ${fbNumber}:`, error);
+            throw error;
+        }
+    }
+
+    async writeTagGroupDirect(tags) {
+        try {
+            return await this.tagService.writeTagGroupDirect(tags);
+        } catch (error) {
+            logger.error('Error writing tag group directly:', error);
+            throw error;
+        }
+    }
+
+    async writeMultipleBits(tagName, bits) {
+        try {
+            return await this.tagService.writeMultipleBits(tagName, bits);
+        } catch (error) {
+            logger.error(`Error writing bits for ${tagName}:`, error);
+            throw error;
+        }
+    }
+
     static getInstance(plcConnection) {
         if (!PLCService.instance) {
             PLCService.instance = new PLCService(plcConnection);

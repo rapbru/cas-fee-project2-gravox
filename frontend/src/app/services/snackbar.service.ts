@@ -5,7 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class ErrorHandlingService {
+export class SnackbarService {
   constructor(private snackBar: MatSnackBar) {}
 
   showError(message: string, error?: any): void {
@@ -24,7 +24,7 @@ export class ErrorHandlingService {
     this.snackBar.open(userMessage, '', {
       duration: 5000,
       panelClass: ['error-snackbar'],
-      verticalPosition: 'bottom',
+      verticalPosition: 'top',
       horizontalPosition: 'center'
     });
   }

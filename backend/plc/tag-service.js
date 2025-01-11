@@ -176,22 +176,22 @@ export default class TagService {
         }
     }
 
-    async resetWTArray(wtNumber) {
+    async resetFBArray(fbNumber) {
         try {
             const group = new TagGroup();
             const { DINT } = EthernetIP.CIP.DataTypes.Types;
             
             for (let i = 0; i < 1000; i++) {
-                const tag = new Tag(`WT[${wtNumber},${i}]`, null, DINT);
+                const tag = new Tag(`WT[${fbNumber},${i}]`, null, DINT);
                 tag.value = 0;
                 group.add(tag);
             }
 
             await this.plcConnection.controller.PLC.writeTagGroup(group);
-            logger.info(`WT[${wtNumber}] Array erfolgreich zurückgesetzt`);
+            logger.info(`Flightbar[${fbNumber}] array successfully reset`);
             return true;
         } catch (error) {
-            logger.error(`Error resetting WT[${wtNumber}] array:`, error);
+            logger.error(`Error resetting flightbar[${fbNumber}] array:`, error);
             throw error;
         }
     }
@@ -215,7 +215,7 @@ export default class TagService {
             tag.value = newValue;
             await this.plcConnection.controller.PLC.writeTag(tag);
             
-            logger.info(`Bits ${bits.map(b => b.bitNumber).join(', ')} von ${tagName} gesetzt, neuer Wert: ${newValue}`);
+            logger.info(`Bits ${bits.map(b => b.bitNumber).join(', ')} of ${tagName} set, new value: ${newValue}`);
             return true;
         } catch (error) {
             logger.error(`Error writing bits of ${tagName}:`, error);
@@ -227,7 +227,7 @@ export default class TagService {
         return this.writeMultipleBits(tagName, [{ bitNumber, value }]);
     }
 
-    async getAllWTNumbers() {
+    async getAllFBNumbers() {
         try {
             const group = new TagGroup();
             const { DINT } = EthernetIP.CIP.DataTypes.Types;
@@ -248,38 +248,38 @@ export default class TagService {
 
             return Array.from(activeWTNumbers);
         } catch (error) {
-            logger.error('Error reading WT numbers:', error);
+            logger.error('Error reading flightbar numbers:', error);
             throw error;
         }
     }
 
-    async findFreeWTNumber() {
+    async findFreeFBNumber() {
         try {
-            const activeWTNumbers = await this.getAllWTNumbers();
+            const activeFBNumbers = await this.getAllFBNumbers();
             
             for (let i = 1; i <= 30; i++) {
-                if (!activeWTNumbers.includes(i)) {
+                if (!activeFBNumbers.includes(i)) {
                     return i;
                 }
             }
             
-            throw new Error('Keine freie WT-Nummer verfügbar (1-30 sind alle belegt)');
+            throw new Error('No free flightbar number available (1-30 are all occupied)');
         } catch (error) {
-            logger.error('Error finding free WT number:', error);
+            logger.error('Error finding free flightbar number:', error);
             throw error;
         }
     }
 
-    async writeWTNumber(positionNumber, wtNumber) {
+    async writeFBNumber(positionNumber, fbNumber) {
         try {
             const { DINT } = EthernetIP.CIP.DataTypes.Types;
             const tag = new Tag(`POS[${positionNumber}].FB.NBR`, null, DINT);
-            tag.value = wtNumber;
+            tag.value = fbNumber;
             await this.plcConnection.controller.PLC.writeTag(tag);
-            logger.info(`WT-Nummer ${wtNumber} in Position ${positionNumber} geschrieben`);
+            logger.info(`Flightbar number ${fbNumber} to position ${positionNumber} written`);
             return true;
         } catch (error) {
-            logger.error(`Error writing WT number to position ${positionNumber}:`, error);
+            logger.error(`Error writing flightbar number to position ${positionNumber}:`, error);
             throw error;
         }
     }
