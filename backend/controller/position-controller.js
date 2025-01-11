@@ -17,9 +17,9 @@ export class PositionController {
     getAllPositions = async (req, res) => {
         try {
             const positions = await this.positionService.getPositions();
-            res.json(positions);
+            return res.status(200).json(positions);
         } catch (err) {
-            res.status(500).json({ error: 'Internal Server Error' });
+            return res.status(500).json({ error: 'Internal Server Error' });
         }
     };
 
@@ -27,9 +27,12 @@ export class PositionController {
         const positionId = req.params.id;
         try {
             const position = await this.positionService.getPositionById(positionId);
-            res.json(position);
+            if (!position) {
+                return res.status(404).json({ error: 'Position not found' });
+            }
+            return res.status(200).json(position);
         } catch (err) {
-            res.status(500).json({ error: 'Internal Server Error' });
+            return res.status(500).json({ error: 'Internal Server Error' });
         }
     };
 
@@ -39,7 +42,7 @@ export class PositionController {
             const newPosition = await this.positionService.createPosition(positionData);
             return res.status(201).json(newPosition);
         } catch (err) {
-            return res.status(500).json({ error: 'Interner Server Fehler' });
+            return res.status(500).json({ error: 'Internal Server Error' });
         }
     };
 
@@ -57,7 +60,7 @@ export class PositionController {
         try {
             const { positionIds } = req.body;
             await this.positionService.deletePositions(positionIds);
-            return res.status(200).json({ message: 'Positionen erfolgreich gelöscht' });
+            return res.status(200).json({ message: 'Positions successfully deleted' });
         } catch (error) {
             return res.status(500).json({ error: error.message });
         }
@@ -67,7 +70,7 @@ export class PositionController {
         try {
             const { positions } = req.body;
             await this.positionService.savePositionOrder(positions);
-            return res.status(200).json({ message: 'Positionsreihenfolge erfolgreich gespeichert' });
+            return res.status(200).json({ message: 'Position order successfully saved' });
         } catch (error) {
             return res.status(500).json({ error: error.message });
         }

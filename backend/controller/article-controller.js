@@ -4,7 +4,7 @@ class ArticleController {
     static getAllArticles = async (req, res) => {
         try {
             const articles = await ArticleService.getArticles();
-            return res.json(articles);
+            return res.status(200).json(articles);
         } catch (err) {
             return res.status(500).json({ error: 'Internal Server Error' });
         }
