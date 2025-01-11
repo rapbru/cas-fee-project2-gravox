@@ -5,7 +5,7 @@
     "node": "20.x"
   },
   "scripts": {
-    "postinstall": "cd frontend && npm install && npm run build-dev && cd ../backend && npm install",
-    "start": "cd backend && npm start-dev"
+    "postinstall": "cd frontend && npm install && npx ng build --configuration=development && cd ../backend && npm install",
+    "start": "cd backend && npm run start-dev"
   }
 } 
