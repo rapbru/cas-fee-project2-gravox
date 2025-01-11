@@ -82,6 +82,8 @@
     </div>
   </form>
 
-  <app-position-sequence></app-position-sequence>
+  <app-position-sequence 
+    (selectedPositionsChange)="onSequenceChange($event)">
+  </app-position-sequence>
 </div>
 
