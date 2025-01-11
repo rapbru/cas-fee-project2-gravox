@@ -9,7 +9,7 @@ import { LoggerService } from '../../services/logger.service';
 import { SidebarSheetComponent } from '../../sidebar-sheet/sidebar-sheet.component';
 import { PositionDragDropService } from '../../services/position-drag-drop.service';
 import { ToolbarComponent } from '../../toolbar/toolbar.component';
-import { Sequence } from '../../models/article.model';
+import { Sequence } from '../../models/sequence.model';
 
 type PresetField = 'timePreset' | 'currentPreset' | 'voltagePreset';
 
@@ -60,30 +60,18 @@ export class PositionSequenceComponent {
       event.stopPropagation();
     }
     
-    // Add sequence values to the position
     const enrichedPosition: Position = {
       ...position,
-      timePreset: 0,     // Default time preset
-      currentPreset: 0,  // Default current preset
-      voltagePreset: 0   // Default voltage preset
+      timePreset: 0,
+      currentPreset: 0,
+      voltagePreset: 0
     };
     
-    // Add to selected positions with order number
-    const orderNumber = this.selectedPositions.length + 1;
     this.selectedPositions = [...this.selectedPositions, enrichedPosition];
-    
-    // Emit the sequence data
-    this.selectedPositionsChange.emit(this.selectedPositions.map((pos, index) => ({
-      positionId: pos.id.toString(),
-      orderNumber: index + 1,
-      timePreset: pos.timePreset?.toString() || '0',
-      currentPreset: pos.currentPreset?.toString() || '0',
-      voltagePreset: pos.voltagePreset?.toString() || '0'
-    })));
+    this.selectedPositionsChange.emit(this.createSequenceArray());
 
     this.logger.log('Position added to sequence:', enrichedPosition);
 
-    // Scroll to the newly added position
     setTimeout(() => {
       if (this.selectedPositionsContainer) {
         const container = this.selectedPositionsContainer.nativeElement;
@@ -92,7 +80,6 @@ export class PositionSequenceComponent {
           const isMobile = window.innerWidth < 768;
           const viewportHeight = window.innerHeight;
           
-          // Calculate optimal scroll position based on viewport height
           const scrollOptions = {
             behavior: 'smooth' as ScrollBehavior,
             block: isMobile ? 'start' : 
@@ -108,15 +95,7 @@ export class PositionSequenceComponent {
 
   onRemovePosition(position: Position) {
     this.selectedPositions = this.selectedPositions.filter(p => p !== position);
-    
-    // Transform positions to sequences before emitting
-    this.selectedPositionsChange.emit(this.selectedPositions.map((pos, index) => ({
-      positionId: pos.id.toString(),
-      orderNumber: index + 1,
-      timePreset: pos.timePreset?.toString() || '0',
-      currentPreset: pos.currentPreset?.toString() || '0',
-      voltagePreset: pos.voltagePreset?.toString() || '0'
-    })));
+    this.selectedPositionsChange.emit(this.createSequenceArray());
     
     this.logger.log('Position removed from sequence:', position);
   }
@@ -134,6 +113,7 @@ export class PositionSequenceComponent {
     const columns = [this.selectedPositions];
     this.positionDragDropService.handleDrop(event, columns, 0);
     this.selectedPositions = columns[0];
+    this.selectedPositionsChange.emit(this.createSequenceArray());
   }
 
   hasSelectedPositions(): boolean {
@@ -143,15 +123,7 @@ export class PositionSequenceComponent {
   deleteSelectedPositions() {
     if (!this.hasSelectedPositions()) return;
     this.selectedPositions = this.selectedPositions.filter(position => !position.isSelected);
-    
-    // Transform positions to sequences before emitting
-    this.selectedPositionsChange.emit(this.selectedPositions.map((pos, index) => ({
-      positionId: pos.id.toString(),
-      orderNumber: index + 1,
-      timePreset: pos.timePreset?.toString() || '0',
-      currentPreset: pos.currentPreset?.toString() || '0',
-      voltagePreset: pos.voltagePreset?.toString() || '0'
-    })));
+    this.selectedPositionsChange.emit(this.createSequenceArray());
   }
 
   openPositionSelector() {
@@ -190,46 +162,37 @@ export class PositionSequenceComponent {
     const selectionEnd = input.selectionEnd || 0;
     const key = event.key;
 
-    // Always allow navigation keys
     if (['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(key)) {
       return;
     }
 
-    // Prevent any non-numeric input except decimal point
     if (!/^\d$/.test(key) && key !== '.') {
       event.preventDefault();
       return;
     }
 
-    // Calculate what the new value would be
     const newValue = value.slice(0, selectionStart) + key + value.slice(selectionEnd);
 
-    // Validate decimal point
     if (key === '.') {
-      // Only allow one decimal point
       if (value.includes('.')) {
         event.preventDefault();
         return;
       }
-      return; // Allow decimal point at any position
+      return;
     }
 
-    // Validate number format
     const parts = newValue.split('.');
     
-    // Check digits before decimal
     if (parts[0].length > 3) {
       event.preventDefault();
       return;
     }
 
-    // Check digits after decimal
     if (parts[1] && parts[1].length > 2) {
       event.preventDefault();
       return;
     }
 
-    // Prevent values over 999.99
     const numValue = parseFloat(newValue);
     if (!isNaN(numValue) && numValue > 999.99) {
       event.preventDefault();
@@ -242,17 +205,20 @@ export class PositionSequenceComponent {
     
     let numValue = parseFloat(value);
     if (!isNaN(numValue) && numValue >= 0 && numValue <= 999.99) {
-      // Round to two decimal places
       position[field] = Math.round(numValue * 100) / 100;
-      this.selectedPositionsChange.emit(this.selectedPositions.map((pos, index) => ({
-        positionId: pos.id.toString(),
-        orderNumber: index + 1,
-        timePreset: pos.timePreset?.toString() || '0',
-        currentPreset: pos.currentPreset?.toString() || '0',
-        voltagePreset: pos.voltagePreset?.toString() || '0'
-      })));
+      this.selectedPositionsChange.emit(this.createSequenceArray());
     }
     
     this.cancelEdit();
+  }
+
+  private createSequenceArray(): Sequence[] {
+    return this.selectedPositions.map((pos, index) => ({
+      positionId: pos.id.toString(),
+      orderNumber: index + 1,
+      timePreset: pos.timePreset ?? 0,
+      currentPreset: pos.currentPreset ?? 0,
+      voltagePreset: pos.voltagePreset ?? 0
+    }));
   }
 }

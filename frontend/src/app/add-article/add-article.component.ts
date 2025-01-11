@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { InputFieldComponent } from '../input-field/input-field.component';
-import { Article } from '../models/article.model';
+import { Article, Sequence as ArticleSequence } from '../models/article.model';
 import { Position } from '../models/position.model';
 import { LoggerService } from '../services/logger.service';
 import { environment } from '../../environments/environment';
@@ -15,6 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { HeaderService } from '../services/header.service';
 import { PositionService } from '../services/position.service';
 import { PositionSequenceComponent } from '../position/position-sequence/position-sequence.component';
+import { Sequence as PositionSequence } from '../models/sequence.model';
 
 @Component({
   selector: 'app-add-article',
@@ -53,6 +54,8 @@ export class AddArticleComponent implements OnInit {
   maxLengthAnodic = 20;
   maxLengthComment = 100;
 
+  sequences: ArticleSequence[] = [];
+
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -73,6 +76,16 @@ export class AddArticleComponent implements OnInit {
     this.positionService.stopFetching();
   }
 
+  onSequenceChange(sequences: PositionSequence[]) {
+    this.sequences = sequences.map(seq => ({
+      positionId: seq.positionId,
+      orderNumber: seq.orderNumber,
+      timePreset: (seq.timePreset ?? 0).toString(),
+      currentPreset: (seq.currentPreset ?? 0).toString(),
+      voltagePreset: (seq.voltagePreset ?? 0).toString()
+    }));
+  }
+
   onSave() {
     if (this.enableLogging) {
       this.loggerService.log('Saving article:', this.article);
@@ -87,7 +100,7 @@ export class AddArticleComponent implements OnInit {
       anodic: this.article.anodic,
       note: this.article.comment,
       createdBy: 'system',
-      sequence: []
+      sequence: this.sequences
     };
 
     this.http.post<Article>(`${environment.apiUrl}/article`, articleData)
