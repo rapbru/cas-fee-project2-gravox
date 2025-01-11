@@ -3,7 +3,7 @@ const mockPositions = [
         "id": 1,
         "number": 50,
         "name": "Laden/Entladen",
-        "flightbar": 2,
+        "flightbar": 0,
         "articleName": "Artikel",
         "customerName": "Kunde",
         "time": {
@@ -273,11 +273,11 @@ const mockPositions = [
         "id": 200,
         "number": 52,
         "name": "Speicher",
-        "flightbar": 12,
+        "flightbar": 0,
         "articleName": "Artikel",
         "customerName": "Kunde",
         "time": {
-            "actual": 24510,
+            "actual": 0,
             "preset": 0
         },
         "temperature": {
@@ -381,11 +381,11 @@ const mockPositions = [
         "id": 181,
         "number": 51,
         "name": "Speicher",
-        "flightbar": 0,
+        "flightbar": 1,
         "articleName": "Artikel",
         "customerName": "Kunde",
         "time": {
-            "actual": 0,
+            "actual": 10303,
             "preset": 1
         },
         "temperature": {
@@ -413,7 +413,7 @@ const mockPositions = [
         "customerName": "Kunde",
         "time": {
             "actual": 0,
-            "preset": 60
+            "preset": 690
         },
         "temperature": {
             "actual": 82,
@@ -440,7 +440,7 @@ const mockPositions = [
         "customerName": "Kunde",
         "time": {
             "actual": 0,
-            "preset": 650
+            "preset": 30
         },
         "temperature": {
             "actual": 22.299999237060547,
@@ -467,7 +467,7 @@ const mockPositions = [
         "customerName": "Kunde",
         "time": {
             "actual": 0,
-            "preset": 205
+            "preset": 60
         },
         "temperature": {
             "actual": 0,
