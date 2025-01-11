@@ -1,0 +1,11 @@
+{
+  "name": "cas-fee-project2-gravox",
+  "version": "1.0.0",
+  "engines": {
+    "node": "20.x"
+  },
+  "scripts": {
+    "postinstall": "cd frontend && npm install && npm run build-dev && cd ../backend && npm install",
+    "start": "cd backend && npm start-dev"
+  }
+} 
