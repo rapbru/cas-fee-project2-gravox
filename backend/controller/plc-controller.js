@@ -3,12 +3,19 @@ import PLCMockData from '../data/plc-mock-data.js';
 import PLCConnection from '../plc/plc-connection.js'
 import ArticleService from '../services/article-service.js';
 import ArticleLoadingService from '../services/article-loading-service.js';
+import ArticleLoadingMock from '../data/article-loading-mock.js';
 
 export class PLCController {
     constructor() {
         this.plcConnection = new PLCConnection('10.198.200.39');
-        this.plcService = (process.env.NODE_ENV === "production" ? PLCService.getInstance(this.plcConnection) : new PLCMockData());
-        this.articleLoadingService = new ArticleLoadingService(this.plcService);
+        
+        if (process.env.NODE_ENV === "production") {
+            this.plcService = PLCService.getInstance(this.plcConnection);
+            this.articleLoadingService = new ArticleLoadingService(this.plcService);
+        } else {
+            this.plcService = new PLCMockData();
+            this.articleLoadingService = new ArticleLoadingMock();
+        }
     }
 
     getAllValues = async (req, res) => {
