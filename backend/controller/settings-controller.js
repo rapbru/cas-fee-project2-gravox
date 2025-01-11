@@ -1,8 +1,13 @@
 import SettingsService from '../services/settings-service.js';
+import SettingsMockService from '../services/mock/settings-mock-service.js';
 
 export class SettingsController {
     constructor() {
-        this.settingsService = new SettingsService();
+        if (process.env.NODE_ENV === "production") {
+            this.settingsService = new SettingsService();
+        } else {
+            this.settingsService = new SettingsMockService();
+        }
     }
 
     getColumnSettings = async (req, res) => {
