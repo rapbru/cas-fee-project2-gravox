@@ -6,7 +6,7 @@ import { interval, Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { OverviewStateService } from './overview-state.service';
 import { ColumnManagementService } from './column-management.service';
-import { ErrorHandlingService } from './error-handling.service';
+import { SnackbarService } from './snackbar.service';
 import { PositionOrderService } from './position-order.service';
 import { ApiConfigService } from '../services/api-config.service';
 import { BehaviorSubject } from 'rxjs';
@@ -34,7 +34,7 @@ export class PositionService {
     private snackbar: MatSnackBar,
     private overviewStateService: OverviewStateService,
     private columnManagementService: ColumnManagementService,
-    private errorHandlingService: ErrorHandlingService,
+    private snackbarService: SnackbarService,
     private positionOrderService: PositionOrderService,
     private apiConfig: ApiConfigService
   ) {
@@ -127,10 +127,10 @@ export class PositionService {
     return this.http.post<Position>(this.apiUrl, position).pipe(
       map(response => this.transformData([response])[0]),
       tap(() => {        
-        this.errorHandlingService.showSuccess('Position erfolgreich erstellt');
+        this.snackbarService.showSuccess('Position erfolgreich erstellt');
       }),
       catchError(error => {
-        this.errorHandlingService.showError('Fehler beim Erstellen der Position');
+        this.snackbarService.showError('Fehler beim Erstellen der Position');
         throw error;
       })
     );
@@ -143,7 +143,7 @@ export class PositionService {
                 this.saveRemainingOperations();
             },
             error: (error) => {
-                this.errorHandlingService.showError('Fehler beim Speichern der neuen Positionen', error);
+                this.snackbarService.showError('Fehler beim Speichern der neuen Positionen', error);
             }
         });
     } else {
@@ -192,19 +192,19 @@ export class PositionService {
     if (this.hasModifications()) {
         this.handleModifiedPositions().forEach(observable => 
             observable.subscribe({
-                error: (error) => this.errorHandlingService.showError('Fehler beim Aktualisieren der Positionen', error)
+                error: (error) => this.snackbarService.showError('Fehler beim Aktualisieren der Positionen', error)
             })
         );
     }
 
     // Löschungen
     this.handleDeletedPositions().subscribe({
-      error: (error) => this.errorHandlingService.showError('Fehler beim Löschen der Positionen', error)
+      error: (error) => this.snackbarService.showError('Fehler beim Löschen der Positionen', error)
     });
 
     // Spalteneinstellungen
     this.columnManagementService.saveColumnSettings().subscribe({
-        error: (error) => this.errorHandlingService.showError('Fehler beim Speichern der Spalteneinstellungen', error)
+        error: (error) => this.snackbarService.showError('Fehler beim Speichern der Spalteneinstellungen', error)
     });
 
     // Positionsreihenfolge mit den aktualisierten IDs
@@ -212,10 +212,10 @@ export class PositionService {
     this.positionOrderService.savePositionOrder(editPositions.map(pos => pos.id)).subscribe({
         next: () => {
             this.clearModifiedPositions();
-            this.errorHandlingService.showSuccess('Änderungen gespeichert');
+            this.snackbarService.showSuccess('Änderungen gespeichert');
         },
         error: (error) => {
-            this.errorHandlingService.showError('Speichern fehlgeschlagen', error);
+            this.snackbarService.showError('Speichern fehlgeschlagen', error);
             // Optionally revert changes here if needed
             this.cancelAllChanges();
         }

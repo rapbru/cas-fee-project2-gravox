@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { PositionOrderService } from './position-order.service';
-import { ErrorHandlingService } from './error-handling.service';
+import { ErrorHandlingService } from './snackbar.service';
 import { ApiConfigService } from './api-config.service';
 import { Position } from '../models/position.model';
 import { PositionOrder } from '../models/position-order.model';

@@ -1,8 +1,14 @@
 <div class="content-container">
   @if (article) {
     <div class="article-actions">
-      <button class="button vonesco card-button" (click)="onLoad()">
-        <mat-icon>download</mat-icon>
+      <button class="button vonesco card-button" 
+              [disabled]="isLoading()" 
+              (click)="onLoad()">
+        @if (isLoading()) {
+          <mat-spinner diameter="20"></mat-spinner>
+        } @else {
+          <mat-icon>download</mat-icon>
+        }
         <span>Laden</span>
       </button>
     </div>

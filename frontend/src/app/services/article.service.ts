@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Signal, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap, Observable, of } from 'rxjs';
 import { AuthService } from '../authentication/auth.service';
@@ -6,6 +6,7 @@ import { LoggerService } from './logger.service';
 import { ApiConfigService } from './api-config.service';
 import { Article } from '../models/article.model';
 import { environment } from '../../environments/environment';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +15,14 @@ export class ArticleService {
   private apiUrl: string;
   private modifiedArticles: Set<Article> = new Set();
   private currentArticle: Article | null = null;
+  private isLoading = signal(false);
 
   constructor(
     private http: HttpClient,
     private authService: AuthService,
     private logger: LoggerService,
-    private apiConfig: ApiConfigService
+    private apiConfig: ApiConfigService,
+    private snackbarService: SnackbarService
   ) {
     this.apiUrl = this.apiConfig.getUrl('article');
   }
@@ -91,8 +94,24 @@ export class ArticleService {
     return this.currentArticle;
   }
 
-  loadArticleToPlc(articleId: number) {
-    return this.http.post(`${environment.apiUrl}/plc/load/${articleId}`, {});
+  loadArticleToPlc(articleId: number): void {
+    this.isLoading.set(true);
+    this.http.post<{message: string}>(`${environment.apiUrl}/plc/load/${articleId}`, {}).pipe(
+      tap((response) => {
+        this.snackbarService.showSuccess(response.message);
+        this.isLoading.set(false);
+      }),
+      catchError(error => {
+        const errorMessage = error.error?.error || 'Fehler beim Laden des Artikels';
+        this.snackbarService.showError(errorMessage, error);
+        this.isLoading.set(false);
+        throw error;
+      })
+    ).subscribe();
+  }
+
+  getIsLoading(): Signal<boolean> {
+    return this.isLoading.asReadonly();
   }
 
   private getAuthHeaders(): HttpHeaders {

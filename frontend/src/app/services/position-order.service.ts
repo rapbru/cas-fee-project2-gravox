@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map, tap } from 'rxjs';
 import { Position } from '../models/position.model';
 import { PositionOrder } from '../models/position-order.model';
-import { ErrorHandlingService } from './error-handling.service';
+import { SnackbarService } from './snackbar.service';
 import { ApiConfigService } from './api-config.service';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class PositionOrderService {
 
   constructor(
     private http: HttpClient,
-    private errorHandlingService: ErrorHandlingService,
+    private snackbarService: SnackbarService,
     private apiConfig: ApiConfigService
   ) {
     this.apiUrl = this.apiConfig.getUrl('settings/position-order');
@@ -27,10 +27,10 @@ export class PositionOrderService {
   savePositionOrder(positions: number[]): Observable<void> {
     return this.http.post<void>(this.apiUrl, { positions }).pipe(
       tap(() => {
-        this.errorHandlingService.showSuccess('Reihenfolge gespeichert');
+        this.snackbarService.showSuccess('Reihenfolge gespeichert');
       }),
       catchError(error => {
-        this.errorHandlingService.showError('Fehler beim Speichern der Reihenfolge');
+        this.snackbarService.showError('Fehler beim Speichern der Reihenfolge');
         throw error;
       })
     );

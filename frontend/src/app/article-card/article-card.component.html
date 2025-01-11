@@ -11,9 +11,13 @@
     </mat-checkbox>
     <h2>{{ article.title }}</h2>
     <button class="button vonesco card-button"
-            [disabled]="isLoadButtonDisabled"
+            [disabled]="isLoading()"
             (click)="onLoad(); $event.stopPropagation()">
-      <mat-icon>download</mat-icon>
+      @if (isLoading()) {
+        <mat-spinner diameter="20"></mat-spinner>
+      } @else {
+        <mat-icon>download</mat-icon>
+      }
       <span>Laden</span>
     </button>
   </div>
