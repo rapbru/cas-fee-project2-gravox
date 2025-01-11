@@ -8,7 +8,7 @@ import { OverviewStateService } from '../services/overview-state.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ArticleCardComponent } from '../article-card/article-card.component';
-import { PositionCardComponent } from '../position/position-card/position-card.component';
+import { SequenceCardComponent } from '../position/sequence-card/sequence-card.component';
 import { DragDropModule, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PositionService } from '../services/position.service';
@@ -24,7 +24,7 @@ import { firstValueFrom } from 'rxjs';
     MatIconModule,
     MatButtonModule,
     ArticleCardComponent,
-    PositionCardComponent,
+    SequenceCardComponent,
     DragDropModule,
     MatProgressSpinnerModule
   ],
@@ -34,6 +34,8 @@ import { firstValueFrom } from 'rxjs';
 export class ArticlesDetailsComponent implements OnInit, OnDestroy {
   article: Article | null = null;
   positions: Position[] = [];
+  editingPosition: Position | null = null;
+  editingField: string | null = null;
   public readonly enableEdit = this.overviewStateService.enableEdit;
   isLoading = this.articleService.getIsLoading();
 
@@ -185,5 +187,46 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
           }
         });
     }
+  }
+
+  onToggleSelection(position: Position) {
+    position.isSelected = !position.isSelected;
+  }
+
+  onRemovePosition(position: Position) {
+    this.positions = this.positions.filter(p => p !== position);
+    // Update article sequence accordingly
+  }
+
+  onStartEditing(event: {position: Position, field: string}) {
+    this.editingPosition = event.position;
+    this.editingField = event.field;
+  }
+
+  onConfirmEdit(event: {position: Position, field: string, value: string}) {
+    const value = parseFloat(event.value);
+    if (!isNaN(value)) {
+      const position = this.positions.find(p => p === event.position);
+      if (position) {
+        switch(event.field) {
+          case 'timePreset':
+            position.timePreset = value;
+            break;
+          case 'currentPreset':
+            position.currentPreset = value;
+            break;
+          case 'voltagePreset':
+            position.voltagePreset = value;
+            break;
+        }
+      }
+    }
+    this.editingPosition = null;
+    this.editingField = null;
+  }
+
+  onCancelEdit() {
+    this.editingPosition = null;
+    this.editingField = null;
   }
 }
