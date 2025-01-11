@@ -5,9 +5,11 @@
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0 --configuration=development",
     "start-prod": "ng serve --host 0.0.0.0 --configuration=production",
+    "start-heroku": "ng serve --host 0.0.0.0 --configuration=heroku",
     "build": "ng build",
     "build-dev": "ng build --configuration=development",
     "build-prod": "ng build --configuration=production",
+    "build-heroku": "ng build --configuration=heroku",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint"

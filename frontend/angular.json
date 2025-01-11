@@ -71,6 +71,30 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "heroku": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.heroku.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractLicenses": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "1mb",
+                  "maximumError": "2mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "8kb",
+                  "maximumError": "10kb"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -83,6 +107,9 @@
             },
             "development": {
               "buildTarget": "gravox:build:development"
+            },
+            "heroku": {
+              "buildTarget": "gravox:build:heroku"
             }
           },
           "defaultConfiguration": "development"
