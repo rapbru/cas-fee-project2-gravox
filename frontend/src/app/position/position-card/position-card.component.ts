@@ -16,30 +16,41 @@ import { FormsModule } from '@angular/forms';
   ],
   template: `
     <div class="position-card" [class.editable]="isEditable">
+      <div class="position-header" *ngIf="showHeader">
+        <div class="position-title">
+          Position {{position.number}}
+        </div>
+        <div class="position-checkbox" *ngIf="showCheckbox">
+          <input type="checkbox" [(ngModel)]="position.isSelected">
+        </div>
+      </div>
+      
       <div class="position-content">
         <div class="position-info">
-          <div class="info-column">
-            <div class="info-header">
-              <mat-icon>timer</mat-icon>
-              <span>Zeit (min)</span>
-            </div>
-            <div class="info-value">{{position.timePreset}}</div>
+          <div class="info-row">
+            <mat-icon>numbers</mat-icon>
+            <span class="label">Position:</span>
+            <span class="value">{{position.number}}</span>
           </div>
-          
-          <div class="info-column">
-            <div class="info-header">
-              <mat-icon>bolt</mat-icon>
-              <span>Strom (A)</span>
-            </div>
-            <div class="info-value">{{position.currentPreset}}</div>
+          <div class="info-row">
+            <mat-icon>label</mat-icon>
+            <span class="label">Name:</span>
+            <span class="value">{{position.name}}</span>
           </div>
-          
-          <div class="info-column">
-            <div class="info-header">
-              <mat-icon>electric_meter</mat-icon>
-              <span>Spannung (V)</span>
-            </div>
-            <div class="info-value">{{position.voltagePreset}}</div>
+          <div class="info-row" *ngIf="position.timePreset !== undefined">
+            <mat-icon>timer</mat-icon>
+            <span class="label">Zeit:</span>
+            <span class="value">{{position.timePreset}} min</span>
+          </div>
+          <div class="info-row" *ngIf="position.currentPreset !== undefined">
+            <mat-icon>bolt</mat-icon>
+            <span class="label">Strom:</span>
+            <span class="value">{{position.currentPreset}} A</span>
+          </div>
+          <div class="info-row" *ngIf="position.voltagePreset !== undefined">
+            <mat-icon>electric_meter</mat-icon>
+            <span class="label">Spannung:</span>
+            <span class="value">{{position.voltagePreset}} V</span>
           </div>
         </div>
       </div>
@@ -53,7 +64,6 @@ import { FormsModule } from '@angular/forms';
       padding: 16px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       transition: all 0.2s ease;
-      width: 100%;
 
       &.editable {
         cursor: move;
@@ -65,39 +75,44 @@ import { FormsModule } from '@angular/forms';
       }
     }
 
+    .position-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .position-title {
+      font-size: 1.1em;
+      font-weight: 500;
+      color: var(--color-text);
+    }
+
     .position-content {
       display: flex;
       flex-direction: column;
+      gap: 12px;
     }
 
-    .position-info {
+    .info-row {
       display: flex;
-      justify-content: space-between;
-      gap: 24px;
-    }
+      align-items: center;
+      gap: 8px;
+      padding: 4px 0;
 
-    .info-column {
-      flex: 1;
-      text-align: center;
-      
-      .info-header {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        margin-bottom: 8px;
+      mat-icon {
         color: var(--color-text-sub);
-        
-        mat-icon {
-          font-size: 20px;
-          width: 20px;
-          height: 20px;
-        }
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
       }
-      
-      .info-value {
-        font-size: 1.2em;
-        font-weight: 500;
+
+      .label {
+        color: var(--color-text-sub);
+        min-width: 80px;
+      }
+
+      .value {
         color: var(--color-text);
       }
     }
