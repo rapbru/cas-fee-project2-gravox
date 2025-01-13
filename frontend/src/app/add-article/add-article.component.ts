@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -14,9 +14,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { HeaderService } from '../services/header.service';
 import { PositionService } from '../services/position.service';
-import { MatButtonModule } from '@angular/material/button';
-import { DragDropModule, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { SequenceCardComponent } from '../position/sequence-card/sequence-card.component';
+import { PositionSequenceComponent } from '../position/position-sequence/position-sequence.component';
+import { Sequence as PositionSequence } from '../models/sequence.model';
 
 @Component({
   selector: 'app-add-article',
@@ -29,9 +28,7 @@ import { SequenceCardComponent } from '../position/sequence-card/sequence-card.c
     InputFieldComponent,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule,
-    DragDropModule,
-    SequenceCardComponent
+    PositionSequenceComponent
   ],
   templateUrl: './add-article.component.html',
   styleUrls: ['./add-article.component.scss']
@@ -58,9 +55,6 @@ export class AddArticleComponent implements OnInit {
   maxLengthComment = 100;
 
   sequences: ArticleSequence[] = [];
-  selectedPositions: Position[] = [];
-  editingPosition: Position | null = null;
-  editingField: string | null = null;
 
   constructor(
     private http: HttpClient,
@@ -82,7 +76,7 @@ export class AddArticleComponent implements OnInit {
     this.positionService.stopFetching();
   }
 
-  onSequenceChange(sequences: ArticleSequence[]) {
+  onSequenceChange(sequences: PositionSequence[]) {
     this.sequences = sequences.map(seq => ({
       positionId: seq.positionId,
       orderNumber: seq.orderNumber,
@@ -127,54 +121,5 @@ export class AddArticleComponent implements OnInit {
 
   onEscapeKey() {
     this.router.navigate(['/articles']);
-  }
-
-  toggleSelection(position: Position) {
-    position.isSelected = !position.isSelected;
-  }
-
-  removePosition(position: Position) {
-    this.selectedPositions = this.selectedPositions.filter(p => p !== position);
-    // Update any other state as needed
-  }
-
-  startEditing(event: {position: Position, field: string}) {
-    this.editingPosition = event.position;
-    this.editingField = event.field;
-  }
-
-  confirmEdit(event: {position: Position, field: string, value: string}) {
-    const value = parseFloat(event.value);
-    if (!isNaN(value)) {
-      const position = this.selectedPositions.find(p => p === event.position);
-      if (position) {
-        switch(event.field) {
-          case 'timePreset':
-            position.timePreset = value;
-            break;
-          case 'currentPreset':
-            position.currentPreset = value;
-            break;
-          case 'voltagePreset':
-            position.voltagePreset = value;
-            break;
-        }
-      }
-    }
-    this.editingPosition = null;
-    this.editingField = null;
-  }
-
-  cancelEdit() {
-    this.editingPosition = null;
-    this.editingField = null;
-  }
-
-  onDrop(event: CdkDragDrop<Position[]>) {
-    moveItemInArray(
-      this.selectedPositions,
-      event.previousIndex,
-      event.currentIndex
-    );
   }
 }
