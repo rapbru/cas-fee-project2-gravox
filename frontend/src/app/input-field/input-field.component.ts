@@ -15,7 +15,7 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule
   ],
   template: `
-    <div class="input-field">
+    <div class="input-field" [class.comment-field]="name === 'comment'">
       <div class="input-field-header">
         <label class="input-field-label" [for]="name">{{ label }}</label>
         <span class="input-field-counter" [class.visible]="showCounter" [class.flash-limit]="flashLimit">
@@ -23,22 +23,41 @@ import { MatInputModule } from '@angular/material/input';
         </span>
       </div>
       <div class="input-wrapper">
-        <input
-          [id]="name"
-          [name]="name"
-          [type]="type"
-          [required]="required"
-          [maxlength]="unit ? maxLength + unit.length + 1 : maxLength"
-          [placeholder]="placeholder"
-          [disabled]="disabled"
-          [class.flash-limit]="flashLimit"
-          class="input-field-value"
-          [ngModel]="displayValue"
-          (ngModelChange)="onInputChange($event)"
-          (blur)="onBlur()"
-          (focus)="onFocus()"
-          (keypress)="onKeyPress($event)"
-        />
+        <ng-container *ngIf="name === 'comment'; else standardInput">
+          <textarea
+            [id]="name"
+            [name]="name"
+            [required]="required"
+            [maxlength]="maxLength"
+            [placeholder]="placeholder"
+            [disabled]="disabled"
+            [class.flash-limit]="flashLimit"
+            class="input-field-value"
+            [ngModel]="displayValue"
+            (ngModelChange)="onInputChange($event)"
+            (blur)="onBlur()"
+            (focus)="onFocus()"
+            rows="1"
+          ></textarea>
+        </ng-container>
+        <ng-template #standardInput>
+          <input
+            [id]="name"
+            [name]="name"
+            [type]="type"
+            [required]="required"
+            [maxlength]="unit ? maxLength + unit.length + 1 : maxLength"
+            [placeholder]="placeholder"
+            [disabled]="disabled"
+            [class.flash-limit]="flashLimit"
+            class="input-field-value"
+            [ngModel]="displayValue"
+            (ngModelChange)="onInputChange($event)"
+            (blur)="onBlur()"
+            (focus)="onFocus()"
+            (keypress)="onKeyPress($event)"
+          />
+        </ng-template>
       </div>
     </div>
   `,

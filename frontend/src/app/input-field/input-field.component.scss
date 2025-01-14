@@ -12,9 +12,25 @@ input {
 }
 
 .input-field {
-  input {
-    width: 100%;
+  max-width: 400px;
+  width: 100%;
+  
+  &.comment-field {
+    max-width: 400px;
+    
+    .input-field-value {
+      min-height: 38px; // Reserve space for one line
+      max-height: calc(38px * 4); // Allow for up to 4 lines of text
+      height: auto;
+      resize: none; // Prevent manual resizing
+      overflow: auto;
+      line-height: 1.4;
+    }
   }
+}
+
+.input-wrapper {
+  width: 100%;
 }
 
 .input-field-value {
@@ -95,15 +111,6 @@ input {
 
 .input-field-counter-limit {
   color: var(--color-vonesco-sub);
-}
-
-.input-wrapper {
-  width: 100%;
-}
-
-.input-field-value {
-  width: 100%;
-  padding: 0.56em 1.2em;
 }
 
 @keyframes flash-input {
