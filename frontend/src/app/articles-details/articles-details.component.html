@@ -22,15 +22,14 @@
         [isEditable]="enableEdit()">
       </app-article-card>
 
-      @if (positions.length > 0) {
-        <div cdkDropList (cdkDropListDropped)="onDrop($event)" class="positions-container">
-          @for (position of positions; track position.id) {
-            <div cdkDrag class="position-wrapper">
-              <app-position-card
-                [position]="position"
-                [isEditable]="enableEdit()"
-                [showCheckbox]="false">
-              </app-position-card>
+      @if (article.sequence && article.sequence.length > 0) {
+        <div cdkDropList (cdkDropListDropped)="onDrop($event)" class="sequences-container">
+          @for (seq of article.sequence; track seq.positionId) {
+            <div cdkDrag class="sequence-wrapper">
+              <app-sequence-card
+                [sequence]="seq"
+                [isEditable]="enableEdit()">
+              </app-sequence-card>
             </div>
           }
         </div>
