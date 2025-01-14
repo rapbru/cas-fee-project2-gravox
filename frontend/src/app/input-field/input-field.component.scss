@@ -43,8 +43,7 @@ input {
   }
 
   &.flash-limit {
-    color: var(--color-vonesco-sub);
-    animation: shake 0.2s ease-in-out;
+    animation: flash-input 1s ease-in-out;
   }
 }
 
@@ -66,7 +65,7 @@ input {
   margin-left: 0.8em;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0s ease, visibility 0s ease;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 
   &.visible {
     opacity: 1;
@@ -74,8 +73,7 @@ input {
   }
 
   &.flash-limit {
-    color: var(--color-vonesco-sub);
-    animation: flash-color 0s ease;
+    animation: flash-counter 1s ease-in-out;
   }
 }
 
@@ -106,4 +104,22 @@ input {
 .input-field-value {
   width: 100%;
   padding: 0.56em 1.2em;
+}
+
+@keyframes flash-input {
+  0%, 100% {
+    color: var(--color-text);
+  }
+  10%, 90% {
+    color: var(--color-vonesco-sub);
+  }
+}
+
+@keyframes flash-counter {
+  0%, 100% {
+    color: var(--color-sub-1);
+  }
+  10%, 90% {
+    color: var(--color-vonesco-sub);
+  }
 }

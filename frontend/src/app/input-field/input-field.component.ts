@@ -18,7 +18,7 @@ import { MatInputModule } from '@angular/material/input';
     <div class="input-field">
       <div class="input-field-header">
         <label class="input-field-label" [for]="name">{{ label }}</label>
-        <span class="input-field-counter" [class.visible]="showCounter" [class.flash-limit]="isAtLimit">
+        <span class="input-field-counter" [class.visible]="showCounter" [class.flash-limit]="flashLimit">
           {{ value.length || 0 }}/{{ getEffectiveMaxLength() }} {{ numbersOnly ? 'Zahlen' : 'Zeichen' }}
         </span>
       </div>
@@ -31,7 +31,7 @@ import { MatInputModule } from '@angular/material/input';
           [maxlength]="unit ? maxLength + unit.length + 1 : maxLength"
           [placeholder]="placeholder"
           [disabled]="disabled"
-          [class.flash-limit]="isAtLimit"
+          [class.flash-limit]="flashLimit"
           class="input-field-value"
           [ngModel]="displayValue"
           (ngModelChange)="onInputChange($event)"
@@ -66,6 +66,7 @@ export class InputFieldComponent implements ControlValueAccessor {
   isAtLimit: boolean = false;
   showCounter: boolean = false;
   isFocused: boolean = false;
+  flashLimit: boolean = false;
 
   private onChange: any = () => {};
   private onTouched: any = () => {};
@@ -126,7 +127,14 @@ export class InputFieldComponent implements ControlValueAccessor {
 
   private checkLimit(): void {
     if (this.maxLength > 0) {
-      this.isAtLimit = (this.value?.length || 0) >= this.getEffectiveMaxLength();
+      const isNowAtLimit = (this.value?.length || 0) >= this.getEffectiveMaxLength();
+      if (isNowAtLimit && !this.isAtLimit) {
+        this.flashLimit = true;
+        setTimeout(() => {
+          this.flashLimit = false;
+        }, 1000);
+      }
+      this.isAtLimit = isNowAtLimit;
     }
   }
 
