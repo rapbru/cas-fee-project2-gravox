@@ -26,58 +26,65 @@
   <form (ngSubmit)="onSave()">
     <div class="form-group">
       <app-input-field
+        label="Name"
+        name="name"
         [(ngModel)]="article.name"
-        name="articleName"
-        [label]="'Name'"
+        [required]="true"
         [maxLength]="maxLengthName"
-        [required]="true">
+        placeholder="Artikelname eingeben">
       </app-input-field>
 
       <app-input-field
+        label="Nummer"
+        name="number"
         [(ngModel)]="article.number"
-        name="articleNumber"
-        [label]="'Nummer'"
+        [required]="true"
         [maxLength]="maxLengthNumber"
-        [required]="true">
+        [numbersOnly]="true"
+        placeholder="Artikelnummer eingeben">
       </app-input-field>
 
       <app-input-field
+        label="Kunde"
+        name="customer"
         [(ngModel)]="article.customer"
-        name="articleCustomer"
-        [label]="'Kunde'"
+        [required]="true"
         [maxLength]="maxLengthCustomer"
-        [required]="true">
+        placeholder="Kundennamen eingeben">
       </app-input-field>
 
       <app-input-field
+        label="Fläche"
+        name="surface"
         [(ngModel)]="article.surface"
-        name="articleSurface"
-        [label]="'Fläche'"
         [maxLength]="maxLengthSurface"
-        [required]="true">
+        [numbersOnly]="true"
+        placeholder="Fläche eingeben">
       </app-input-field>
 
       <app-input-field
+        label="Abtropfen"
+        name="dripOff"
         [(ngModel)]="article.dripOff"
-        name="articleDripOff"
-        [label]="'Abtropfen'"
         [maxLength]="maxLengthDripOff"
-        [required]="true">
+        [numbersOnly]="true"
+        placeholder="Abtropfzeit eingeben">
       </app-input-field>
 
       <app-input-field
+        label="Anodisch"
+        name="anodic"
         [(ngModel)]="article.anodic"
-        name="articleAnodic"
-        [label]="'Anodisch'"
         [maxLength]="maxLengthAnodic"
-        [required]="true">
+        placeholder="Anodisch eingeben">
       </app-input-field>
 
       <app-input-field
+        label="Kommentar"
+        name="comment"
         [(ngModel)]="article.comment"
-        name="articleComment"
-        [label]="'Bemerkung'"
-        [maxLength]="maxLengthComment">
+        [maxLength]="maxLengthComment"
+        placeholder="Kommentar eingeben">
       </app-input-field>
     </div>
   </form>
