@@ -59,6 +59,7 @@
         [(ngModel)]="article.surface"
         [maxLength]="maxLengthSurface"
         [numbersOnly]="true"
+        [unit]="'dm²'"
         placeholder="Fläche eingeben">
       </app-input-field>
 
@@ -68,6 +69,7 @@
         [(ngModel)]="article.dripOff"
         [maxLength]="maxLengthDripOff"
         [numbersOnly]="true"
+        [unit]="'%'"
         placeholder="Abtropfzeit eingeben">
       </app-input-field>
 

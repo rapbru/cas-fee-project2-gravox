@@ -22,22 +22,24 @@ import { MatInputModule } from '@angular/material/input';
           {{ value.length || 0 }}/{{ maxLength }}
         </span>
       </div>
-      <input
-        [id]="name"
-        [name]="name"
-        [type]="type"
-        [required]="required"
-        [maxlength]="maxLength"
-        [placeholder]="placeholder"
-        [disabled]="disabled"
-        [class.flash-limit]="isAtLimit"
-        class="input-field-value"
-        [ngModel]="value"
-        (ngModelChange)="onInputChange($event)"
-        (blur)="onBlur()"
-        (focus)="onFocus()"
-        (keypress)="onKeyPress($event)"
-      />
+      <div class="input-wrapper">
+        <input
+          [id]="name"
+          [name]="name"
+          [type]="type"
+          [required]="required"
+          [maxlength]="maxLength"
+          [placeholder]="placeholder"
+          [disabled]="disabled"
+          [class.flash-limit]="isAtLimit"
+          class="input-field-value"
+          [ngModel]="displayValue"
+          (ngModelChange)="onInputChange($event)"
+          (blur)="onBlur()"
+          (focus)="onFocus()"
+          (keypress)="onKeyPress($event)"
+        />
+      </div>
     </div>
   `,
   providers: [
@@ -57,8 +59,10 @@ export class InputFieldComponent implements ControlValueAccessor {
   @Input() placeholder: string = '';
   @Input() disabled: boolean = false;
   @Input() numbersOnly: boolean = false;
+  @Input() unit: string = '';
 
   value: string = '';
+  displayValue: string = '';
   isAtLimit: boolean = false;
   showCounter: boolean = false;
   isFocused: boolean = false;
@@ -68,6 +72,7 @@ export class InputFieldComponent implements ControlValueAccessor {
 
   writeValue(value: string): void {
     this.value = value;
+    this.updateDisplayValue();
     this.checkLimit();
   }
 
@@ -89,6 +94,7 @@ export class InputFieldComponent implements ControlValueAccessor {
     }
     
     this.value = value;
+    this.updateDisplayValue();
     this.onChange(value);
     this.checkLimit();
     this.updateCounterVisibility();
@@ -97,6 +103,7 @@ export class InputFieldComponent implements ControlValueAccessor {
   onBlur(): void {
     this.onTouched();
     this.isFocused = false;
+    this.updateDisplayValue();
     this.updateCounterVisibility();
   }
 
@@ -117,7 +124,6 @@ export class InputFieldComponent implements ControlValueAccessor {
 
   onKeyPress(event: KeyboardEvent): void {
     if (this.numbersOnly) {
-      // Allow only number keys (0-9) and control keys
       const isNumber = /[0-9]/.test(event.key);
       const isControlKey = event.ctrlKey || event.metaKey;
       const isAllowedKey = event.key === 'Backspace' || 
@@ -130,5 +136,9 @@ export class InputFieldComponent implements ControlValueAccessor {
         event.preventDefault();
       }
     }
+  }
+
+  private updateDisplayValue(): void {
+    this.displayValue = this.value + (this.value && this.unit ? ' ' + this.unit : '');
   }
 }
