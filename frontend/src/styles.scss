@@ -515,7 +515,17 @@ input {
   margin-left: 0.8em;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0s ease, visibility 0s ease;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &.flash-limit {
+    color: var(--color-vonesco-sub);
+    animation: flash-color 0s ease;
+  }
 }
 
 .input-field-group {

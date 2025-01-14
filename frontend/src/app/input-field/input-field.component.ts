@@ -28,6 +28,7 @@ import { FormsModule } from '@angular/forms';
         [ngModel]="value"
         (ngModelChange)="onInputChange($event)"
         (blur)="onBlur()"
+        (focus)="onFocus()"
       />
     </div>
   `,
@@ -51,6 +52,7 @@ export class InputFieldComponent implements ControlValueAccessor {
   value: string = '';
   isAtLimit: boolean = false;
   showCounter: boolean = false;
+  isFocused: boolean = false;
 
   private onChange: any = () => {};
   private onTouched: any = () => {};
@@ -76,15 +78,26 @@ export class InputFieldComponent implements ControlValueAccessor {
     this.value = value;
     this.onChange(value);
     this.checkLimit();
+    this.updateCounterVisibility();
   }
 
   onBlur(): void {
     this.onTouched();
+    this.isFocused = false;
+    this.updateCounterVisibility();
+  }
+
+  onFocus(): void {
+    this.isFocused = true;
+    this.updateCounterVisibility();
+  }
+
+  private updateCounterVisibility(): void {
+    this.showCounter = this.maxLength > 0 && (this.isFocused || (this.value?.length || 0) > 0);
   }
 
   private checkLimit(): void {
     if (this.maxLength > 0) {
-      this.showCounter = true;
       this.isAtLimit = (this.value?.length || 0) >= this.maxLength;
     }
   }
