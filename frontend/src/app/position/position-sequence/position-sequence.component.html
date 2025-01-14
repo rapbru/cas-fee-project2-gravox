@@ -40,7 +40,11 @@
               <mat-icon [class.disabled]="position.timePreset === 0">timer</mat-icon>
               <span class="label" [class.disabled]="position.timePreset === 0">Zeit</span>
               <span class="value" 
+                    tabindex="0"
+                    role="button"
                     (click)="startEditing(position, 'timePreset')"
+                    (keydown.enter)="startEditing(position, 'timePreset')"
+                    (keydown.space)="startEditing(position, 'timePreset')"
                     *ngIf="!isEditing(position, 'timePreset')">
                 {{ position.timePreset | number:'1.2-2' }}<span class="unit" [class.disabled]="position.timePreset === 0">s</span>
               </span>
@@ -60,7 +64,11 @@
               <mat-icon [class.disabled]="position.currentPreset === 0">bolt</mat-icon>
               <span class="label" [class.disabled]="position.currentPreset === 0">Strom</span>
               <span class="value" 
+                    tabindex="0"
+                    role="button"
                     (click)="startEditing(position, 'currentPreset')"
+                    (keydown.enter)="startEditing(position, 'currentPreset')"
+                    (keydown.space)="startEditing(position, 'currentPreset')"
                     *ngIf="!isEditing(position, 'currentPreset')">
                 {{ position.currentPreset | number:'1.2-2' }}<span class="unit" [class.disabled]="position.currentPreset === 0">A</span>
               </span>
@@ -80,7 +88,11 @@
               <mat-icon class="mat-icon-filled" [class.disabled]="position.voltagePreset === 0">bolt</mat-icon>
               <span class="label" [class.disabled]="position.voltagePreset === 0">Spannung</span>
               <span class="value" 
+                    tabindex="0"
+                    role="button"
                     (click)="startEditing(position, 'voltagePreset')"
+                    (keydown.enter)="startEditing(position, 'voltagePreset')"
+                    (keydown.space)="startEditing(position, 'voltagePreset')"
                     *ngIf="!isEditing(position, 'voltagePreset')">
                 {{ position.voltagePreset | number:'1.2-2' }}<span class="unit" [class.disabled]="position.voltagePreset === 0">V</span>
               </span>
