@@ -44,13 +44,18 @@ class ArticleController {
                     });
                 }
                 
-                for (const seq of articleData.sequence) {
-                    if (!seq.positionId || !seq.orderNumber) {
-                        return res.status(400).json({ 
-                            error: 'Each sequence must have positionId and orderNumber',
-                            invalidSequence: seq
-                        });
-                    }
+                // Use array.some() instead of for...of
+                const hasInvalidSequence = articleData.sequence.some(seq => 
+                    !seq.positionId || !seq.orderNumber
+                );
+
+                if (hasInvalidSequence) {
+                    return res.status(400).json({ 
+                        error: 'Each sequence must have positionId and orderNumber',
+                        invalidSequence: articleData.sequence.find(seq => 
+                            !seq.positionId || !seq.orderNumber
+                        )
+                    });
                 }
             }
 
