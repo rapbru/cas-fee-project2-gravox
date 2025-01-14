@@ -35,6 +35,28 @@ class ArticleService {
         try {
             await client.query('BEGIN');
 
+            logger.info('Starting article creation with data:', articleData);
+
+            // First, validate that all positions exist
+            if (articleData.sequence && articleData.sequence.length > 0) {
+                const positionIds = articleData.sequence.map(seq => seq.positionId);
+                logger.info('Checking positions:', positionIds);
+                
+                const positionCheckQuery = `
+                    SELECT id FROM position 
+                    WHERE id = ANY($1::int[])
+                `;
+                const existingPositions = await client.query(positionCheckQuery, [positionIds]);
+                logger.info('Found positions:', existingPositions.rows);
+                
+                if (existingPositions.rows.length !== positionIds.length) {
+                    const existingIds = new Set(existingPositions.rows.map(row => row.id));
+                    const missingIds = positionIds.filter(id => !existingIds.has(parseInt(id)));
+                    throw new Error(`Positions not found: ${missingIds.join(', ')}`);
+                }
+            }
+
+            // Insert article
             const articleQuery = `
                 INSERT INTO article (
                     number, title, customer, area, drainage, 
@@ -43,7 +65,7 @@ class ArticleService {
                 RETURNING id
             `;
             
-            const articleResult = await client.query(articleQuery, [
+            const articleValues = [
                 articleData.number,
                 articleData.title,
                 articleData.customer,
@@ -52,10 +74,15 @@ class ArticleService {
                 articleData.anodic,
                 articleData.note,
                 articleData.createdBy
-            ]);
+            ];
 
+            logger.info('Executing article query with values:', articleValues);
+            
+            const articleResult = await client.query(articleQuery, articleValues);
             const articleId = articleResult.rows[0].id;
+            logger.info('Created article with ID:', articleId);
 
+            // Insert sequences if present
             if (articleData.sequence && articleData.sequence.length > 0) {
                 const sequenceQuery = `
                     INSERT INTO sequence (
@@ -64,20 +91,30 @@ class ArticleService {
                     ) VALUES ($1, $2, $3, $4, $5, $6)
                 `;
 
-                await Promise.all(
-                    articleData.sequence.map(seq => 
-                        client.query(sequenceQuery, [
-                            articleId,
-                            seq.positionId,
-                            seq.orderNumber,
-                            seq.timePreset,
-                            seq.currentPreset,
-                            seq.voltagePreset
-                        ])
-                    )
-                );
+                logger.info('Creating sequences for article:', articleId);
+
+                try {
+                    await Promise.all(
+                        articleData.sequence.map(async (seq, index) => {
+                            const sequenceValues = [
+                                articleId,
+                                parseInt(seq.positionId),
+                                seq.orderNumber,
+                                parseFloat(seq.timePreset) || 0,
+                                parseFloat(seq.currentPreset) || 0,
+                                parseFloat(seq.voltagePreset) || 0
+                            ];
+                            logger.info(`Creating sequence ${index + 1}:`, sequenceValues);
+                            return client.query(sequenceQuery, sequenceValues);
+                        })
+                    );
+                } catch (seqError) {
+                    logger.error('Error creating sequences:', seqError);
+                    throw seqError;
+                }
             }
 
+            // Get complete article data
             const getArticleQuery = `
                 SELECT 
                     a.*,
@@ -87,24 +124,23 @@ class ArticleService {
                             'orderNumber', s.order_number,
                             'timePreset', s.time_preset,
                             'currentPreset', s.current_preset,
-                            'voltagePreset', s.voltage_preset,
-                            'positionName', p.position_name
+                            'voltagePreset', s.voltage_preset
                         ) ORDER BY s.order_number
                     ) FILTER (WHERE s.id IS NOT NULL) as sequence
                 FROM article a
                 LEFT JOIN sequence s ON a.id = s.article_id
-                LEFT JOIN position p ON s.position_id = p.id
                 WHERE a.id = $1
                 GROUP BY a.id`;
 
             const completeArticle = await client.query(getArticleQuery, [articleId]);
             
             await client.query('COMMIT');
+            logger.info('Successfully created article with sequences');
             
-            return ArticleService.transformArticleData([completeArticle.rows[0]])[0];
+            return completeArticle.rows[0];
         } catch (error) {
             await client.query('ROLLBACK');
-            logger.error('Error creating article:', error);
+            logger.error('Error in createArticle:', error);
             throw error;
         } finally {
             client.release();

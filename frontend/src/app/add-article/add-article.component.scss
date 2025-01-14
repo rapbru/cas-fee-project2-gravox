@@ -20,3 +20,89 @@
   gap: 16px;
   margin-bottom: 24px;
 }
+
+.positions-container {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  margin-top: 20px;
+}
+
+.position-wrapper {
+  cursor: move;
+}
+
+.sequence-item {
+  background-color: var(--color-main);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  .drag-handle {
+    cursor: move;
+    margin-right: 8px;
+    
+    mat-icon {
+      color: var(--color-text-sub);
+    }
+  }
+
+  .position-content {
+    flex: 1;
+  }
+
+  &:hover {
+    border-color: var(--color-vonesco-sub-2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  &.editable {
+    cursor: move;
+  }
+
+  .detail-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px;
+    margin: 4px 0;
+    transition: all 0.2s ease;
+
+    mat-icon {
+      color: var(--color-text-sub);
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+
+    .label {
+      color: var(--color-text-sub);
+      min-width: 80px;
+    }
+
+    .value {
+      color: var(--color-text);
+    }
+  }
+}
+
+.button-icon {
+  background: none;
+  border: none;
+  color: var(--color-text-sub);
+  cursor: pointer;
+  padding: 4px;
+  
+  &:hover {
+    color: var(--color-danger);
+  }
+
+  mat-icon {
+    font-size: 20px;
+  }
+}
