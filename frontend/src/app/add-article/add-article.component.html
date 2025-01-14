@@ -24,68 +24,72 @@
 
 <div class="scrollable-content" aria-label="Scrollbarer Inhalt" i18n-aria-label="@@ScrollableContent">
   <form (ngSubmit)="onSave()">
-    <div class="form-group">
-      <app-input-field
-        label="Name"
-        name="name"
-        [(ngModel)]="article.name"
-        [required]="true"
-        [maxLength]="maxLengthName"
-        icon="deployed_code"
-        placeholder="Artikelname eingeben">
-      </app-input-field>
+    <div class="add-article">
+      <div class="left-column">
+        <app-input-field
+          label="Name"
+          name="name"
+          [(ngModel)]="article.name"
+          [required]="true"
+          [maxLength]="maxLengthName"
+          icon="deployed_code"
+          placeholder="Artikelname eingeben">
+        </app-input-field>
 
-      <app-input-field
-        label="Nummer"
-        name="number"
-        [(ngModel)]="article.number"
-        [required]="true"
-        [maxLength]="maxLengthNumber"
-        [numbersOnly]="true"
-        icon="tag"
-        placeholder="Artikelnummer eingeben">
-      </app-input-field>
+        <app-input-field
+          label="Nummer"
+          name="number"
+          [(ngModel)]="article.number"
+          [required]="true"
+          [maxLength]="maxLengthNumber"
+          [numbersOnly]="true"
+          icon="tag"
+          placeholder="Artikelnummer eingeben">
+        </app-input-field>
 
-      <app-input-field
-        label="Kunde"
-        name="customer"
-        [(ngModel)]="article.customer"
-        [required]="true"
-        [maxLength]="maxLengthCustomer"
-        icon="business"
-        placeholder="Kundennamen eingeben">
-      </app-input-field>
+        <app-input-field
+          label="Kunde"
+          name="customer"
+          [(ngModel)]="article.customer"
+          [required]="true"
+          [maxLength]="maxLengthCustomer"
+          icon="business"
+          placeholder="Kundennamen eingeben">
+        </app-input-field>
+      </div>
 
-      <app-input-field
-        label="Fläche"
-        name="surface"
-        [(ngModel)]="article.surface"
-        [maxLength]="maxLengthSurface"
-        [numbersOnly]="true"
-        [unit]="'dm²'"
-        icon="square_foot"
-        placeholder="Fläche eingeben (dm²)">
-      </app-input-field>
+      <div class="right-column">
+        <app-input-field
+          label="Fläche"
+          name="surface"
+          [(ngModel)]="article.surface"
+          [maxLength]="maxLengthSurface"
+          [numbersOnly]="true"
+          [unit]="'dm²'"
+          icon="square_foot"
+          placeholder="Fläche eingeben (dm²)">
+        </app-input-field>
 
-      <app-input-field
-        label="Abtropfen"
-        name="dripOff"
-        [(ngModel)]="article.dripOff"
-        [maxLength]="maxLengthDripOff"
-        [numbersOnly]="true"
-        [unit]="'%'"
-        icon="water_drop"
-        placeholder="Abtropfzeit eingeben (%)">
-      </app-input-field>
+        <app-input-field
+          label="Abtropfen"
+          name="dripOff"
+          [(ngModel)]="article.dripOff"
+          [maxLength]="maxLengthDripOff"
+          [numbersOnly]="true"
+          [unit]="'%'"
+          icon="water_drop"
+          placeholder="Abtropfzeit eingeben (%)">
+        </app-input-field>
 
-      <app-input-field
-        label="Kommentar"
-        name="comment"
-        [(ngModel)]="article.comment"
-        [maxLength]="maxLengthComment"
-        icon="note"
-        placeholder="Kommentar eingeben">
-      </app-input-field>
+        <app-input-field
+          label="Kommentar"
+          name="comment"
+          [(ngModel)]="article.comment"
+          [maxLength]="maxLengthComment"
+          icon="note"
+          placeholder="Kommentar eingeben">
+        </app-input-field>
+      </div>
     </div>
   </form>
 
