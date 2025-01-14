@@ -51,7 +51,7 @@ class ArticleService {
                 
                 if (existingPositions.rows.length !== positionIds.length) {
                     const existingIds = new Set(existingPositions.rows.map(row => row.id));
-                    const missingIds = positionIds.filter(id => !existingIds.has(parseInt(id)));
+                    const missingIds = positionIds.filter(id => !existingIds.has(parseInt(id, 10)));
                     throw new Error(`Positions not found: ${missingIds.join(', ')}`);
                 }
             }
@@ -98,7 +98,7 @@ class ArticleService {
                         articleData.sequence.map(async (seq, index) => {
                             const sequenceValues = [
                                 articleId,
-                                parseInt(seq.positionId),
+                                parseInt(seq.positionId, 10),
                                 seq.orderNumber,
                                 parseFloat(seq.timePreset) || 0,
                                 parseFloat(seq.currentPreset) || 0,
@@ -236,7 +236,7 @@ class ArticleService {
             await Promise.all(sequence.map(seq =>
                 client.query(sequenceQuery, [
                     id,
-                    seq.positionId,
+                    parseInt(seq.positionId, 10),
                     seq.orderNumber,
                     seq.timePreset,
                     seq.currentPreset,
