@@ -31,6 +31,7 @@
         [(ngModel)]="article.name"
         [required]="true"
         [maxLength]="maxLengthName"
+        icon="deployed_code"
         placeholder="Artikelname eingeben">
       </app-input-field>
 
@@ -41,6 +42,7 @@
         [required]="true"
         [maxLength]="maxLengthNumber"
         [numbersOnly]="true"
+        icon="tag"
         placeholder="Artikelnummer eingeben">
       </app-input-field>
 
@@ -50,6 +52,7 @@
         [(ngModel)]="article.customer"
         [required]="true"
         [maxLength]="maxLengthCustomer"
+        icon="business"
         placeholder="Kundennamen eingeben">
       </app-input-field>
 
@@ -60,6 +63,7 @@
         [maxLength]="maxLengthSurface"
         [numbersOnly]="true"
         [unit]="'dm²'"
+        icon="square_foot"
         placeholder="Fläche eingeben (dm²)">
       </app-input-field>
 
@@ -70,6 +74,7 @@
         [maxLength]="maxLengthDripOff"
         [numbersOnly]="true"
         [unit]="'%'"
+        icon="water_drop"
         placeholder="Abtropfzeit eingeben (%)">
       </app-input-field>
 
@@ -78,6 +83,7 @@
         name="comment"
         [(ngModel)]="article.comment"
         [maxLength]="maxLengthComment"
+        icon="note"
         placeholder="Kommentar eingeben">
       </app-input-field>
     </div>

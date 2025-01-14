@@ -1610,14 +1610,6 @@ app-add-article {
 }
 
 .input-field {
-  padding: 4px;
-  
-  input {
-    width: 100%;
-  }
-}
-
-.input-field {
   max-width: 400px;
   width: 100%;
   
@@ -1629,6 +1621,25 @@ app-add-article {
       resize: none;
       overflow: auto;
       line-height: 1.4;
+    }
+  }
+
+  .input-field-label {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 8px;
+    color: var(--color-sub-1);
+    
+    .input-label-icon {
+      font-size: 28px;
+      width: 28px;
+      height: 28px;
+      color: var(--color-sub-1);
+      font-variation-settings: 'FILL' 0, 'wght' 200;
+      line-height: 1;
+      position: relative;
+      top: 4px;
     }
   }
 }

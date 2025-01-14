@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-input-field',
@@ -12,12 +13,16 @@ import { MatInputModule } from '@angular/material/input';
     CommonModule, 
     FormsModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatIconModule
   ],
   template: `
     <div class="input-field" [class.comment-field]="name === 'comment'">
       <div class="input-field-header">
-        <label class="input-field-label" [for]="name">{{ label }}</label>
+        <label class="input-field-label" [for]="name">
+          <mat-icon *ngIf="icon" class="input-label-icon">{{ icon }}</mat-icon>
+          {{ label }}
+        </label>
         <span class="input-field-counter" [class.visible]="showCounter" [class.flash-limit]="flashLimit">
           {{ value.length || 0 }}/{{ getEffectiveMaxLength() }} {{ numbersOnly ? 'Zahlen' : 'Zeichen' }}
         </span>
@@ -79,6 +84,7 @@ export class InputFieldComponent implements ControlValueAccessor {
   @Input() disabled: boolean = false;
   @Input() numbersOnly: boolean = false;
   @Input() unit: string = '';
+  @Input() icon: string = '';
 
   value: string = '';
   displayValue: string = '';
@@ -140,6 +146,26 @@ export class InputFieldComponent implements ControlValueAccessor {
     this.updateCounterVisibility();
   }
 
+  onKeyPress(event: KeyboardEvent): void {
+    if (this.numbersOnly) {
+      const isNumber = /[0-9]/.test(event.key);
+      const isControlKey = event.ctrlKey || event.metaKey;
+      const isAllowedKey = event.key === 'Backspace' || 
+                          event.key === 'Delete' || 
+                          event.key === 'ArrowLeft' || 
+                          event.key === 'ArrowRight' || 
+                          event.key === 'Tab';
+
+      if (!isNumber && !isControlKey && !isAllowedKey) {
+        event.preventDefault();
+      }
+    }
+  }
+
+  private updateDisplayValue(): void {
+    this.displayValue = this.value + (this.value && this.unit ? ' ' + this.unit : '');
+  }
+
   private updateCounterVisibility(): void {
     this.showCounter = this.maxLength > 0 && (this.isFocused || (this.value?.length || 0) > 0);
   }
@@ -159,25 +185,5 @@ export class InputFieldComponent implements ControlValueAccessor {
 
   getEffectiveMaxLength(): number {
     return this.maxLength;
-  }
-
-  onKeyPress(event: KeyboardEvent): void {
-    if (this.numbersOnly) {
-      const isNumber = /[0-9]/.test(event.key);
-      const isControlKey = event.ctrlKey || event.metaKey;
-      const isAllowedKey = event.key === 'Backspace' || 
-                          event.key === 'Delete' || 
-                          event.key === 'ArrowLeft' || 
-                          event.key === 'ArrowRight' || 
-                          event.key === 'Tab';
-
-      if (!isNumber && !isControlKey && !isAllowedKey) {
-        event.preventDefault();
-      }
-    }
-  }
-
-  private updateDisplayValue(): void {
-    this.displayValue = this.value + (this.value && this.unit ? ' ' + this.unit : '');
   }
 }
