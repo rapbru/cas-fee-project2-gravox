@@ -67,6 +67,10 @@ export class NavbarComponent {
     return !this.deviceDetectionService.isMobileSignal() || this.currentRoute.includes('/overview');
   }
 
+  shouldShowEditButton(): boolean {
+    return !this.currentRoute.includes('/add-article');
+  }
+
   navigateTo(path: string): void {
     if (this.enableEdit()) {
       this.overviewStateService.toggleEdit();

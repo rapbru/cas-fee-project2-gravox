@@ -30,6 +30,7 @@
     </div>
     <div class="right-section">
       <button class="button" 
+        *ngIf="shouldShowEditButton()"
         [class.edit-active]="enableEdit()"
         (click)="toggleEdit()"
         tabindex="3"
