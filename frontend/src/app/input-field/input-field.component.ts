@@ -19,7 +19,7 @@ import { MatInputModule } from '@angular/material/input';
       <div class="input-field-header">
         <label class="input-field-label" [for]="name">{{ label }}</label>
         <span class="input-field-counter" [class.visible]="showCounter" [class.flash-limit]="isAtLimit">
-          {{ value.length || 0 }}/{{ maxLength }}
+          {{ value.length || 0 }}/{{ getEffectiveMaxLength() }} {{ numbersOnly ? 'Zahlen' : 'Zeichen' }}
         </span>
       </div>
       <div class="input-wrapper">
@@ -28,7 +28,7 @@ import { MatInputModule } from '@angular/material/input';
           [name]="name"
           [type]="type"
           [required]="required"
-          [maxlength]="maxLength"
+          [maxlength]="unit ? maxLength + unit.length + 1 : maxLength"
           [placeholder]="placeholder"
           [disabled]="disabled"
           [class.flash-limit]="isAtLimit"
@@ -89,8 +89,16 @@ export class InputFieldComponent implements ControlValueAccessor {
   }
 
   onInputChange(value: string): void {
+    if (this.unit && value.endsWith(this.unit)) {
+      value = value.slice(0, -this.unit.length).trim();
+    }
+    
     if (this.numbersOnly) {
       value = value.replace(/[^0-9]/g, '');
+    }
+    
+    if (this.maxLength > 0 && value.length > this.getEffectiveMaxLength()) {
+      value = value.slice(0, this.getEffectiveMaxLength());
     }
     
     this.value = value;
@@ -118,8 +126,12 @@ export class InputFieldComponent implements ControlValueAccessor {
 
   private checkLimit(): void {
     if (this.maxLength > 0) {
-      this.isAtLimit = (this.value?.length || 0) >= this.maxLength;
+      this.isAtLimit = (this.value?.length || 0) >= this.getEffectiveMaxLength();
     }
+  }
+
+  getEffectiveMaxLength(): number {
+    return this.maxLength;
   }
 
   onKeyPress(event: KeyboardEvent): void {
