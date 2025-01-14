@@ -1598,3 +1598,11 @@ app-add-article {
   box-sizing: border-box;
   max-width: 100%;
 }
+
+.input-field {
+  padding: 4px;
+  
+  input {
+    width: 100%;
+  }
+}
