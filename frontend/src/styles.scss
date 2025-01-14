@@ -1625,7 +1625,7 @@ app-add-article {
     max-width: 400px;
     
     .input-field-value {
-      height: calc(38px * 1.5); // Reduced from 3x to 1.5x standard input height
+      height: calc(38px * 1.5);
       resize: none;
       overflow: auto;
       line-height: 1.4;
@@ -1648,6 +1648,59 @@ app-add-article {
   background-color: var(--color-main);
   color: var(--color-text);
   transition: color 0.3s ease;
+
+  &::placeholder {
+    color: var(--color-sub-1);
+  }
+
+  &:hover,
+  &:focus {
+    filter: brightness(110%);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &.flash-limit {
+    animation: flash-input 1s ease-in-out;
+  }
+}
+
+.input-field-counter {
+  font-size: var(--font-size);
+  color: var(--color-sub-1);
+  margin-left: 0.8em;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &.flash-limit {
+    animation: flash-counter 1s ease-in-out;
+  }
+}
+
+@keyframes flash-input {
+  0%, 100% {
+    color: var(--color-text);
+  }
+  10%, 90% {
+    color: var(--color-vonesco-sub);
+  }
+}
+
+@keyframes flash-counter {
+  0%, 100% {
+    color: var(--color-sub-1);
+  }
+  10%, 90% {
+    color: var(--color-vonesco-sub);
+  }
 }
 
 // Remove or update any conflicting input styles
