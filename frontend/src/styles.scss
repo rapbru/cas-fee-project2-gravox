@@ -1547,7 +1547,7 @@ app-add-article {
     gap: 16px;
     margin-bottom: 12px;
     padding-bottom: 8px;
-    border-bottom: 1px solid var(--color-vonesco);
+    // border-bottom: 1px solid var(--color-vonesco);
 
     .position-number {
       font-weight: 600;
@@ -1709,7 +1709,6 @@ app-add-article {
   }
 }
 
-// Remove or update any conflicting input styles
 input {
   width: 100%;
   padding: 0.56em 1.2em;
