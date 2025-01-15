@@ -24,7 +24,7 @@ import { MatIconModule } from '@angular/material/icon';
           {{ label }}
         </label>
         <span class="input-field-counter" [class.visible]="showCounter" [class.flash-limit]="flashLimit">
-          {{ value.length || 0 }}/{{ getEffectiveMaxLength() }} {{ numbersOnly ? 'Zahlen' : 'Zeichen' }}
+          {{ value.length || 0 }}/{{ getEffectiveMaxLength() }} {{ numbersOnly ? 'Stellen' : 'Zeichen' }}
         </span>
       </div>
       <div class="input-wrapper">
