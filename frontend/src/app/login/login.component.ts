@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../authentication/auth.service';
 import { FormsModule } from '@angular/forms';
@@ -11,12 +11,21 @@ import { CommonModule } from '@angular/common';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
-  public username = '';
-  public password = '';
-  public errorMessage: string | null = null;
+export class LoginComponent implements OnInit {
+  username = '';
+  password = '';
+  errorMessage: string | null = null;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
+  ngOnInit() {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/overview']);
+    }
+  }
 
   login() {
     if (!this.username || !this.password) {
