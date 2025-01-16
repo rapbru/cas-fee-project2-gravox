@@ -2,18 +2,31 @@ export interface Position {
   id: number;
   number: number;
   name: string;
-  isSelected?: boolean;
+  flightbar?: number;
+  articleName?: string;
+  customerName?: string;
+  time: { 
+    actual: number; 
+    preset: number; 
+  };
+  temperature: { 
+    actual: number; 
+    preset: number; 
+    isPresent: boolean; 
+  };
+  current: { 
+    actual: number; 
+    preset: number; 
+    isPresent: boolean; 
+  };
+  voltage: { 
+    actual: number; 
+    preset: number; 
+    isPresent: boolean; 
+  };
   timePreset?: number;
   currentPreset?: number;
   voltagePreset?: number;
-  current?: {
-    actual: number;
-    preset: number;
-    isPresent: boolean;
-  };
-  voltage?: {
-    actual: number;
-    preset: number;
-    isPresent: boolean;
-  };
+  isSelected?: boolean;
+  selected?: boolean;
 }
