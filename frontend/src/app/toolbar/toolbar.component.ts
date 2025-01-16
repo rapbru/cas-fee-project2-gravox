@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,7 +15,8 @@ import { RouterModule, Router } from '@angular/router';
     MatTooltipModule,
     RouterModule
   ],
-  templateUrl: './toolbar.component.html'
+  templateUrl: './toolbar.component.html',
+  styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent {
   @Input() showAddLine = false;
@@ -35,6 +36,18 @@ export class ToolbarComponent {
   @Output() reorder = new EventEmitter<void>();
   @Output() delete = new EventEmitter<void>();
   @Output() load = new EventEmitter<void>();
+
+  showToolbar = computed(() => {
+    return (
+      (this.showReorder) ||
+      (this.showNavigateAdd) ||
+      (this.showAdd && !this.isReorderMode) ||
+      (this.showAddLine && this.isReorderMode) ||
+      (this.showLoad) ||
+      (this.showDeleteLine && this.isReorderMode) ||
+      (this.showDelete && !this.isReorderMode)
+    );
+  });
 
   constructor(private router: Router) {}
 
