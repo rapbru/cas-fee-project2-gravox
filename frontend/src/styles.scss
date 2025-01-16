@@ -45,6 +45,10 @@ html {
 
   --content-padding: 24px;
   --color-sheet-background: rgba(255, 255, 255, 0.8);
+
+  // Layout variables
+  --container-padding: 1rem;
+  --container-padding-mobile: 0.5rem;
 }
 
 .dark-theme {
@@ -450,121 +454,7 @@ button.navbar-item {
 }
 
 
-input {
-  width: 100%;
-  padding: 0.56em 1.2em;
-  font-family: inherit;
-  font-size: var(--font-size);
-  box-sizing: border-box;
-  border: 1px solid var(--color-main);
-  border-radius: var(--button-border-radius);
-  background-color: var(--color-main);
-  color: var(--color-text);
-  transition: color 0.3s ease, border-color 0.3s ease;
-}
 
-
-.input-field input {
-  width: 100%;
-}
-
-.input-field-value {
-  width: 100%;
-  padding: 0.56em 1.2em;
-  font-family: inherit;
-  font-size: var(--font-size);
-  box-sizing: border-box;
-  border: 1px solid var(--color-main);
-  border-radius: var(--button-border-radius);
-  background-color: var(--color-main);
-  color: var(--color-text);
-  transition: color 0.3s ease;
-}
-
-.input-field-value::placeholder {
-  color: var(--color-sub-1);
-}
-
-.input-field-value:hover {
-  filter: brightness(110%);
-}
-
-.input-field-value:focus {
-  filter: brightness(110%);
-}
-
-.input-field-header{
-  display: flex;
-  align-items: baseline;
-}
-
-.input-field-label {
-  font-size: var(--font-size);
-  color: var(--color-sub-1);
-  margin: 0 0 0.6em 1.24em;
-  display: block;
-}
-
-.input-field-value:disabled {
-  cursor: not-allowed;
-}
-
-.input-field-counter {
-  font-size: var(--font-size);
-  color: var(--color-sub-1);
-  margin-left: 0.8em;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-
-  &.visible {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  &.flash-limit {
-    color: var(--color-vonesco-sub);
-    animation: flash-color 0s ease;
-  }
-}
-
-.input-field-group {
-  display: flex;
-  gap: 1em;
-  width: 100%;
-  align-items: flex-start;
-}
-
-.input-field-group .input-field {
-  flex: 1;
-  min-width: 150px;
-}
-
-@media (max-width: 768px) {
-  .input-field-group {
-    flex-direction: column;
-  }
-}
-
-.input-field-counter-limit {
-  color: var(--color-vonesco-sub);
-}
-
-.input-field-value.flash-limit {
-  color: var(--color-vonesco-sub);
-  animation: shake 0.2s ease-in-out;
-
-}
-
-.input-field-counter.flash-limit {
-  color: var(--color-vonesco-sub);
-  animation: flash-color 0s ease;
-}
-
-.input-field-counter.visible {
-  opacity: 1;
-  visibility: visible;
-}
 
 @keyframes flash-color {
   0% {
