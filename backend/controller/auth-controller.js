@@ -1,7 +1,6 @@
 // controllers/AuthController.js
-import UserService from '../services/user-service.js';
-import PasswordService from '../services/password-service.js';
-import TokenService from '../services/token-service.js';
+import AuthService from '../services/auth-service.js';
+import AuthMockService from '../services/mock/auth-mock-service.js';
 
 class AuthController {
     static async login(req, res) {
@@ -12,24 +11,11 @@ class AuthController {
         }
 
         try {
-            const user = await UserService.findUserByUsername(username);
-
-            if (!user) {
-                return res.status(401).send('Invalid username or password');
-            }
-
-            const match = await PasswordService.comparePassword(password, user.password);
-
-            if (!match) {
-                return res.status(401).send('Invalid username or password');
-            }
-
-            const token = TokenService.generateToken({ userId: user.id });
-
-            return res.json({ token });
-
+            const service = process.env.NODE_ENV === "production" ? AuthService : AuthMockService;
+            const result = await service.authenticate(username, password);
+            return res.json(result);
         } catch (error) {
-            return res.status(500).send('Internal Server Error');
+            return res.status(401).send('Invalid username or password');
         }
     }
 }
