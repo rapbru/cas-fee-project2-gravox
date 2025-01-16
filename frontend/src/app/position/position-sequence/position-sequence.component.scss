@@ -471,3 +471,26 @@
   }
 }
 
+.positions-container {
+  max-width: 600px;
+  width: 100%;
+  margin: 0;
+}
+
+.position-card {
+  background-color: var(--color-main);
+  border-radius: var(--button-border-radius);
+  padding: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+  color: var(--color-text);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-bottom: 12px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
