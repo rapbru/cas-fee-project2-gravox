@@ -60,9 +60,9 @@
                      type="text"
                      inputmode="decimal">
             </div>
-            <div class="metric-column" *ngIf="position.currentPreset !== undefined">
-              <mat-icon [class.disabled]="position.currentPreset === 0">bolt</mat-icon>
-              <span class="label" [class.disabled]="position.currentPreset === 0">Strom</span>
+            <div class="metric-column" [class.disabled]="!hasCurrentCapability(position)">
+              <mat-icon>bolt</mat-icon>
+              <span class="label">Strom</span>
               <span class="value" 
                     tabindex="0"
                     role="button"
@@ -70,7 +70,7 @@
                     (keydown.enter)="startEditing(position, 'currentPreset')"
                     (keydown.space)="startEditing(position, 'currentPreset')"
                     *ngIf="!isEditing(position, 'currentPreset')">
-                {{ position.currentPreset | number:'1.2-2' }}<span class="unit" [class.disabled]="position.currentPreset === 0">A</span>
+                {{ position.currentPreset | number:'1.2-2' }}<span class="unit" [class.disabled]="!hasCurrentCapability(position)">A</span>
               </span>
               <input #valueInput
                      class="value-input" 
@@ -84,9 +84,9 @@
                      type="text"
                      inputmode="decimal">
             </div>
-            <div class="metric-column" *ngIf="position.voltagePreset !== undefined">
-              <mat-icon class="mat-icon-filled" [class.disabled]="position.voltagePreset === 0">bolt</mat-icon>
-              <span class="label" [class.disabled]="position.voltagePreset === 0">Spannung</span>
+            <div class="metric-column" [class.disabled]="!hasVoltageCapability(position)">
+              <mat-icon>electric_bolt</mat-icon>
+              <span class="label">Spannung</span>
               <span class="value" 
                     tabindex="0"
                     role="button"
@@ -94,7 +94,7 @@
                     (keydown.enter)="startEditing(position, 'voltagePreset')"
                     (keydown.space)="startEditing(position, 'voltagePreset')"
                     *ngIf="!isEditing(position, 'voltagePreset')">
-                {{ position.voltagePreset | number:'1.2-2' }}<span class="unit" [class.disabled]="position.voltagePreset === 0">V</span>
+                {{ position.voltagePreset | number:'1.2-2' }}<span class="unit" [class.disabled]="!hasVoltageCapability(position)">V</span>
               </span>
               <input #valueInput
                      class="value-input" 
