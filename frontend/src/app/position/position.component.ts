@@ -12,12 +12,22 @@ import { OverviewStateService } from '../services/overview-state.service';
 import { PositionService } from '../services/position.service';
 import { PlcService } from '../services/plc.service';
 import { SnackbarService } from '../services/snackbar.service';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 @Component({
   selector: 'app-position',
   standalone: true,
-  imports: [CommonModule, MatIconModule, FormsModule, MatCardModule, MatInputModule, MatButtonModule, MatFormFieldModule],
+  imports: [
+    CommonModule, 
+    MatIconModule, 
+    FormsModule, 
+    MatCardModule, 
+    MatInputModule, 
+    MatButtonModule, 
+    MatFormFieldModule,
+    DragDropModule
+  ],
   templateUrl: './position.component.html',
   styleUrls: ['./position.component.scss']
 })

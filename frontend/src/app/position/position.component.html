@@ -9,7 +9,10 @@
                 <ng-container *ngIf="enableOrder(); else noOrder">
                     <div class="position-number">{{ position.number }}</div>  
                     <div class="position-name">{{ position.name }}</div> 
-                    <button mat-icon-button class="drag-handle">
+                    <button *ngIf="!isMobile()" mat-icon-button class="drag-handle">
+                        <mat-icon>drag_handle</mat-icon>
+                    </button>
+                    <button *ngIf="isMobile()" mat-icon-button class="drag-handle" cdkDragHandle>
                         <mat-icon>drag_handle</mat-icon>
                     </button>
                 </ng-container>
