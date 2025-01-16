@@ -61,8 +61,8 @@
                      inputmode="decimal">
             </div>
             <div class="metric-column" [class.disabled]="!hasCurrentCapability(position)">
-              <mat-icon>bolt</mat-icon>
-              <span class="label">Strom</span>
+              <mat-icon [class.disabled]="position.currentPreset === 0">bolt</mat-icon>
+              <span class="label" [class.disabled]="position.currentPreset === 0">Strom</span>
               <span class="value" 
                     tabindex="0"
                     role="button"
@@ -85,8 +85,8 @@
                      inputmode="decimal">
             </div>
             <div class="metric-column" [class.disabled]="!hasVoltageCapability(position)">
-              <mat-icon>electric_bolt</mat-icon>
-              <span class="label">Spannung</span>
+              <mat-icon [class.disabled]="position.voltagePreset === 0">electric_bolt</mat-icon>
+              <span class="label" [class.disabled]="position.voltagePreset === 0">Spannung</span>
               <span class="value" 
                     tabindex="0"
                     role="button"
