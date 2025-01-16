@@ -320,6 +320,12 @@
     text-align: right;
     border: none;
 
+    &.disabled {
+      mat-icon, .label, .value, .unit {
+        color: var(--color-sub-3) !important;
+      }
+    }
+
     mat-icon {
       font-size: 32px;
       height: 32px;
@@ -328,10 +334,6 @@
       padding-right: 8px;
       font-weight: 300;
       font-variation-settings: 'wght' 300, 'FILL' 0;
-    }
-
-    .mat-icon-filled {
-      font-variation-settings: 'wght' 300, 'FILL' 1;
     }
 
     .label {
@@ -352,10 +354,6 @@
       text-align: right;
       padding-right: 8px;
       
-      &:hover {
-        opacity: 0.8;
-      }
-
       .unit {
         margin-left: 4px;
         color: var(--color-vonesco);
