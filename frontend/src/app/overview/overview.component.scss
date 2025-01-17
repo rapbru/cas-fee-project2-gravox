@@ -4,7 +4,7 @@ $metrics-grid-gap: 8px;
 $container-padding-right: 40px;
 
 // Breakpoint
-$mobile-breakpoint: 448px;  // Point where our desktop layout starts to break
+$mobile-breakpoint: 400px;  // Updated to 400px for mobile layout
 
 .overview-container {
     display: grid;
@@ -52,7 +52,15 @@ $mobile-breakpoint: 448px;  // Point where our desktop layout starts to break
     background-color: var(--color-sub-3);
     margin-bottom: 2px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 8px;
+    
+    @media (min-width: 520px) {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0;
+    }
 
     .column-metrics {
         display: grid;
@@ -60,6 +68,7 @@ $mobile-breakpoint: 448px;  // Point where our desktop layout starts to break
         gap: $metrics-grid-gap;
         justify-content: end;
         padding-right: $container-padding-right;
+        width: 100%;
         
         @media (max-width: $mobile-breakpoint) {
             grid-template-columns: repeat(4, minmax(60px, 1fr));
