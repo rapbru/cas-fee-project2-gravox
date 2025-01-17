@@ -127,7 +127,8 @@
     align-items: flex-start;
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 100px);
+    justify-content: end;
     
     &:not(.expanded) {
       height: 20px;
@@ -136,7 +137,7 @@
       .metric {
         min-height: unset;
         flex-direction: row;
-        justify-content: center;
+        justify-content: flex-end;
         
         > *:not(:last-child) {
           display: none;
@@ -147,8 +148,9 @@
     .metric {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-end;
       min-height: 80px;
+      padding-right: 8px;
       
       mat-icon {
         margin: 0;
@@ -158,23 +160,23 @@
 
       button {
         display: flex;
-        justify-content: center;
+        justify-content: flex-end;
         align-items: center;
         margin: 0;
         padding: 0;
       }
 
-      .mat-icon-dark {
-        font-variation-settings: 'FILL' 1;
-      }
-
       input {
         border: none;
-        text-align: center;
+        text-align: right;
         color: var(--color-vonesco);
         font-size: inherit;
         width: 100%;
         outline: none;
+      }
+
+      span {
+        text-align: right;
       }
     }
   }
