@@ -1,6 +1,8 @@
 $metric-column-width: 100px;
 $metric-padding-right: 8px;
 $metrics-grid-gap: 8px;
+$container-padding-right: 40px;
+$mobile-breakpoint: 448px;
 
 .position-container {
   color: var(--color-text);
@@ -134,6 +136,26 @@ $metrics-grid-gap: 8px;
     grid-template-columns: repeat(4, $metric-column-width);
     gap: $metrics-grid-gap;
     justify-content: end;
+    padding-right: $container-padding-right;
+    
+    @media (max-width: $mobile-breakpoint) {
+      grid-template-columns: repeat(4, minmax(60px, 1fr));
+      gap: 4px;
+      padding-right: 20px;
+      
+      .metric {
+        mat-icon {
+          font-size: 24px;
+          height: 24px;
+          width: 24px;
+          margin-bottom: 4px;
+        }
+        
+        input, span {
+          font-size: 0.9em;
+        }
+      }
+    }
     
     &:not(.expanded) {
       height: 20px;
