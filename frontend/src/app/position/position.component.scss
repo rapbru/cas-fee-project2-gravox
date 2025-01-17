@@ -3,6 +3,7 @@ $metric-padding-right: 8px;
 $metrics-grid-gap: 8px;
 $container-padding-right: 40px;
 $container-padding-left: 12px;
+$number-padding: 12px;
 $container-padding: 12px;
 $mobile-breakpoint: 520px;
 $position-number-width: 70px;
@@ -54,15 +55,15 @@ $column-mobile-breakpoint: 400px;
       padding-right: $container-padding-right;
       
       @container (max-width: 400px) {
-        grid-template-columns: repeat(4, minmax(60px, 1fr));
-        gap: 4px;
-        padding-right: 20px;
+        grid-template-columns: repeat(4, minmax(40px, 1fr));
+        gap: 2px;
+        padding-right: 16px;
         
         .metric {
           mat-icon {
-            font-size: 24px;
-            height: 24px;
-            width: 24px;
+            font-size: 20px;
+            height: 20px;
+            width: 20px;
             margin-bottom: 4px;
           }
           
@@ -133,13 +134,18 @@ $column-mobile-breakpoint: 400px;
   .position-header {
     width: 100%;
     margin: 0;
-    padding: 0 0 0 $container-padding-left;
+    padding: 0;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 0;
 
     .position-number {
+      padding: 0 $number-padding 0 $number-padding;
       width: $position-number-width;
+    }
+
+    .position-name {
+      padding-left: 0;
     }
   }
 
