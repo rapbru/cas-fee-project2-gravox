@@ -37,6 +37,24 @@
         </div>
     </ng-template>
 
+    <!-- Flightbar Information - Moved here -->
+    <ng-container *ngIf="position.flightbar && !enableEdit() && !collapsed">
+        <div class="position-details">
+            <div class="detail">
+                <div>WT-Nr.</div>
+                <div>{{ position.flightbar }}</div> 
+            </div>
+            <div class="detail">
+                <div>Artikel</div>
+                <div>{{ position.articleName }}</div>
+            </div>
+            <div class="detail">
+                <div>Kunde</div>
+                <div>{{ position.customerName }}</div>
+            </div>
+        </div>
+    </ng-container>
+
     <!-- Metrics Section -->
     <div class="position-metrics" [ngClass]="{'expanded': !collapsed}">
         <!-- Time -->
@@ -95,23 +113,5 @@
             </button>
         </div>
     </div>
-
-    <!-- Flightbar Information -->
-    <ng-container *ngIf="position.flightbar && !enableEdit() && !collapsed">
-        <div class="position-details">
-            <div class="detail">
-                <div>WT-Nr.</div>
-                <div>{{ position.flightbar }}</div> 
-            </div>
-            <div class="detail">
-                <div>Artikel</div>
-                <div>{{ position.articleName }}</div>
-            </div>
-            <div class="detail">
-                <div>Kunde</div>
-                <div>{{ position.customerName }}</div>
-            </div>
-        </div>
-    </ng-container>
 </div>
   
