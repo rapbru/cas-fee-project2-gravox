@@ -20,6 +20,10 @@ $position-number-width: 70px;
   gap: 16px;
   align-items: flex-start;
 
+  .position-metrics {
+    display: none !important;
+  }
+
   &.with-flightbar {
     align-items: flex-start;
     padding-bottom: 12px;
@@ -35,6 +39,16 @@ $position-number-width: 70px;
         font-weight: 500;
         padding-left: 0;
       }
+    }
+
+    .position-metrics {
+      display: grid !important;
+      align-items: flex-start;
+      width: 100%;
+      grid-template-columns: repeat(4, $metric-column-width);
+      gap: $metrics-grid-gap;
+      justify-content: end;
+      padding-right: $container-padding-right;
     }
   }
 
