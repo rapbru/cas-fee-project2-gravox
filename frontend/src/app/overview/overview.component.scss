@@ -48,6 +48,7 @@ $min-height: 32px;
 }
 
 .app-position-header {
+    container-type: inline-size;
     padding: $container-padding;
     border-radius: 16px;
     background-color: var(--color-sub-3);
@@ -81,7 +82,7 @@ $min-height: 32px;
         padding-right: $container-padding-right;
         width: 100%;
         
-        @media (max-width: 400px) {
+        @container (max-width: 400px) {
             grid-template-columns: repeat(4, minmax(60px, 1fr));
             gap: 4px;
             padding-right: 20px;
