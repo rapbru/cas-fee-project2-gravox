@@ -1,3 +1,7 @@
+$metric-column-width: 100px;
+$metric-padding-right: 8px;
+$metrics-grid-gap: 8px;
+
 .position-container {
   color: var(--color-text);
   padding: 6px 12px;
@@ -127,7 +131,8 @@
     align-items: flex-start;
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(4, 100px);
+    grid-template-columns: repeat(4, $metric-column-width);
+    gap: $metrics-grid-gap;
     justify-content: end;
     
     &:not(.expanded) {
@@ -150,7 +155,7 @@
       flex-direction: column;
       align-items: flex-end;
       min-height: 80px;
-      padding-right: 8px;
+      padding-right: $metric-padding-right;
       
       mat-icon {
         font-size: 32px;
