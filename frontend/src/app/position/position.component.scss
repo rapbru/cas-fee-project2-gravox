@@ -156,10 +156,17 @@
         font-size: 32px;
         height: 32px;
         width: 32px;
-        margin-bottom: 4px;
-        padding-right: 8px;
+        margin-bottom: 8px;
+        padding-right: 0;
         font-weight: 300;
         font-variation-settings: 'wght' 300, 'FILL' 0;
+        display: flex;
+        justify-content: flex-end;
+        align-self: flex-end;
+
+        &.mat-icon-dark {
+          font-variation-settings: 'wght' 300, 'FILL' 1;
+        }
       }
 
       button {
@@ -168,6 +175,7 @@
         align-items: center;
         margin: 0;
         padding: 0;
+        width: 100%;
       }
 
       input {
