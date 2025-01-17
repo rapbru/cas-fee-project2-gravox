@@ -2,9 +2,10 @@ $metric-column-width: 100px;
 $metric-padding-right: 8px;
 $metrics-grid-gap: 8px;
 $container-padding-right: 40px;
-
-// Breakpoint
-$mobile-breakpoint: 400px;  // Updated to 400px for mobile layout
+$container-padding-left: 12px;
+$container-padding: 12px;
+$mobile-breakpoint: 520px;
+$min-height: 32px;
 
 .overview-container {
     display: grid;
@@ -47,19 +48,29 @@ $mobile-breakpoint: 400px;  // Updated to 400px for mobile layout
 }
 
 .app-position-header {
-    padding: 8px 12px;
+    padding: $container-padding;
     border-radius: 16px;
     background-color: var(--color-sub-3);
     margin-bottom: 2px;
     display: flex;
     flex-direction: column;
     gap: 8px;
+    font-weight: 500;
+    min-height: $min-height;
+    box-sizing: border-box;
     
-    @media (min-width: 520px) {
+    @media (min-width: $mobile-breakpoint) {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
         gap: 0;
+    }
+
+    .column-name {
+        padding-left: $container-padding-left;
+        display: flex;
+        align-items: center;
+        height: 100%;
     }
 
     .column-metrics {
@@ -70,7 +81,7 @@ $mobile-breakpoint: 400px;  // Updated to 400px for mobile layout
         padding-right: $container-padding-right;
         width: 100%;
         
-        @media (max-width: $mobile-breakpoint) {
+        @media (max-width: 400px) {
             grid-template-columns: repeat(4, minmax(60px, 1fr));
             gap: 4px;
             padding-right: 20px;
@@ -81,6 +92,7 @@ $mobile-breakpoint: 400px;  // Updated to 400px for mobile layout
             width: 100%;
             display: flex;
             justify-content: flex-end;
+            height: 100%;
         }
     }
 }
