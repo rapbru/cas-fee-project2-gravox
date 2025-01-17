@@ -26,20 +26,15 @@ $position-number-width: 70px;
     min-height: auto;
 
     .position-header {
-      width: 100%;
-      margin: 0;
-      padding: 0 0 0 $container-padding-left;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
 
-      .position-number {
-        width: $position-number-width;
+      .position-name {
+        font-size: 1.2em;
+        font-weight: 500;
+        padding-left: 0;
       }
-    }
-
-    mat-icon {
-      height: 40px;
     }
   }
 
@@ -100,13 +95,16 @@ $position-number-width: 70px;
   }
 
   .position-header {
-    display: flex;
-    font-weight: normal;
-    height: 20px;
-    line-height: 20px;
-    align-items: center;
     width: 100%;
-    margin-bottom: 4px;
+    margin: 0;
+    padding: 0 0 0 $container-padding-left;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .position-number {
+      width: $position-number-width;
+    }
   }
 
   .position-details {
