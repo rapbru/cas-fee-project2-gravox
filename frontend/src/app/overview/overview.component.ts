@@ -97,7 +97,7 @@ export class OverviewComponent implements OnDestroy, OnInit {
     const randomId = -(Date.now() + Math.floor(Math.random() * 1000));
     this.newPosition = {
       id: randomId,
-      number: 0,
+      number: '' as any,
       name: '',
       time: { actual: 0, preset: 0 },
       temperature: { actual: 0, preset: 0, isPresent: false },
