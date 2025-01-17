@@ -50,6 +50,25 @@ $position-number-width: 70px;
       gap: $metrics-grid-gap;
       justify-content: end;
       padding-right: $container-padding-right;
+      
+      @media (max-width: 400px) {
+        grid-template-columns: repeat(4, minmax(60px, 1fr));
+        gap: 4px;
+        padding-right: 20px;
+        
+        .metric {
+          mat-icon {
+            font-size: 24px;
+            height: 24px;
+            width: 24px;
+            margin-bottom: 4px;
+          }
+          
+          input, span {
+            font-size: 0.9em;
+          }
+        }
+      }
     }
   }
 
