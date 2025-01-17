@@ -4,23 +4,24 @@
     background-color: var(--color-background);
     width: 100%;
     padding: 0 var(--container-padding);
-    
+    margin-top: 0;
+
     @media (min-width: 2000px) {
         grid-template-columns: repeat(min(var(--total-columns), 4), 1fr);
     }
-    
+
     @media (min-width: 1500px) and (max-width: 1999px) {
         grid-template-columns: repeat(min(var(--total-columns), 3), 1fr);
     }
-    
-    @media (min-width: 1000px) and (max-width: 1499px) { 
+
+    @media (min-width: 1000px) and (max-width: 1499px) {
         grid-template-columns: repeat(min(var(--total-columns), 2), 1fr);
     }
-    
+
     @media (max-width: 999px) {
         grid-template-columns: 1fr;
     }
-    
+
     @media (max-width: 600px) {
         padding: 0 var(--container-padding-mobile);
     }
@@ -38,8 +39,7 @@
 }
 
 .app-position-header {
-    padding: 4px;
-    padding-left: 16px;
+    padding: 8px 16px;
     border: 1px solid var(--color-main);
     border-radius: 16px;
     background-color: var(--color-main);
@@ -74,7 +74,7 @@ app-position {
 .list-item {
     display: flex;
     flex-direction: column;
-
+    padding: 2px 0;
     cursor: default;
 
     &.draggable {

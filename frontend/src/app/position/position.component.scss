@@ -1,15 +1,18 @@
 .position-container {
   color: var(--color-text);
-  padding-left: 12px;
+  padding: 6px 12px;
   border: 1px solid var(--color-main);
   border-radius: 16px;
   background-color: var(--color-main);
   transition: background-color 0.3s;
   display: flex;
+  min-height: 32px;
+  box-sizing: border-box;
 
   &.with-flightbar {
     padding-top: 12px;
     padding-bottom: 12px;
+    min-height: auto;
 
     .position-header {
       margin-bottom: 16px;
@@ -42,7 +45,7 @@
       transform: rotate(360deg);
     }
   }
-  
+
   .drag-handle {
     margin-right: 8px;
   }
@@ -57,12 +60,14 @@
       color: var(--color-vonesco);
       font-size: inherit;
       font-style: inherit;
-      font-weight: bold;
+      font-weight: normal;
       width: auto;
       outline: none;
       text-align: left;
       margin: 0;
       padding: 0;
+      height: 20px;
+      line-height: 20px;
     }
 
     .position-number-input {
@@ -76,8 +81,10 @@
 
   .position-header {
     display: flex;
-    font-weight: bold;
-    height: 100%;
+    font-weight: normal;
+    height: 20px;
+    line-height: 20px;
+    align-items: center;
   }
 
   .position-details {
@@ -93,12 +100,12 @@
   .position-number-base {
     display: flex;
     width: 40px;
-    height: 100%;   
+    height: 100%;
   }
 
   .position-number {
     @extend .position-number-base;
-    align-items: center; 
+    align-items: center;
   }
 
   .position-name-base {
@@ -115,6 +122,8 @@
   .position-metrics {
     align-items: center;
     flex: 1;
+    height: 20px;
+    line-height: 20px;
 
     display: grid;
     grid-template-columns: repeat(4, 1fr);
