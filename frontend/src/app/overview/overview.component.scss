@@ -6,6 +6,8 @@ $container-padding-left: 12px;
 $container-padding: 12px;
 $mobile-breakpoint: 520px;
 $min-height: 32px;
+$mobile-grid-gap: 2px;
+$mobile-padding-right: 16px;
 
 .overview-container {
     display: grid;
@@ -90,8 +92,9 @@ $min-height: 32px;
         
         @container (max-width: 400px) {
             grid-template-columns: repeat(4, minmax(40px, 1fr));
-            gap: 2px;
-            padding-right: 16px;
+            gap: $mobile-grid-gap;
+            padding-right: $mobile-padding-right;
+            width: 100%;
             
             .metric {
                 text-align: right;
