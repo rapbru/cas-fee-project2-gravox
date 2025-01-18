@@ -131,4 +131,13 @@ export class PositionComponent {
     const input = event.target as HTMLInputElement;
     input.select();
   }
+
+  shouldShowMetrics(): boolean {
+    return !this.overviewStateService.enableOrder() && 
+           !this.overviewStateService.enableEdit();
+  }
+
+  shouldShowFlightbar(): boolean {
+    return !this.overviewStateService.enableEdit();
+  }
 }

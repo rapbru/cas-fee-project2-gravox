@@ -116,3 +116,9 @@ app-position {
   width: 100%;
   overflow-x: auto;
 }
+
+.mobile-hidden {
+  @media (max-width: 600px) {
+    display: none;
+  }
+}
