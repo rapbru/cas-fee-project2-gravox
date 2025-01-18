@@ -27,6 +27,7 @@
 }
 
 .overview-list {
+    container-type: inline-size;
     display: flex;
     flex-direction: column;
     background-color: var(--color-background);
@@ -62,6 +63,12 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     width: 100%;
+
+  &.mobile-hidden {
+    @container (max-width: 400px) {
+      display: none !important;
+    }
+  }
 }
 
 app-position {
