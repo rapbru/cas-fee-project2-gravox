@@ -19,7 +19,7 @@
     @for (column of columns(); track $index; let index = $index) {
       <div cdkDropList [cdkDropListData]="column" class="overview-list" (cdkDropListDropped)="drop($event, index)">
         <div *ngIf="!enableMultiSelect()" class="app-position-header">
-          <div class="column-name">{{index + 1}}</div>
+          <div class="column-name">Linie {{index + 1}}</div>
           <div class="column-name"></div>
           <div *ngIf="!enableOrder()" class="column-metrics">
             <div>min</div>
