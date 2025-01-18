@@ -41,7 +41,7 @@ $column-mobile-breakpoint: 400px;
       .position-name {
         font-size: 1.2em;
         font-weight: 500;
-        padding-left: 0;
+        padding-left: $container-padding-left;
       }
     }
 
