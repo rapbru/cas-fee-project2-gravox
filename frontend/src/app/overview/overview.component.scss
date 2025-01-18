@@ -65,7 +65,7 @@
     width: 100%;
 
   &.mobile-hidden {
-    @container (max-width: 400px) {
+    @container (width < 600px) {
       display: none !important;
     }
   }

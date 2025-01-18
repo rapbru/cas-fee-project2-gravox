@@ -16,8 +16,12 @@
       margin-bottom: 16px;
     }
 
-    mat-icon {
-      height: 40px;
+    @container (width < 600px) {
+      flex-direction: column;
+      
+      .position-metrics {
+        margin-top: 16px;
+      }
     }
   }
 
@@ -112,75 +116,6 @@
     @extend .position-name-base;
     align-items: center;
   }
-
-  .position-metrics {
-    align-items: center;
-    flex: 1;
-
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    width: 100%;
-
-    &.mobile-hidden {
-      @container (max-width: 400px) {
-        &:not(:has(button[mat-icon-button])) {
-          .position-container:not(.with-flightbar) & {
-            display: none !important;
-          }
-        }
-      }
-    }
-
-    .metric {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      height: 100%;
-
-      @container (max-width: 400px) {
-        :host .position-container:not(.with-flightbar) & {
-          &:not(:has(button[mat-icon-button])) {
-            display: none !important;
-          }
-        }
-      }
-
-      mat-icon {
-        margin: 0;
-        padding: 0;
-        font-variation-settings: 'FILL' 0;
-      }
-
-      button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0;
-        padding: 0;
-      }
-
-      .mat-icon-dark{
-        font-variation-settings: 'FILL' 1;
-      }
-
-      input {
-        border: none;
-        text-align: center;
-        color: var(--color-vonesco);
-        font-size: inherit;
-        width: 100%;
-        outline: none;
-      }
-    }
-  }
-
-  .present {
-    color: var(--color-vonesco);
-  }
-
-  .not-present {
-    color: var(--color-background);
-  }
 }
 
 .metric {
@@ -190,5 +125,57 @@
         display: none !important;
       }
     }
+  }
+}
+
+.position-metrics {
+  align-items: center;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+
+  &.mobile-hidden {
+    @container (width < 600px) {
+      :not(.with-flightbar) & {
+        &:not(:has(button[mat-icon-button])) {
+          display: none !important;
+        }
+      }
+    }
+  }
+
+  .metric {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+  }
+
+  mat-icon {
+    margin: 0;
+    padding: 0;
+    font-variation-settings: 'FILL' 0;
+  }
+
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  .mat-icon-dark{
+    font-variation-settings: 'FILL' 1;
+  }
+
+  input {
+    border: none;
+    text-align: center;
+    color: var(--color-vonesco);
+    font-size: inherit;
+    width: 100%;
+    outline: none;
   }
 }
