@@ -7,6 +7,8 @@
   background-color: var(--color-main);
   transition: background-color 0.3s;
   display: flex;
+  min-height: 32px;
+  align-items: center;
 
   &.with-flightbar {
     padding-top: 12px;
@@ -56,6 +58,8 @@
     display: flex;
     flex-direction: column;
     flex: 1;
+    align-items: flex-start;
+    width: 100%;
 
     input {
       border: none;
@@ -77,12 +81,31 @@
     .position-name-input {
       width: 100%;
     }
-  }
 
-  .position-header {
-    display: flex;
-    font-weight: bold;
-    height: 100%;
+    .position-header {
+      display: flex;
+      font-weight: bold;
+      height: 100%;
+      align-items: center;
+      width: 100%;
+      justify-content: flex-start;
+    }
+
+    .position-number-base {
+      display: flex;
+      width: 40px;
+      height: 100%;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .position-name-base {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: flex-start;
+    }
   }
 
   .position-details {
@@ -95,21 +118,9 @@
     }
   }
 
-  .position-number-base {
-    display: flex;
-    width: 40px;
-    height: 100%;   
-  }
-
   .position-number {
     @extend .position-number-base;
     align-items: center; 
-  }
-
-  .position-name-base {
-    display: flex;
-    width: 100%;
-    height: 100%;
   }
 
   .position-name {
