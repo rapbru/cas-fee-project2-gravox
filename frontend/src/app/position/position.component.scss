@@ -120,11 +120,29 @@
     grid-template-columns: repeat(4, 1fr);
     width: 100%;
 
+    &.mobile-hidden {
+      @media (max-width: 600px) {
+        &:not(:has(button[mat-icon-button])) {
+          .position-container:not(.with-flightbar) & {
+            display: none !important;
+          }
+        }
+      }
+    }
+
     .metric {
       display: flex;
       flex-direction: column;
       align-items: center;
       height: 100%;
+
+      @media (max-width: 600px) {
+        :host .position-container:not(.with-flightbar) & {
+          &:not(:has(button[mat-icon-button])) {
+            display: none !important;
+          }
+        }
+      }
 
       mat-icon {
         margin: 0;
@@ -161,5 +179,15 @@
 
   .not-present {
     color: var(--color-background);
+  }
+}
+
+.metric {
+  @media (max-width: 600px) {
+    .position-container:not(.with-flightbar) & {
+      &:not(:has(button[mat-icon-button])) {
+        display: none !important;
+      }
+    }
   }
 }
