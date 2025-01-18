@@ -8,7 +8,7 @@ $mobile-breakpoint: 520px;
 $min-height: 32px;
 $mobile-grid-gap: 2px;
 $mobile-padding-right: 16px;
-$metrics-hide-breakpoint: 590px;
+$metrics-hide-breakpoint: 720px;
 
 .overview-container {
     display: grid;
@@ -92,6 +92,10 @@ $metrics-hide-breakpoint: 590px;
         box-sizing: border-box;
         
         @media (max-width: $metrics-hide-breakpoint) {
+            display: none;
+        }
+        
+        @media (min-width: 1000px) {
             display: none;
         }
         
