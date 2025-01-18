@@ -49,7 +49,7 @@ $min-height: 32px;
 
 .app-position-header {
     container-type: inline-size;
-    padding: $container-padding $container-padding_right $container-padding $container-padding;
+    padding: $container-padding;
     border-radius: 16px;
     background-color: var(--color-sub-3);
     margin-bottom: 2px;
@@ -59,7 +59,7 @@ $min-height: 32px;
     font-weight: 500;
     min-height: $min-height;
     box-sizing: border-box;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
 
     @container (max-width: 500px) {
@@ -82,14 +82,16 @@ $min-height: 32px;
         grid-template-columns: repeat(4, $metric-column-width);
         gap: $metrics-grid-gap;
         justify-content: end;
-        padding-right: 0;
         flex-shrink: 0;
-        width: 100%;
+        width: auto;
+        margin-left: auto;
+        padding-right: $container-padding-right;
+        box-sizing: border-box;
         
         @container (max-width: 400px) {
             grid-template-columns: repeat(4, minmax(40px, 1fr));
             gap: 2px;
-            padding-right: 0;
+            padding-right: $container-padding-right;
             
             .metric {
                 text-align: right;
