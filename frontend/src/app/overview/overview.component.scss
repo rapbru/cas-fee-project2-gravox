@@ -1,7 +1,7 @@
 $metric-column-width: 100px;
 $metric-padding-right: 8px;
 $metrics-grid-gap: 8px;
-$container-padding-right: 16px;
+$container-padding-right: 40px;
 $container-padding-left: 12px;
 $container-padding: 12px;
 $mobile-breakpoint: 520px;
@@ -91,7 +91,7 @@ $min-height: 32px;
         @container (max-width: 400px) {
             grid-template-columns: repeat(4, minmax(40px, 1fr));
             gap: 2px;
-            padding-right: $container-padding-right;
+            padding-right: 16px;
             
             .metric {
                 text-align: right;
