@@ -150,12 +150,16 @@
     flex-direction: column;
     align-items: center;
     height: 100%;
-  }
 
-  mat-icon {
-    margin: 0;
-    padding: 0;
-    font-variation-settings: 'FILL' 0;
+    mat-icon {
+      &.present {
+        color: var(--color-vonesco);
+      }
+
+      &.not-present {
+        color: var(--color-background);
+      }
+    }
   }
 
   button {
