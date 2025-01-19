@@ -16,56 +16,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatInputModule,
     MatIconModule
   ],
-  template: `
-    <div class="input-field" [class.comment-field]="name === 'comment'">
-      <div class="input-field-header">
-        <label class="input-field-label" [for]="name">
-          <mat-icon *ngIf="icon" class="input-label-icon">{{ icon }}</mat-icon>
-          {{ label }}
-        </label>
-        <span class="input-field-counter" [class.visible]="showCounter" [class.flash-limit]="flashLimit">
-          {{ value.length || 0 }}/{{ getEffectiveMaxLength() }} {{ numbersOnly ? 'Stellen' : 'Zeichen' }}
-        </span>
-      </div>
-      <div class="input-wrapper">
-        <ng-container *ngIf="name === 'comment'; else standardInput">
-          <textarea
-            [id]="name"
-            [name]="name"
-            [required]="required"
-            [maxlength]="maxLength"
-            [placeholder]="placeholder"
-            [disabled]="disabled"
-            [class.flash-limit]="flashLimit"
-            class="input-field-value"
-            [ngModel]="displayValue"
-            (ngModelChange)="onInputChange($event)"
-            (blur)="onBlur()"
-            (focus)="onFocus()"
-            rows="1"
-          ></textarea>
-        </ng-container>
-        <ng-template #standardInput>
-          <input
-            [id]="name"
-            [name]="name"
-            [type]="type"
-            [required]="required"
-            [maxlength]="unit ? maxLength + unit.length + 1 : maxLength"
-            [placeholder]="placeholder"
-            [disabled]="disabled"
-            [class.flash-limit]="flashLimit"
-            class="input-field-value"
-            [ngModel]="displayValue"
-            (ngModelChange)="onInputChange($event)"
-            (blur)="onBlur()"
-            (focus)="onFocus()"
-            (keypress)="onKeyPress($event)"
-          />
-        </ng-template>
-      </div>
-    </div>
-  `,
+  templateUrl: './input-field.component.html',
+  styleUrls: ['./input-field.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
