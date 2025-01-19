@@ -28,7 +28,6 @@ import { Sequence } from '../models/sequence.model';
     MatIconModule,
     MatButtonModule,
     ArticleCardComponent,
-    PositionCardComponent,
     DragDropModule,
     MatProgressSpinnerModule,
     PositionSequenceComponent
