@@ -138,4 +138,14 @@ export class ArticleCardComponent {
         return value;
     }
   }
+
+  formatDate(dateValue: string | Date | undefined): string {
+    if (!dateValue) return '';
+    const date = typeof dateValue === 'string' ? new Date(dateValue) : dateValue;
+    return date.toLocaleDateString('de-DE', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+  }
 }
