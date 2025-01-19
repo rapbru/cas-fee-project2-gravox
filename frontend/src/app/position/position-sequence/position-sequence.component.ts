@@ -10,6 +10,7 @@ import { SidebarSheetComponent } from '../../sidebar-sheet/sidebar-sheet.compone
 import { PositionDragDropService } from '../../services/position-drag-drop.service';
 import { ToolbarComponent } from '../../toolbar/toolbar.component';
 import { Sequence } from '../../models/sequence.model';
+import { OverviewStateService } from '../../services/overview-state.service';
 
 type PresetField = 'timePreset' | 'currentPreset' | 'voltagePreset';
 
@@ -39,10 +40,13 @@ export class PositionSequenceComponent {
   showPositionSelector: boolean = false;
   private editingState: { position: Position | null, field: PresetField | null } = { position: null, field: null };
 
+  public readonly enableEdit = this.overviewStateService.enableEdit;
+
   constructor(
     public positionService: PositionService,
     private logger: LoggerService,
-    private positionDragDropService: PositionDragDropService
+    private positionDragDropService: PositionDragDropService,
+    private overviewStateService: OverviewStateService
   ) {}
 
   ngOnInit() {

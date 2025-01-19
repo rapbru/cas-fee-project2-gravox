@@ -5,33 +5,41 @@
         <h3>Ausgewählte Positionen</h3>
         <div class="toolbar-group">
           <app-toolbar
-            [showDelete]="true"
+            [showDelete]="enableEdit()"
             [deleteDisabled]="!hasSelectedPositions()"
-            [showAdd]="true"
+            [showAdd]="enableEdit()"
             (delete)="deleteSelectedPositions()"
             (add)="openPositionSelector()">
           </app-toolbar>
         </div>
       </div>
 
-      <div class="positions-grid" cdkDropList (cdkDropListDropped)="onDrop($event)">
+      <div class="positions-grid" 
+           cdkDropList 
+           [cdkDropListDisabled]="!enableEdit()"
+           (cdkDropListDropped)="onDrop($event)">
         <div *ngFor="let position of selectedPositions; let i = index" 
              class="position-card"
              cdkDrag
              [cdkDragData]="position">
           <div class="position-header">
-            <button mat-icon-button class="check-circle" (click)="toggleSelection(position)">
+            <button mat-icon-button 
+                    class="check-circle" 
+                    [disabled]="!enableEdit()"
+                    (click)="toggleSelection(position)">
               <mat-icon class="check-circle-icon" [ngClass]="{ 'selected': position.isSelected }">
                 {{ position.isSelected ? 'check_circle' : 'radio_button_unchecked' }}
               </mat-icon>
             </button>
             <span class="position-number">{{ i + 1 }}</span>
             <span class="position-name">{{ position.name }}</span>
-            <button class="button button-label button-highlight-sub" (click)="onRemovePosition(position)">
+            <button *ngIf="enableEdit()"
+                    class="button button-label button-highlight-sub" 
+                    (click)="onRemovePosition(position)">
               <mat-icon>remove</mat-icon>
               <span>Entfernen</span>
             </button>
-            <div class="drag-handle" cdkDragHandle>
+            <div class="drag-handle" *ngIf="enableEdit()" cdkDragHandle>
               <mat-icon>drag_handle</mat-icon>
             </div>
           </div>
