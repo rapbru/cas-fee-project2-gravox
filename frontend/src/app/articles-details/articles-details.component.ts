@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Article } from '../models/article.model';
 import { Position } from '../models/position.model';
@@ -36,6 +36,8 @@ import { Sequence } from '../models/sequence.model';
   styleUrls: ['./articles-details.component.scss']
 })
 export class ArticlesDetailsComponent implements OnInit, OnDestroy {
+  @ViewChild('positionSequence') positionSequence?: PositionSequenceComponent;
+  
   article: Article | null = null;
   positions: Position[] = [];
   public readonly enableEdit = this.overviewStateService.enableEdit;
@@ -201,5 +203,11 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
     
     this.articleService.trackModification(updatedArticle);
     this.article = updatedArticle;
+  }
+
+  openPositionSelector() {
+    if (this.positionSequence) {
+      this.positionSequence.openPositionSelector();
+    }
   }
 }

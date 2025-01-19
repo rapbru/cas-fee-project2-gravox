@@ -11,6 +11,13 @@
         }
         <span>Laden</span>
       </button>
+
+      <button *ngIf="enableEdit()"
+              class="button"
+              (click)="openPositionSelector()">
+        <mat-icon>add</mat-icon>
+        <span>Hinzufügen</span>
+      </button>
     </div>
 
     <app-article-card
@@ -23,7 +30,8 @@
 
     <app-position-sequence
       [selectedPositions]="positions"
-      (selectedPositionsChange)="onSequenceChange($event)">
+      (selectedPositionsChange)="onSequenceChange($event)"
+      #positionSequence>
     </app-position-sequence>
   } @else {
     <div>Loading article details...</div>
