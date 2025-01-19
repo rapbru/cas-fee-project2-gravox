@@ -33,11 +33,12 @@
 
       @if (showAddLine && isReorderMode) {
         <button class="button"
+                [disabled]="addLineDisabled"
                 (click)="addLine.emit()"
-                aria-label="Linie hinzufügen" i18n-aria-label="@@ButtonAddLineAriaLabel"
-                matTooltip="Linie hinzufügen" i18n-matTooltip="@@ButtonAddLineTooltip">
+                aria-label="Linie hinzufügen"
+                matTooltip="Linie hinzufügen">
           <mat-icon>add_circle</mat-icon>
-          <span i18n="@@ButtonAddLine">Linie hinzufügen</span>
+          <span>Linie hinzufügen</span>
         </button>
       }
 
@@ -54,11 +55,12 @@
 
       @if (showDeleteLine && isReorderMode) {
         <button class="button danger"
+                [disabled]="deleteLineDisabled"
                 (click)="deleteLine.emit()"
-                aria-label="Linie löschen" i18n-aria-label="@@ButtonDeleteLineAriaLabel"
-                matTooltip="Linie löschen" i18n-matTooltip="@@ButtonDeleteLineTooltip">
+                aria-label="Linie löschen"
+                matTooltip="Linie löschen">
           <mat-icon>remove_circle</mat-icon>
-          <span i18n="@@ButtonDeleteLine">Linie löschen</span>
+          <span>Linie löschen</span>
         </button>
       }
 

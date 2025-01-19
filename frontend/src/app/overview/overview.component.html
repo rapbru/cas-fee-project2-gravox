@@ -2,6 +2,8 @@
   *ngIf="showToolbar && enableEdit()"
   [showAddLine]="enableEdit()"
   [showDeleteLine]="enableEdit()"
+  [addLineDisabled]="columnManagementService.getColumnCount() >= 4"
+  [deleteLineDisabled]="columnManagementService.getColumnCount() <= 1"
   [showAdd]="enableEdit() && !enableOrder()"
   [showReorder]="enableEdit()"
   [showDelete]="enableEdit() && !enableOrder()"
