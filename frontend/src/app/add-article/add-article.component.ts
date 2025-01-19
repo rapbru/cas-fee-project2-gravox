@@ -92,11 +92,11 @@ export class AddArticleComponent implements OnInit {
   }
 
   private validateArticleData(articleData: Article): boolean {
-    if (!articleData.title || !articleData.number || !articleData.customer) {
+    if (!articleData.title.trim() || !articleData.number.trim() || !articleData.customer.trim()) {
         this.snackbarService.showError('Bitte füllen Sie alle Pflichtfelder aus');
         return false;
     }
-    if (articleData.sequence && articleData.sequence.length === 0) {
+    if (!articleData.sequence || articleData.sequence.length === 0) {
         this.snackbarService.showError('Bitte fügen Sie mindestens eine Position hinzu');
         return false;
     }
@@ -129,12 +129,19 @@ export class AddArticleComponent implements OnInit {
     this.http.post<Article>(`${environment.apiUrl}/article`, articleData)
         .subscribe({
             next: (response) => {
+                this.loggerService.log('Article saved successfully:', response);
                 this.snackbarService.showSuccess('Artikel erfolgreich gespeichert');
                 this.router.navigate(['/articles']);
             },
             error: (error) => {
+                this.loggerService.error('Error saving article:', {
+                    error,
+                    sentData: articleData,
+                    errorMessage: error.error?.error,
+                    status: error.status,
+                    statusText: error.statusText
+                });
                 const errorMessage = error.error?.error || 'Fehler beim Speichern des Artikels';
-                this.loggerService.error('Error saving article:', error);
                 this.snackbarService.showError(errorMessage);
                 this.isSaving = false;
             },
