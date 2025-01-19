@@ -1420,53 +1420,53 @@ app-add-article {
   box-sizing: border-box;
 }
 
-.position-card {
-  background-color: var(--color-main);
-  border-radius: var(--border-radius);
-  padding: 12px;
-  width: 100%;
-  box-sizing: border-box;
-  min-width: 0;
-  color: var(--color-text);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
+// .position-card {
+//   background-color: var(--color-main);
+//   border-radius: var(--border-radius);
+//   padding: 12px;
+//   width: 100%;
+//   box-sizing: border-box;
+//   min-width: 0;
+//   color: var(--color-text);
+//   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+//   transition: transform 0.2s, box-shadow 0.2s;
 
-  .position-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    // border-bottom: 1px solid var(--color-vonesco);
+//   .position-header {
+//     display: flex;
+//     align-items: center;
+//     gap: 16px;
+//     margin-bottom: 12px;
+//     padding-bottom: 8px;
+//     // border-bottom: 1px solid var(--color-vonesco);
 
-    .position-number {
-      font-weight: 600;
-      color: var(--color-vonesco);
-      min-width: 48px;
-    }
+//     .position-number {
+//       font-weight: 600;
+//       color: var(--color-vonesco);
+//       min-width: 48px;
+//     }
 
-    .position-name {
-      font-weight: 500;
-      flex: 1;
-    }
-  }
+//     .position-name {
+//       font-weight: 500;
+//       flex: 1;
+//     }
+//   }
 
-  .position-details {
-    display: grid;
-    gap: 8px;
-    font-size: 0.9rem;
+//   .position-details {
+//     display: grid;
+//     gap: 8px;
+//     font-size: 0.9rem;
 
-    > div {
-      display: flex;
-      justify-content: space-between;
-      padding: 4px 0;
+//     > div {
+//       display: flex;
+//       justify-content: space-between;
+//       padding: 4px 0;
 
-      &:not(:last-child) {
-        border-bottom: 1px solid var(--color-background);
-      }
-    }
-  }
-}
+//       &:not(:last-child) {
+//         border-bottom: 1px solid var(--color-background);
+//       }
+//     }
+//   }
+// }
 
 // Add a container style for grouping positions
 .positions-container {

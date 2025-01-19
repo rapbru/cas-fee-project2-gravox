@@ -34,8 +34,6 @@
       background-color: var(--color-sheet-background);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      border-top-left-radius: var(--button-border-radius);
-      border-top-right-radius: var(--button-border-radius);
     }
 
     .sheet-content {
@@ -130,6 +128,43 @@
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
       }
+    }
+  }
+}
+
+:host ::ng-deep .position-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  min-height: 48px;
+  line-height: 1;
+
+  .position-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    min-height: unset;
+    line-height: 1;
+
+    .title, span {
+      margin: 0;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      font-size: inherit;
+    }
+
+    .button {
+      margin: 0;
+      padding: 0 16px;
+      height: 36px;
+      line-height: 36px;
+      display: inline-flex;
+      align-items: center;
     }
   }
 }

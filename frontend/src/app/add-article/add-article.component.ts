@@ -73,11 +73,15 @@ export class AddArticleComponent implements OnInit {
   ngOnInit() {
     this.loggerService.log('AddArticleComponent initialized');
     this.headerService.setTitle('Artikeldaten');
-    this.positionService.startFetching();
+    
+    this.fetchPositionsOnce();
+  }
+
+  private fetchPositionsOnce() {
+    this.positionService.fetchPositions();
   }
 
   ngOnDestroy() {
-    this.positionService.stopFetching();
   }
 
   onSequenceChange(sequences: any[]) {

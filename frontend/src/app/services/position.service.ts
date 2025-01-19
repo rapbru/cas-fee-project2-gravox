@@ -82,6 +82,29 @@ export class PositionService {
     ).subscribe();
   }
 
+  public fetchPositionsOnce() {
+    return this.http.get<Position[]>(this.apiUrl).pipe(
+      map(positions => this.transformData(positions)),
+      tap(loaded => {
+        const currentPositions = this.positions();
+        if (JSON.stringify(loaded) !== JSON.stringify(currentPositions)) {
+          this.positions.set(loaded);
+        }
+      }),
+      switchMap(() => this.positionOrderService.applyOrder(this.positions())),
+      tap(orderedPositions => {
+        const currentOrdered = this.orderedPositions();
+        if (JSON.stringify(orderedPositions) !== JSON.stringify(currentOrdered)) {
+          this.orderedPositions.set(orderedPositions);
+        }
+      }),
+      catchError(error => {
+        console.error('Error fetching positions:', error);
+        return of([]);
+      })
+    ).subscribe();
+  }
+
   // Getter für die View
   public getPositions(): Signal<Position[]> {
     return computed(() => 
