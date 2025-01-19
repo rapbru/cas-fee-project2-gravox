@@ -1,5 +1,5 @@
 import PLCService from '../plc/plc-service.js';
-import PLCMockData from '../data/plc-mock-data.js';
+import PLCMockData from '../mock/plc-mock-service.js';
 import PLCConnection from '../plc/plc-connection.js'
 import ArticleService from '../services/article-service.js';
 import ArticleLoadingService from '../services/article-loading-service.js';

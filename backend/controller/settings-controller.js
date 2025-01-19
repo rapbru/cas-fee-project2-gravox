@@ -1,5 +1,5 @@
 import SettingsService from '../services/settings-service.js';
-import SettingsMockService from '../services/mock/settings-mock-service.js';
+import SettingsMockService from '../mock/settings-mock-service.js';
 
 export class SettingsController {
     constructor() {

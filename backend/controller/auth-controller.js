@@ -1,6 +1,6 @@
 // controllers/AuthController.js
 import AuthService from '../services/auth-service.js';
-import AuthMockService from '../services/mock/auth-mock-service.js';
+import AuthMockService from '../mock/auth-mock-service.js';
 
 class AuthController {
     static async login(req, res) {

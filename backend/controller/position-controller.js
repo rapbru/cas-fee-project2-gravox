@@ -1,8 +1,7 @@
 import PositionService from '../services/position-service.js';
 import TagService from '../plc/tag-service.js';
 import PLCService from '../plc/plc-service.js';
-// import PLCMockData from '../data/plc-mock-data.js';
-import PositionMockService from '../services/mock/position-mock-service.js';
+import PositionMockService from '../mock/position-mock-service.js';
 
 
 export class PositionController {

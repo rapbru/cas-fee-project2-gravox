@@ -1,4 +1,4 @@
-import TokenService from '../token-service.js';
+import TokenService from '../services/token-service.js';
 
 class AuthMockService {
     static mockUsers = [
