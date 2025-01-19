@@ -117,42 +117,27 @@
 }
 
 .detail-row {
-  display: grid;
-  grid-template-columns: 24px 100px 1fr;
+  display: flex;
+  align-items: center;
   gap: 8px;
-  margin: 2px 0;
-  min-height: 24px;
 
   mat-icon {
-    color: #666;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 24px;
-    position: relative;
-    top: 2px;
+    color: var(--color-text);
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
   }
 
   .label {
-    color: #666;
-    white-space: nowrap;
+    color: var(--color-text);
+    font-size: 14px;
+    font-weight: 400;
   }
 
   .value {
     color: var(--color-text);
-    line-height: 1.4;
-    white-space: normal;
-    word-break: break-word;
-
-    .details-grid & {
-      cursor: pointer;
-      transition: color 0.2s ease;
-
-      :host-context(.is-in-details) &:hover {
-        color: var(--color-vonesco-sub);
-        text-decoration: underline;
-      }
-    }
+    font-size: 14px;
+    font-weight: 500;
   }
 }
 

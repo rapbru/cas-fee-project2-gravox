@@ -133,21 +133,6 @@
                    (input)="updateArticleInfo($event, 'drainage')" />
           </ng-template>
         </div>
-        <div class="detail-row">
-          <mat-icon>bolt</mat-icon>
-          <span class="label">Anodisch</span>
-          <ng-container *ngIf="!isEditable; else editAnodic">
-            <span class="value">{{ article.anodic }}</span>
-          </ng-container>
-          <ng-template #editAnodic>
-            <input class="value-input"
-                   type="text"
-                   [value]="article.anodic"
-                   (focus)="selectInputContent($event)"
-                   (click)="selectInputContent($event)"
-                   (input)="updateArticleInfo($event, 'anodic')" />
-          </ng-template>
-        </div>
       </div>
     </div>
   </div>
