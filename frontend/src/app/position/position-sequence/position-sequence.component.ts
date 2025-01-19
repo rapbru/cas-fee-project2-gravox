@@ -11,6 +11,7 @@ import { PositionDragDropService } from '../../services/position-drag-drop.servi
 import { ToolbarComponent } from '../../toolbar/toolbar.component';
 import { Sequence } from '../../models/sequence.model';
 import { OverviewStateService } from '../../services/overview-state.service';
+import { moveItemInArray } from '@angular/cdk/drag-drop';
 
 type PresetField = 'timePreset' | 'currentPreset' | 'voltagePreset';
 
@@ -114,10 +115,25 @@ export class PositionSequenceComponent {
   }
 
   onDrop(event: CdkDragDrop<Position[]>) {
-    const columns = [this.selectedPositions];
-    this.positionDragDropService.handleDrop(event, columns, 0);
-    this.selectedPositions = columns[0];
-    this.selectedPositionsChange.emit(this.createSequenceArray());
+    if (!this.selectedPositions) {
+      this.selectedPositions = [];
+    }
+    
+    moveItemInArray(
+      this.selectedPositions,
+      event.previousIndex,
+      event.currentIndex
+    );
+    
+    const sequences = this.selectedPositions.map((pos, index) => ({
+      positionId: pos.id.toString(),
+      orderNumber: index + 1,
+      timePreset: pos.timePreset ?? 0,
+      currentPreset: pos.currentPreset ?? 0,
+      voltagePreset: pos.voltagePreset ?? 0
+    }));
+    
+    this.selectedPositionsChange.emit(sequences);
   }
 
   hasSelectedPositions(): boolean {

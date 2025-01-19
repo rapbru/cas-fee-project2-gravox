@@ -21,6 +21,7 @@
         <div *ngFor="let position of selectedPositions; let i = index" 
              class="position-card"
              cdkDrag
+             [cdkDragDisabled]="!enableEdit()"
              [cdkDragData]="position">
           <div class="position-header">
             <button mat-icon-button 
