@@ -36,6 +36,11 @@
         </div>
       }
     </div>
+
+    <app-position-sequence
+      [selectedPositions]="positions"
+      (selectedPositionsChange)="onSequenceChange($event)">
+    </app-position-sequence>
   } @else {
     <div>Loading article details...</div>
   }

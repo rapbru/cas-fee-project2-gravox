@@ -16,17 +16,22 @@ import { HeaderService } from '../services/header.service';
 import { ArticleService } from '../services/article.service';
 import { LoggerService } from '../services/logger.service';
 import { firstValueFrom } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { PositionSequenceComponent } from '../position/position-sequence/position-sequence.component';
+import { Sequence } from '../models/sequence.model';
 
 @Component({
   selector: 'app-articles-details',
   standalone: true,
   imports: [
+    CommonModule,
     MatIconModule,
     MatButtonModule,
     ArticleCardComponent,
     PositionCardComponent,
     DragDropModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    PositionSequenceComponent
   ],
   templateUrl: './articles-details.component.html',
   styleUrls: ['./articles-details.component.scss']
@@ -84,20 +89,16 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
     }
     
     try {
-      // Get all positions from the service
       const allPositions = await firstValueFrom(this.positionService.positions$);
       this.logger.log('All positions from service:', allPositions);
       this.logger.log('Article sequence:', this.article.sequence);
       
-      // Create a temporary array to hold valid positions
       const validPositions: Position[] = [];
       
-      // Sort sequences by order number and process each one
       this.article.sequence
         .sort((a, b) => a.orderNumber - b.orderNumber)
         .forEach(seq => {
           this.logger.log('Processing sequence:', seq);
-          // Find position by number instead of id
           const position = allPositions.find(p => p.number === Number(seq.positionId));
           this.logger.log('Found position:', position);
           
@@ -111,7 +112,6 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
             this.logger.log('Mapped position:', mappedPosition);
             validPositions.push(mappedPosition);
           } else {
-            // Create a new position if not found in allPositions
             const newPosition: Position = {
               id: Number(seq.positionId),
               number: Number(seq.positionId),
@@ -129,7 +129,6 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
           }
         });
       
-      // Assign the valid positions to the component property
       this.positions = validPositions;
       this.logger.log('Final positions array:', this.positions);
     } catch (error) {
@@ -161,7 +160,6 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
         event.currentIndex
       );
 
-      // Update sequence order numbers
       this.article.sequence = this.positions.map((pos, index) => ({
         positionId: pos.id.toString(),
         orderNumber: index + 1,
@@ -185,5 +183,24 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
           }
         });
     }
+  }
+
+  onSequenceChange(sequences: Sequence[]) {
+    if (!this.article) return;
+    
+    const articleSequences = sequences.map(seq => ({
+      ...seq,
+      timePreset: seq.timePreset?.toString() ?? '0',
+      currentPreset: seq.currentPreset?.toString() ?? '0',
+      voltagePreset: seq.voltagePreset?.toString() ?? '0'
+    }));
+    
+    const updatedArticle = {
+      ...this.article,
+      sequence: articleSequences
+    };
+    
+    this.articleService.trackModification(updatedArticle);
+    this.article = updatedArticle;
   }
 }

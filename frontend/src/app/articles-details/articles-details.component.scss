@@ -68,7 +68,10 @@
 .content-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .article-actions {
@@ -114,4 +117,8 @@
 
 .sequences-container.cdk-drop-list-dragging .sequence-item:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+app-position-sequence {
+  margin-top: 24px;
 }

@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, HostBinding, EventEmitter, Output } from '@angular/core';
+import { Component, ViewChild, ElementRef, HostBinding, EventEmitter, Output, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { CdkDragDrop, DragDropModule, CdkDrag, CdkDragHandle, CdkDropList } from '@angular/cdk/drag-drop';
@@ -34,9 +34,9 @@ export class PositionSequenceComponent {
   @ViewChild('selectedPositionsContainer') selectedPositionsContainer?: ElementRef;
   @HostBinding('class.show-sheet') get showSheetClass() { return this.showPositionSelector; }
   
-  selectedPositions: Position[] = [];
-  showPositionSelector: boolean = false;
+  @Input() selectedPositions: Position[] = [];
   @Output() selectedPositionsChange = new EventEmitter<Sequence[]>();
+  showPositionSelector: boolean = false;
   private editingState: { position: Position | null, field: PresetField | null } = { position: null, field: null };
 
   constructor(
