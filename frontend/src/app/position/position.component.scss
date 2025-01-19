@@ -31,6 +31,26 @@
 
   &.edit-mode {
     padding: 12px 8px;
+
+    &.reorder-mode {
+      padding-left: 16px;
+    }
+
+    .position-metrics {
+      .metric {
+        button.mat-mdc-icon-button {
+          padding: 0;
+          width: 32px;
+          height: 32px;
+          line-height: 1;
+        }
+
+        mat-icon {
+          margin: 0;
+          padding-right: 0;
+        }
+      }
+    }
   }
 
   .check-circle {
