@@ -194,10 +194,11 @@
   }
 
   .position-number {
-    font-weight: 600;
-    color: var(--color-text);
+    padding-left: 8px;
+    margin-right: 8px;
     min-width: 24px;
-    text-align: left;
+    font-weight: 500;
+    color: var(--color-text-sub);
   }
 
   .drag-handle {
