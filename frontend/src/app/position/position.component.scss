@@ -143,14 +143,20 @@
 
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 
   mat-icon {
-    margin-right: 4px;
+    margin-bottom: 4px;
+    margin-right: 2px;
   }
 
   span {
     color: var(--color-text);
+  }
+
+  input, span {
+    margin: 0;
+    padding: 0;
   }
 }
 
