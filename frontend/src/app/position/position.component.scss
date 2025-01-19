@@ -140,6 +140,18 @@
       }
     }
   }
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  mat-icon {
+    margin-right: 4px;
+  }
+
+  span {
+    color: var(--color-text);
+  }
 }
 
 .position-metrics {
