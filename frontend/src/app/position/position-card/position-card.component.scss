@@ -45,3 +45,17 @@
       }
     }
   }
+
+.position-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.position-number {
+  color: var(--color-text);
+}
+
+.position-name {
+  color: var(--color-text);
+}

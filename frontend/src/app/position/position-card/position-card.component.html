@@ -1,1 +1,39 @@
-<p>position-card works!</p>
+<div class="position-card" [class.editable]="isEditable">
+  <div class="position-content">
+    <div class="position-header">
+      <div class="position-title">
+        <span class="position-number">{{ position.number }}</span>
+        <span class="position-name">{{ position.name }}</span>
+      </div>
+      <button class="button button-label button-highlight-main">
+        <mat-icon>add</mat-icon>
+        <span>Hinzufügen</span>
+      </button>
+    </div>
+    <div class="position-info">
+      <div class="info-column">
+        <div class="info-header">
+          <mat-icon>timer</mat-icon>
+          <span>Zeit (min)</span>
+        </div>
+        <div class="info-value">{{position.timePreset}}</div>
+      </div>
+      
+      <div class="info-column">
+        <div class="info-header">
+          <mat-icon>bolt</mat-icon>
+          <span>Strom (A)</span>
+        </div>
+        <div class="info-value">{{position.currentPreset}}</div>
+      </div>
+      
+      <div class="info-column">
+        <div class="info-header">
+          <mat-icon>electric_meter</mat-icon>
+          <span>Spannung (V)</span>
+        </div>
+        <div class="info-value">{{position.voltagePreset}}</div>
+      </div>
+    </div>
+  </div>
+</div>
