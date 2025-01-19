@@ -13,29 +13,13 @@
       </button>
     </div>
 
-    <div>
-      <app-article-card
-        [article]="article"
-        [showCheckbox]="false"
-        [showHeader]="false"
-        [isInDetails]="true"
-        [isEditable]="enableEdit()">
-      </app-article-card>
-
-      @if (positions.length > 0) {
-        <div cdkDropList (cdkDropListDropped)="onDrop($event)" class="positions-container">
-          @for (position of positions; track position.id) {
-            <div cdkDrag class="position-wrapper">
-              <app-position-card
-                [position]="position"
-                [isEditable]="enableEdit()"
-                [showCheckbox]="false">
-              </app-position-card>
-            </div>
-          }
-        </div>
-      }
-    </div>
+    <app-article-card
+      [article]="article"
+      [showCheckbox]="false"
+      [showHeader]="false"
+      [isInDetails]="true"
+      [isEditable]="enableEdit()">
+    </app-article-card>
 
     <app-position-sequence
       [selectedPositions]="positions"
