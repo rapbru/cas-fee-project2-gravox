@@ -42,9 +42,11 @@ export class PositionService {
   }
 
   public startFetching() {
-    this.intervalSubscription = interval(this.updateInterval).subscribe(() => {
-      this.fetchPositions();
-    });
+    if (!this.overviewStateService.enableEdit()) {
+      this.intervalSubscription = interval(this.updateInterval).subscribe(() => {
+        this.fetchPositions();
+      });
+    }
   }
 
   public stopFetching() {
@@ -54,12 +56,24 @@ export class PositionService {
   }
 
   public fetchPositions() {
+    if (this.overviewStateService.enableEdit()) {
+      return;
+    }
+
     this.http.get<Position[]>(this.apiUrl).pipe(
       map(positions => this.transformData(positions)),
-      tap(loaded => this.positions.set(loaded)),
+      tap(loaded => {
+        const currentPositions = this.positions();
+        if (JSON.stringify(loaded) !== JSON.stringify(currentPositions)) {
+          this.positions.set(loaded);
+        }
+      }),
       switchMap(() => this.positionOrderService.applyOrder(this.positions())),
       tap(orderedPositions => {
-        this.orderedPositions.set(orderedPositions);
+        const currentOrdered = this.orderedPositions();
+        if (JSON.stringify(orderedPositions) !== JSON.stringify(currentOrdered)) {
+          this.orderedPositions.set(orderedPositions);
+        }
       }),
       catchError(error => {
         console.error('Error fetching positions:', error);
