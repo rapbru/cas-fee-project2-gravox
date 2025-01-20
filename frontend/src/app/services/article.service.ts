@@ -56,7 +56,6 @@ export class ArticleService {
   getArticles(): Observable<Article[]> {
     const headers = this.getAuthHeaders();
     return this.http.get<Article[]>(this.apiUrl, { headers }).pipe(
-      tap(articles => this.logger.log('Fetched articles:', articles)),
       catchError(error => {
         this.logger.error('Error fetching articles:', error);
         return of([]);
@@ -78,7 +77,6 @@ export class ArticleService {
   updateArticle(article: Article): Observable<Article> {
     const headers = this.getAuthHeaders();
     return this.http.put<Article>(`${this.apiUrl}/${article.id}`, article, { headers }).pipe(
-      tap(updatedArticle => this.logger.log('Updated article:', updatedArticle)),
       catchError(error => {
         this.logger.error('Error updating article:', error);
         throw error;
