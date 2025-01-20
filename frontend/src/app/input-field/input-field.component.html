@@ -4,7 +4,7 @@
       <mat-icon *ngIf="icon" class="input-label-icon">{{ icon }}</mat-icon>
       {{ label }}
     </label>
-    <span class="input-field-counter" [class.visible]="showCounter" [class.flash-limit]="flashLimit">
+    <span class="input-field-counter" [class.visible]="showCounter">
       {{ value.length || 0 }}/{{ getEffectiveMaxLength() }} {{ numbersOnly ? 'Stellen' : 'Zeichen' }}
     </span>
   </div>
@@ -17,7 +17,6 @@
         [maxlength]="maxLength"
         [placeholder]="placeholder"
         [disabled]="disabled"
-        [class.flash-limit]="flashLimit"
         [attr.aria-label]="ariaLabel"
         class="input-field-value"
         [ngModel]="displayValue"
@@ -36,7 +35,6 @@
         [maxlength]="unit ? maxLength + unit.length + 1 : maxLength"
         [placeholder]="placeholder"
         [disabled]="disabled"
-        [class.flash-limit]="flashLimit"
         [attr.aria-label]="ariaLabel"
         class="input-field-value"
         [ngModel]="displayValue"

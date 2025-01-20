@@ -45,7 +45,7 @@ export class InputFieldComponent implements ControlValueAccessor {
   isAtLimit: boolean = false;
   showCounter: boolean = false;
   isFocused: boolean = false;
-  flashLimit: boolean = false;
+  // flashLimit: boolean = false;  // Commented out as we're not using flash animation
 
   private onChange: any = () => {};
   private onTouched: any = () => {};
@@ -128,12 +128,6 @@ export class InputFieldComponent implements ControlValueAccessor {
   private checkLimit(): void {
     if (this.maxLength > 0) {
       const isNowAtLimit = (this.value?.length || 0) >= this.getEffectiveMaxLength();
-      if (isNowAtLimit && !this.isAtLimit) {
-        this.flashLimit = true;
-        setTimeout(() => {
-          this.flashLimit = false;
-        }, 1000);
-      }
       this.isAtLimit = isNowAtLimit;
     }
   }
