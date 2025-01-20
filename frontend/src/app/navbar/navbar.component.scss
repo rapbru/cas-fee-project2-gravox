@@ -50,6 +50,38 @@
   .app-container {
     padding: 0 var(--container-padding);
   }
+
+  .button.edit-active {
+    color: #FF6228;  // Light theme default
+    
+    mat-icon {
+      color: #FF6228;
+    }
+  }
+}
+
+// Dark theme styles
+:host-context(.dark-theme) {
+  .navbar .button.edit-active {
+    color: #FFA786;
+    
+    mat-icon {
+      color: #FFA786;
+    }
+  }
+}
+
+// Handle system dark mode preference
+@media (prefers-color-scheme: dark) {
+  :root:not(.light-theme) {
+    .navbar .button.edit-active {
+      color: #FFA786;
+      
+      mat-icon {
+        color: #FFA786;
+      }
+    }
+  }
 }
 
 @media (max-width: 600px) {
@@ -61,3 +93,6 @@
     }
   }
 }
+
+
+

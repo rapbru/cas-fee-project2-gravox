@@ -208,24 +208,22 @@ input {
     }
 
     &.edit-active {
-      background-color: var(--color-main);
-      color: var(--color-vonesco-sub-2);
+      color: var(--color-vonesco);
       font-weight: 500;
-      opacity: 1;
       
       mat-icon {
-        color: var(--color-vonesco-sub-2);
+        color: var(--color-vonesco);
       }
 
       &:hover {
-        filter: brightness(103%);
+        background-color: var(--color-sub-3);
       }
 
       @media (prefers-color-scheme: dark) {
-        color: var(--color-vonesco-sub);
+        color: var(--color-vonesco-sub-2);
         
         mat-icon {
-          color: var(--color-vonesco-sub);
+          color: var(--color-vonesco-sub-2);
         }
       }
     }
@@ -370,15 +368,23 @@ button.navbar-item {
   }
 
   &.edit-active {
-    color: var(--color-vonesco-sub-2);
+    color: var(--color-vonesco);
     font-weight: 500;
     
+    mat-icon {
+      color: var(--color-vonesco);
+    }
+
     &:hover {
       background-color: var(--color-sub-3);
     }
 
     @media (prefers-color-scheme: dark) {
-      color: var(--color-vonesco-sub);
+      color: var(--color-vonesco-sub-2);
+      
+      mat-icon {
+        color: var(--color-vonesco-sub-2);
+      }
     }
   }
 
