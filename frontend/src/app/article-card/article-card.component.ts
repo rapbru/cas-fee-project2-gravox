@@ -71,6 +71,12 @@ export class ArticleCardComponent implements OnInit, OnDestroy {
     ).subscribe(() => {
       this.saveChanges();
     });
+
+    effect(() => {
+      if (!this.overviewStateService.enableEdit()) {
+        this.saveChanges();
+      }
+    });
   }
 
   onCardClick() {
@@ -118,11 +124,7 @@ export class ArticleCardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    effect(() => {
-      if (!this.overviewStateService.enableEdit()) {
-        this.saveChanges();
-      }
-    });
+    // Remove effect from here
   }
 
   ngOnDestroy() {
