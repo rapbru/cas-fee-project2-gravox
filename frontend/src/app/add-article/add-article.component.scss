@@ -7,10 +7,21 @@
 .scrollable-content {
   flex: 1;
   overflow-y: auto;
-  padding-bottom: 50vh; // Add padding at the bottom equal to bottom sheet height on mobile
+  padding-bottom: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   @media (min-width: 768px) {
-    padding-bottom: 0; // Remove padding on desktop
+    padding-bottom: 0;
+  }
+
+  form {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-bottom: 32px;
+    padding-top: 16px;
   }
 }
 
@@ -111,7 +122,6 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  max-width: 600px;
   width: 100%;
   margin: 0;
 
