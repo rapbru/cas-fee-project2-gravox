@@ -78,50 +78,34 @@
       display: grid;
       grid-template-columns: 24px 120px 1fr;
       gap: 8px;
-      margin: 2px 0;
-      min-height: 24px;
-      font-size: calc(var(--font-size) * 1);
-
-      mat-icon {
-        color: var(--color-text-sub);
+      align-items: center;
+      height: 38px;
+      margin: 0;
+      
+      .value, app-input-field {
+        width: 100%;
+        height: 38px;
         display: flex;
         align-items: center;
-        justify-content: center;
-        height: 24px;
-        position: relative;
-        top: 2px;
-        font-size: calc(var(--font-size) * 1.6);
-        width: calc(var(--font-size) * 1.6);
-        height: calc(var(--font-size) * 1.6);
-      }
 
-      .label {
-        color: var(--color-text-sub);
-        white-space: nowrap;
-        font-size: calc(var(--font-size) * 1);
-      }
+        ::ng-deep .input-field {
+          height: 38px;
+          
+          .input-field-header {
+            position: absolute;
+            right: 0;
+            top: 0;
+            pointer-events: none;
+          }
 
-      .value {
-        color: var(--color-text);
-        line-height: 1.4;
-        white-space: normal;
-        word-break: break-word;
-        font-size: calc(var(--font-size) * 1);
-      }
-
-      .value-input {
-        font-size: calc(var(--font-size) * 1);
-        border: 1px solid var(--color-border);
-        border-radius: 4px;
-        padding: 0px 0px;
-        background-color: var(--color-main);
-        color: var(--color-vonesco);
-        width: 100%;
-        transition: all 0.2s ease;
-
-        &:hover, &:focus {
-          border-color: var(--color-vonesco);
-          outline: none;
+          .input-wrapper {
+            height: 100%;
+            
+            input, textarea {
+              height: 100%;
+              padding: 0 8px;
+            }
+          }
         }
       }
     }
