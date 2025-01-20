@@ -49,9 +49,13 @@
 
     .timestamps-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: 1fr;
       gap: 4px;
       margin-bottom: 8px;
+
+      @media (min-width: 900px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     .details-grid {
@@ -59,7 +63,7 @@
       grid-template-columns: 1fr;
       gap: 16px;
 
-      @media (min-width: 600px) {
+      @media (min-width: 900px) {
         grid-template-columns: repeat(2, 1fr);
       }
     }
