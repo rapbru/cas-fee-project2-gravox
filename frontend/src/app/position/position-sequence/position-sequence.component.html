@@ -2,7 +2,7 @@
   <div class="selected-positions-container" #selectedPositionsContainer>
     <div class="selected-positions">
       <div class="positions-header">
-        <h3>Ausgewählte Positionen</h3>
+        <h3>Reihenfolge Positionen</h3>
         <div class="toolbar-group">
           <app-toolbar
             [showDelete]="enableEdit()"
@@ -32,7 +32,7 @@
                 {{ position.isSelected ? 'check_circle' : 'radio_button_unchecked' }}
               </mat-icon>
             </button>
-            <span class="position-number">{{ i + 1 }}</span>
+            <span class="position-number">{{ position.number }}</span>
             <span class="position-name">{{ position.name }}</span>
             <button *ngIf="enableEdit()"
                     class="button button-label button-highlight-sub" 
