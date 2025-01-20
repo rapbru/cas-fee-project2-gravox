@@ -95,7 +95,7 @@
                      inputmode="decimal">
             </div>
             <div class="metric-column" [class.disabled]="!hasVoltageCapability(position)">
-              <mat-icon [class.disabled]="position.voltagePreset === 0">electric_bolt</mat-icon>
+              <mat-icon [class.disabled]="position.voltagePreset === 0" class="mat-icon-filled">bolt</mat-icon>
               <span class="label" [class.disabled]="position.voltagePreset === 0">Spannung</span>
               <span class="value" 
                     tabindex="0"
