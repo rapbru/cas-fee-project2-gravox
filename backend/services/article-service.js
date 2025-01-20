@@ -37,21 +37,21 @@ class ArticleService {
 
             logger.info('Starting article creation with data:', articleData);
 
-            // First, validate that all positions exist
+            // Validate positions exist
             if (articleData.sequence && articleData.sequence.length > 0) {
-                const positionIds = articleData.sequence.map(seq => seq.positionId);
+                const positionIds = articleData.sequence.map(seq => parseInt(seq.positionId, 10));
                 logger.info('Checking positions:', positionIds);
                 
                 const positionCheckQuery = `
-                    SELECT id FROM position 
+                    SELECT id, position_name FROM position 
                     WHERE id = ANY($1::int[])
                 `;
                 const existingPositions = await client.query(positionCheckQuery, [positionIds]);
                 logger.info('Found positions:', existingPositions.rows);
                 
-                if (existingPositions.rows.length !== positionIds.length) {
+                if (existingPositions.rows.length !== new Set(positionIds).size) {
                     const existingIds = new Set(existingPositions.rows.map(row => row.id));
-                    const missingIds = positionIds.filter(id => !existingIds.has(parseInt(id, 10)));
+                    const missingIds = [...new Set(positionIds)].filter(id => !existingIds.has(id));
                     throw new Error(`Positions not found: ${missingIds.join(', ')}`);
                 }
             }
