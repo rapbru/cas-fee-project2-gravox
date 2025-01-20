@@ -5,12 +5,11 @@ $app-container-padding: 1rem;
 }
 
 .input-field {
-  max-width: 400px;
   width: 100%;
   padding-top: 24px;
   
   &.comment-field {
-    max-width: 400px;
+    width: 100%;
     
     .input-field-value {
       height: calc(38px * 1.5);
@@ -155,7 +154,6 @@ input {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-width: 600px;
   width: 100%;
   margin: 0;
 
@@ -172,11 +170,10 @@ input {
   }
 
   .input-field {
-    max-width: 288px;
     width: 100%;
     
     &.comment-field {
-      max-width: 288px;
+      width: 100%;
       
       .input-field-value {
         height: calc(38px * 1.5);
