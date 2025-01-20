@@ -39,7 +39,7 @@
       </ng-template>
     </div>
 
-    <div class="timestamps-grid">
+    <div class="timestamps-grid" *ngIf="!isInDetails">
       <div class="detail-row">
         <mat-icon>calendar_today</mat-icon>
         <span class="label">Created:</span>
@@ -62,12 +62,13 @@
             <span class="value">{{ article.number }}</span>
           </ng-container>
           <ng-template #editNumber>
-            <input class="value-input"
-                   type="text"
-                   [value]="article.number"
-                   (focus)="selectInputContent($event)"
-                   (click)="selectInputContent($event)"
-                   (input)="updateArticleInfo($event, 'number')" />
+            <app-input-field
+              [name]="'number'"
+              [(ngModel)]="article.number"
+              [maxLength]="maxLengthNumber"
+              [numbersOnly]="true"
+              (ngModelChange)="updateArticleInfo($event, 'number')"
+            ></app-input-field>
           </ng-template>
         </div>
         <div class="detail-row">
@@ -77,12 +78,12 @@
             <span class="value">{{ article.customer }}</span>
           </ng-container>
           <ng-template #editCustomer>
-            <input class="value-input"
-                   type="text"
-                   [value]="article.customer"
-                   (focus)="selectInputContent($event)"
-                   (click)="selectInputContent($event)"
-                   (input)="updateArticleInfo($event, 'customer')" />
+            <app-input-field
+              [name]="'customer'"
+              [(ngModel)]="article.customer"
+              [maxLength]="maxLengthCustomer"
+              (ngModelChange)="updateArticleInfo($event, 'customer')"
+            ></app-input-field>
           </ng-template>
         </div>
         <div class="detail-row">
@@ -92,12 +93,12 @@
             <span class="value">{{ article.note }}</span>
           </ng-container>
           <ng-template #editNote>
-            <input class="value-input"
-                   type="text"
-                   [value]="article.note"
-                   (focus)="selectInputContent($event)"
-                   (click)="selectInputContent($event)"
-                   (input)="updateArticleInfo($event, 'note')" />
+            <app-input-field
+              [name]="'note'"
+              [(ngModel)]="article.note"
+              [maxLength]="maxLengthNote"
+              (ngModelChange)="updateArticleInfo($event, 'note')"
+            ></app-input-field>
           </ng-template>
         </div>
       </div>
