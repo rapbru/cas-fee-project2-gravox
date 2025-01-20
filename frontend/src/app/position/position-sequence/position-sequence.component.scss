@@ -411,6 +411,14 @@
   &:hover {
     opacity: 0.8;
   }
+
+  :host-context(:not(.edit-mode)) & {
+    cursor: default;
+    
+    &:hover {
+      opacity: 1;
+    }
+  }
 }
 
 .value-input {
