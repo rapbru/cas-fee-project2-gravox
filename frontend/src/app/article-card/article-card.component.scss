@@ -17,6 +17,38 @@
     outline-offset: 2px;
   }
 
+  &[isInDetails="true"] {
+    width: 100%;
+    margin: 0;
+    cursor: default;
+
+    .detail-row {
+      grid-template-columns: 24px 120px 1fr;
+      width: 100%;
+    }
+
+    .article-grid {
+      display: grid;
+      grid-template-columns: 1fr !important;
+      gap: 8px;
+      width: 100%;
+    }
+
+    app-input-field {
+      width: 100%;
+
+      ::ng-deep input.input-field-value,
+      ::ng-deep textarea.input-field-value {
+        color: var(--color-vonesco);
+      }
+    }
+
+    &:hover {
+      transform: none;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+  }
+
   .article-header {
     display: flex;
     align-items: center;

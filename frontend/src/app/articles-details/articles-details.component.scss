@@ -1,8 +1,19 @@
+:host {
+  display: block;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
 .positions-container {
   display: grid;
   gap: 16px;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: 1fr;
   margin-top: 20px;
+  width: 100%;
+  margin-left: 0;
 }
 
 .position-wrapper {
@@ -23,7 +34,7 @@
   .drag-handle {
     cursor: move;
     margin-right: 8px;
-    
+
     mat-icon {
       color: var(--color-text-sub);
     }
@@ -70,8 +81,8 @@
   flex-direction: column;
   gap: 24px;
   padding: 24px;
-  max-width: 1200px;
-  margin: 0 auto;
+  margin: 0;
+  width: 100%;
 }
 
 .article-actions {
@@ -92,7 +103,7 @@
     height: 36px;
     background-color: var(--color-accent);
     color: var(--color-text-light);
-    
+
     &:hover {
       background-color: var(--color-accent-hover);
     }
