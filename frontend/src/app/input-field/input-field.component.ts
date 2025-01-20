@@ -50,8 +50,8 @@ export class InputFieldComponent implements ControlValueAccessor {
   private onChange: any = () => {};
   private onTouched: any = () => {};
 
-  writeValue(value: string): void {
-    this.value = value;
+  writeValue(value: string | null): void {
+    this.value = value || '';
     this.updateDisplayValue();
     this.checkLimit();
   }
@@ -70,15 +70,15 @@ export class InputFieldComponent implements ControlValueAccessor {
 
   onInputChange(event: any): void {
     let value = typeof event === 'string' ? event : event.target.value;
-    if (this.unit && value.endsWith(this.unit)) {
+    if (this.unit && value?.endsWith(this.unit)) {
       value = value.slice(0, -this.unit.length).trim();
     }
     
     if (this.numbersOnly) {
-      value = value.replace(/[^0-9]/g, '');
+      value = value?.replace(/[^0-9]/g, '') || '';
     }
     
-    if (this.maxLength > 0 && value.length > this.getEffectiveMaxLength()) {
+    if (this.maxLength > 0 && value?.length > this.getEffectiveMaxLength()) {
       value = value.slice(0, this.getEffectiveMaxLength());
     }
     
@@ -118,7 +118,7 @@ export class InputFieldComponent implements ControlValueAccessor {
   }
 
   private updateDisplayValue(): void {
-    this.displayValue = this.value + (this.value && this.unit ? ' ' + this.unit : '');
+    this.displayValue = (this.value || '') + (this.value && this.unit ? ' ' + this.unit : '');
   }
 
   private updateCounterVisibility(): void {

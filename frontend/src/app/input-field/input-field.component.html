@@ -5,7 +5,7 @@
       {{ label }}
     </label>
     <span class="input-field-counter" [class.visible]="showCounter">
-      {{ value.length || 0 }}/{{ getEffectiveMaxLength() }} {{ numbersOnly ? 'Stellen' : 'Zeichen' }}
+      {{ value.length }}/{{ getEffectiveMaxLength() }} {{ numbersOnly ? 'Stellen' : 'Zeichen' }}
     </span>
   </div>
   <div class="input-wrapper">
