@@ -4,6 +4,10 @@
             <ng-container *ngIf="!enableEdit(); else editHeader">
                 <div class="position-number-base">{{ position.number }}</div>  
                 <div class="position-name-base">{{ position.name }}</div> 
+                <div class="position-temperature-base" *ngIf="position.temperature.isPresent">
+                    {{ position.temperature.actual }}
+                    <span>°C</span>
+                </div>
             </ng-container>
             <ng-template #editHeader>
                 <ng-container *ngIf="enableOrder(); else noOrder">
