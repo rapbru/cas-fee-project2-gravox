@@ -21,10 +21,25 @@ $app-container-padding: 1rem;
   }
 }
 
+.input-fields-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 800px;
+  width: 100%;
+  margin: 0;
+
+  @media (min-width: 768px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
 .input-field-header {
   display: flex;
   align-items: baseline;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   gap: 8px;
 }
 
