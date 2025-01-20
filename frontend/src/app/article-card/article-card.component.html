@@ -30,12 +30,12 @@
         <span class="value">{{ article.title }}</span>
       </ng-container>
       <ng-template #editTitle>
-        <input class="value-input"
-               type="text"
-               [value]="article.title"
-               (focus)="selectInputContent($event)"
-               (click)="selectInputContent($event)"
-               (input)="updateArticleInfo($event, 'title')" />
+        <app-input-field
+          [name]="'title'"
+          [(ngModel)]="article.title"
+          [maxLength]="maxLengthName"
+          (ngModelChange)="updateArticleInfo($event, 'title')"
+        ></app-input-field>
       </ng-template>
     </div>
 
@@ -110,27 +110,31 @@
             <span class="value">{{ formatValue(article.area, 'area') }}</span>
           </ng-container>
           <ng-template #editArea>
-            <input class="value-input"
-                   type="text"
-                   [value]="formatValue(article.area, 'area')"
-                   (focus)="selectInputContent($event)"
-                   (click)="selectInputContent($event)"
-                   (input)="updateArticleInfo($event, 'area')" />
+            <app-input-field
+              [name]="'area'"
+              [(ngModel)]="article.area"
+              [maxLength]="maxLengthArea"
+              [numbersOnly]="true"
+              [unit]="'dm²'"
+              (ngModelChange)="updateArticleInfo($event, 'area')"
+            ></app-input-field>
           </ng-template>
         </div>
         <div class="detail-row">
           <mat-icon>water_drop</mat-icon>
           <span class="label">Abtropfen</span>
           <ng-container *ngIf="!isEditable; else editDrainage">
-            <span class="value">{{ article.drainage }}</span>
+            <span class="value">{{ formatValue(article.drainage, 'drainage') }}</span>
           </ng-container>
           <ng-template #editDrainage>
-            <input class="value-input"
-                   type="text"
-                   [value]="article.drainage"
-                   (focus)="selectInputContent($event)"
-                   (click)="selectInputContent($event)"
-                   (input)="updateArticleInfo($event, 'drainage')" />
+            <app-input-field
+              [name]="'drainage'"
+              [(ngModel)]="article.drainage"
+              [maxLength]="maxLengthDrainage"
+              [numbersOnly]="true"
+              [unit]="'%'"
+              (ngModelChange)="updateArticleInfo($event, 'drainage')"
+            ></app-input-field>
           </ng-template>
         </div>
       </div>

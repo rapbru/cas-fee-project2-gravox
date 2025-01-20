@@ -11,6 +11,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ArticleService } from '../services/article.service';
 import { HeaderService } from '../services/header.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { InputFieldComponent } from '../input-field/input-field.component';
 
 @Component({
   selector: 'app-article-card',
@@ -21,7 +22,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatButtonModule,
     MatIconModule,
     MatCheckboxModule, 
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    InputFieldComponent
   ],
   templateUrl: './article-card.component.html',
   styleUrls: ['./article-card.component.scss'],
@@ -42,6 +44,13 @@ export class ArticleCardComponent {
   @Output() cardClick = new EventEmitter<number>();
 
   isLoading = this.articleService.getIsLoading();
+
+  maxLengthName = 30;
+  maxLengthNumber = 6;
+  maxLengthCustomer = 30;
+  maxLengthArea = 4;
+  maxLengthDrainage = 3;
+  maxLengthNote = 120;
 
   constructor(
     private router: Router,
@@ -124,7 +133,6 @@ export class ArticleCardComponent {
     input.select();
   }
 
-  // Helper method to display values with units
   formatValue(value: string | undefined, field: string): string {
     if (!value) return '';
     
