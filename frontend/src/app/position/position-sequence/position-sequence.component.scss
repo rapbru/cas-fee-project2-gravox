@@ -348,16 +348,28 @@
     }
 
     .value {
-      color: var(--color-vonesco);
       font-size: 0.9rem;
       font-weight: normal;
       width: 100%;
       text-align: right;
       padding-right: 8px;
       
+      :host(.edit-mode) & {
+        color: var(--color-vonesco);
+        cursor: pointer;
+      }
+      
+      :host(:not(.edit-mode)) & {
+        color: var(--color-text);
+        
+        &[class*="value-0"] {
+          color: var(--color-sub-3);
+        }
+      }
+      
       .unit {
         margin-left: 4px;
-        color: var(--color-vonesco);
+        color: inherit;
         display: inline-block;
       }
     }

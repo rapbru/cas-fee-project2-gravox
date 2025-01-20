@@ -35,6 +35,7 @@ type PresetField = 'timePreset' | 'currentPreset' | 'voltagePreset';
 export class PositionSequenceComponent {
   @ViewChild('selectedPositionsContainer') selectedPositionsContainer?: ElementRef;
   @HostBinding('class.show-sheet') get showSheetClass() { return this.showPositionSelector; }
+  @HostBinding('class.edit-mode') get editModeClass() { return this.enableEdit(); }
   
   @Input() selectedPositions: Position[] = [];
   @Output() selectedPositionsChange = new EventEmitter<Sequence[]>();
