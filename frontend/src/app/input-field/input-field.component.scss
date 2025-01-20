@@ -7,6 +7,7 @@ $app-container-padding: 1rem;
 .input-field {
   max-width: 400px;
   width: 100%;
+  padding-top: 24px;
   
   &.comment-field {
     max-width: 400px;
@@ -18,24 +19,31 @@ $app-container-padding: 1rem;
       line-height: 1.4;
     }
   }
+}
 
-  .input-field-label {
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-    gap: 8px;
+.input-field-header {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 8px;
+  gap: 8px;
+}
+
+.input-field-label {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 8px;
+  color: var(--color-sub-1);
+  
+  .input-label-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
     color: var(--color-sub-1);
-    
-    .input-label-icon {
-      font-size: 28px;
-      width: 28px;
-      height: 28px;
-      color: var(--color-sub-1);
-      font-variation-settings: 'FILL' 0, 'wght' 200;
-      line-height: 1;
-      position: relative;
-      top: 4px;
-    }
+    font-variation-settings: 'FILL' 0, 'wght' 200;
+    line-height: 1;
+    position: relative;
+    top: 4px;
   }
 }
 
@@ -78,6 +86,8 @@ $app-container-padding: 1rem;
 }
 
 .input-field-counter {
+  display: inline-flex;
+  align-items: baseline;
   font-size: var(--font-size);
   color: var(--color-sub-1);
   margin-left: 0.8em;
