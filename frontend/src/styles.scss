@@ -46,7 +46,6 @@ html {
   --content-padding: 24px;
   --color-sheet-background: rgba(255, 255, 255, 0.8);
 
-  // Layout variables
   --container-padding: 1rem;
   --container-padding-mobile: 0.5rem;
 }
@@ -123,7 +122,13 @@ html {
   }
 }
 
-// Common header styles
+
+* {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+
 h1 {
   color: var(--color-text);
   font-size: 32px;
@@ -151,7 +156,6 @@ input {
   background-color: var(--color-main);
 }
 
-// Navbar styles
 .navbar {
   position: sticky;
   top: 0;
@@ -310,7 +314,6 @@ button.navbar-item {
   }
 }
 
-// Base button styles
 .button {
   display: inline-flex;
   align-items: center;
@@ -350,7 +353,6 @@ button.navbar-item {
     background-color: var(--color-sub-2);
   }
 
-  // Inactive state
   &.inactive {
     opacity: 0.7;
     cursor: default;
@@ -367,7 +369,6 @@ button.navbar-item {
     }
   }
 
-  // Edit active state
   &.edit-active {
     color: var(--color-vonesco-sub-2);
     font-weight: 500;
@@ -381,7 +382,6 @@ button.navbar-item {
     }
   }
 
-  // Vonesco variant
   &.vonesco {
     color: var(--color-vonesco);
     background-color: var(--color-main);
@@ -392,7 +392,6 @@ button.navbar-item {
     }
   }
 
-  // Danger variant
   &.danger {
     color: var(--color-red);
 
@@ -401,7 +400,6 @@ button.navbar-item {
     }
   }
 
-  // Disabled state
   &:disabled {
     cursor: not-allowed;
     color: var(--color-sub-3);
@@ -871,7 +869,6 @@ app-navbar {
   }
 }
 
-// Drag and drop animation styles
 .cdk-drag-preview {
   box-sizing: border-box;
   border-radius: 4px;
@@ -898,7 +895,6 @@ app-navbar {
   width: 100%;
 }
 
-// Navbar and toolbar container styles
 .navbar,
 .toolbar {
   display: flex;
@@ -912,121 +908,11 @@ app-navbar {
   }
 }
 
-// Specific toolbar margin
-// .toolbar {
-//   margin-bottom: 20px;
-// }
 
-// // Article Card Styles
-// .article-container {
-//   border-radius: 8px;
-//   padding: 20px;
-//   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-//   cursor: pointer;
-//   transition: transform 0.2s;
-//   outline: none;
-//   background-color: var(--color-main);
-
-//   &:hover, &:focus {
-//     transform: translateY(-2px);
-//     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-//   }
-
-//   &:focus {
-//     outline: 2px solid var(--color-vonesco-sub-2);
-//     outline-offset: 2px;
-//   }
-
-//   .article-header {
-//     display: flex;
-//     align-items: center;
-//     gap: 12px;
-//     margin-bottom: 16px;
-//     color: var(--color-text);
-
-//     @media (max-width: 600px) {
-//       flex-direction: column;
-//       align-items: flex-start;
-
-//       h2 {
-//         margin-bottom: 12px;
-//       }
-//     }
-
-//     h2 {
-//       margin: 0;
-//       flex-grow: 1;
-//       color: var(--color-text);
-//     }
-//   }
-
-//   .article-details {
-//     display: flex;
-//     flex-direction: column;
-//     gap: 16px;
-//     color: var(--color-text);
-
-//     .timestamps-grid {
-//       display: grid;
-//       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-//       gap: 4px;
-//       margin-bottom: 8px;
-//     }
-
-//     .details-grid {
-//       display: grid;
-//       grid-template-columns: 1fr;
-//       gap: 16px;
-
-//       @media (min-width: 600px) {
-//         grid-template-columns: repeat(2, 1fr);
-//       }
-//     }
-
-//     .detail-group {
-//       display: flex;
-//       flex-direction: column;
-//       gap: 4px;
-//     }
-
-//     .detail-row {
-//       display: grid;
-//       grid-template-columns: 24px 120px 1fr;
-//       gap: 8px;
-//       margin: 2px 0;
-//       min-height: 24px;
-
-//       mat-icon {
-//         color: var(--color-text-sub);
-//         display: flex;
-//         align-items: center;
-//         justify-content: center;
-//         height: 24px;
-//         position: relative;
-//         top: 2px;
-//       }
-
-//       .label {
-//         color: var(--color-text-sub);
-//         white-space: nowrap;
-//       }
-
-//       .value {
-//         color: var(--color-text);
-//         line-height: 1.4;
-//         white-space: normal;
-//         word-break: break-word;
-//       }
-//     }
-//   }
-// }
-
-// Global focus styles
 :focus {
   outline-color: var(--color-vonesco-sub-2) !important;
 }
 
-// Override Material styles for focus states
 .mat-mdc-focus-indicator {
   &::before {
     border-color: var(--color-vonesco-sub-2) !important;
@@ -1055,7 +941,6 @@ app-navbar {
   }
 }
 
-// Layout structure
 .app-layout {
   display: flex;
   flex-direction: column;
@@ -1150,7 +1035,6 @@ app-navbar {
   }
 }
 
-// Button Styles
 .mat-mdc-button {
   &.mdc-button {
     min-width: 90px;
@@ -1179,7 +1063,6 @@ app-navbar {
   }
 }
 
-// Action Container Styles
 .article-actions, .card-actions {
   display: flex;
   justify-content: flex-start;
@@ -1192,7 +1075,6 @@ app-navbar {
   gap: 10px;
 }
 
-// Icon Button Styles (keeping your recent adjustments)
 .mat-mdc-icon-button {
   --mdc-icon-button-state-layer-size: 32px;
   padding: 3px !important;
@@ -1249,7 +1131,6 @@ app-navbar {
   }
 }
 
-// Update header styles
 .header-container {
   background-color: var(--color-main);
   border-bottom: 1px solid var(--color-border);
@@ -1265,7 +1146,6 @@ app-navbar {
   }
 }
 
-// Update scrollable content styles
 .scrollable-content {
   flex: 1;
   overflow-y: auto;
@@ -1276,7 +1156,6 @@ app-navbar {
   }
 }
 
-// Base layout container
 .app-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -1285,7 +1164,6 @@ app-navbar {
   padding: 0 20px;
 }
 
-// Layout wrapper for full-width backgrounds
 .full-width-wrapper {
   width: 100%;
   background-color: var(--color-main);
@@ -1299,7 +1177,6 @@ app-navbar {
   }
 }
 
-// Header styles
 .header-container {
   .app-container {
     padding: 16px 20px;
@@ -1312,7 +1189,6 @@ app-navbar {
   }
 }
 
-// Main content area
 .main-content {
   flex: 1;
   width: 100%;
@@ -1324,14 +1200,12 @@ app-navbar {
   }
 }
 
-// Navbar styles
 .navbar-container {
   position: sticky;
   bottom: 0;
   z-index: 100;
 }
 
-// Toolbar styles
 .spacer {
   flex: 1 1 auto;
 }
@@ -1379,7 +1253,6 @@ app-navbar {
   }
 }
 
-// Add-Article Component Styles
 app-add-article {
   display: flex;
   flex-direction: column;
@@ -1420,55 +1293,6 @@ app-add-article {
   box-sizing: border-box;
 }
 
-// .position-card {
-//   background-color: var(--color-main);
-//   border-radius: var(--border-radius);
-//   padding: 12px;
-//   width: 100%;
-//   box-sizing: border-box;
-//   min-width: 0;
-//   color: var(--color-text);
-//   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-//   transition: transform 0.2s, box-shadow 0.2s;
-
-//   .position-header {
-//     display: flex;
-//     align-items: center;
-//     gap: 16px;
-//     margin-bottom: 12px;
-//     padding-bottom: 8px;
-//     // border-bottom: 1px solid var(--color-vonesco);
-
-//     .position-number {
-//       font-weight: 600;
-//       color: var(--color-vonesco);
-//       min-width: 48px;
-//     }
-
-//     .position-name {
-//       font-weight: 500;
-//       flex: 1;
-//     }
-//   }
-
-//   .position-details {
-//     display: grid;
-//     gap: 8px;
-//     font-size: 0.9rem;
-
-//     > div {
-//       display: flex;
-//       justify-content: space-between;
-//       padding: 4px 0;
-
-//       &:not(:last-child) {
-//         border-bottom: 1px solid var(--color-background);
-//       }
-//     }
-//   }
-// }
-
-// Add a container style for grouping positions
 .positions-container {
   background-color: var(--color-background);
   border-radius: var(--border-radius);
@@ -1486,12 +1310,6 @@ app-add-article {
       margin: 0;
     }
   }
-}
-
-// Ensure all elements respect container width
-* {
-  box-sizing: border-box;
-  max-width: 100%;
 }
 
 .input-field {

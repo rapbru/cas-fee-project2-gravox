@@ -108,7 +108,6 @@
   }
 }
 
-// Dark theme styles
 :host-context(.dark-theme) {
   .sidebar-sheet.mobile {
     .sheet-header, .sheet-content {
@@ -119,7 +118,6 @@
   }
 }
 
-// System dark mode styles
 @media (prefers-color-scheme: dark) {
   :root:not(.light-theme) {
     .sidebar-sheet.mobile {
