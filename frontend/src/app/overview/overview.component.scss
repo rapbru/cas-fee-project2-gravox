@@ -1,9 +1,12 @@
 .overview-container {
     display: grid;
-    gap: 8px;
-    background-color: var(--color-background);
+    grid-template-columns: repeat(var(--total-columns), 1fr);
+    gap: var(--grid-gap);
+    padding: 12px 16px;
     width: 100%;
-    padding: 0 var(--container-padding);
+    max-width: calc(var(--total-columns) * 800px);
+    justify-content: center;
+    margin: 12px auto;
     
     @media (min-width: 2000px) {
         grid-template-columns: repeat(min(var(--total-columns), 4), 1fr);
@@ -19,11 +22,14 @@
     
     @media (max-width: 999px) {
         grid-template-columns: 1fr;
+        margin: 12px 0;
     }
     
     @media (max-width: 600px) {
         padding: 0 var(--container-padding-mobile);
+        margin: 12px auto;
     }
+  
 }
 
 .overview-list {
@@ -33,6 +39,7 @@
     background-color: var(--color-background);
     min-width: 0;
     gap: 4px;
+    margin-bottom: 8px;
 }
 
 .list-container {
@@ -48,6 +55,7 @@
     display: flex;
     justify-content: space-between;
     min-height: 32px;
+    margin-right: 6px;
 }
 
 .column-name {
@@ -73,8 +81,7 @@
 }
 
 app-position {
-    width: calc(100% - 4px);
-    margin: 2px;
+    width: calc(100% - 8px);
     border-width: 2px;
     border-color: var(--color-vonesco);
 }
@@ -121,12 +128,16 @@ app-position {
 }
 
 .columns-wrapper {
-  width: 100%;
-  overflow-x: auto;
+    width: 100%;
+    overflow-x: auto;
 }
 
 .mobile-hidden {
-  @media (max-width: 600px) {
-    display: none;
-  }
+    @media (max-width: 600px) {
+        display: none;
+    }
+}
+
+app-toolbar {
+    margin-bottom: 12px;
 }

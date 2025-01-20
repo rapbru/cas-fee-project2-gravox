@@ -1,147 +1,159 @@
-<div class="position-container" [ngClass]="{'with-flightbar': (position.flightbar || !collapsed)  && !enableEdit(), 'edit-mode': enableEdit(), 'reorder-mode': enableOrder()}">
-    <div class="flightbar-information" (keydown)="toggleCollapsed()" (click)="toggleCollapsed()" tabindex="0">
-        <div class="position-header">
-            <ng-container *ngIf="!enableEdit(); else editHeader">
+<div class="position-container" 
+     (click)="$event.target === $event.currentTarget && toggleCollapsed()" 
+     (keydown.enter)="$event.target === $event.currentTarget && toggleCollapsed()"
+     (keydown.space)="$event.target === $event.currentTarget && toggleCollapsed(); $event.preventDefault()"
+     tabindex="0"
+     role="button"
+     [ngClass]="{'with-flightbar': (position.flightbar || !collapsed)  && !enableEdit(), 'edit-mode': enableEdit(), 'reorder-mode': enableOrder()}">
+    
+    <div class="position-header" (keydown)="toggleCollapsed()" (click)="toggleCollapsed()" tabindex="0">
+        <ng-container *ngIf="!enableEdit(); else editHeader">
+            <div class="position-number-base">{{ position.number }}</div>  
+            <div class="position-name-base">{{ position.name }}</div> 
+        </ng-container>
+        <ng-template #editHeader>
+            <ng-container *ngIf="enableOrder(); else noOrder">
                 <div class="position-number-base">{{ position.number }}</div>  
                 <div class="position-name-base">{{ position.name }}</div> 
-                <div class="position-temperature-base" *ngIf="position.temperature.isPresent">
-                    {{ position.temperature.actual }}
-                    <span>°C</span>
+                <button *ngIf="!isMobile()" mat-icon-button class="drag-handle">
+                    <mat-icon>drag_handle</mat-icon>
+                </button>
+                <button *ngIf="isMobile()" mat-icon-button class="drag-handle" cdkDragHandle>
+                    <mat-icon>drag_handle</mat-icon>
+                </button>
+            </ng-container>
+            <ng-template #noOrder>
+                <button mat-icon-button class="check-circle" (click)="toggleSelection()">
+                    <mat-icon class="check-circle-icon" [ngClass]="{ 'selected': isSelected }">
+                        {{ isSelected ? 'check_circle' : 'radio_button_unchecked' }}
+                    </mat-icon>
+                </button>
+                <input class="position-number-input" type="text" inputmode="numeric" pattern="[0-9]" [value]="position.number" (focus)="selectInputContent($event)" (click)="selectInputContent($event)" (input)="updatePositionInfo($event, 'number')" />
+                <input class="position-name-input" type="text" inputmode="text"[value]="position.name" (focus)="selectInputContent($event)" (click)="selectInputContent($event)" (input)="updatePositionInfo($event, 'name')" /> 
+            </ng-template>
+        </ng-template>
+    </div>
+
+    <div class="position-data-container" *ngIf="!enableEdit() && collapsed && position.temperature.isPresent" (keydown)="toggleCollapsed()" (click)="toggleCollapsed()" tabindex="0">
+        <div class="position-temperature-collapsed">
+            {{ position.temperature.actual }}
+            <span>°C</span>
+        </div>
+    </div>
+
+
+    <div class="position-data-container" *ngIf="!enableOrder() && (enableEdit() || !collapsed)">
+        <div class="flightbar-information">
+            <ng-container *ngIf="position.flightbar && !enableEdit();">
+                <div class="position-details">
+                    <div class="detail">
+                        <div>WT-Nr.</div>
+                        <div>{{ position.flightbar }}</div> 
+                    </div>
+                    <div class="detail">
+                        <div>Artikel</div>
+                        <div>{{ position.articleName }}</div>
+                    </div>
+                    <div class="detail">
+                        <div>Kunde</div>
+                        <div>{{ position.customerName }}</div>
+                    </div>
                 </div>
             </ng-container>
-            <ng-template #editHeader>
-                <ng-container *ngIf="enableOrder(); else noOrder">
-                    <div class="position-number">{{ position.number }}</div>  
-                    <div class="position-name">{{ position.name }}</div> 
-                    <button *ngIf="!isMobile()" mat-icon-button class="drag-handle">
-                        <mat-icon>drag_handle</mat-icon>
-                    </button>
-                    <button *ngIf="isMobile()" mat-icon-button class="drag-handle" cdkDragHandle>
-                        <mat-icon>drag_handle</mat-icon>
-                    </button>
+        </div>
+    
+        <div *ngIf="!enableMultiSelect() && !enableOrder()" class="position-metrics">
+            <!-- Time -->
+            <ng-container *ngIf="!collapsed && !enableEdit(); else collapsedTime">
+                <div class="metric">
+                    <mat-icon>timer</mat-icon>
+                    <span>min</span>
+                    <input type="text" inputmode="numeric" pattern="[0-9]" [value]="position.time.preset" (focus)="selectInputContent($event)" (click)="selectInputContent($event)" (change)="updatePresetValue($event, '.TIME.PRESET')" />
+                    <span>{{ position.time.actual }}</span>
+                </div>
+            </ng-container>
+            <ng-template #collapsedTime>
+                <div class="metric">
+                </div>
+            </ng-template>
+            
+            <!-- Temperature -->
+            <ng-container *ngIf="!collapsed && !enableEdit(); else collapsedTemperature">
+                <ng-container *ngIf="position.temperature.isPresent; else noTemperature">
+                    <div class="metric">
+                        <mat-icon>thermostat</mat-icon>
+                        <span>°C</span>
+                        <input type="text" inputmode="numeric" pattern="[0-9]" [value]="position.temperature.preset" (focus)="selectInputContent($event)" (click)="selectInputContent($event)" (change)="updatePresetValue($event, '.TEMP.PRESET')" />
+                        <span>{{ position.temperature.actual }}</span>
+                    </div>
                 </ng-container>
-                <ng-template #noOrder>
-                    <button mat-icon-button class="check-circle" (click)="toggleSelection()">
-                        <mat-icon class="check-circle-icon" [ngClass]="{ 'selected': isSelected }">
-                            {{ isSelected ? 'check_circle' : 'radio_button_unchecked' }}
-                        </mat-icon>
-                    </button>
-                    <input class="position-number-input" type="text" inputmode="numeric" pattern="[0-9]" [value]="position.number" (focus)="selectInputContent($event)" (click)="selectInputContent($event)" (input)="updatePositionInfo($event, 'number')" />
-                    <input class="position-name-input" type="text" inputmode="text"[value]="position.name" (focus)="selectInputContent($event)" (click)="selectInputContent($event)" (input)="updatePositionInfo($event, 'name')" /> 
+                <ng-template #noTemperature>
+                    <div class="metric"></div>
+                </ng-template>            
+            </ng-container>
+            <ng-template #collapsedTemperature>
+                <ng-container *ngIf="enableEdit();">
+                    <div class="metric">
+                        <button mat-icon-button (click)="toggleIsPresent('temperature')">
+                            <mat-icon [ngClass]="{'present': position.temperature.isPresent, 'not-present': !position.temperature.isPresent}">thermostat</mat-icon>
+                        </button>
+                    </div>
+                </ng-container>   
+            </ng-template>
+            <!-- Current -->
+            <ng-container *ngIf="!collapsed && !enableEdit(); else collapsedCurrent">
+                <ng-container *ngIf="position.current.isPresent; else noCurrent">
+                    <div class="metric">
+                        <mat-icon>bolt</mat-icon>
+                        <span>A</span>
+                        <input type="text" inputmode="numeric" pattern="[0-9]" [value]="position.current.preset" (focus)="selectInputContent($event)" (click)="selectInputContent($event)" (input)="updatePresetValue($event, '.current.preset')" />
+                        <span>{{ position.current.actual }}</span>
+                    </div>
+                </ng-container>
+                <ng-template #noCurrent>
+                    <div class="metric"></div>
                 </ng-template>
+            </ng-container>
+            <ng-template #collapsedCurrent>
+                <ng-container *ngIf="enableEdit(); else noCurrent">
+                    <div class="metric" *ngIf="!enableOrder() && !enableMultiSelect()">
+                        <button mat-icon-button (click)="toggleIsPresent('current')">
+                            <mat-icon [ngClass]="{'present': position.current.isPresent, 'not-present': !position.current.isPresent}">bolt</mat-icon>
+                        </button>
+                    </div>
+                </ng-container>
+                <ng-template #noCurrent>
+                    <div class="metric"></div>
+                </ng-template>            
+            </ng-template>
+
+            <!-- Voltage -->
+            <ng-container *ngIf="!collapsed && !enableEdit(); else collapsedVoltage">
+                <ng-container *ngIf="position.voltage.isPresent; else noVoltage">
+                    <div class="metric">
+                        <mat-icon class="mat-icon-dark">bolt</mat-icon>
+                        <span>V</span>
+                        <input type="text" inputmode="numeric" pattern="[0-9]" [value]="position.voltage.preset" (focus)="selectInputContent($event)" (click)="selectInputContent($event)" (input)="updatePresetValue($event, '.voltage.preset')" />
+                        <span>{{ position.voltage.actual }}</span>
+                    </div>
+                </ng-container>
+                <ng-template #noVoltage>
+                    <div class="metric"></div>
+                </ng-template>  
+            </ng-container>
+            <ng-template #collapsedVoltage>
+                <ng-container *ngIf="enableEdit(); else noVoltage">
+                    <div class="metric" *ngIf="!enableOrder() && !enableMultiSelect()">
+                        <button mat-icon-button (click)="toggleIsPresent('voltage')">
+                            <mat-icon [ngClass]="{'present': position.voltage.isPresent, 'not-present': !position.voltage.isPresent}" class="mat-icon-dark">bolt</mat-icon>
+                        </button>
+                    </div>
+                </ng-container>
+                <ng-template #noVoltage>
+                    <div class="metric"></div>
+                </ng-template>            
             </ng-template>
         </div>
-
-        <ng-container *ngIf="position.flightbar && !enableEdit();">
-            <div class="position-details">
-                <div class="detail">
-                    <div>WT-Nr.</div>
-                    <div>{{ position.flightbar }}</div> 
-                </div>
-                <div class="detail">
-                    <div>Artikel</div>
-                    <div>{{ position.articleName }}</div>
-                </div>
-                <div class="detail">
-                    <div>Kunde</div>
-                    <div>{{ position.customerName }}</div>
-                </div>
-            </div>
-        </ng-container>
-    </div>
-  
-    <div *ngIf="!enableMultiSelect() && !enableOrder()" class="position-metrics mobile-hidden">
-        <!-- Time -->
-        <ng-container *ngIf="!collapsed && !enableEdit(); else collapsedTime">
-            <div class="metric">
-                <mat-icon>timer</mat-icon>
-                <span>min</span>
-                <input type="text" inputmode="numeric" pattern="[0-9]" [value]="position.time.preset" (focus)="selectInputContent($event)" (click)="selectInputContent($event)" (change)="updatePresetValue($event, '.TIME.PRESET')" />
-                <span>{{ position.time.actual }}</span>
-            </div>
-        </ng-container>
-        <ng-template #collapsedTime>
-            <div class="metric">
-            </div>
-        </ng-template>
-        
-        <!-- Temperature -->
-        <ng-container *ngIf="!collapsed && !enableEdit(); else collapsedTemperature">
-            <ng-container *ngIf="position.temperature.isPresent; else noTemperature">
-                <div class="metric">
-                    <mat-icon>thermostat</mat-icon>
-                    <span>°C</span>
-                    <input type="text" inputmode="numeric" pattern="[0-9]" [value]="position.temperature.preset" (focus)="selectInputContent($event)" (click)="selectInputContent($event)" (change)="updatePresetValue($event, '.TEMP.PRESET')" />
-                    <span>{{ position.temperature.actual }}</span>
-                </div>
-            </ng-container>
-            <ng-template #noTemperature>
-                <div class="metric"></div>
-            </ng-template>            
-        </ng-container>
-        <ng-template #collapsedTemperature>
-            <ng-container *ngIf="enableEdit();">
-                <div class="metric">
-                    <button mat-icon-button (click)="toggleIsPresent('temperature')">
-                        <mat-icon [ngClass]="{'present': position.temperature.isPresent, 'not-present': !position.temperature.isPresent}">thermostat</mat-icon>
-                    </button>
-                </div>
-            </ng-container>           
-        </ng-template>
-        
-        <!-- Current -->
-        <ng-container *ngIf="!collapsed && !enableEdit(); else collapsedCurrent">
-            <ng-container *ngIf="position.current.isPresent; else noCurrent">
-                <div class="metric">
-                    <mat-icon>bolt</mat-icon>
-                    <span>A</span>
-                    <input type="text" inputmode="numeric" pattern="[0-9]" [value]="position.current.preset" (focus)="selectInputContent($event)" (click)="selectInputContent($event)" (input)="updatePresetValue($event, '.current.preset')" />
-                    <span>{{ position.current.actual }}</span>
-                </div>
-            </ng-container>
-            <ng-template #noCurrent>
-                <div class="metric"></div>
-            </ng-template>
-        </ng-container>
-        <ng-template #collapsedCurrent>
-            <ng-container *ngIf="enableEdit(); else noCurrent">
-                <div class="metric" *ngIf="!enableOrder() && !enableMultiSelect()">
-                    <button mat-icon-button (click)="toggleIsPresent('current')">
-                        <mat-icon [ngClass]="{'present': position.current.isPresent, 'not-present': !position.current.isPresent}">bolt</mat-icon>
-                    </button>
-                </div>
-            </ng-container>
-            <ng-template #noCurrent>
-                <div class="metric"></div>
-            </ng-template>            
-        </ng-template>
-
-        <!-- Voltage -->
-        <ng-container *ngIf="!collapsed && !enableEdit(); else collapsedVoltage">
-            <ng-container *ngIf="position.voltage.isPresent; else noVoltage">
-                <div class="metric">
-                    <mat-icon class="mat-icon-dark">bolt</mat-icon>
-                    <span>V</span>
-                    <input type="text" inputmode="numeric" pattern="[0-9]" [value]="position.voltage.preset" (focus)="selectInputContent($event)" (click)="selectInputContent($event)" (input)="updatePresetValue($event, '.voltage.preset')" />
-                    <span>{{ position.voltage.actual }}</span>
-                </div>
-            </ng-container>
-            <ng-template #noVoltage>
-                <div class="metric"></div>
-            </ng-template>  
-        </ng-container>
-        <ng-template #collapsedVoltage>
-            <ng-container *ngIf="enableEdit(); else noVoltage">
-                <div class="metric" *ngIf="!enableOrder() && !enableMultiSelect()">
-                    <button mat-icon-button (click)="toggleIsPresent('voltage')">
-                        <mat-icon [ngClass]="{'present': position.voltage.isPresent, 'not-present': !position.voltage.isPresent}" class="mat-icon-dark">bolt</mat-icon>
-                    </button>
-                </div>
-            </ng-container>
-            <ng-template #noVoltage>
-                <div class="metric"></div>
-            </ng-template>            
-        </ng-template>
     </div>
 </div>
   

@@ -70,8 +70,12 @@
   flex-direction: column;
   gap: 24px;
   padding: 24px;
-  max-width: 1200px;
+  max-width: 80%;
   margin: 0 auto;
+
+  @media (max-width: 800px) {
+    max-width: 100%;
+  }
 }
 
 .article-actions {
