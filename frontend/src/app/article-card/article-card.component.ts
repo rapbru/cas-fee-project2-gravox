@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, effect } from '@angular/core';
 import { Router } from '@angular/router';
 import { Article } from '../models/article.model';
 import { HttpClient } from '@angular/common/http';
@@ -12,6 +12,10 @@ import { ArticleService } from '../services/article.service';
 import { HeaderService } from '../services/header.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { InputFieldComponent } from '../input-field/input-field.component';
+import { OverviewStateService } from '../services/overview-state.service';
+import { SnackbarService } from '../services/snackbar.service';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-article-card',
@@ -32,7 +36,7 @@ import { InputFieldComponent } from '../input-field/input-field.component';
     '[attr.isEditable]': 'isEditable'
   }
 })
-export class ArticleCardComponent {
+export class ArticleCardComponent implements OnInit, OnDestroy {
   @Input() article!: Article;
   @Input() showHeader: boolean = true;
   @Input() showCheckbox: boolean = false;
@@ -52,12 +56,22 @@ export class ArticleCardComponent {
   maxLengthDrainage = 3;
   maxLengthNote = 120;
 
+  private changes$ = new Subject<void>();
+
   constructor(
     private router: Router,
     private http: HttpClient,
     private articleService: ArticleService,
-    private headerService: HeaderService
-  ) {}
+    private headerService: HeaderService,
+    private overviewStateService: OverviewStateService,
+    private snackbarService: SnackbarService
+  ) {
+    this.changes$.pipe(
+      debounceTime(1000)
+    ).subscribe(() => {
+      this.saveChanges();
+    });
+  }
 
   onCardClick() {
     if (this.article) {
@@ -82,50 +96,37 @@ export class ArticleCardComponent {
     }
   }
 
-  updateArticleInfo(event: Event, field: string) {
-    const inputElement = event.target as HTMLInputElement;
-    let newValue = inputElement.value;
-
-    // Strip units from values before saving
-    switch (field) {
-      case 'area':
-        newValue = newValue.replace(/\s*dm2\s*$/i, '').trim();
-        break;
-      case 'drainage':
-      case 'anodic':
-        newValue = newValue.replace(/\s*%\s*$/i, '').trim();
-        break;
+  updateArticleInfo(event: any, field: string) {
+    if (this.article) {
+      this.article = {
+        ...this.article,
+        [field]: event
+      };
+      
+      this.articleService.trackModification(this.article);
+      this.changes$.next();
     }
+  }
 
-    const updatedArticle = { ...this.article };
-    
-    switch (field) {
-      case 'title':
-        updatedArticle.title = newValue;
-        this.headerService.setTitle(newValue);
-        break;
-      case 'number':
-        updatedArticle.number = newValue;
-        break;
-      case 'customer':
-        updatedArticle.customer = newValue;
-        break;
-      case 'area':
-        updatedArticle.area = newValue;
-        break;
-      case 'drainage':
-        updatedArticle.drainage = newValue;
-        break;
-      case 'anodic':
-        updatedArticle.anodic = newValue;
-        break;
-      case 'note':
-        updatedArticle.note = newValue;
-        break;
+  private async saveChanges() {
+    try {
+      await this.articleService.updateArticle(this.article).toPromise();
+      this.snackbarService.showSuccess('Änderungen gespeichert');
+    } catch (error) {
+      this.snackbarService.showError('Fehler beim Speichern', error);
     }
+  }
 
-    this.article = updatedArticle;
-    this.articleService.trackModification(this.article);
+  ngOnInit() {
+    effect(() => {
+      if (!this.overviewStateService.enableEdit()) {
+        this.saveChanges();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.changes$.complete();
   }
 
   selectInputContent(event: Event): void {
