@@ -46,6 +46,9 @@
   }
 }
 
+// @media (max-width: 600px) {
+//   .navbar {
+//     // padding: 0.25rem 0;
 .navbar {
   .app-container {
     padding: 0 var(--container-padding);
@@ -88,11 +91,8 @@
   .navbar {
     padding: 0.25rem 0;
     
-    .app-container {
-      padding: 0 var(--container-padding-mobile);
-    }
-  }
-}
-
-
-
+//     .app-container {
+//       padding: 0 var(--container-padding-mobile);
+//     }
+//   }
+// }

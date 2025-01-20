@@ -8,24 +8,17 @@
   transition: background-color 0.3s;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
   min-height: 32px;
+  margin: 2px 0 0 0;
 
   &.with-flightbar {
-    padding-top: 12px;
-    padding-bottom: 12px;
+    flex-direction: column;
+    align-items: flex-start;
 
     .position-header {
       margin-bottom: 16px;
-    }
-
-    @container (width < 600px) {
-      flex-direction: column;
-      
-      // .position-metrics {
-      //   margin-top: 16px;
-      // }
     }
   }
 
@@ -83,84 +76,85 @@
   .flightbar-information {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     flex: 1;
+  }
+ 
+  input {
+    border: none;
+    color: var(--color-vonesco);
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: normal;
+    width: auto;
+    outline: none;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+  }
+
+  .position-number-input {
+    width: 40px;
+    align-items: flex-start;
+  }
+
+  .position-name-input {
+    width: 80%;
+  }
+
+  .position-temperature-collapsed {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: flex-end;
+    gap: 4px;
+  }
+
+  .position-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding-bottom: 16px;
+    
+    .detail {
+      display: grid;
+      grid-template-columns: 70px auto;
+    }
+  }
+
+  .position-header {
+    display: flex;
+    font-weight: normal;
+    height: 100%;
+    align-items: center;
+    width: 100%;
+    justify-content: flex-start;
+    gap: 4px;
+  }
+
+  .position-data-container {
+    display: flex;
     align-items: flex-start;
     width: 100%;
 
-    input {
-      border: none;
-      color: var(--color-vonesco);
-      font-size: inherit;
-      font-style: inherit;
-      font-weight: normal;
-      width: auto;
-      outline: none;
-      text-align: left;
-      margin: 0;
-      padding: 0;
-    }
-
-    .position-number-input {
-      width: 40px;
-    }
-
-    .position-name-input {
-      width: 100%;
-    }
-
-    .position-header {
-      display: flex;
-      font-weight: normal;
-      height: 100%;
-      align-items: center;
-      width: 100%;
-      justify-content: flex-start;
-    }
-
-    .position-number-base {
-      // display: flex;
-      width: 40px;
-      // height: 100%;
-      // align-items: center;
-      // justify-content: flex-start;
-    }
-
-    .position-name-base {
-      // display: flex;
-      width: 100%;
-      // height: 100%;
-      // align-items: center;
-      // justify-content: flex-start;
-    }
-
-    .position-temperature-base {
-      display: flex;
-      height: 100%;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .position-details {
-      display: flex;
+    @container (width < 600px) {
       flex-direction: column;
-      align-items: flex-start;
-      width: 100%;
-      padding-bottom: 16px;
-      
-      .detail {
-        display: grid;
-        grid-template-columns: 70px auto;
-      }
     }
   }
 
-  .position-number {
-    @extend .position-number-base;
+  .position-number-base {
+    display: flex;
+    flex: none;
+    width: 30px;
+    height: 100%;
     align-items: center; 
   }
 
-  .position-name {
-    @extend .position-name-base;
+  .position-name-base {
+    display: flex;
+    width: 100%;
+    height: 100%;
     align-items: center;
   }
 
@@ -168,7 +162,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    // gap: 12px;
   }
 }
 
@@ -176,14 +169,6 @@
   display: flex;
   align-items: center;
   gap: 4px;
-
-  @container (max-width: 400px) {
-    .position-container:not(.with-flightbar) & {
-      &:not(:has(button[mat-icon-button])) {
-        display: none !important;
-      }
-    }
-  }
 
   mat-icon {
     margin-bottom: 4px;
@@ -202,20 +187,10 @@
 
 .position-metrics {
   align-items: center;
-  flex: 1;
+  flex: 2;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   width: 100%;
-
-  &.mobile-hidden {
-    @container (width < 600px) {
-      :not(.with-flightbar) & {
-        &:not(:has(button[mat-icon-button])) {
-          display: none !important;
-        }
-      }
-    }
-  }
 
   .metric {
     display: flex;

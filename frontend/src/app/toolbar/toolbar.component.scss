@@ -1,7 +1,8 @@
 .toolbar {
-  padding: 0 var(--container-padding);
   display: none;
   margin: 0;
+  padding-top: 14px;
+  padding-left: 16px;
   min-height: 0;
   
   &:not(:empty) {
@@ -9,7 +10,7 @@
   }
   
   @media (max-width: 600px) {
-    padding: 0 var(--container-padding-mobile);
+    padding: 0 0 0 6px;
   }
 }
 

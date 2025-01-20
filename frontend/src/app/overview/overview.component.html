@@ -1,3 +1,7 @@
+<div>
+
+  
+</div>
 <app-toolbar
   *ngIf="showToolbar && enableEdit()"
   [showAddLine]="enableEdit()"
@@ -22,13 +26,6 @@
       <div cdkDropList [cdkDropListData]="column" class="overview-list" (cdkDropListDropped)="drop($event, index)">
         <div *ngIf="!enableMultiSelect()" class="app-position-header">
           <div class="column-name">Linie {{index + 1}}</div>
-          <div class="column-name"></div>
-          <div *ngIf="!enableOrder()" class="column-metrics mobile-hidden">
-            <div>min</div>
-            <div>°C</div>
-            <div>A</div>
-            <div>V</div>
-          </div>
         </div>
         @for (position of column; track position.id) {
           <div class="list-item" cdkDrag [cdkDragDisabled]="!enableOrder()" [class.draggable]="enableOrder()">
