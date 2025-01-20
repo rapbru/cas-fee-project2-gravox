@@ -163,12 +163,9 @@
       }
     }
   }
-}
 
-.button {
-  font-size: calc(var(--font-size) * 1.2);
-  
-  span {
-    font-size: calc(var(--font-size) * 1.2);
+  .article-actions {
+    display: flex;
+    gap: 12px;
   }
 }
