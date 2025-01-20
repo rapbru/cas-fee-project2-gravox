@@ -16,12 +16,30 @@
     padding-bottom: 0;
   }
 
+  @media (min-width: 1400px) {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 32px;
+    padding: 24px;
+
+    form {
+      flex: 0 1 600px;
+      margin-bottom: 0;
+    }
+
+    app-position-sequence {
+      flex: 0 1 600px;
+      align-self: stretch;
+    }
+  }
+
   form {
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
     margin-bottom: 32px;
-    padding-top: 16px;
+    padding-top: 24px;
   }
 }
 
@@ -125,7 +143,7 @@
   width: 100%;
   margin: 0;
 
-  @media (min-width: 768px) {
+  @media (min-width: 768px) and (max-width: 1399px) {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
