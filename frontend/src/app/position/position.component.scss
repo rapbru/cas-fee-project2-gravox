@@ -8,7 +8,7 @@
   transition: background-color 0.3s;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
   min-height: 32px;
 
@@ -201,7 +201,7 @@
 }
 
 .position-metrics {
-  align-items: center;
+  align-items: flex-start;
   flex: 1;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -222,6 +222,7 @@
     flex-direction: column;
     align-items: center;
     height: 100%;
+    padding-top: 4px;
 
     mat-icon {
       &.present {
