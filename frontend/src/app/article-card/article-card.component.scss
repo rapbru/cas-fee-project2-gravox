@@ -119,9 +119,11 @@
         height: 38px;
         display: flex;
         align-items: center;
+        overflow: hidden;
 
         ::ng-deep .input-field {
           height: 38px;
+          width: 100%;
           
           .input-field-header {
             position: absolute;
@@ -132,15 +134,32 @@
 
           .input-wrapper {
             height: 100%;
+            width: 100%;
             
             input, textarea {
               height: 100%;
+              width: 100%;
               padding: 0;
               border: none;
               background: transparent;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
             }
           }
         }
+      }
+
+      .value {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      .label {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
       }
     }
   }
