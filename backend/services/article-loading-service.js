@@ -76,13 +76,13 @@ export default class ArticleLoadingService {
         if (step.currentPreset && step.presetCurrentAddress) {
             tags.push({
                 tagName: `WT[${fbNumber},${step.presetCurrentAddress}]`,
-                value: step.currentPreset
+                value: step.currentPreset * 10
             });
         }
         if (step.voltagePreset && step.presetVoltageAddress) {
             tags.push({
                 tagName: `WT[${fbNumber},${step.presetVoltageAddress}]`,
-                value: step.voltagePreset
+                value: step.voltagePreset * 10
             });
         }
     }
