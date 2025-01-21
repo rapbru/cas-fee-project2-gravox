@@ -69,7 +69,7 @@ export default class ArticleLoadingService {
         // Sollzeit (101-199)
         tags.push({
             tagName: `WT[${fbNumber},${index + 101}]`,
-            value: step.timePreset
+            value: step.timePreset * 60
         });
 
         // Strom- und Spannungswerte

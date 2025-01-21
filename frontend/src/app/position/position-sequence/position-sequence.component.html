@@ -55,7 +55,7 @@
                     (keydown.enter)="enableEdit() && startEditing(position, 'timePreset')"
                     (keydown.space)="enableEdit() && startEditing(position, 'timePreset')"
                     *ngIf="!isEditing(position, 'timePreset')">
-                {{ position.timePreset | number:'1.2-2' }}<span class="unit" [class.disabled]="position.timePreset === 0">s</span>
+                {{ position.timePreset | number:'1.2-2' }}<span class="unit" [class.disabled]="position.timePreset === 0">Min</span>
               </span>
               <input #valueInput
                      class="value-input" 
