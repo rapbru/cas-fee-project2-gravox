@@ -23,11 +23,9 @@ class AuthMockService {
                 success: true,
                 token
             };
-        }
-        return {
-            success: false,
-            message: 'Invalid username or password'
-        };
+        } 
+
+        throw new Error('Invalid username or password');
     }
 }
 
