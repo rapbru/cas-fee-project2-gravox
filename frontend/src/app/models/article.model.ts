@@ -21,4 +21,5 @@ export interface Sequence {
   timePreset: string;
   currentPreset: string;
   voltagePreset: string;
+  positionName?: string;
 }

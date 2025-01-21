@@ -1165,7 +1165,6 @@ app-navbar {
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
-  padding: 0 20px;
   padding-top: 10px;
 
   @media (max-width: 800px) {
@@ -1189,10 +1188,6 @@ app-navbar {
 }
 
 .header-container {
-  .app-container {
-    padding: 16px 20px;
-  }
-
   h1 {
     margin: 0;
     font-size: 24px;
@@ -1205,10 +1200,6 @@ app-navbar {
   width: 100%;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  
-  .app-container {
-    padding: 20px;
-  }
 }
 
 .navbar-container {

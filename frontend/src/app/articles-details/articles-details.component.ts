@@ -19,6 +19,7 @@ import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { PositionSequenceComponent } from '../position/position-sequence/position-sequence.component';
 import { Sequence } from '../models/sequence.model';
+import { Sequence as ArticleSequence } from '../models/article.model';
 
 @Component({
   selector: 'app-articles-details',
@@ -90,7 +91,7 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
     }
     
     try {
-      const allPositions = await firstValueFrom(this.positionService.positions$);
+      const allPositions = this.positionService.positions();
       this.logger.log('All positions from service:', allPositions);
       this.logger.log('Article sequence:', this.article.sequence);
       
@@ -98,7 +99,7 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
       
       this.article.sequence
         .sort((a, b) => a.orderNumber - b.orderNumber)
-        .forEach(seq => {
+        .forEach((seq: ArticleSequence) => {
           this.logger.log('Processing sequence:', seq);
           const position = allPositions.find(p => p.number === Number(seq.positionId));
           this.logger.log('Found position:', position);
@@ -108,7 +109,18 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
               ...position,
               timePreset: Number(seq.timePreset) || 0,
               currentPreset: Number(seq.currentPreset) || 0,
-              voltagePreset: Number(seq.voltagePreset) || 0
+              voltagePreset: Number(seq.voltagePreset) || 0,
+              name: seq.positionName || position.name,
+              voltage: {
+                ...position.voltage,
+                preset: Number(seq.voltagePreset) || 0,
+                isPresent: position.voltage.isPresent
+              },
+              current: {
+                ...position.current,
+                preset: Number(seq.currentPreset) || 0,
+                isPresent: position.current.isPresent
+              }
             };
             this.logger.log('Mapped position:', mappedPosition);
             validPositions.push(mappedPosition);
@@ -116,11 +128,11 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
             const newPosition: Position = {
               id: Number(seq.positionId),
               number: Number(seq.positionId),
-              name: `Position ${seq.positionId}`,
+              name: seq.positionName || `Position ${seq.positionId}`,
               time: { actual: 0, preset: Number(seq.timePreset) || 0 },
               temperature: { actual: 0, preset: 0, isPresent: false },
-              current: { actual: 0, preset: Number(seq.currentPreset) || 0, isPresent: true },
-              voltage: { actual: 0, preset: Number(seq.voltagePreset) || 0, isPresent: true },
+              current: { actual: 0, preset: Number(seq.currentPreset) || 0, isPresent: false },
+              voltage: { actual: 0, preset: Number(seq.voltagePreset) || 0, isPresent: false },
               timePreset: Number(seq.timePreset) || 0,
               currentPreset: Number(seq.currentPreset) || 0,
               voltagePreset: Number(seq.voltagePreset) || 0

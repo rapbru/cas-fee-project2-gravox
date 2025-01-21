@@ -65,19 +65,7 @@ export class ArticleCardComponent implements OnInit, OnDestroy {
     private headerService: HeaderService,
     private overviewStateService: OverviewStateService,
     private snackbarService: SnackbarService
-  ) {
-    this.changes$.pipe(
-      debounceTime(1000)
-    ).subscribe(() => {
-      this.saveChanges();
-    });
-
-    effect(() => {
-      if (!this.overviewStateService.enableEdit()) {
-        this.saveChanges();
-      }
-    });
-  }
+  ) {}
 
   onCardClick() {
     if (this.article) {

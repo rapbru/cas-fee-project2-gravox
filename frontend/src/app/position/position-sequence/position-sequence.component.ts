@@ -244,22 +244,10 @@ export class PositionSequenceComponent {
   }
 
   hasCurrentCapability(position: Position): boolean {
-    this.logger.log('Current capability check:', {
-      positionId: position.id,
-      positionName: position.name,
-      hasCurrent: position.current?.isPresent,
-      currentData: position.current
-    });
     return position.current?.isPresent ?? false;
   }
 
   hasVoltageCapability(position: Position): boolean {
-    this.logger.log('Voltage capability check:', {
-      positionId: position.id,
-      positionName: position.name,
-      hasVoltage: position.voltage?.isPresent,
-      voltageData: position.voltage
-    });
     return position.voltage?.isPresent ?? false;
   }
 }

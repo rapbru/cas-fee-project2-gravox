@@ -5,6 +5,7 @@ export interface Sequence {
   timePreset?: number;
   currentPreset?: number;
   voltagePreset?: number;
+  positionName?: string;
   position?: {
     id: number;
     number: number;

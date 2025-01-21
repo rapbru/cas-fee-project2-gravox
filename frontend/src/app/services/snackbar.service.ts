@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
+import { LoggerService } from './logger.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SnackbarService {
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(private snackBar: MatSnackBar, private logger: LoggerService) {}
 
   showError(message: string, error?: any): void {
-    console.error(message, error);
+    this.logger.error(message, error);
     
     let userMessage = 'Ein Fehler ist aufgetreten';
     

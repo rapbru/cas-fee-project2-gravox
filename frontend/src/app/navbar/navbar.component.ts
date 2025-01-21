@@ -13,6 +13,7 @@ import { ThemeService } from '../services/theme.service';
 import { filter } from 'rxjs/operators';
 import { ArticleService } from '../services/article.service';
 import { HeaderService } from '../services/header.service';
+import { LoggerService } from '../services/logger.service';
 
 @Component({
   selector: 'app-navbar',
@@ -40,7 +41,8 @@ export class NavbarComponent {
     private headerService: HeaderService,
     public deviceDetectionService: DeviceDetectionService,
     private dialogService: DialogService,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private logger: LoggerService
   ) {
     this.currentRoute = this.router.url;
     
@@ -87,7 +89,7 @@ export class NavbarComponent {
           this.positionService.saveEditing();
         },
         error: (error) => {
-          console.error('Error saving article modifications:', error);
+          this.logger.error('Error saving article modifications:', error);
         }
       });
     } else {

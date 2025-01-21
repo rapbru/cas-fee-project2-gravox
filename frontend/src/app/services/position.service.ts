@@ -10,6 +10,7 @@ import { SnackbarService } from './snackbar.service';
 import { PositionOrderService } from './position-order.service';
 import { ApiConfigService } from '../services/api-config.service';
 import { BehaviorSubject } from 'rxjs';
+import { LoggerService } from './logger.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,6 @@ export class PositionService {
   private intervalSubscription!: Subscription;
 
   private positionsSubject = new BehaviorSubject<Position[]>([]);
-  public positions$ = this.positionsSubject.asObservable();
 
   constructor(
     private http: HttpClient, 
@@ -36,7 +36,8 @@ export class PositionService {
     private columnManagementService: ColumnManagementService,
     private snackbarService: SnackbarService,
     private positionOrderService: PositionOrderService,
-    private apiConfig: ApiConfigService
+    private apiConfig: ApiConfigService,
+    private logger: LoggerService
   ) {
     this.apiUrl = this.apiConfig.getUrl('position');
   }
@@ -76,7 +77,7 @@ export class PositionService {
         }
       }),
       catchError(error => {
-        console.error('Error fetching positions:', error);
+        this.logger.error('Error fetching positions:', error);
         return of([]);
       })
     ).subscribe();
@@ -99,7 +100,7 @@ export class PositionService {
         }
       }),
       catchError(error => {
-        console.error('Error fetching positions:', error);
+        this.logger.error('Error fetching positions:', error);
         return of([]);
       })
     ).subscribe();
@@ -115,17 +116,17 @@ export class PositionService {
   }
 
   public startEditing(): void {
-    console.log('Started editing positions');
+    this.logger.log('Started editing positions');
     this.editPositions.set([...this.orderedPositions()]);
   }
 
   public saveEditing(): void {
-    console.log('Saving position changes');
+    this.logger.log('Saving position changes');
     this.saveAllChanges();
   }
 
   public cancelEditing(): void {
-    console.log('Cancelled position editing');
+    this.logger.log('Cancelled position editing');
     this.editPositions.set([]);
     this.cancelAllChanges();
   }

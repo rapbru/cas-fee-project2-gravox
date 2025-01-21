@@ -78,12 +78,12 @@
                     (click)="enableEdit() && hasCurrentCapability(position) && startEditing(position, 'currentPreset')"
                     (keydown.enter)="enableEdit() && hasCurrentCapability(position) && startEditing(position, 'currentPreset')"
                     (keydown.space)="enableEdit() && hasCurrentCapability(position) && startEditing(position, 'currentPreset')"
-                    *ngIf="!isEditing(position, 'currentPreset')">
+                    *ngIf="!isEditing(position, 'currentPreset') && hasCurrentCapability(position)">
                 {{ position.currentPreset | number:'1.2-2' }}<span class="unit" [class.disabled]="!hasCurrentCapability(position)">A</span>
               </span>
               <input #valueInput
                      class="value-input" 
-                     *ngIf="isEditing(position, 'currentPreset')"
+                     *ngIf="isEditing(position, 'currentPreset') && hasCurrentCapability(position)"
                      [value]="formatNumber(position.currentPreset)"
                      [disabled]="!hasCurrentCapability(position)"
                      (keydown)="validateInput($event)"
@@ -103,12 +103,12 @@
                     (click)="enableEdit() && hasVoltageCapability(position) && startEditing(position, 'voltagePreset')"
                     (keydown.enter)="enableEdit() && hasVoltageCapability(position) && startEditing(position, 'voltagePreset')"
                     (keydown.space)="enableEdit() && hasVoltageCapability(position) && startEditing(position, 'voltagePreset')"
-                    *ngIf="!isEditing(position, 'voltagePreset')">
+                    *ngIf="!isEditing(position, 'voltagePreset') && hasVoltageCapability(position)">
                 {{ position.voltagePreset | number:'1.2-2' }}<span class="unit" [class.disabled]="!hasVoltageCapability(position)">V</span>
               </span>
               <input #valueInput
                      class="value-input" 
-                     *ngIf="isEditing(position, 'voltagePreset')"
+                     *ngIf="isEditing(position, 'voltagePreset') && hasVoltageCapability(position)"
                      [value]="formatNumber(position.voltagePreset)"
                      [disabled]="!hasVoltageCapability(position)"
                      (keydown)="validateInput($event)"
