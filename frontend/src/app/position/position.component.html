@@ -68,7 +68,15 @@
                 <div class="metric">
                     <mat-icon>timer</mat-icon>
                     <span>min</span>
-                    <input type="text" inputmode="numeric" pattern="[0-9]" [value]="position.time.preset" (focus)="selectInputContent($event)" (click)="selectInputContent($event)" (change)="updatePresetValue($event, '.TIME.PRESET')" />
+                    <input #presetTime
+                        type="text" 
+                        inputmode="numeric" 
+                        pattern="[0-9]" 
+                        [value]="position.time.preset"
+                        (focus)="selectInputContent($event)" 
+                        (click)="selectInputContent($event)" 
+                        (change)="updatePresetValue($event, '.TIME.PRESET')" 
+                        (keydown.enter)="presetTime.blur()" />
                     <span>{{ position.time.actual }}</span>
                 </div>
             </ng-container>
@@ -83,7 +91,16 @@
                     <div class="metric">
                         <mat-icon>thermostat</mat-icon>
                         <span>°C</span>
-                        <input type="text" inputmode="numeric" pattern="[0-9]" [value]="position.temperature.preset" (focus)="selectInputContent($event)" (click)="selectInputContent($event)" (change)="updatePresetValue($event, '.TEMP.PRESET')" />
+                        <input 
+                            #presetTemp
+                            type="text" 
+                            inputmode="numeric" 
+                            pattern="[0-9]" 
+                            [value]="position.temperature.preset" 
+                            (focus)="selectInputContent($event)" 
+                            (click)="selectInputContent($event)" 
+                            (input)="updatePresetValue($event, '.TEMP.PRESET')" 
+                            (keydown.enter)="presetTemp.blur()" />
                         <span>{{ position.temperature.actual }}</span>
                     </div>
                 </ng-container>
@@ -106,7 +123,16 @@
                     <div class="metric">
                         <mat-icon>bolt</mat-icon>
                         <span>A</span>
-                        <input type="text" inputmode="numeric" pattern="[0-9]" [value]="position.current.preset" (focus)="selectInputContent($event)" (click)="selectInputContent($event)" (input)="updatePresetValue($event, '.current.preset')" />
+                        <input 
+                            #presetCurrent
+                            type="text" 
+                            inputmode="numeric" 
+                            pattern="[0-9]" 
+                            [value]="position.current.preset" 
+                            (focus)="selectInputContent($event)" 
+                            (click)="selectInputContent($event)" 
+                            (input)="updatePresetValue($event, '.current.preset')" 
+                            (keydown.enter)="presetCurrent.blur()" />
                         <span>{{ position.current.actual }}</span>
                     </div>
                 </ng-container>
@@ -133,7 +159,16 @@
                     <div class="metric">
                         <mat-icon class="mat-icon-dark">bolt</mat-icon>
                         <span>V</span>
-                        <input type="text" inputmode="numeric" pattern="[0-9]" [value]="position.voltage.preset" (focus)="selectInputContent($event)" (click)="selectInputContent($event)" (input)="updatePresetValue($event, '.voltage.preset')" />
+                        <input
+                            #presetVoltage
+                            type="text" 
+                            inputmode="numeric" 
+                            pattern="[0-9]" 
+                            [value]="position.voltage.preset" 
+                            (focus)="selectInputContent($event)" 
+                            (click)="selectInputContent($event)" 
+                            (input)="updatePresetValue($event, '.voltage.preset')" 
+                            (keydown.enter)="presetVoltage.blur()" />
                         <span>{{ position.voltage.actual }}</span>
                     </div>
                 </ng-container>

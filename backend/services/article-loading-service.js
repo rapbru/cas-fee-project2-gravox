@@ -76,7 +76,7 @@ export default class ArticleLoadingService {
         if (step.currentPreset && step.presetCurrentAddress) {
             tags.push({
                 tagName: `WT[${fbNumber},${step.presetCurrentAddress}]`,
-                value: step.currentPreset * 10
+                value: step.currentPreset
             });
         }
         if (step.voltagePreset && step.presetVoltageAddress) {

@@ -128,10 +128,21 @@ export default class TagService {
         try {
             const tagGroup = new TagGroup();
             await Promise.all(tagDataArray.map(async (data) => {
-                if (!this.isTagSubscribed(data.tagName)) {
-                    await this.subscribeTags([data.tagName]);
+                let mappedTagName = data.tagName;
+                
+                if (data.tagName.toLowerCase().includes('time.preset')) {
+                    mappedTagName = data.tagName.replace(/time\.preset/i, 'TIME.PRESET');
+                } else if (data.tagName.toLowerCase().includes('voltage.preset')) {
+                    mappedTagName = data.tagName.replace(/voltage\.preset/i, 'GL.PRESETVOLT[1]');
+                } else if (data.tagName.toLowerCase().includes('current.preset')) {
+                    mappedTagName = data.tagName.replace(/current\.preset/i, 'GL.PRESETAMPS[1]');
                 }
-                const tag = this.tags.find(t => t.name === data.tagName);
+    
+                if (!this.isTagSubscribed(mappedTagName)) {
+                    await this.subscribeTags([mappedTagName]);
+                }
+                
+                const tag = this.tags.find(t => t.name === mappedTagName);
                 if (tag) {
                     tag.value = data.value;
                     tagGroup.add(tag);

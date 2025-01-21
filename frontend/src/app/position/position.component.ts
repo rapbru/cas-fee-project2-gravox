@@ -55,6 +55,7 @@ export class PositionComponent {
       tagName,
       value: field.includes('TIME') ? value * 60 : value
     };
+    console.log('update', update);
 
     this.plcService.writeValues([update]).subscribe({
       error: (error) => {
