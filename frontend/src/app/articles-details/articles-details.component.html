@@ -19,20 +19,22 @@
         <span>Hinzufügen</span>
       </button>
     </div>
+    <div class="details-container">
+      <app-article-card
+        [article]="article"
+        [showCheckbox]="false"
+        [showHeader]="false"
+        [isInDetails]="true"
+        [isEditable]="enableEdit()">
+      </app-article-card>
 
-    <app-article-card
-      [article]="article"
-      [showCheckbox]="false"
-      [showHeader]="false"
-      [isInDetails]="true"
-      [isEditable]="enableEdit()">
-    </app-article-card>
-
-    <app-position-sequence
-      [selectedPositions]="positions"
-      (selectedPositionsChange)="onSequenceChange($event)"
-      #positionSequence>
-    </app-position-sequence>
+      <app-position-sequence
+        [selectedPositions]="positions"
+        (selectedPositionsChange)="onSequenceChange($event)"
+        #positionSequence>
+      </app-position-sequence>
+    </div>
+    
   } @else {
     <div>Loading article details...</div>
   }

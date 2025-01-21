@@ -1,11 +1,16 @@
 .article-container {
   border-radius: 8px;
   padding: 20px;
+  // margin: 16px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   cursor: pointer;
   transition: transform 0.2s;
   outline: none;
   background-color: var(--color-main);
+
+  @media (max-width: 600px) {
+    margin: 0;
+  }
 
   &:hover, &:focus {
     transform: translateY(-2px);
