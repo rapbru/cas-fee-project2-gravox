@@ -7,7 +7,7 @@ import ArticleLoadingMock from '../data/article-loading-mock.js';
 
 export class PLCController {
     constructor() {
-        this.plcConnection = new PLCConnection('10.198.200.39');
+        this.plcConnection = new PLCConnection('10.198.200.82', 3);
         
         if (process.env.NODE_ENV === "production") {
             this.plcService = PLCService.getInstance(this.plcConnection);
