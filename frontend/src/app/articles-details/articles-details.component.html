@@ -7,12 +7,12 @@
           [showCheckbox]="false"
           [showHeader]="false"
           [isInDetails]="true"
-          [isEditable]="enableEdit()">
+          [isEditable]="isEditEnabled()">
         </app-article-card>
 
         <app-position-sequence
           [selectedPositions]="positions"
-          [enableEdit]="enableEdit()"
+          [enableEdit]="isEditEnabled()"
           (selectedPositionsChange)="onSequenceChange($event)"
           #positionSequence>
         </app-position-sequence>

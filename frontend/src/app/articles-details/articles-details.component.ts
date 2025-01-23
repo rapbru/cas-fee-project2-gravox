@@ -222,4 +222,8 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
       this.positionSequence.openPositionSelector();
     }
   }
+
+  isEditEnabled(): boolean {
+    return this.enableEdit();
+  }
 }

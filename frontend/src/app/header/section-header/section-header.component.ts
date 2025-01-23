@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { ToolbarComponent } from '../../toolbar/toolbar.component';
@@ -12,10 +12,10 @@ import { ToolbarComponent } from '../../toolbar/toolbar.component';
 })
 export class SectionHeaderComponent {
   @Input() title: string = '';
-  @Input() showDelete: boolean = false;
-  @Input() deleteDisabled: boolean = true;
   @Input() showAdd: boolean = false;
+  @Input() showDelete: boolean = false;
+  @Input() deleteDisabled: boolean = false;
   
-  @Output() delete = new EventEmitter<void>();
   @Output() add = new EventEmitter<void>();
+  @Output() delete = new EventEmitter<void>();
 }
