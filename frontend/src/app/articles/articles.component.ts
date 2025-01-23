@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -38,6 +38,7 @@ export class ArticlesComponent implements OnInit {
   private enableLogging = environment.enableLogging;
   articles: Article[] = [];
   isReorderMode = false;
+  isEditMode = false;
   public readonly enableEdit = this.overviewStateService.enableEdit;
 
   displayedColumns: string[] = [
@@ -58,7 +59,13 @@ export class ArticlesComponent implements OnInit {
     private overviewStateService: OverviewStateService,
     private dialogService: DialogService,
     private headerService: HeaderService
-  ) {}
+  ) {
+    this.isEditMode = this.overviewStateService.enableEdit();
+
+    effect(() => {
+      this.isEditMode = this.overviewStateService.enableEdit();
+    });
+  }
 
   ngOnInit() {
     this.headerService.setTitle('Artikel');

@@ -11,7 +11,7 @@
     <app-article-card 
       *ngFor="let article of articles"
       [article]="article"
-      [showCheckbox]="enableEdit()"
+      [isEditable]="isEditMode"
       (cardClick)="navigateToDetails($event)"
       (loadClick)="navigateToDetails(article.id)">
     </app-article-card>

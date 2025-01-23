@@ -4,22 +4,33 @@
      (click)="onCardClick()"
      (keydown.enter)="onCardClick()"
      (keydown.space)="onCardClick()">
-  <div class="article-header" *ngIf="!isInDetails">
-    <mat-checkbox *ngIf="showCheckbox"
-      [(ngModel)]="article.selected"
-      (click)="$event.stopPropagation()">
-    </mat-checkbox>
-    <h2>{{ article.title }}</h2>
-    <button class="button vonesco card-button"
-            [disabled]="isLoading()"
-            (click)="onLoad(); $event.stopPropagation()">
-      @if (isLoading()) {
-        <mat-spinner diameter="20"></mat-spinner>
-      } @else {
-        <mat-icon>download</mat-icon>
-      }
-      <span>Laden</span>
-    </button>
+  <div class="article-header">
+    <ng-container *ngIf="!isEditable">
+      <h2>{{ article.title }}</h2>
+      <button class="button vonesco card-button"
+              [disabled]="isLoading()"
+              (click)="onLoad(); $event.stopPropagation()">
+        @if (isLoading()) {
+          <mat-spinner diameter="20"></mat-spinner>
+        } @else {
+          <mat-icon>download</mat-icon>
+        }
+        <span>Laden</span>
+      </button>
+    </ng-container>
+    <ng-container *ngIf="isEditable && showCheckbox">
+      <button mat-icon-button 
+              class="check-circle" 
+              (click)="onCheckboxClick($event)">
+        <mat-icon class="check-circle-icon" [ngClass]="{ 'selected': isSelected }">
+          {{ isSelected ? 'check_circle' : 'radio_button_unchecked' }}
+        </mat-icon>
+      </button>
+      <h2>{{ article.title }}</h2>
+    </ng-container>
+    <ng-container *ngIf="isEditable && !showCheckbox">
+      <h2>{{ article.title }}</h2>
+    </ng-container>
   </div>
 
   <div class="article-details">

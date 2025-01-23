@@ -172,3 +172,26 @@
     gap: 12px;
   }
 }
+
+.check-circle {
+  margin-right: 8px;
+  width: 32px;
+  color: var(--color-sub-1);
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+}
+
+.check-circle-icon {
+  font-variation-settings: 'FILL' 1;
+  color: var(--color-background);
+  transition: color 0.3s ease, transform 0.3s ease;
+
+  &.selected {
+    font-variation-settings: 'FILL' 1;
+    color: var(--color-vonesco-sub);
+    transform: rotate(360deg);
+  }
+}

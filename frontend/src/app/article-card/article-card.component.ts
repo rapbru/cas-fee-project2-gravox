@@ -39,8 +39,7 @@ import { debounceTime } from 'rxjs/operators';
 export class ArticleCardComponent implements OnInit, OnDestroy {
   @Input() article!: Article;
   @Input() showHeader: boolean = true;
-  @Input() showCheckbox: boolean = false;
-  @Input() isSelected: boolean = false;
+  @Input() showCheckbox: boolean = true;
   @Input() isEditable: boolean = false;
   @Input() isLoadButtonDisabled: boolean = false;
   @Input() isInDetails: boolean = false;
@@ -57,6 +56,7 @@ export class ArticleCardComponent implements OnInit, OnDestroy {
   maxLengthNote = 120;
 
   private changes$ = new Subject<void>();
+  isSelected = false;
 
   constructor(
     private router: Router,
@@ -67,15 +67,20 @@ export class ArticleCardComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService
   ) {}
 
+  toggleSelection(): void {
+    this.isSelected = !this.isSelected;
+    this.selectionChange.emit(this.isSelected);
+  }
+
   onCardClick() {
     if (this.article) {
       this.cardClick.emit(this.article.id);
     }
   }
 
-  onCheckboxChange(event: any) {
-    this.isSelected = event.checked;
-    this.selectionChange.emit(this.isSelected);
+  onCheckboxClick(event: Event): void {
+    event.stopPropagation();
+    this.toggleSelection();
   }
 
   onLoad() {
