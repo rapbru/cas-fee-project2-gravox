@@ -3,10 +3,8 @@
     <div class="selected-positions">
       <app-section-header
         title="Reihenfolge Positionen"
-        [showDelete]="enableEdit()"
-        [deleteDisabled]="!hasSelectedPositions()"
+        [showDelete]="false"
         [showAdd]="enableEdit()"
-        (delete)="deleteSelectedPositions()"
         (add)="openPositionSelector()">
       </app-section-header>
 
