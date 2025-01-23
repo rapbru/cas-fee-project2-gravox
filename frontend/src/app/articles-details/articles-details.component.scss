@@ -82,6 +82,7 @@
 .details-container {
   flex: 1;
   overflow-y: auto;
+  padding-bottom: 50vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -90,11 +91,19 @@
   @media (max-width: 600px) {
     padding: 0 4px;
   }
+
+  @media (min-width: 768px) {
+    padding-bottom: 0;
+  }
+
+  @media (min-width: 1400px) {
+    padding: 24px;
+  }
 }
 
 .content-wrapper {
-  max-width: 600px;
   width: 100%;
+  max-width: 600px;
   margin: 0 auto;
 
   app-article-card,
@@ -105,6 +114,27 @@
 
   app-article-card {
     margin-bottom: 24px;
+  }
+
+  @media (min-width: 1400px) {
+    max-width: none;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 32px;
+
+    app-article-card {
+      flex: 1;
+      max-width: 50%;
+      margin-bottom: 0;
+      padding-top: 72px;
+    }
+
+    app-position-sequence {
+      flex: 1;
+      max-width: 50%;
+    }
   }
 }
 
