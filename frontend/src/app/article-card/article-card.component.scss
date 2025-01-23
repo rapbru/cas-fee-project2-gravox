@@ -63,6 +63,7 @@
     gap: 12px;
     margin-bottom: 16px;
     color: var(--color-text);
+    position: relative;
     min-width: 0;
 
     h2 {
@@ -73,7 +74,46 @@
       overflow: hidden;
       text-overflow: ellipsis;
       width: 100%;
-      min-width: 0;
+      padding-left: 0;
+    }
+
+    &:has(.check-circle) h2 {
+      padding-left: 40px;
+    }
+
+    .check-circle {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      margin: 0;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      color: var(--color-sub-1);
+      transition: transform 0.3s ease-in-out;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      &:hover {
+        transform: translateY(-50%) scale(1.2);
+      }
+
+      .mat-mdc-focus-indicator {
+        display: none;
+      }
+
+      mat-icon {
+        margin: 0;
+        padding: 0;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     }
 
     .card-button {
@@ -170,17 +210,6 @@
   .article-actions {
     display: flex;
     gap: 12px;
-  }
-}
-
-.check-circle {
-  margin-right: 8px;
-  width: 32px;
-  color: var(--color-sub-1);
-  transition: transform 0.3s ease-in-out;
-
-  &:hover {
-    transform: scale(1.2);
   }
 }
 
