@@ -67,7 +67,10 @@ export class ArticleCardComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService
   ) {}
 
-  toggleSelection(): void {
+  toggleSelection(event?: Event): void {
+    if (event) {
+      event.stopPropagation();
+    }
     this.isSelected = !this.isSelected;
     this.selectionChange.emit(this.isSelected);
   }
@@ -79,8 +82,7 @@ export class ArticleCardComponent implements OnInit, OnDestroy {
   }
 
   onCheckboxClick(event: Event): void {
-    event.stopPropagation();
-    this.toggleSelection();
+    this.toggleSelection(event);
   }
 
   onLoad() {

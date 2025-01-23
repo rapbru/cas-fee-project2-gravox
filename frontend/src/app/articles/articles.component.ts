@@ -40,6 +40,7 @@ export class ArticlesComponent implements OnInit {
   isReorderMode = false;
   isEditMode = false;
   public readonly enableEdit = this.overviewStateService.enableEdit;
+  selectedArticles: Set<Article> = new Set();
 
   displayedColumns: string[] = [
     'select',
@@ -93,8 +94,16 @@ export class ArticlesComponent implements OnInit {
     }
   }
 
+  onArticleSelection(article: Article, isSelected: boolean) {
+    if (isSelected) {
+      this.selectedArticles.add(article);
+    } else {
+      this.selectedArticles.delete(article);
+    }
+  }
+
   hasSelectedArticles(): boolean {
-    return this.articles.some(article => article.selected);
+    return this.selectedArticles.size > 0;
   }
 
   hasExactlyOneSelected(): boolean {
@@ -109,15 +118,13 @@ export class ArticlesComponent implements OnInit {
   }
 
   async deleteSelectedArticles() {
-    const selectedArticles = this.articles.filter(article => article.selected);
-    
-    if (selectedArticles.length === 0) return;
+    if (this.selectedArticles.size === 0) return;
 
     const confirmed = await this.dialogService.showConfirmDialog({
       title: 'Artikel löschen',
-      message: selectedArticles.length === 1 
+      message: this.selectedArticles.size === 1 
         ? 'Möchten Sie diesen Artikel wirklich löschen?' 
-        : `Möchten Sie diese ${selectedArticles.length} Artikel wirklich löschen?`,
+        : `Möchten Sie diese ${this.selectedArticles.size} Artikel wirklich löschen?`,
       confirmText: 'Löschen',
       cancelText: 'Abbrechen',
       confirmClass: 'danger'
@@ -125,13 +132,14 @@ export class ArticlesComponent implements OnInit {
 
     if (!confirmed) return;
 
-    const deleteObservables = selectedArticles
+    const deleteObservables = Array.from(this.selectedArticles)
       .filter(article => article.id)
       .map(article => this.articleService.deleteArticle(article.id!));
 
     forkJoin(deleteObservables).subscribe({
       next: () => {
         this.loggerService.log('Articles deleted successfully');
+        this.selectedArticles.clear();
         this.loadArticles();
       },
       error: (error) => {
@@ -154,14 +162,6 @@ export class ArticlesComponent implements OnInit {
 
   enableOrder(): boolean {
     return this.isReorderMode;
-  }
-
-  onAddLine() {
-    // Implement if needed or remove from template
-  }
-
-  onDeleteLine() {
-    // Implement if needed or remove from template
   }
 
   onAdd() {
