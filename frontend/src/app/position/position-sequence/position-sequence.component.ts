@@ -42,14 +42,13 @@ type PresetField = 'timePreset' | 'currentPreset' | 'voltagePreset';
 export class PositionSequenceComponent {
   @ViewChild('selectedPositionsContainer') selectedPositionsContainer?: ElementRef;
   @HostBinding('class.show-sheet') get showSheetClass() { return this.showPositionSelector; }
-  @HostBinding('class.edit-mode') get editModeClass() { return this.enableEdit(); }
+  @HostBinding('class.edit-mode') get editModeClass() { return this.isEditEnabled(); }
   
   @Input() selectedPositions: Position[] = [];
+  @Input() enableEdit: boolean = false;
   @Output() selectedPositionsChange = new EventEmitter<Sequence[]>();
   showPositionSelector: boolean = false;
   private editingState: { position: Position | null, field: PresetField | null } = { position: null, field: null };
-
-  public readonly enableEdit = this.overviewStateService.enableEdit;
 
   constructor(
     public positionService: PositionService,
@@ -256,5 +255,9 @@ export class PositionSequenceComponent {
 
   hasVoltageCapability(position: Position): boolean {
     return position.voltage?.isPresent ?? false;
+  }
+
+  isEditEnabled(): boolean {
+    return this.enableEdit;
   }
 }

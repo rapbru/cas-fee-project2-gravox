@@ -90,6 +90,7 @@
   </form>
 
   <app-position-sequence 
+    [enableEdit]="enableEdit()"
     (selectedPositionsChange)="onSequenceChange($event)">
   </app-position-sequence>
 </div>

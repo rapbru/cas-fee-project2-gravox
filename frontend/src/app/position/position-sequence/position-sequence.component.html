@@ -4,23 +4,23 @@
       <app-section-header
         title="Reihenfolge Positionen"
         [showDelete]="false"
-        [showAdd]="enableEdit()"
+        [showAdd]="isEditEnabled()"
         (add)="openPositionSelector()">
       </app-section-header>
 
       <div class="positions-grid" 
            cdkDropList 
-           [cdkDropListDisabled]="!enableEdit()"
+           [cdkDropListDisabled]="!isEditEnabled()"
            (cdkDropListDropped)="onDrop($event)">
         <div *ngFor="let position of selectedPositions; let i = index" 
              class="position-card"
              cdkDrag
-             [cdkDragDisabled]="!enableEdit()"
+             [cdkDragDisabled]="!isEditEnabled()"
              [cdkDragData]="position">
           <div class="position-header">
             <button mat-icon-button 
                     class="check-circle" 
-                    [disabled]="!enableEdit()"
+                    [disabled]="!isEditEnabled()"
                     (click)="toggleSelection(position)">
               <mat-icon class="check-circle-icon" [ngClass]="{ 'selected': position.isSelected }">
                 {{ position.isSelected ? 'check_circle' : 'radio_button_unchecked' }}
@@ -28,13 +28,13 @@
             </button>
             <span class="position-number">{{ position.number }}</span>
             <span class="position-name">{{ position.name }}</span>
-            <button *ngIf="enableEdit()"
+            <button *ngIf="isEditEnabled()"
                     class="button button-label button-highlight-sub" 
                     (click)="onRemovePosition(position)">
               <mat-icon>remove</mat-icon>
               <span>Entfernen</span>
             </button>
-            <div class="drag-handle" *ngIf="enableEdit()" cdkDragHandle>
+            <div class="drag-handle" *ngIf="isEditEnabled()" cdkDragHandle>
               <mat-icon>drag_handle</mat-icon>
             </div>
           </div>
@@ -45,9 +45,9 @@
               <span class="value" 
                     tabindex="0"
                     role="button"
-                    (click)="enableEdit() && startEditing(position, 'timePreset')"
-                    (keydown.enter)="enableEdit() && startEditing(position, 'timePreset')"
-                    (keydown.space)="enableEdit() && startEditing(position, 'timePreset')"
+                    (click)="isEditEnabled() && startEditing(position, 'timePreset')"
+                    (keydown.enter)="isEditEnabled() && startEditing(position, 'timePreset')"
+                    (keydown.space)="isEditEnabled() && startEditing(position, 'timePreset')"
                     *ngIf="!isEditing(position, 'timePreset')">
                 {{ position.timePreset | number:'1.2-2' }}<span class="unit" [class.disabled]="position.timePreset === 0">Min</span>
               </span>
@@ -69,9 +69,9 @@
               <span class="value" 
                     tabindex="0"
                     role="button"
-                    (click)="enableEdit() && hasCurrentCapability(position) && startEditing(position, 'currentPreset')"
-                    (keydown.enter)="enableEdit() && hasCurrentCapability(position) && startEditing(position, 'currentPreset')"
-                    (keydown.space)="enableEdit() && hasCurrentCapability(position) && startEditing(position, 'currentPreset')"
+                    (click)="isEditEnabled() && hasCurrentCapability(position) && startEditing(position, 'currentPreset')"
+                    (keydown.enter)="isEditEnabled() && hasCurrentCapability(position) && startEditing(position, 'currentPreset')"
+                    (keydown.space)="isEditEnabled() && hasCurrentCapability(position) && startEditing(position, 'currentPreset')"
                     *ngIf="!isEditing(position, 'currentPreset') && hasCurrentCapability(position)">
                 {{ position.currentPreset | number:'1.2-2' }}<span class="unit" [class.disabled]="!hasCurrentCapability(position)">A</span>
               </span>
@@ -94,9 +94,9 @@
               <span class="value" 
                     tabindex="0"
                     role="button"
-                    (click)="enableEdit() && hasVoltageCapability(position) && startEditing(position, 'voltagePreset')"
-                    (keydown.enter)="enableEdit() && hasVoltageCapability(position) && startEditing(position, 'voltagePreset')"
-                    (keydown.space)="enableEdit() && hasVoltageCapability(position) && startEditing(position, 'voltagePreset')"
+                    (click)="isEditEnabled() && hasVoltageCapability(position) && startEditing(position, 'voltagePreset')"
+                    (keydown.enter)="isEditEnabled() && hasVoltageCapability(position) && startEditing(position, 'voltagePreset')"
+                    (keydown.space)="isEditEnabled() && hasVoltageCapability(position) && startEditing(position, 'voltagePreset')"
                     *ngIf="!isEditing(position, 'voltagePreset') && hasVoltageCapability(position)">
                 {{ position.voltagePreset | number:'1.2-2' }}<span class="unit" [class.disabled]="!hasVoltageCapability(position)">V</span>
               </span>

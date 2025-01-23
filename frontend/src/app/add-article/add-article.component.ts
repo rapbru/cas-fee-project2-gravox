@@ -158,4 +158,8 @@ export class AddArticleComponent implements OnInit {
   onEscapeKey() {
     this.router.navigate(['/articles']);
   }
+
+  enableEdit(): boolean {
+    return true;  // Always enable edit mode in add-article
+  }
 }
