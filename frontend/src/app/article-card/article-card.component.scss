@@ -7,6 +7,8 @@
   transition: transform 0.2s;
   outline: none;
   background-color: var(--color-main);
+  width: 100%;
+  box-sizing: border-box;
 
   @media (max-width: 600px) {
     margin: 0;
@@ -105,11 +107,12 @@
 
     .detail-row {
       display: grid;
-      grid-template-columns: 24px 120px 1fr;
+      grid-template-columns: 24px minmax(80px, 120px) 1fr;
       gap: 8px;
       align-items: center;
       height: 38px;
       margin: 0;
+      min-width: 0;
       
       .value, app-input-field {
         width: 100%;
@@ -117,6 +120,7 @@
         display: flex;
         align-items: center;
         overflow: hidden;
+        min-width: 0;
 
         ::ng-deep .input-field {
           height: 38px;
@@ -157,6 +161,7 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
+        min-width: 0;
       }
     }
   }

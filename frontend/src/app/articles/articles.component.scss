@@ -1,8 +1,15 @@
-.articles-grid {
+.content-container {
+  padding: 16px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  padding: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 720px), 1fr));
+  gap: 16px;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .article-container {
