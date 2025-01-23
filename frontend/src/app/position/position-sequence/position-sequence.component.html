@@ -1,18 +1,14 @@
 <div class="positions-container">
   <div class="selected-positions-container" #selectedPositionsContainer>
     <div class="selected-positions">
-      <div class="positions-header">
-        <h3>Reihenfolge Positionen</h3>
-        <div class="toolbar-group">
-          <app-toolbar
-            [showDelete]="enableEdit()"
-            [deleteDisabled]="!hasSelectedPositions()"
-            [showAdd]="enableEdit()"
-            (delete)="deleteSelectedPositions()"
-            (add)="openPositionSelector()">
-          </app-toolbar>
-        </div>
-      </div>
+      <app-section-header
+        title="Reihenfolge Positionen"
+        [showDelete]="enableEdit()"
+        [deleteDisabled]="!hasSelectedPositions()"
+        [showAdd]="enableEdit()"
+        (delete)="deleteSelectedPositions()"
+        (add)="openPositionSelector()">
+      </app-section-header>
 
       <div class="positions-grid" 
            cdkDropList 

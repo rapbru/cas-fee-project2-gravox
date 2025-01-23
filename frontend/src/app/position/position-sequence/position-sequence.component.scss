@@ -142,17 +142,6 @@
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
-
-  h4 {
-    color: var(--color-vonesco);
-    margin-bottom: 16px;
-    font-size: 1rem;
-    font-weight: 500;
-  }
-
-  .position-card {
-    background-color: var(--color-sheet-background);
-  }
 }
 
 .hidden {
@@ -170,19 +159,6 @@
 @media (max-width: 767px) {
   .position-selector {
     padding-bottom: 80px; // Space for bottom navigation
-  }
-}
-
-.positions-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-  color: var(--color-text);
-
-  h3 {
-    margin: 0;
-    color: var(--color-text);
   }
 }
 
@@ -251,7 +227,6 @@
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-// Optimize dragging performance for all cards
 .position-card {
   background-color: var(--color-main);
   border-radius: var(--button-border-radius);
@@ -266,10 +241,6 @@
 
   &:last-child {
     margin-bottom: 0;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    border-color: var(--color-sub-3);
   }
 }
 
@@ -407,84 +378,10 @@
         box-shadow: none;
       }
     }
-
-    mat-icon, .label {
-      transition: opacity 0.2s ease;
-      
-      &.disabled {
-        opacity: 0.5;
-      }
-    }
-
-    .value {
-      &:hover {
-        opacity: 0.8;
-      }
-    }
   }
 }
 
-.value {
-  cursor: pointer;
-  
-  &:hover {
-    opacity: 0.8;
-  }
-
-  :host-context(:not(.edit-mode)) & {
-    cursor: default;
-    
-    &:hover {
-      opacity: 1;
-    }
-  }
-}
-
-.value-input {
-  font-size: 1rem;
-  font-weight: 500;
-  font-family: inherit;
-  color: var(--color-vonesco);
-  background: transparent;
-  border: none;
-  outline: none;
-  width: 70px;
-  text-align: right;
-  padding: 0 8px 0 0;
-  margin: 0;
-  appearance: textfield;
-
-  &::-webkit-inner-spin-button, 
-  &::-webkit-outer-spin-button { 
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  &:focus {
-    outline: none;
-    border: none;
-    box-shadow: none;
-  }
-}
-
-.value {
-  min-width: 70px;
-  display: inline-block;
-  text-align: right;
-  padding-right: 8px;
-  margin: 0;
-  font-family: inherit;
-  font-weight: 500;
-}
-
-.metric-column {
-  .value, .value-input {
-    font-family: inherit;
-    width: 100%;
-    box-sizing: border-box;
-  }
-}
-// Ensure correct background color in dark mode
+// Dark mode adjustments
 :host-context(.dark-theme) {
   .position-card {
     background-color: var(--color-main);
@@ -503,22 +400,5 @@
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
-}
-
-.position-card {
-  background-color: var(--color-main);
-  border-radius: var(--button-border-radius);
-  padding: 12px;
-  width: 100%;
-  box-sizing: border-box;
-  min-width: 0;
-  color: var(--color-text);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
-  margin-bottom: 12px;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
 }
 

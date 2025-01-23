@@ -1,0 +1,12 @@
+<div class="section-header">
+  <h3>{{ title }}</h3>
+  <div class="toolbar-group">
+    <app-toolbar
+      [showDelete]="showDelete"
+      [deleteDisabled]="deleteDisabled"
+      [showAdd]="showAdd"
+      (delete)="delete.emit()"
+      (add)="add.emit()">
+    </app-toolbar>
+  </div>
+</div>

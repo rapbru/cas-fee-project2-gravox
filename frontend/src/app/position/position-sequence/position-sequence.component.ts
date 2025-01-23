@@ -8,10 +8,17 @@ import { PositionService } from '../../services/position.service';
 import { LoggerService } from '../../services/logger.service';
 import { SidebarSheetComponent } from '../../sidebar-sheet/sidebar-sheet.component';
 import { PositionDragDropService } from '../../services/position-drag-drop.service';
-import { ToolbarComponent } from '../../toolbar/toolbar.component';
-import { Sequence } from '../../models/sequence.model';
 import { OverviewStateService } from '../../services/overview-state.service';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
+import { SectionHeaderComponent } from '../../header/section-header/section-header.component';
+
+interface Sequence {
+  positionId: string;
+  orderNumber: number;
+  timePreset: number;
+  currentPreset: number;
+  voltagePreset: number;
+}
 
 type PresetField = 'timePreset' | 'currentPreset' | 'voltagePreset';
 
@@ -27,7 +34,7 @@ type PresetField = 'timePreset' | 'currentPreset' | 'voltagePreset';
     CdkDrag,
     CdkDragHandle,
     CdkDropList,
-    ToolbarComponent
+    SectionHeaderComponent
   ],
   templateUrl: './position-sequence.component.html',
   styleUrls: ['./position-sequence.component.scss']
