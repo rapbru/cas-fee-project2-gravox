@@ -15,6 +15,7 @@ export class SectionHeaderComponent {
   @Input() showAdd: boolean = false;
   @Input() showDelete: boolean = false;
   @Input() deleteDisabled: boolean = false;
+  @Input() disabled: boolean = false;
   
   @Output() add = new EventEmitter<void>();
   @Output() delete = new EventEmitter<void>();

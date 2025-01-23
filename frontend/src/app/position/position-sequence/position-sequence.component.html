@@ -5,6 +5,7 @@
         title="Reihenfolge Positionen"
         [showDelete]="false"
         [showAdd]="true"
+        [disabled]="!isButtonEnabled()"
         (add)="openPositionSelector()">
       </app-section-header>
 

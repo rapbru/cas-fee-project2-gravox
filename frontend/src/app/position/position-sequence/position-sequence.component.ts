@@ -49,6 +49,7 @@ export class PositionSequenceComponent {
   @Output() selectedPositionsChange = new EventEmitter<Sequence[]>();
   showPositionSelector: boolean = false;
   private editingState: { position: Position | null, field: PresetField | null } = { position: null, field: null };
+  public readonly editState = this.overviewStateService.enableEdit;
 
   constructor(
     public positionService: PositionService,
@@ -258,6 +259,10 @@ export class PositionSequenceComponent {
   }
 
   isEditEnabled(): boolean {
-    return this.enableEdit;
+    return this.enableEdit || this.editState();
+  }
+
+  isButtonEnabled(): boolean {
+    return this.enableEdit || this.editState();
   }
 }

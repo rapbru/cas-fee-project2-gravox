@@ -31,6 +31,7 @@ export class ToolbarComponent {
   @Input() isReorderMode = false;
   @Input() addLineDisabled = false;
   @Input() deleteLineDisabled = false;
+  @Input() addDisabled: boolean = false;
 
   @Output() addLine = new EventEmitter<void>();
   @Output() deleteLine = new EventEmitter<void>();

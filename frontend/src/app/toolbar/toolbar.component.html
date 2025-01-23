@@ -25,7 +25,8 @@
         <button class="button"
                 (click)="add.emit()"
                 aria-label="Hinzufügen" i18n-aria-label="@@ButtonAddAriaLabel"
-                matTooltip="Hinzufügen" i18n-matTooltip="@@ButtonAddTooltip">
+                matTooltip="Hinzufügen" i18n-matTooltip="@@ButtonAddTooltip"
+                [disabled]="addDisabled">
           <mat-icon>add</mat-icon>
           <span i18n="@@ButtonAdd">Hinzufügen</span>
         </button>
