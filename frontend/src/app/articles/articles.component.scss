@@ -2,21 +2,23 @@
   padding: 16px;
   max-width: 100%;
   box-sizing: border-box;
+  min-width: 0;
 }
 
 .card-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(300px, 1fr);
   gap: 16px;
   max-width: 100%;
   margin: 0 auto;
+  min-width: 0;
 
   @media (min-width: 801px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(calc((100% - 16px) / 2), 1fr));
   }
 
   @media (min-width: 1152px) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(calc((100% - 32px) / 3), 1fr));
   }
 }
 
