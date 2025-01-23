@@ -71,6 +71,7 @@
             ></app-input-field>
           </ng-template>
         </div>
+        
         <div class="detail-row">
           <mat-icon>business</mat-icon>
           <span class="label">Kunde</span>
@@ -86,24 +87,7 @@
             ></app-input-field>
           </ng-template>
         </div>
-        <div class="detail-row">
-          <mat-icon>note</mat-icon>
-          <span class="label">Bemerkung</span>
-          <ng-container *ngIf="!isEditable; else editNote">
-            <span class="value">{{ article.note }}</span>
-          </ng-container>
-          <ng-template #editNote>
-            <app-input-field
-              [name]="'note'"
-              [(ngModel)]="article.note"
-              [maxLength]="maxLengthNote"
-              (ngModelChange)="updateArticleInfo($event, 'note')"
-            ></app-input-field>
-          </ng-template>
-        </div>
-      </div>
 
-      <div class="detail-group">
         <div class="detail-row">
           <mat-icon>square_foot</mat-icon>
           <span class="label">Fläche</span>
@@ -121,6 +105,7 @@
             ></app-input-field>
           </ng-template>
         </div>
+
         <div class="detail-row">
           <mat-icon>water_drop</mat-icon>
           <span class="label">Abtropfen</span>
@@ -135,6 +120,22 @@
               [numbersOnly]="true"
               [unit]="'%'"
               (ngModelChange)="updateArticleInfo($event, 'drainage')"
+            ></app-input-field>
+          </ng-template>
+        </div>
+
+        <div class="detail-row">
+          <mat-icon>note</mat-icon>
+          <span class="label">Bemerkung</span>
+          <ng-container *ngIf="!isEditable; else editNote">
+            <span class="value">{{ article.note }}</span>
+          </ng-container>
+          <ng-template #editNote>
+            <app-input-field
+              [name]="'note'"
+              [(ngModel)]="article.note"
+              [maxLength]="maxLengthNote"
+              (ngModelChange)="updateArticleInfo($event, 'note')"
             ></app-input-field>
           </ng-template>
         </div>
