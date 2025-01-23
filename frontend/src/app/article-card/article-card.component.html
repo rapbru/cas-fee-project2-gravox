@@ -6,31 +6,37 @@
      (keydown.enter)="onCardClick()"
      (keydown.space)="onCardClick()">
   <div class="article-header">
-    <ng-container *ngIf="!isEditable">
-      <h2>{{ article.title }}</h2>
-      <button class="button vonesco card-button"
-              [disabled]="isLoading()"
-              (click)="onLoad(); $event.stopPropagation()">
-        @if (isLoading()) {
-          <mat-spinner diameter="20"></mat-spinner>
-        } @else {
-          <mat-icon>download</mat-icon>
-        }
-        <span>Laden</span>
-      </button>
-    </ng-container>
-    <ng-container *ngIf="isEditable && showCheckbox">
-      <button mat-icon-button 
-              class="check-circle" 
-              (click)="onCheckboxClick($event)">
-        <mat-icon class="check-circle-icon" [ngClass]="{ 'selected': isSelected }">
-          {{ isSelected ? 'check_circle' : 'radio_button_unchecked' }}
-        </mat-icon>
-      </button>
-      <h2>{{ article.title }}</h2>
-    </ng-container>
-    <ng-container *ngIf="isEditable && !showCheckbox">
-      <h2>{{ article.title }}</h2>
+    <ng-container [ngSwitch]="true">
+      <div class="header-content" *ngSwitchCase="isEditable && showCheckbox">
+        <button mat-icon-button 
+                class="check-circle" 
+                (click)="onCheckboxClick($event)">
+          <mat-icon class="check-circle-icon" [ngClass]="{ 'selected': isSelected }">
+            {{ isSelected ? 'check_circle' : 'radio_button_unchecked' }}
+          </mat-icon>
+        </button>
+        <h2>{{ article.title }}</h2>
+      </div>
+
+      <div class="header-content" *ngSwitchCase="isEditable && !showCheckbox && isInDetails">
+        <h2>{{ article.title }}</h2>
+      </div>
+
+      <div class="header-wrapper" *ngSwitchDefault>
+        <div class="header-content">
+          <h2>{{ article.title }}</h2>
+        </div>
+        <button class="button vonesco card-button"
+                [disabled]="isLoading()"
+                (click)="onLoad(); $event.stopPropagation()">
+          @if (isLoading()) {
+            <mat-spinner diameter="20"></mat-spinner>
+          } @else {
+            <mat-icon>download</mat-icon>
+          }
+          <span>Laden</span>
+        </button>
+      </div>
     </ng-container>
   </div>
 
@@ -38,7 +44,7 @@
     <div class="detail-row" *ngIf="isInDetails">
       <mat-icon>deployed_code</mat-icon>
       <span class="label">Name</span>
-      <ng-container *ngIf="!isEditable; else editTitle">
+      <ng-container *ngIf="!isEditable || !isInDetails; else editTitle">
         <span class="value">{{ article.title }}</span>
       </ng-container>
       <ng-template #editTitle>
@@ -70,7 +76,7 @@
         <div class="detail-row">
           <mat-icon>tag</mat-icon>
           <span class="label">Nummer</span>
-          <ng-container *ngIf="!isEditable; else editNumber">
+          <ng-container *ngIf="!isEditable || !isInDetails; else editNumber">
             <span class="value">{{ article.number }}</span>
           </ng-container>
           <ng-template #editNumber>
@@ -87,7 +93,7 @@
         <div class="detail-row">
           <mat-icon>business</mat-icon>
           <span class="label">Kunde</span>
-          <ng-container *ngIf="!isEditable; else editCustomer">
+          <ng-container *ngIf="!isEditable || !isInDetails; else editCustomer">
             <span class="value">{{ article.customer }}</span>
           </ng-container>
           <ng-template #editCustomer>
@@ -103,7 +109,7 @@
         <div class="detail-row">
           <mat-icon>square_foot</mat-icon>
           <span class="label">Fläche</span>
-          <ng-container *ngIf="!isEditable; else editArea">
+          <ng-container *ngIf="!isEditable || !isInDetails; else editArea">
             <span class="value">{{ formatValue(article.area, 'area') }}</span>
           </ng-container>
           <ng-template #editArea>
@@ -121,7 +127,7 @@
         <div class="detail-row">
           <mat-icon>water_drop</mat-icon>
           <span class="label">Abtropfen</span>
-          <ng-container *ngIf="!isEditable; else editDrainage">
+          <ng-container *ngIf="!isEditable || !isInDetails; else editDrainage">
             <span class="value">{{ formatValue(article.drainage, 'drainage') }}</span>
           </ng-container>
           <ng-template #editDrainage>
@@ -139,7 +145,7 @@
         <div class="detail-row">
           <mat-icon>note</mat-icon>
           <span class="label">Bemerkung</span>
-          <ng-container *ngIf="!isEditable; else editNote">
+          <ng-container *ngIf="!isEditable || !isInDetails; else editNote">
             <span class="value">{{ article.note }}</span>
           </ng-container>
           <ng-template #editNote>
