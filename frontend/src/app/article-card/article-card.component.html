@@ -49,6 +49,7 @@
       </ng-container>
       <ng-template #editTitle>
         <app-input-field
+          [alwaysOrange]="isInDetails"
           [name]="'title'"
           [(ngModel)]="article.title"
           [maxLength]="maxLengthName"
@@ -81,6 +82,7 @@
           </ng-container>
           <ng-template #editNumber>
             <app-input-field
+              [alwaysOrange]="isInDetails"
               [name]="'number'"
               [(ngModel)]="article.number"
               [maxLength]="maxLengthNumber"
@@ -98,6 +100,7 @@
           </ng-container>
           <ng-template #editCustomer>
             <app-input-field
+              [alwaysOrange]="isInDetails"
               [name]="'customer'"
               [(ngModel)]="article.customer"
               [maxLength]="maxLengthCustomer"
@@ -114,6 +117,7 @@
           </ng-container>
           <ng-template #editArea>
             <app-input-field
+              [alwaysOrange]="isInDetails"
               [name]="'area'"
               [(ngModel)]="article.area"
               [maxLength]="maxLengthArea"
@@ -132,6 +136,7 @@
           </ng-container>
           <ng-template #editDrainage>
             <app-input-field
+              [alwaysOrange]="isInDetails"
               [name]="'drainage'"
               [(ngModel)]="article.drainage"
               [maxLength]="maxLengthDrainage"
@@ -150,6 +155,7 @@
           </ng-container>
           <ng-template #editNote>
             <app-input-field
+              [alwaysOrange]="isInDetails"
               [name]="'note'"
               [(ngModel)]="article.note"
               [maxLength]="maxLengthNote"

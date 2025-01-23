@@ -24,6 +24,7 @@
         (blur)="markAsTouched()"
         (focus)="onFocus()"
         rows="1"
+        [class.always-orange]="alwaysOrange"
       ></textarea>
     </ng-container>
     <ng-template #standardInput>
@@ -42,6 +43,7 @@
         (blur)="markAsTouched()"
         (focus)="onFocus()"
         (keypress)="onKeyPress($event)"
+        [class.always-orange]="alwaysOrange"
       />
     </ng-template>
   </div>

@@ -91,6 +91,16 @@
   &.ng-untouched {
     color: var(--color-vonesco);
   }
+
+  &.always-orange {
+    color: var(--color-vonesco) !important;
+    
+    &:focus,
+    &.ng-touched,
+    &.ng-dirty {
+      color: var(--color-vonesco) !important;
+    }
+  }
 }
 
 .input-field-counter {
