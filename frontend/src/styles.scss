@@ -1304,7 +1304,7 @@ app-add-article {
   right: 0;
   width: 400px;
   height: 100vh;
-  background-color: var(--color-main);
+  background-color: var(--color-sub-3);
   box-shadow: var(--shadow);
   transform: translateX(100%);
   z-index: 1000;
@@ -1327,14 +1327,14 @@ app-add-article {
     transform: translateY(100%);
     margin: 0;
     padding: 0;
-    background-color: var(--color-main);
+    background-color: var(--color-sub-3);
 
     .sheet-header {
-      background-color: var(--color-main);
+      background-color: var(--color-sub-3);
     }
 
     .sheet-content {
-      background-color: var(--color-main);
+      background-color: var(--color-sub-3);
       flex: 1;
       overflow-y: auto;
     }
@@ -1356,7 +1356,7 @@ app-add-article {
   justify-content: space-between;
   align-items: center;
   padding: var(--content-padding);
-  background-color: var(--color-main);
+  background-color: var(--color-sub-3);
   border-bottom: 1px solid var(--color-sub-3);
   color: var(--color-text);
   
@@ -1378,7 +1378,7 @@ app-add-article {
   flex: 1;
   overflow-y: auto;
   padding: var(--content-padding);
-  background-color: var(--color-main);
+  background-color: var(--color-sub-3);
 }
 
 .backdrop {
