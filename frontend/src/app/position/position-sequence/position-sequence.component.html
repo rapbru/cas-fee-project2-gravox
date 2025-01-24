@@ -74,6 +74,7 @@
                     tabindex="0"
                     role="button"
                     (click)="isEditEnabled() && startEditing(position, 'timePreset')"
+                    (focus)="isEditEnabled() && startEditing(position, 'timePreset')"
                     (keydown.enter)="isEditEnabled() && startEditing(position, 'timePreset')"
                     (keydown.space)="isEditEnabled() && startEditing(position, 'timePreset')"
                     *ngIf="!isEditing(position, 'timePreset')">
