@@ -23,8 +23,11 @@
   }
 
   &:focus {
-    outline: 2px solid var(--color-vonesco-sub-2);
-    outline-offset: 2px;
+    outline: none;
+  }
+
+  &:active {
+    background-color: var(--color-sub-3);
   }
 
   &[isInDetails="true"] {
