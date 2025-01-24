@@ -2,18 +2,35 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 2rem;
+  justify-content: flex-start;
+  padding: 0;
   text-align: center;
   height: 100%;
-  color: var(--text-color-secondary);
+  color: var(--color-text);
+  width: 100%;
+
+  .empty-container {
+    background-color: var(--color-main);
+    border-radius: var(--button-border-radius);
+    padding: 1.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
 
   .empty-icon {
-    font-size: 3rem;
-    width: 3rem;
-    height: 3rem;
-    margin-bottom: 1rem;
+    font-size: 3.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-bottom: 0.5rem;
     opacity: 0.5;
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 100,
+      'GRAD' -25,
+      'opsz' 48;
+    color: var(--color-text);
   }
 
   .empty-text {
@@ -22,7 +39,7 @@
   }
 
   .empty-subtext {
-    font-size: 0.875rem;
+    font-size: var(--font-size);
     opacity: 0.7;
   }
 }
