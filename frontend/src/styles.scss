@@ -412,6 +412,10 @@ button.navbar-item {
       background-color: var(--color-main);
     }
   }
+
+  mat-icon + span {
+    padding-right: 4px;
+  }
 }
 
 .button.primary {
