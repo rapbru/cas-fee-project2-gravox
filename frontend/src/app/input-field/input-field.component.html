@@ -22,7 +22,8 @@
         [ngModel]="displayValue"
         (ngModelChange)="onInputChange($event)"
         (blur)="markAsTouched()"
-        (focus)="onFocus()"
+        (focus)="selectInputContent($event)"
+        (click)="selectInputContent($event)"
         rows="1"
         [class.always-orange]="alwaysOrange"
       ></textarea>
@@ -41,7 +42,8 @@
         [ngModel]="displayValue"
         (ngModelChange)="onInputChange($event)"
         (blur)="markAsTouched()"
-        (focus)="onFocus()"
+        (focus)="selectInputContent($event)"
+        (click)="selectInputContent($event)"
         (keypress)="onKeyPress($event)"
         [class.always-orange]="alwaysOrange"
       />

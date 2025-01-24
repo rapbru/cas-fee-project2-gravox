@@ -140,4 +140,11 @@ export class InputFieldComponent implements ControlValueAccessor {
   markAsTouched(): void {
     this.onTouched();
   }
+
+  selectInputContent(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    setTimeout(() => {
+      input.select();
+    }, 0);
+  }
 }
