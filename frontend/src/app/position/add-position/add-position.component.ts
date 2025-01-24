@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, HostListener, OnInit } from '@angular/core';
 import { Position } from '../../models/position.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -17,10 +17,34 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
   templateUrl: './add-position.component.html',
   styleUrls: ['./add-position.component.scss']
 })
-export class AddPositionComponent {
+export class AddPositionComponent implements OnInit {
   @Input() position: Position | undefined;
   @Output() cancelEdit = new EventEmitter<void>();
   @Output() savePosition = new EventEmitter<Position>();
+
+  isMobile: boolean = window.innerWidth < 768;
+  enableTransitions: boolean = false;
+
+  ngOnInit() {
+    setTimeout(() => {
+      this.enableTransitions = true;
+    }, 100);
+    this.checkScreenSize();
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.checkScreenSize();
+  }
+
+  private checkScreenSize() {
+    const wasMobile = this.isMobile;
+    this.isMobile = window.innerWidth < 768;
+    
+    if (wasMobile !== this.isMobile && this.position) {
+      this.cancelChanges();
+    }
+  }
 
   confirmChanges() {
     this.savePosition.emit(this.position);

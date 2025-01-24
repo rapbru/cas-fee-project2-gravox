@@ -1,25 +1,43 @@
-<div class="add-position">
-  <h5>Neue Position erfassen</h5>
-  <form *ngIf="position">
-    <h6>Position</h6>
-    <div class="form-group">
-      <label for="position-number">Nummer</label>
-      <input id="position-number" type="number" [(ngModel)]="position.number" name="positionNumber" />
-    </div>
-    <div class="form-group">
-      <label for="position-name">Bezeichung</label>
-      <input id="position-name" type="text" [(ngModel)]="position.name" name="positionName" />
-    </div>
-    
-    <div class="buttons">
-      <button class="button" (click)="confirmChanges()">
-        <mat-icon>check</mat-icon>
-        <span>Bestätigen</span>
-      </button>
-      <button class="button danger" (click)="cancelChanges()">
-        <mat-icon>close</mat-icon>
-        <span>Abbrechen</span>
-      </button>
-    </div>
-  </form>
+<div class="sidebar-sheet" [class.show]="position" [class.mobile]="isMobile">
+  <div class="sheet-header">
+    <h3>Neue Position erfassen</h3>
+    <button class="button button-label button-highlight-sub" (click)="cancelChanges()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  
+  <div class="sheet-content">
+    <form *ngIf="position">
+      <h6>Position</h6>
+      <div class="form-group">
+        <label for="position-number">Nummer</label>
+        <input id="position-number" type="number" [(ngModel)]="position.number" name="positionNumber" />
+      </div>
+      <div class="form-group">
+        <label for="position-name">Bezeichung</label>
+        <input id="position-name" type="text" [(ngModel)]="position.name" name="positionName" />
+      </div>
+      
+      <div class="buttons">
+        <button class="button vonesco" (click)="confirmChanges()">
+          <mat-icon>check</mat-icon>
+          <span>Bestätigen</span>
+        </button>
+        <button class="button danger" (click)="cancelChanges()">
+          <mat-icon>close</mat-icon>
+          <span>Abbrechen</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="position" 
+     class="backdrop" 
+     [class.show]="position && isMobile" 
+     (click)="cancelChanges()"
+     (keydown.escape)="cancelChanges()"
+     tabindex="0"
+     role="button"
+     [attr.aria-label]="'Close position form'">
 </div>
