@@ -1,35 +1,74 @@
 <div class="position-container" 
+     [attr.aria-label]="'Position ' + position.number + ': ' + position.name"
+     [attr.aria-expanded]="!collapsed"
      (click)="$event.target === $event.currentTarget && toggleCollapsed()" 
      (keydown.enter)="$event.target === $event.currentTarget && toggleCollapsed()"
      (keydown.space)="$event.target === $event.currentTarget && toggleCollapsed(); $event.preventDefault()"
      tabindex="0"
      role="button"
-     [ngClass]="{'with-flightbar': (position.flightbar || !collapsed)  && !enableEdit(), 'edit-mode': enableEdit(), 'reorder-mode': enableOrder()}">
+     [ngClass]="{'with-flightbar': (position.flightbar || !collapsed) && !enableEdit(), 'edit-mode': enableEdit(), 'reorder-mode': enableOrder()}">
     
-    <div class="position-header" (keydown)="toggleCollapsed()" (click)="toggleCollapsed()" tabindex="0">
+    <div class="position-header" 
+         (keydown)="toggleCollapsed()" 
+         (click)="toggleCollapsed()" 
+         tabindex="0"
+         [attr.aria-label]="'Position Header ' + position.number">
         <ng-container *ngIf="!enableEdit(); else editHeader">
-            <div class="position-number-base">{{ position.number }}</div>  
-            <div class="position-name-base">{{ position.name }}</div> 
+            <div class="position-number-base" aria-label="Position number">{{ position.number }}</div>  
+            <div class="position-name-base" aria-label="Position name">{{ position.name }}</div> 
         </ng-container>
         <ng-template #editHeader>
             <ng-container *ngIf="enableOrder(); else noOrder">
                 <div class="position-number-base">{{ position.number }}</div>  
                 <div class="position-name-base">{{ position.name }}</div> 
-                <button *ngIf="!isMobile()" mat-icon-button class="drag-handle">
+                <button *ngIf="!isMobile()" 
+                        mat-icon-button 
+                        class="drag-handle"
+                        matTooltip="Zum Verschieben ziehen"
+                        aria-label="Position verschieben">
                     <mat-icon>drag_handle</mat-icon>
                 </button>
-                <button *ngIf="isMobile()" mat-icon-button class="drag-handle" cdkDragHandle>
+                <button *ngIf="isMobile()" 
+                        mat-icon-button 
+                        class="drag-handle" 
+                        cdkDragHandle
+                        matTooltip="Zum Verschieben ziehen"
+                        aria-label="Position verschieben">
                     <mat-icon>drag_handle</mat-icon>
                 </button>
             </ng-container>
             <ng-template #noOrder>
-                <button mat-icon-button class="check-circle" (click)="toggleSelection()">
+                <button mat-icon-button 
+                        class="check-circle" 
+                        (click)="toggleSelection()"
+                        matTooltip="{{ isSelected ? 'Abwählen' : 'Auswählen' }}"
+                        [attr.aria-label]="isSelected ? 'Position abwählen' : 'Position auswählen'"
+                        tabindex="0">
                     <mat-icon class="check-circle-icon" [ngClass]="{ 'selected': isSelected }">
                         {{ isSelected ? 'check_circle' : 'radio_button_unchecked' }}
                     </mat-icon>
                 </button>
-                <input class="position-number-input" type="text" inputmode="numeric" pattern="[0-9]" [value]="position.number" (focus)="selectInputContent($event)" (click)="selectInputContent($event)" (input)="updatePositionInfo($event, 'number')" />
-                <input class="position-name-input" type="text" inputmode="text"[value]="position.name" (focus)="selectInputContent($event)" (click)="selectInputContent($event)" (input)="updatePositionInfo($event, 'name')" /> 
+                <input class="position-number-input" 
+                       type="text" 
+                       inputmode="numeric" 
+                       pattern="[0-9]" 
+                       [value]="position.number" 
+                       (focus)="selectInputContent($event)" 
+                       (click)="selectInputContent($event)" 
+                       (input)="updatePositionInfo($event, 'number')"
+                       aria-label="Positionsnummer"
+                       matTooltip="Positionsnummer bearbeiten"
+                       tabindex="0" />
+                <input class="position-name-input" 
+                       type="text" 
+                       inputmode="text"
+                       [value]="position.name" 
+                       (focus)="selectInputContent($event)" 
+                       (click)="selectInputContent($event)" 
+                       (input)="updatePositionInfo($event, 'name')"
+                       aria-label="Positionsname"
+                       matTooltip="Positionsname bearbeiten"
+                       tabindex="0" />
             </ng-template>
         </ng-template>
     </div>
@@ -76,7 +115,10 @@
                         (focus)="selectInputContent($event)" 
                         (click)="selectInputContent($event)" 
                         (change)="updatePresetValue($event, '.TIME.PRESET')" 
-                        (keydown.enter)="presetTime.blur()" />
+                        (keydown.enter)="presetTime.blur()"
+                        aria-label="Zeit Voreinstellung"
+                        matTooltip="Zeit in Minuten"
+                        tabindex="0" />
                     <span>{{ position.time.actual }}</span>
                 </div>
             </ng-container>
@@ -96,11 +138,14 @@
                             type="text" 
                             inputmode="numeric" 
                             pattern="[0-9]" 
-                            [value]="position.temperature.preset" 
+                            [value]="position.temperature.preset"
                             (focus)="selectInputContent($event)" 
                             (click)="selectInputContent($event)" 
                             (input)="updatePresetValue($event, '.TEMP.PRESET')" 
-                            (keydown.enter)="presetTemp.blur()" />
+                            (keydown.enter)="presetTemp.blur()"
+                            aria-label="Temperatur Voreinstellung"
+                            matTooltip="Temperatur in °C"
+                            tabindex="0" />
                         <span>{{ position.temperature.actual }}</span>
                     </div>
                 </ng-container>
@@ -111,8 +156,14 @@
             <ng-template #collapsedTemperature>
                 <ng-container *ngIf="enableEdit();">
                     <div class="metric">
-                        <button mat-icon-button (click)="toggleIsPresent('temperature')">
-                            <mat-icon [ngClass]="{'present': position.temperature.isPresent, 'not-present': !position.temperature.isPresent}">thermostat</mat-icon>
+                        <button mat-icon-button 
+                                (click)="toggleIsPresent('temperature')"
+                                [attr.aria-label]="position.temperature.isPresent ? 'Temperatur deaktivieren' : 'Temperatur aktivieren'"
+                                matTooltip="{{ position.temperature.isPresent ? 'Temperatur deaktivieren' : 'Temperatur aktivieren' }}"
+                                tabindex="0">
+                            <mat-icon [ngClass]="{'present': position.temperature.isPresent, 'not-present': !position.temperature.isPresent}">
+                                thermostat
+                            </mat-icon>
                         </button>
                     </div>
                 </ng-container>   
@@ -132,7 +183,10 @@
                             (focus)="selectInputContent($event)" 
                             (click)="selectInputContent($event)" 
                             (input)="updatePresetValue($event, '.current.preset')" 
-                            (keydown.enter)="presetCurrent.blur()" />
+                            (keydown.enter)="presetCurrent.blur()"
+                            aria-label="Strom Voreinstellung"
+                            matTooltip="Strom in Ampere"
+                            tabindex="0" />
                         <span>{{ position.current.actual }}</span>
                     </div>
                 </ng-container>
@@ -143,8 +197,14 @@
             <ng-template #collapsedCurrent>
                 <ng-container *ngIf="enableEdit(); else noCurrent">
                     <div class="metric" *ngIf="!enableOrder() && !enableMultiSelect()">
-                        <button mat-icon-button (click)="toggleIsPresent('current')">
-                            <mat-icon [ngClass]="{'present': position.current.isPresent, 'not-present': !position.current.isPresent}">bolt</mat-icon>
+                        <button mat-icon-button 
+                                (click)="toggleIsPresent('current')"
+                                [attr.aria-label]="position.current.isPresent ? 'Strom deaktivieren' : 'Strom aktivieren'"
+                                matTooltip="{{ position.current.isPresent ? 'Strom deaktivieren' : 'Strom aktivieren' }}"
+                                tabindex="0">
+                            <mat-icon [ngClass]="{'present': position.current.isPresent, 'not-present': !position.current.isPresent}">
+                                bolt
+                            </mat-icon>
                         </button>
                     </div>
                 </ng-container>
@@ -168,7 +228,10 @@
                             (focus)="selectInputContent($event)" 
                             (click)="selectInputContent($event)" 
                             (input)="updatePresetValue($event, '.voltage.preset')" 
-                            (keydown.enter)="presetVoltage.blur()" />
+                            (keydown.enter)="presetVoltage.blur()"
+                            aria-label="Spannung Voreinstellung"
+                            matTooltip="Spannung in Volt"
+                            tabindex="0" />
                         <span>{{ position.voltage.actual }}</span>
                     </div>
                 </ng-container>
@@ -179,8 +242,14 @@
             <ng-template #collapsedVoltage>
                 <ng-container *ngIf="enableEdit(); else noVoltage">
                     <div class="metric" *ngIf="!enableOrder() && !enableMultiSelect()">
-                        <button mat-icon-button (click)="toggleIsPresent('voltage')">
-                            <mat-icon [ngClass]="{'present': position.voltage.isPresent, 'not-present': !position.voltage.isPresent}" class="mat-icon-dark">bolt</mat-icon>
+                        <button mat-icon-button 
+                                (click)="toggleIsPresent('voltage')"
+                                [attr.aria-label]="position.voltage.isPresent ? 'Spannung deaktivieren' : 'Spannung aktivieren'"
+                                matTooltip="{{ position.voltage.isPresent ? 'Spannung deaktivieren' : 'Spannung aktivieren' }}"
+                                tabindex="0">
+                            <mat-icon [ngClass]="{'present': position.voltage.isPresent, 'not-present': !position.voltage.isPresent}" class="mat-icon-dark">
+                                bolt
+                            </mat-icon>
                         </button>
                     </div>
                 </ng-container>

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { Position } from '../models/position.model';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -21,6 +22,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
   imports: [
     CommonModule, 
     MatIconModule, 
+    MatTooltipModule,
     FormsModule, 
     MatCardModule, 
     MatInputModule, 
@@ -34,6 +36,32 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 export class PositionComponent {
   @Input() position!: Position;
   public isCollapsed = false;
+
+  readonly translations = {
+    position: {
+      aria: {
+        container: 'Position {number}: {name}',
+        header: 'Position Header {number}',
+        number: 'Position number',
+        name: 'Position name',
+        dragHandle: 'Position verschieben',
+        select: {
+          select: 'Position auswählen',
+          deselect: 'Position abwählen'
+        }
+      },
+      tooltips: {
+        dragHandle: 'Zum Verschieben ziehen',
+        number: 'Positionsnummer bearbeiten',
+        name: 'Positionsname bearbeiten',
+        time: 'Zeit in Minuten',
+        temperature: {
+          enable: 'Temperatur aktivieren',
+          disable: 'Temperatur deaktivieren'
+        }
+      }
+    }
+  };
 
   constructor(
     private deviceDetectionService: DeviceDetectionService,
