@@ -553,10 +553,6 @@ button.navbar-item {
   width: 100%;
 }
 
-.article-container {
-  margin-bottom: 20px;
-}
-
 .article-header {
   display: flex;
   justify-content: space-between;
@@ -820,7 +816,6 @@ app-navbar {
   border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: all 0.2s ease;
 
   .sequence-content {
@@ -848,7 +843,6 @@ app-navbar {
   &:hover {
     cursor: pointer;
     border-color: var(--color-vonesco-sub-2);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
 
   &.editable {
@@ -1208,7 +1202,6 @@ app-navbar {
   background: var(--color-background-light);
   border-radius: 8px;
   padding: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
   .card-header {
     display: flex;
@@ -1284,7 +1277,6 @@ app-add-article {
   border-radius: var(--border-radius);
   padding: 0;
   margin-top: 24px;
-  box-shadow: var(--shadow);
 
   .positions-header {
     display: flex;
@@ -1298,6 +1290,22 @@ app-add-article {
   }
 }
 
+.position-card {
+  background-color: var(--color-main);
+  border-radius: var(--button-border-radius);
+  padding: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+  color: var(--color-text);
+  transition: transform 0.2s;
+  margin-bottom: 12px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
 .sidebar-sheet {
   position: fixed;
   top: 0;
@@ -1305,7 +1313,6 @@ app-add-article {
   width: 400px;
   height: 100vh;
   background-color: var(--color-sub-3);
-  box-shadow: var(--shadow);
   transform: translateX(100%);
   z-index: 1000;
   display: flex;

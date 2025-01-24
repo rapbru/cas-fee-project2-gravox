@@ -1,6 +1,6 @@
 .article-container {
-  border-radius: 8px;
-  padding: 20px;
+  border-radius: var( --button-border-radius);
+  padding: 16px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   cursor: pointer;
   transition: background-color 0.2s ease;
@@ -9,6 +9,8 @@
   width: 100%;
   box-sizing: border-box;
   min-width: 0;
+  margin-bottom: 16px;
+
 
   @media (max-width: 600px) {
     margin: 0;
