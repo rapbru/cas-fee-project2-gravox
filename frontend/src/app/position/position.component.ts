@@ -130,7 +130,9 @@ export class PositionComponent {
 
   selectInputContent(event: Event): void {
     const input = event.target as HTMLInputElement;
-    input.select();
+    setTimeout(() => {
+      input.select();
+    }, 0);
   }
 
   shouldShowMetrics(): boolean {

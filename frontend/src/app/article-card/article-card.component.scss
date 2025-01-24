@@ -210,12 +210,13 @@
               width: 100%;
               padding: 0;
               border: none;
+              border-radius: 0;
               background: transparent;
               text-overflow: ellipsis;
               white-space: nowrap;
               overflow: hidden;
               line-height: 1;
-              margin-top: -8px;
+              margin-top: -2px;
             }
           }
         }
