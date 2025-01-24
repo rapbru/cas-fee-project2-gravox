@@ -183,19 +183,24 @@
         ::ng-deep .input-field {
           height: 38px;
           width: 100%;
+          display: flex;
+          align-items: center;
           
           .input-field-header {
             position: absolute;
             right: 0;
-            top: 0;
+            top: 50%;
+            transform: translateY(-50%);
             pointer-events: none;
           }
 
           .input-wrapper {
             height: 100%;
             width: 100%;
+            display: flex;
+            align-items: center;
             
-            input, textarea {
+            input.input-field-value {
               height: 100%;
               width: 100%;
               padding: 0;
@@ -204,6 +209,8 @@
               text-overflow: ellipsis;
               white-space: nowrap;
               overflow: hidden;
+              line-height: 1;
+              margin-top: -8px;
             }
           }
         }
