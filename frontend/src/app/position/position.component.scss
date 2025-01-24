@@ -82,6 +82,7 @@
  
   input {
     border: none;
+    border-radius: 0;
     color: var(--color-vonesco);
     font-size: inherit;
     font-style: inherit;
@@ -91,6 +92,7 @@
     text-align: left;
     margin: 0;
     padding: 0;
+    background: transparent;
   }
 
   .position-number-input {
@@ -223,10 +225,12 @@
 
   input {
     border: none;
+    border-radius: 0;
     text-align: center;
     color: var(--color-vonesco);
     font-size: inherit;
     width: 100%;
     outline: none;
+    background: transparent;
   }
 }
