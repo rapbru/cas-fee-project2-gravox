@@ -17,6 +17,7 @@ import { PositionService } from '../services/position.service';
 import { PositionSequenceComponent } from '../position/position-sequence/position-sequence.component';
 import { Sequence as PositionSequence } from '../models/sequence.model';
 import { SnackbarService } from '../services/snackbar.service';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-add-article',
@@ -29,7 +30,8 @@ import { SnackbarService } from '../services/snackbar.service';
     InputFieldComponent,
     MatFormFieldModule,
     MatInputModule,
-    PositionSequenceComponent
+    PositionSequenceComponent,
+    FooterComponent
   ],
   templateUrl: './add-article.component.html',
   styleUrls: ['./add-article.component.scss']

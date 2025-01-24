@@ -15,6 +15,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
 import { HeaderService } from '../services/header.service';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-overview',
@@ -27,7 +28,8 @@ import { HeaderService } from '../services/header.service';
     AddPositionComponent,
     MatTooltipModule,
     MatButtonModule,
-    ToolbarComponent
+    ToolbarComponent,
+    FooterComponent
   ],
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss']

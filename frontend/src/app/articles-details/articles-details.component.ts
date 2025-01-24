@@ -20,6 +20,7 @@ import { CommonModule } from '@angular/common';
 import { PositionSequenceComponent } from '../position/position-sequence/position-sequence.component';
 import { Sequence } from '../models/sequence.model';
 import { Sequence as ArticleSequence } from '../models/article.model';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-articles-details',
@@ -31,7 +32,8 @@ import { Sequence as ArticleSequence } from '../models/article.model';
     ArticleCardComponent,
     DragDropModule,
     MatProgressSpinnerModule,
-    PositionSequenceComponent
+    PositionSequenceComponent,
+    FooterComponent
   ],
   templateUrl: './articles-details.component.html',
   styleUrls: ['./articles-details.component.scss']
