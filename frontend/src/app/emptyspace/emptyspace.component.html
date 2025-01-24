@@ -1,6 +1,17 @@
 <div class="empty-space">
-  <button class="button empty-container" (click)="onAddClick()">
-    <mat-icon class="empty-icon material-symbols-rounded">add_circle_outline</mat-icon>
-    <p class="empty-subtext">Fügen Sie Positionen hinzu, um eine Sequenz zu erstellen</p>
+  <button class="button empty-container" 
+          (click)="onAddClick()"
+          tabindex="0"
+          aria-label="Position hinzufügen" i18n-aria-label="@@EmptySpaceAddPositionAriaLabel"
+          matTooltip="Position hinzufügen" i18n-matTooltip="@@EmptySpaceAddPositionTooltip"
+          (keydown.enter)="onAddClick()"
+          (keydown.space)="onAddClick(); $event.preventDefault()">
+    <mat-icon class="empty-icon material-symbols-rounded"
+              aria-hidden="true">
+      add_circle_outline
+    </mat-icon>
+    <p class="empty-subtext" i18n="@@EmptySpaceSubtext">
+      Fügen Sie Positionen hinzu, um eine Sequenz zu erstellen
+    </p>
   </button>
 </div>
