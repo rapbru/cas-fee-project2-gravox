@@ -1304,7 +1304,7 @@ app-add-article {
   right: 0;
   width: 400px;
   height: 100vh;
-  background-color: transparent;
+  background-color: var(--color-main);
   box-shadow: var(--shadow);
   transform: translateX(100%);
   z-index: 1000;
@@ -1327,18 +1327,14 @@ app-add-article {
     transform: translateY(100%);
     margin: 0;
     padding: 0;
-    background-color: transparent;
+    background-color: var(--color-main);
 
     .sheet-header {
-      background-color: var(--color-sheet-background);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background-color: var(--color-main);
     }
 
     .sheet-content {
-      background-color: var(--color-sheet-background);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background-color: var(--color-main);
       flex: 1;
       overflow-y: auto;
     }
