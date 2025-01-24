@@ -17,6 +17,7 @@ import { ArticleService } from '../services/article.service';
 import { DialogService } from '../services/dialog.service';
 import { forkJoin } from 'rxjs';
 import { HeaderService } from '../services/header.service';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-articles',
@@ -29,7 +30,8 @@ import { HeaderService } from '../services/header.service';
     MatIconModule,
     FormsModule,
     ToolbarComponent,
-    ArticleCardComponent
+    ArticleCardComponent,
+    FooterComponent
   ],
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.scss']
