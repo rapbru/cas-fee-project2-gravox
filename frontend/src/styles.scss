@@ -74,10 +74,10 @@ html {
   .button, .navbar-item {
     &:disabled, &.inactive {
       opacity: 0.5;
-      color: var(--color-sub-1) !important;
+      color: var(--color-sub-1);
       
       mat-icon, span {
-        color: var(--color-sub-1) !important;
+        color: var(--color-sub-1);
       }
     }
   }
@@ -110,10 +110,10 @@ html {
     .button, .navbar-item {
       &:disabled, &.inactive {
         opacity: 0.5;
-        color: var(--color-sub-1) !important;
+        color: var(--color-sub-1);
         
         mat-icon, span {
-          color: var(--color-sub-1) !important;
+          color: var(--color-sub-1);
         }
       }
     }
@@ -230,7 +230,7 @@ input {
     padding: 0.25rem 0;
 
     .button {
-      display: flex !important;
+      display: flex;
     }
   }
 }
@@ -607,14 +607,14 @@ a.button {
     --mdc-snackbar-supporting-text-color: var(--color-text);
     
     .mdc-snackbar__surface {
-      min-width: unset !important;
-      max-width: 90vw !important;
-      margin: 8px auto !important;
-      border-radius: var(--button-border-radius) !important;
-      display: flex !important;
-      justify-content: center !important;
-      align-items: center !important;
-      padding: calc(var(--button-padding) * 2) !important;
+      min-width: unset;
+      max-width: 90vw;
+      margin: 8px auto;
+      border-radius: var(--button-border-radius);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: calc(var(--button-padding) * 2);
     }
 
     .mat-mdc-snack-bar-label {
@@ -629,15 +629,15 @@ a.button {
     }
 
     @media (max-width: 600px) {
-      left: 50% !important;
-      right: auto !important;
-      transform: translateX(-50%) !important;
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
       margin-bottom: 70px;
       
       .mdc-snackbar__surface {
-        max-width: calc(100vw - 48px) !important;
+        max-width: calc(100vw - 48px);
         transform: var(--button-transform);
-        padding: calc(var(--button-padding) * 1.5) calc(var(--button-padding) * 2) !important;
+        padding: calc(var(--button-padding) * 1.5) calc(var(--button-padding) * 2);
       }
     }
   }
@@ -652,19 +652,19 @@ a.button {
 }
 
 .mat-mdc-dialog-container {
-  --mdc-dialog-container-color: var(--color-main) !important;
+  --mdc-dialog-container-color: var(--color-main);
   
   .mdc-dialog__surface {
-    border-radius: var(--button-border-radius) !important;
-    padding: calc(var(--button-padding) * 3) calc(var(--button-padding) * 4) !important;
-    color: var(--color-text) !important;
-    width: auto !important;
-    min-width: unset !important;
+    border-radius: var(--button-border-radius);
+    padding: calc(var(--button-padding) * 3) calc(var(--button-padding) * 4);
+    color: var(--color-text);
+    width: auto;
+    min-width: unset;
   }
 
   .mat-mdc-dialog-content {
-    margin: 0 !important;
-    padding: calc(var(--button-padding) * 2) 0 !important;
+    margin: 0;
+    padding: calc(var(--button-padding) * 2) 0;
     text-align: center;
     white-space: nowrap;
   }
@@ -674,26 +674,26 @@ a.button {
     font-size: calc(var(--font-size) * 0.9);
     font-variation-settings: "wght" 320;
     text-align: center;
-    padding: 0 !important;
-    margin: 0 !important;
+    padding: 0;
+    margin: 0;
     white-space: nowrap;
   }
 
   .mat-mdc-dialog-actions {
-    padding: calc(var(--button-padding) * 2) 0 0 0 !important;
-    margin: 0 !important;
-    display: flex !important;
-    flex-direction: row !important;
-    justify-content: center !important;
+    padding: calc(var(--button-padding) * 2) 0 0 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     gap: var(--button-gap);
-    min-height: unset !important;
-    flex-wrap: nowrap !important;
+    min-height: unset;
+    flex-wrap: nowrap;
 
     button {
-      margin: 0 !important;
-      flex: 0 0 auto !important;
-      width: auto !important;
-      min-width: 100px !important;
+      margin: 0;
+      flex: 0 0 auto;
+      width: auto;
+      min-width: 100px;
       
       &.danger {
         --mdc-protected-button-container-color: var(--color-red);
@@ -705,81 +705,81 @@ a.button {
   @media (max-width: 600px) {
     .mdc-dialog__surface {
       margin: var(--button-padding);
-      padding: calc(var(--button-padding) * 2) !important;
+      padding: calc(var(--button-padding) * 2);
     }
 
     .mat-mdc-dialog-actions {
-      flex-direction: row !important;
+      flex-direction: row;
       button {
-        min-width: 90px !important;
+        min-width: 90px;
       }
     }
   }
 }
 
 ::ng-deep .mat-mdc-dialog-actions {
-  flex-direction: row !important;
+  flex-direction: row;
 }
 
 .mat-mdc-tooltip {
-  --mdc-plain-tooltip-container-color: var(--color-sub-3) !important;
-  --mdc-plain-tooltip-supporting-text-color: var(--color-text) !important;
+  --mdc-plain-tooltip-container-color: var(--color-sub-3);
+  --mdc-plain-tooltip-supporting-text-color: var(--color-text);
   font-size: calc(var(--font-size) * 0.9);
   max-width: 200px;
   text-align: center;
 
   .mdc-tooltip__surface {
-    border-radius: var(--button-border-radius) !important;
-    padding: calc(var(--button-padding) * 1.5) calc(var(--button-padding) * 2) !important;
-    background-color: var(--color-sub-3) !important;
+    border-radius: var(--button-border-radius);
+    padding: calc(var(--button-padding) * 1.5) calc(var(--button-padding) * 2);
+    background-color: var(--color-sub-3);
   }
 
   .mdc-tooltip__content {
-    color: var(--color-text) !important;
+    color: var(--color-text);
     font-variation-settings: "wght" 320;
   }
 
   @media (prefers-color-scheme: dark) {
-    --mdc-plain-tooltip-container-color: var(--color-sub-2) !important;
+    --mdc-plain-tooltip-container-color: var(--color-sub-2);
     
     .mdc-tooltip__surface {
-      background-color: var(--color-sub-2) !important;
+      background-color: var(--color-sub-2);
     }
 
     .mdc-tooltip__content {
-      color: var(--color-text) !important;
+      color: var(--color-text);
     }
   }
 }
 
 .mat-mdc-tooltip-panel {
   .mdc-tooltip__surface {
-    background-color: var(--color-sub-3) !important;
+    background-color: var(--color-sub-3);
 
     @media (prefers-color-scheme: dark) {
-      background-color: var(--color-sub-2) !important;
+      background-color: var(--color-sub-2);
     }
   }
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-vonesco-sub-2) !important;
-  outline-offset: 2px !important;
-  border-radius: var(--button-border-radius) !important;
+  outline: 2px solid var(--color-vonesco-sub-2);
+  outline-offset: 2px;
+  border-radius: var(--button-border-radius);
 }
 
 button:focus-visible {
-  outline: 2px solid var(--color-vonesco-sub-2) !important;
-  outline-offset: 2px !important;
-  border-radius: var(--button-border-radius) !important;
+  outline: 2px solid var(--color-vonesco-sub-2);
+  outline-offset: 2px;
+  border-radius: var(--button-border-radius);
 }
 
 .mat-mdc-button:focus-visible,
 .mat-mdc-raised-button:focus-visible,
 .mat-mdc-outlined-button:focus-visible {
-  outline: 2px solid var(--color-vonesco-sub-2) !important;
-  outline-offset: 2px !important;
-  border-radius: var(--button-border-radius) !important;
+  outline: 2px solid var(--color-vonesco-sub-2);
+  outline-offset: 2px;
+  border-radius: var(--button-border-radius);
 }
 
 * {
@@ -897,12 +897,12 @@ app-navbar {
 
 
 :focus {
-  outline-color: var(--color-vonesco-sub-2) !important;
+  outline-color: var(--color-vonesco-sub-2);
 }
 
 .mat-mdc-focus-indicator {
   &::before {
-    border-color: var(--color-vonesco-sub-2) !important;
+    border-color: var(--color-vonesco-sub-2);
   }
 }
 
@@ -911,19 +911,19 @@ app-navbar {
 .mat-mdc-outlined-button:focus,
 .mat-mdc-unelevated-button:focus {
   &::after {
-    border-color: var(--color-vonesco-sub-2) !important;
+    border-color: var(--color-vonesco-sub-2);
   }
 }
 
 .mat-mdc-checkbox {
   .mdc-checkbox__background {
     &::after {
-      border-color: var(--color-vonesco-sub-2) !important;
+      border-color: var(--color-vonesco-sub-2);
     }
   }
   
   &.mat-mdc-checkbox-focused .mdc-checkbox__ripple {
-    background-color: var(--color-vonesco-sub-2) !important;
+    background-color: var(--color-vonesco-sub-2);
     opacity: 0.12;
   }
 }
@@ -972,9 +972,9 @@ app-navbar {
 .mat-mdc-icon-button,
 .mdc-icon-button {
   --mdc-icon-button-state-layer-size: 32px;
-  padding: 3px !important;
-  width: 32px !important;
-  height: 32px !important;
+  padding: 3px;
+  width: 32px;
+  height: 32px;
 
   .mat-icon {
     font-size: 20px;
@@ -986,9 +986,9 @@ app-navbar {
 
 .mat-mdc-icon-button.small {
   --mdc-icon-button-state-layer-size: 26px;
-  padding: 2px !important;
-  width: 26px !important;
-  height: 26px !important;
+  padding: 2px;
+  width: 26px;
+  height: 26px;
 
   .mat-icon {
     font-size: 18px;
@@ -1004,26 +1004,26 @@ app-navbar {
 }
 
 .mat-mdc-raised-button {
-  border-radius: var(--button-border-radius) !important;
-  padding: var(--button-padding) !important;
+  border-radius: var(--button-border-radius);
+  padding: var(--button-padding);
   
   mat-icon {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    margin-right: var(--button-gap) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: var(--button-gap);
     font-size: var(--icon-size);
     width: var(--icon-size);
     height: var(--icon-size);
   }
 
   &:hover {
-    filter: brightness(103%) !important;
+    filter: brightness(103%);
   }
 
   &:active {
-    transform: var(--button-transform) !important;
-    filter: brightness(94%) !important;
+    transform: var(--button-transform);
+    filter: brightness(94%);
   }
 }
 
@@ -1083,9 +1083,9 @@ app-navbar {
 
 .mat-mdc-icon-button.small {
   --mdc-icon-button-state-layer-size: 26px;
-  padding: 2px !important;
-  width: 26px !important;
-  height: 26px !important;
+  padding: 2px;
+  width: 26px;
+  height: 26px;
 
   .mat-icon {
     font-size: 18px;
