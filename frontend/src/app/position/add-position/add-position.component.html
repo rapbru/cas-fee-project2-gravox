@@ -1,4 +1,7 @@
-<div class="sidebar-sheet" [class.show]="position" [class.mobile]="isMobile">
+<div class="sidebar-sheet" 
+     [class.show]="position && isInitialized" 
+     [class.mobile]="isMobile"
+     [class.enable-transitions]="enableTransitions">
   <div class="sheet-header">
     <h3>Neue Position erfassen</h3>
     <button class="button button-label button-highlight-sub" (click)="cancelChanges()">
@@ -32,7 +35,7 @@
   </div>
 </div>
 
-<div *ngIf="position" 
+<div *ngIf="position && isInitialized" 
      class="backdrop" 
      [class.show]="position && isMobile" 
      (click)="cancelChanges()"

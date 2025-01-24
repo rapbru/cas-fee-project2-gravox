@@ -24,12 +24,22 @@ export class AddPositionComponent implements OnInit {
 
   isMobile: boolean = window.innerWidth < 768;
   enableTransitions: boolean = false;
+  isInitialized: boolean = false;
 
   ngOnInit() {
-    setTimeout(() => {
-      this.enableTransitions = true;
-    }, 100);
     this.checkScreenSize();
+  }
+
+  ngOnChanges() {
+    if (this.position && !this.isInitialized) {
+      // Delay enabling transitions until after initial render
+      setTimeout(() => {
+        this.isInitialized = true;
+        setTimeout(() => {
+          this.enableTransitions = true;
+        }, 0);
+      }, 0);
+    }
   }
 
   @HostListener('window:resize')
@@ -51,6 +61,8 @@ export class AddPositionComponent implements OnInit {
   }
 
   cancelChanges() {
+    this.enableTransitions = false;
+    this.isInitialized = false;
     this.cancelEdit.emit();
   }
 }
