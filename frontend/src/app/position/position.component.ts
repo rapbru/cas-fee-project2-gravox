@@ -71,19 +71,43 @@ export class PositionComponent {
     private plcService: PlcService
   ) {}
 
-  updatePresetValue(event: Event, field: string) {
-    const inputElement = event.target as HTMLInputElement;
-    const value = parseFloat(inputElement.value);
+  onNumberInput(event: Event, maxLength: number = 3) {
+    const input = event.target as HTMLInputElement;
+    let value = input.value;
     
-    if (isNaN(value) || value <= 0) return;
+    value = value.replace(/[^0-9]/g, '');
+    
+    value = value.slice(0, maxLength);
+    
+    input.value = value;
+    
+    return value;
+  }
+
+  onNameInput(event: Event, maxLength: number = 30) {
+    const input = event.target as HTMLInputElement;
+    let value = input.value;
+    
+    value = value.slice(0, maxLength);
+    
+    input.value = value;
+    
+    return value;
+  }
+
+  updatePresetValue(event: Event, field: string) {
+    const value = this.onNumberInput(event);
+    if (!value) return;
+
+    const numericValue = parseFloat(value);
+    if (isNaN(numericValue) || numericValue <= 0) return;
 
     const tagName = `POS[${this.position.number}]${field}`;
     
     const update = {
       tagName,
-      value: field.includes('TIME') ? value * 60 : value
+      value: field.includes('TIME') ? numericValue * 60 : numericValue
     };
-    console.log('update', update);
 
     this.plcService.writeValues([update]).subscribe({
       error: (error) => {
@@ -94,13 +118,15 @@ export class PositionComponent {
 
   updatePositionInfo(event: Event, field: string) {
     const inputElement = event.target as HTMLInputElement;
-    const newValue = inputElement.value;
+    let newValue: string | number = inputElement.value;
 
     switch (field) {
       case 'name':
+        newValue = this.onNameInput(event);
         this.position.name = newValue;
         break;
       case 'number':
+        newValue = this.onNumberInput(event);
         this.position.number = parseInt(newValue, 10);
         break;
     }

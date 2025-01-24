@@ -16,6 +16,7 @@ import { OverviewStateService } from '../services/overview-state.service';
 import { SnackbarService } from '../services/snackbar.service';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-article-card',
@@ -27,7 +28,8 @@ import { debounceTime } from 'rxjs/operators';
     MatIconModule,
     MatCheckboxModule, 
     MatProgressSpinnerModule,
-    InputFieldComponent
+    InputFieldComponent,
+    MatTooltipModule
   ],
   templateUrl: './article-card.component.html',
   styleUrls: ['./article-card.component.scss'],
@@ -57,6 +59,27 @@ export class ArticleCardComponent implements OnInit, OnDestroy {
 
   private changes$ = new Subject<void>();
   isSelected = false;
+
+  readonly translations = {
+    article: {
+      aria: {
+        card: 'Artikel {title}: Details anzeigen',
+        loadButton: 'Artikel {title} laden',
+        select: {
+          select: 'Artikel auswählen',
+          deselect: 'Artikel abwählen'
+        }
+      },
+      tooltips: {
+        card: 'Artikel Details anzeigen',
+        loadButton: 'Artikel laden',
+        select: {
+          select: 'Artikel auswählen',
+          deselect: 'Artikel abwählen'
+        }
+      }
+    }
+  };
 
   constructor(
     private router: Router,

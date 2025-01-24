@@ -50,18 +50,20 @@
                 </button>
                 <input class="position-number-input" 
                        type="text" 
-                       inputmode="numeric" 
-                       pattern="[0-9]" 
+                       inputmode="numeric"
+                       maxlength="3"
                        [value]="position.number" 
                        (focus)="selectInputContent($event)" 
                        (click)="selectInputContent($event)" 
                        (input)="updatePositionInfo($event, 'number')"
+                       (paste)="$event.preventDefault()"
                        aria-label="Positionsnummer"
                        matTooltip="Positionsnummer bearbeiten"
                        tabindex="0" />
                 <input class="position-name-input" 
                        type="text" 
                        inputmode="text"
+                       maxlength="30"
                        [value]="position.name" 
                        (focus)="selectInputContent($event)" 
                        (click)="selectInputContent($event)" 
@@ -109,12 +111,13 @@
                     <span>min</span>
                     <input #presetTime
                         type="text" 
-                        inputmode="numeric" 
-                        pattern="[0-9]" 
+                        inputmode="numeric"
+                        maxlength="3"
                         [value]="position.time.preset"
                         (focus)="selectInputContent($event)" 
                         (click)="selectInputContent($event)" 
-                        (change)="updatePresetValue($event, '.TIME.PRESET')" 
+                        (input)="updatePresetValue($event, '.TIME.PRESET')" 
+                        (paste)="$event.preventDefault()"
                         (keydown.enter)="presetTime.blur()"
                         aria-label="Zeit Voreinstellung"
                         matTooltip="Zeit in Minuten"
@@ -136,15 +139,16 @@
                         <input 
                             #presetTemp
                             type="text" 
-                            inputmode="numeric" 
-                            pattern="[0-9]" 
+                            inputmode="numeric"
+                            maxlength="3"
                             [value]="position.temperature.preset"
                             (focus)="selectInputContent($event)" 
                             (click)="selectInputContent($event)" 
                             (input)="updatePresetValue($event, '.TEMP.PRESET')" 
+                            (paste)="$event.preventDefault()"
                             (keydown.enter)="presetTemp.blur()"
                             aria-label="Temperatur Voreinstellung"
-                            matTooltip="Temperatur in °C"
+                            matTooltip="Temperatur in °C (max. 3 Ziffern)"
                             tabindex="0" />
                         <span>{{ position.temperature.actual }}</span>
                     </div>
@@ -177,15 +181,16 @@
                         <input 
                             #presetCurrent
                             type="text" 
-                            inputmode="numeric" 
-                            pattern="[0-9]" 
+                            inputmode="numeric"
+                            maxlength="3"
                             [value]="position.current.preset" 
                             (focus)="selectInputContent($event)" 
                             (click)="selectInputContent($event)" 
                             (input)="updatePresetValue($event, '.current.preset')" 
+                            (paste)="$event.preventDefault()"
                             (keydown.enter)="presetCurrent.blur()"
                             aria-label="Strom Voreinstellung"
-                            matTooltip="Strom in Ampere"
+                            matTooltip="Strom in Ampere (max. 3 Ziffern)"
                             tabindex="0" />
                         <span>{{ position.current.actual }}</span>
                     </div>
@@ -222,15 +227,16 @@
                         <input
                             #presetVoltage
                             type="text" 
-                            inputmode="numeric" 
-                            pattern="[0-9]" 
+                            inputmode="numeric"
+                            maxlength="3"
                             [value]="position.voltage.preset" 
                             (focus)="selectInputContent($event)" 
                             (click)="selectInputContent($event)" 
                             (input)="updatePresetValue($event, '.voltage.preset')" 
+                            (paste)="$event.preventDefault()"
                             (keydown.enter)="presetVoltage.blur()"
                             aria-label="Spannung Voreinstellung"
-                            matTooltip="Spannung in Volt"
+                            matTooltip="Spannung in Volt (max. 3 Ziffern)"
                             tabindex="0" />
                         <span>{{ position.voltage.actual }}</span>
                     </div>

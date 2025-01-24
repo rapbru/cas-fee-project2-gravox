@@ -9,7 +9,9 @@
   box-sizing: border-box;
   min-width: 0;
   margin-bottom: 16px;
-
+  color: var(--color-text);
+  border: 1px solid var(--color-main);
+  transition: background-color 0.3s, border-color 0.3s;
 
   @media (max-width: 600px) {
     margin: 0;
@@ -248,6 +250,12 @@
   .article-actions {
     display: flex;
     gap: 12px;
+  }
+
+  &:focus-visible {
+    outline: none;
+    border: 2px solid var(--color-vonesco);
+    box-shadow: 0 0 0 1px var(--color-vonesco);
   }
 }
 

@@ -4,13 +4,19 @@
      role="button"
      (click)="onCardClick()"
      (keydown.enter)="onCardClick()"
-     (keydown.space)="onCardClick()">
+     (keydown.space)="onCardClick(); $event.preventDefault()"
+     [attr.aria-label]="'Artikel ' + article.title + ': Details anzeigen'"
+     matTooltip="Artikel Details anzeigen"
+     matTooltipPosition="above">
   <div class="article-header">
     <ng-container [ngSwitch]="true">
       <div class="header-content" *ngSwitchCase="isEditable && showCheckbox">
         <button mat-icon-button 
                 class="check-circle" 
-                (click)="onCheckboxClick($event)">
+                (click)="onCheckboxClick($event)"
+                [attr.aria-label]="isSelected ? 'Artikel abwählen' : 'Artikel auswählen'"
+                matTooltip="{{ isSelected ? 'Artikel abwählen' : 'Artikel auswählen' }}"
+                tabindex="0">
           <mat-icon class="check-circle-icon" [ngClass]="{ 'selected': isSelected }">
             {{ isSelected ? 'check_circle' : 'radio_button_unchecked' }}
           </mat-icon>
@@ -28,7 +34,10 @@
         </div>
         <button class="button vonesco card-button"
                 [disabled]="isLoading()"
-                (click)="onLoad(); $event.stopPropagation()">
+                (click)="onLoad(); $event.stopPropagation()"
+                [attr.aria-label]="'Artikel ' + article.title + ' laden'"
+                matTooltip="Artikel laden"
+                tabindex="0">
           @if (isLoading()) {
             <mat-spinner diameter="20"></mat-spinner>
           } @else {
