@@ -68,6 +68,8 @@
     color: var(--color-text);
     position: relative;
     min-width: 0;
+    padding-left: 8px;
+
 
     .header-wrapper {
       display: flex;
@@ -147,6 +149,8 @@
     flex-direction: column;
     gap: 4px;
     color: var(--color-text);
+    padding-left: 8px;
+
 
     .timestamps-grid {
       display: flex;
