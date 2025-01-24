@@ -25,8 +25,8 @@ html {
   --color-green: #207F35;
   --color-red: rgb(255,59,48);
   --color-vonesco: #FF6228;
-  --color-vonesco-sub: #FF7442;
-  --color-vonesco-sub-2: #FFA786;
+  --color-vonesco-sub: #FF6228;
+  --color-vonesco-sub-2: #FF6228;
   --color-highlight-text: #FFFFFF;
 
   --button-hover-color: #BFBFC5;
@@ -50,41 +50,6 @@ html {
   --container-padding-mobile: 0.5rem;
 }
 
-.dark-theme {
-  --color-text: #E1E1E7;
-  --color-inverted: black;
-  --color-background: #171719;
-  --color-main: #272729;
-  --color-sub-1: #717175;
-  --color-sub-2: #3F3F41;
-  --color-sub-3: #3F3F41;
-  --color-green: #000100;
-  --color-red: rgb(255,59,48);
-  --color-vonesco: #FFA786;
-  --color-vonesco-sub: #FF7442;
-  --color-vonesco-sub-2: #FF6228;
-  --color-highlight-text: #171719;
-
-  --button-bg-color: #3F3F41;
-  --button-hover-color: #717175;
-  --button-active-color: #272729;
-  --button-border-color: #3F3F41;
-  --button-text-color: #E1E1E7;
-
-  .button, .navbar-item {
-    &:disabled, &.inactive {
-      opacity: 0.5;
-      color: var(--color-sub-1);
-      
-      mat-icon, span {
-        color: var(--color-sub-1);
-      }
-    }
-  }
-
-  --color-sheet-background: rgba(23, 23, 25, 0.8);
-}
-
 @media (prefers-color-scheme: dark) {
   :root:not(.light-theme) {
     --color-text: #E1E1E7;
@@ -96,9 +61,9 @@ html {
     --color-sub-3: #3F3F41;
     --color-green: #000100;
     --color-red: rgb(255,59,48);
-    --color-vonesco: #FFA786;
+    --color-vonesco: #FF7442;
     --color-vonesco-sub: #FF7442;
-    --color-vonesco-sub-2: #FF6228;
+    --color-vonesco-sub-2: #FF7442;
     --color-highlight-text: #171719;
 
     --button-bg-color: #3F3F41;
