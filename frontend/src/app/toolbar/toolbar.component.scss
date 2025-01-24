@@ -12,6 +12,12 @@
   @media (max-width: 600px) {
     padding: 0 0 0 6px;
   }
+
+  @media (max-width: 400px) {
+    .button.danger span {
+      display: none;
+    }
+  }
 }
 
 .toolbar-group {
