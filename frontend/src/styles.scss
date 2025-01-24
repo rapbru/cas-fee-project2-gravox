@@ -1070,7 +1070,7 @@ app-navbar {
 .mat-mdc-icon-button {
   --mdc-icon-button-state-layer-size: 32px;
   padding: 3px !important;
-  width: 32px !important;
+  width: 32px;
   height: 32px !important;
 
   .mat-icon {

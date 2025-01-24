@@ -193,8 +193,9 @@
             transform: translateY(-50%);
             pointer-events: none;
 
-            .input-field-counter {
-              display: none;
+            .input-field-counter.visible {
+              opacity: 0;
+              visibility: hidden;
             }
           }
 
