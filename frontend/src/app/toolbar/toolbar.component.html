@@ -3,6 +3,7 @@
     <div class="toolbar-group">
       @if (showReorder) {
         <button class="button"
+                tabindex="0"
                 (click)="reorder.emit()"
                 [attr.aria-label]="isReorderMode ? 'Positionen' : 'Reihenfolge'"
                 [matTooltip]="isReorderMode ? 'Positionen' : 'Reihenfolge'">
@@ -13,6 +14,7 @@
 
       @if (showNavigateAdd) {
         <button class="button"
+               tabindex="0"
                (click)="onNavigateToAddArticle()"
                aria-label="Artikel hinzufügen" i18n-aria-label="@@ButtonAddArticleAriaLabel"
                matTooltip="Artikel hinzufügen" i18n-matTooltip="@@ButtonAddArticleTooltip">
@@ -23,6 +25,7 @@
 
       @if (showAdd && !isReorderMode) {
         <button class="button"
+                tabindex="0"
                 (click)="add.emit()"
                 aria-label="Hinzufügen" i18n-aria-label="@@ButtonAddAriaLabel"
                 matTooltip="Hinzufügen" i18n-matTooltip="@@ButtonAddTooltip"
@@ -34,6 +37,7 @@
 
       @if (showAddLine && isReorderMode) {
         <button class="button"
+                tabindex="0"
                 [disabled]="addLineDisabled"
                 (click)="addLine.emit()"
                 aria-label="Linie hinzufügen"
@@ -45,6 +49,7 @@
 
       @if (showLoad) {
         <button class="button vonesco"
+                tabindex="0"
                 [disabled]="loadDisabled"
                 (click)="load.emit()"
                 aria-label="Laden" i18n-aria-label="@@ButtonLoadAriaLabel"
@@ -56,6 +61,7 @@
 
       @if (showDeleteLine && isReorderMode) {
         <button class="button danger"
+                tabindex="0"
                 [disabled]="deleteLineDisabled"
                 (click)="deleteLine.emit()"
                 aria-label="Linie löschen"
@@ -67,6 +73,7 @@
 
       @if (showDelete && !isReorderMode) {
         <button class="button danger"
+                tabindex="0"
                 [disabled]="deleteDisabled"
                 (click)="delete.emit()"
                 aria-label="Löschen" i18n-aria-label="@@ButtonDeleteAriaLabel"

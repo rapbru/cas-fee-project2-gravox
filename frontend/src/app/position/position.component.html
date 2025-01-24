@@ -58,7 +58,7 @@
                        (input)="updatePositionInfo($event, 'number')"
                        (paste)="$event.preventDefault()"
                        aria-label="Positionsnummer"
-                       matTooltip="Positionsnummer bearbeiten"
+                       matTooltip="Positionsnummer bearbeiten (max. 3 Ziffern)"
                        tabindex="0" />
                 <input class="position-name-input" 
                        type="text" 
@@ -120,7 +120,7 @@
                         (paste)="$event.preventDefault()"
                         (keydown.enter)="presetTime.blur()"
                         aria-label="Zeit Voreinstellung"
-                        matTooltip="Zeit in Minuten"
+                        matTooltip="Zeit in Minuten (max. 3 Ziffern)"
                         tabindex="0" />
                     <span>{{ position.time.actual }}</span>
                 </div>
