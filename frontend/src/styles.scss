@@ -74,11 +74,16 @@ html {
 
     .button, .navbar-item {
       &:disabled, &.inactive {
-        opacity: 0.5;
+        opacity: 0.4;
         color: var(--color-sub-1);
+        cursor: not-allowed;
         
         mat-icon, span {
           color: var(--color-sub-1);
+        }
+
+        &:hover {
+          transform: none;
         }
       }
     }
@@ -145,26 +150,6 @@ input {
   }
 
   .button {
-    &.inactive {
-      opacity: 0.7;
-      cursor: default;
-      pointer-events: none;
-      
-      &:hover {
-        transform: none;
-      }
-
-      @media (prefers-color-scheme: dark) {
-        opacity: 0.8;
-        background-color: var(--color-main);
-        color: var(--color-text);
-        
-        mat-icon, span {
-          color: var(--color-text);
-        }
-      }
-    }
-
     &.edit-active {
       color: var(--color-vonesco);
       font-weight: 500;
@@ -310,18 +295,18 @@ button.navbar-item {
   }
 
   &.inactive {
-    opacity: 0.7;
-    cursor: default;
+    opacity: 0.35;
+    cursor: not-allowed;
     pointer-events: none;
-    color: var(--color-text);
+    color: var(--color-sub-1);
     
     &:hover {
       background-color: var(--color-main);
     }
 
     @media (prefers-color-scheme: dark) {
-      opacity: 0.8;
-      color: var(--color-text);
+      opacity: 0.4;
+      color: var(--color-sub-1);
     }
   }
 
