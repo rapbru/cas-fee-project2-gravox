@@ -12,9 +12,13 @@
 
   .form-group {
     display: flex;
-    margin-bottom: 16px;
+    flex-direction: column;
     gap: 16px;
-    align-items: center;
+    width: 100%;
+
+    app-input-field {
+      width: 100%;
+    }
   }
 
   label {
@@ -40,7 +44,7 @@
   .buttons {
     display: flex;
     gap: var(--button-gap);
-    margin-top: 24px;
+    margin-top: 8px;
     justify-content: flex-end;
   }
 
@@ -49,4 +53,15 @@
     margin: 0 0 16px 0;
     font-size: 1.1rem;
     font-weight: 500;
+  }
+
+  .sheet-content {
+    padding: 16px;
+    
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      width: 100%;
+    }
   }

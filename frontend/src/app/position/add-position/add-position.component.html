@@ -16,16 +16,32 @@
   <div class="sheet-content">
     <form *ngIf="position">
       <div class="form-group">
-        <label for="position-number">Nummer</label>
-        <input id="position-number" type="number" [(ngModel)]="position.number" name="positionNumber" />
-      </div>
-      <div class="form-group">
-        <label for="position-name">Bezeichung</label>
-        <input id="position-name" type="text" [(ngModel)]="position.name" name="positionName" />
+        <app-input-field
+          name="number"
+          label="Nummer"
+          [icon]="'tag'"
+          [type]="'text'"
+          [numbersOnly]="true"
+          [maxLength]="3"
+          [ngModel]="position.number"
+          (ngModelChange)="onNumberChange($event)"
+          [required]="true">
+        </app-input-field>
+
+        <app-input-field
+          name="name"
+          label="Bezeichnung"
+          [icon]="'abc'"
+          [type]="'text'"
+          [maxLength]="30"
+          [ngModel]="position.name"
+          (ngModelChange)="onNameChange($event)"
+          [required]="true">
+        </app-input-field>
       </div>
       
       <div class="buttons">
-        <button class="button vonesco" 
+        <button class="button" 
                 (click)="confirmChanges()"
                 i18n="@@savePosition"
                 aria-label="Position speichern"

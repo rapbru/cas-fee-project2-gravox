@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { InputFieldComponent } from '../../input-field/input-field.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-add-position',
@@ -12,7 +14,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     CommonModule,
     FormsModule,
     MatIconModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    InputFieldComponent,
+    MatTooltipModule
   ],
   templateUrl: './add-position.component.html',
   styleUrls: ['./add-position.component.scss']
@@ -64,5 +68,17 @@ export class AddPositionComponent implements OnInit {
     this.enableTransitions = false;
     this.isInitialized = false;
     this.cancelEdit.emit();
+  }
+
+  onNumberChange(value: string) {
+    if (this.position) {
+      this.position.number = value ? parseInt(value, 10) : 0;
+    }
+  }
+
+  onNameChange(value: string) {
+    if (this.position) {
+      this.position.name = value;
+    }
   }
 }
