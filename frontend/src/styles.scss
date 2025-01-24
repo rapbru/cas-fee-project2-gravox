@@ -72,22 +72,6 @@ html {
     --button-border-color: #3F3F41;
     --button-text-color: #E1E1E7;
 
-    .button, .navbar-item {
-      &:disabled, &.inactive {
-        opacity: 0.4;
-        color: var(--color-sub-1);
-        cursor: not-allowed;
-        
-        mat-icon, span {
-          color: var(--color-sub-1);
-        }
-
-        &:hover {
-          transform: none;
-        }
-      }
-    }
-
     --color-sheet-background: rgba(23, 23, 25, 0.8);
   }
 }
@@ -292,22 +276,6 @@ button.navbar-item {
 
   &:active {
     background-color: var(--color-sub-2);
-  }
-
-  &.inactive {
-    opacity: 0.35;
-    cursor: not-allowed;
-    pointer-events: none;
-    color: var(--color-sub-1);
-    
-    &:hover {
-      background-color: var(--color-main);
-    }
-
-    @media (prefers-color-scheme: dark) {
-      opacity: 0.4;
-      color: var(--color-sub-1);
-    }
   }
 
   &.edit-active {
@@ -1373,6 +1341,31 @@ app-add-article {
         background-color: rgba(23, 23, 25, 0.8);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
+      }
+    }
+  }
+}
+
+.button, .navbar-item {
+  &:disabled, &.inactive {
+    opacity: 0.8;
+    color: var(--color-sub-1);
+    cursor: not-allowed;
+    
+    mat-icon, span {
+      color: var(--color-sub-1);
+    }
+
+    &:hover {
+      transform: none;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      opacity: 0.4;
+      color: var(--color-sub-1);
+      
+      mat-icon, span {
+        color: var(--color-sub-1);
       }
     }
   }
