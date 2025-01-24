@@ -270,4 +270,8 @@ export class PositionSequenceComponent {
 
   drop(event: CdkDragDrop<any[]>) {
   }
+
+  openSidebarSheet() {
+    this.showPositionSelector = true;
+  }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
@@ -11,5 +11,9 @@ import { MatIconModule } from '@angular/material/icon';
   ]
 })
 export class EmptyspaceComponent {
+  @Output() addClick = new EventEmitter<void>();
 
+  onAddClick() {
+    this.addClick.emit();
+  }
 }

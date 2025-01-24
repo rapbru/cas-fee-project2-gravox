@@ -9,7 +9,10 @@
         (add)="openPositionSelector()">
       </app-section-header>
 
-      <app-emptyspace *ngIf="selectedPositions.length === 0"></app-emptyspace>
+      <app-emptyspace 
+        *ngIf="selectedPositions.length === 0"
+        (addClick)="openSidebarSheet()">
+      </app-emptyspace>
 
       <div
         cdkDropList
