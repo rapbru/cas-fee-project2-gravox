@@ -1,15 +1,19 @@
 .content-container {
-  padding: 16px;
+  padding: var(--container-padding);
   max-width: 100%;
   box-sizing: border-box;
   min-width: 0;
+  
+  @media (max-width: 600px) {
+    padding: var(--container-padding-mobile);
+  }
 }
 
 .card-grid {
   display: grid;
-  grid-template-columns: minmax(300px, 1fr);
-  gap: 16px;
-  max-width: 100%;
+  gap: 8px;
+  grid-template-columns: 1fr;
+  width: 100%;
   margin: 0 auto;
   min-width: 0;
 
