@@ -9,10 +9,14 @@
         (add)="openPositionSelector()">
       </app-section-header>
 
-      <div class="positions-grid" 
-           cdkDropList 
-           [cdkDropListDisabled]="!isEditEnabled()"
-           (cdkDropListDropped)="onDrop($event)">
+      <app-emptyspace *ngIf="selectedPositions.length === 0"></app-emptyspace>
+
+      <div
+        cdkDropList
+        class="positions-grid"
+        [cdkDropListData]="selectedPositions"
+        (cdkDropListDropped)="drop($event)"
+        *ngIf="selectedPositions.length > 0">
         <div *ngFor="let position of selectedPositions; let i = index" 
              class="position-card"
              cdkDrag

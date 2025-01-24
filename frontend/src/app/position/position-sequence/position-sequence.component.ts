@@ -11,6 +11,7 @@ import { PositionDragDropService } from '../../services/position-drag-drop.servi
 import { OverviewStateService } from '../../services/overview-state.service';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { SectionHeaderComponent } from '../../header/section-header/section-header.component';
+import { EmptyspaceComponent } from '../../emptyspace/emptyspace.component';
 
 interface Sequence {
   positionId: string;
@@ -34,7 +35,8 @@ type PresetField = 'timePreset' | 'currentPreset' | 'voltagePreset';
     CdkDrag,
     CdkDragHandle,
     CdkDropList,
-    SectionHeaderComponent
+    SectionHeaderComponent,
+    EmptyspaceComponent
   ],
   templateUrl: './position-sequence.component.html',
   styleUrls: ['./position-sequence.component.scss']
@@ -264,5 +266,8 @@ export class PositionSequenceComponent {
 
   isButtonEnabled(): boolean {
     return this.enableEdit || this.editState();
+  }
+
+  drop(event: CdkDragDrop<any[]>) {
   }
 }
