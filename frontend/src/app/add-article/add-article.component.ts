@@ -74,7 +74,7 @@ export class AddArticleComponent implements OnInit {
 
   ngOnInit() {
     this.loggerService.log('AddArticleComponent initialized');
-    this.headerService.setTitle('Artikeldaten');
+    this.headerService.setTitle('Neuer Artikel');
     
     this.fetchPositionsOnce();
   }

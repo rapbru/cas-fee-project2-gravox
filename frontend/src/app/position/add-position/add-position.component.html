@@ -3,15 +3,18 @@
      [class.mobile]="isMobile"
      [class.enable-transitions]="enableTransitions">
   <div class="sheet-header">
-    <h3>Neue Position erfassen</h3>
-    <button class="button button-label button-highlight-sub" (click)="cancelChanges()">
+    <h3>Neue Position</h3>
+    <button class="button button-label button-highlight-sub" 
+            (click)="cancelChanges()"
+            aria-label="Schließen"
+            matTooltip="Schließen"
+            tabindex="0">
       <mat-icon>close</mat-icon>
     </button>
   </div>
   
   <div class="sheet-content">
     <form *ngIf="position">
-      <h6>Position</h6>
       <div class="form-group">
         <label for="position-number">Nummer</label>
         <input id="position-number" type="number" [(ngModel)]="position.number" name="positionNumber" />
@@ -22,13 +25,14 @@
       </div>
       
       <div class="buttons">
-        <button class="button vonesco" (click)="confirmChanges()">
+        <button class="button vonesco" 
+                (click)="confirmChanges()"
+                i18n="@@savePosition"
+                aria-label="Position speichern"
+                matTooltip="Position speichern"
+                tabindex="0">
           <mat-icon>check</mat-icon>
-          <span>Bestätigen</span>
-        </button>
-        <button class="button danger" (click)="cancelChanges()">
-          <mat-icon>close</mat-icon>
-          <span>Abbrechen</span>
+          <span>Speichern</span>
         </button>
       </div>
     </form>
@@ -42,5 +46,5 @@
      (keydown.escape)="cancelChanges()"
      tabindex="0"
      role="button"
-     [attr.aria-label]="'Close position form'">
+     [attr.aria-label]="'Position schließen'">
 </div>
