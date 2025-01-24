@@ -151,10 +151,22 @@
   flex: 1;
   overflow-y: auto;
   background-color: transparent;
-  padding: 0;
+  padding: 8px;
+  
+  .positions-grid {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: 1fr;
+  }
 }
 
-// Responsive adjustments
+.positions-grid {
+  padding: 8px;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr;
+}
+
 @media (max-width: 767px) {
   .position-selector {
     padding-bottom: 80px; // Space for bottom navigation
@@ -379,5 +391,21 @@
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
+}
+
+.position-card {
+  &:focus-visible {
+    outline: none;
+    border: 2px solid var(--color-vonesco);
+    box-shadow: 0 0 0 1px var(--color-vonesco);
+  }
+}
+
+.available-positions .position-card {
+  &:focus-visible {
+    outline: none;
+    border: 2px solid var(--color-vonesco);
+    box-shadow: 0 0 0 1px var(--color-vonesco);
+  }
 }
 

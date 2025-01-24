@@ -24,25 +24,45 @@
              class="position-card"
              cdkDrag
              [cdkDragDisabled]="!isEditEnabled()"
-             [cdkDragData]="position">
+             [cdkDragData]="position"
+             tabindex="0"
+             [attr.aria-label]="'Position ' + position.number + ': ' + position.name"
+             role="listitem">
           <div class="position-header">
             <button mat-icon-button 
                     class="check-circle" 
                     [disabled]="!isEditEnabled()"
-                    (click)="toggleSelection(position)">
+                    (click)="toggleSelection(position)"
+                    tabindex="0"
+                    [attr.aria-label]="position.isSelected ? 'Position abwählen' : 'Position auswählen'"
+                    [matTooltip]="position.isSelected ? 'Position abwählen' : 'Position auswählen'"
+                    i18n-aria-label="@@PositionSelectAriaLabel"
+                    i18n-matTooltip="@@PositionSelectTooltip">
               <mat-icon class="check-circle-icon" [ngClass]="{ 'selected': position.isSelected }">
                 {{ position.isSelected ? 'check_circle' : 'radio_button_unchecked' }}
               </mat-icon>
             </button>
-            <span class="position-number">{{ position.number }}</span>
-            <span class="position-name">{{ position.name }}</span>
+            <span class="position-number" i18n="@@PositionNumber">{{ position.number }}</span>
+            <span class="position-name" i18n="@@PositionName">{{ position.name }}</span>
             <button *ngIf="isEditEnabled()"
                     class="button button-label button-highlight-sub" 
-                    (click)="onRemovePosition(position)">
+                    (click)="onRemovePosition(position)"
+                    tabindex="0"
+                    aria-label="Position entfernen"
+                    matTooltip="Position entfernen"
+                    i18n-aria-label="@@PositionRemoveAriaLabel"
+                    i18n-matTooltip="@@PositionRemoveTooltip">
               <mat-icon>remove</mat-icon>
-              <span>Entfernen</span>
+              <span i18n="@@ButtonRemove">Entfernen</span>
             </button>
-            <div class="drag-handle" *ngIf="isEditEnabled()" cdkDragHandle>
+            <div class="drag-handle" 
+                 *ngIf="isEditEnabled()" 
+                 cdkDragHandle
+                 tabindex="0"
+                 aria-label="Position verschieben"
+                 matTooltip="Position verschieben"
+                 i18n-aria-label="@@PositionDragAriaLabel"
+                 i18n-matTooltip="@@PositionDragTooltip">
               <mat-icon>drag_handle</mat-icon>
             </div>
           </div>
@@ -129,17 +149,32 @@
 
   <app-sidebar-sheet 
     title="Verfügbare Positionen"
-    [(show)]="showPositionSelector"
-    (showChange)="showPositionSelector = $event">
+    [show]="showPositionSelector"
+    (showChange)="onShowChange($event)"
+    (isBottomSheet)="onSheetConfigChange($event)">
     
     <div class="available-positions">
       <div class="positions-grid">
-        <div *ngFor="let position of positionService.orderedPositions()" class="position-card">
+        <div *ngFor="let position of positionService.orderedPositions()" 
+             class="position-card"
+             tabindex="0"
+             [attr.aria-label]="'Position ' + position.number + ': ' + position.name"
+             role="listitem">
           <div class="position-header">
-            <span class="position-name" [attr.data-number]="position.number">{{ position.name }}</span>
-            <button class="button button-label button-highlight-main" (click)="onAddPosition(position, $event)">
+            <span class="position-name" 
+                  [attr.data-number]="position.number"
+                  i18n="@@PositionName">{{ position.name }}</span>
+            <button class="button button-label button-highlight-main" 
+                    (click)="onAddPosition(position, $event)"
+                    tabindex="0"
+                    aria-label="Position hinzufügen"
+                    matTooltip="Position hinzufügen"
+                    i18n-aria-label="@@PositionAddAriaLabel"
+                    i18n-matTooltip="@@PositionAddTooltip">
               <mat-icon>add</mat-icon>
-              <span>Hinzufügen</span>
+              @if (isBottomSheet) {
+                <span i18n="@@ButtonAdd">Hinzufügen</span>
+              }
             </button>
           </div>
         </div>

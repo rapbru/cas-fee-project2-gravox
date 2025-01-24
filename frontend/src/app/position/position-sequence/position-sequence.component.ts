@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef, HostBinding, EventEmitter, Output, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { CdkDragDrop, DragDropModule, CdkDrag, CdkDragHandle, CdkDropList } from '@angular/cdk/drag-drop';
 import { MatButtonModule } from '@angular/material/button';
 import { Position } from '../../models/position.model';
@@ -30,6 +31,7 @@ type PresetField = 'timePreset' | 'currentPreset' | 'voltagePreset';
     CommonModule,
     MatIconModule,
     MatButtonModule,
+    MatTooltipModule,
     SidebarSheetComponent,
     DragDropModule,
     CdkDrag,
@@ -49,9 +51,38 @@ export class PositionSequenceComponent {
   @Input() selectedPositions: Position[] = [];
   @Input() enableEdit: boolean = false;
   @Output() selectedPositionsChange = new EventEmitter<Sequence[]>();
-  showPositionSelector: boolean = false;
+  showPositionSelector = false;
   private editingState: { position: Position | null, field: PresetField | null } = { position: null, field: null };
   public readonly editState = this.overviewStateService.enableEdit;
+  isBottomSheet = false;
+
+  readonly translations = {
+    position: {
+      aria: {
+        card: 'Position {number}: {name}',
+        select: {
+          select: 'Position auswählen',
+          deselect: 'Position abwählen'
+        },
+        remove: 'Position entfernen',
+        drag: 'Position verschieben',
+        add: 'Position hinzufügen'
+      },
+      tooltips: {
+        select: {
+          select: 'Position auswählen',
+          deselect: 'Position abwählen'
+        },
+        remove: 'Position entfernen',
+        drag: 'Position verschieben',
+        add: 'Position hinzufügen'
+      },
+      buttons: {
+        remove: 'Entfernen',
+        add: 'Hinzufügen'
+      }
+    }
+  };
 
   constructor(
     public positionService: PositionService,
@@ -273,5 +304,13 @@ export class PositionSequenceComponent {
 
   openSidebarSheet() {
     this.showPositionSelector = true;
+  }
+
+  onSheetConfigChange(event: any) {
+    this.isBottomSheet = !!event;
+  }
+
+  onShowChange(event: boolean) {
+    this.showPositionSelector = event;
   }
 }
