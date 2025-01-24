@@ -20,7 +20,7 @@
   (delete)="onDelete()">
 </app-toolbar>
 
-<div *ngIf="!(isMobile() && newPosition)" cdkDropListGroup>
+<div cdkDropListGroup>
   <div class="overview-container" [style.--total-columns]="columnManagementService.getColumnCount()">
     @for (column of columns(); track $index; let index = $index) {
       <div cdkDropList [cdkDropListData]="column" class="overview-list" (cdkDropListDropped)="drop($event, index)">
@@ -39,8 +39,6 @@
 
 <app-add-position 
   *ngIf="newPosition" 
-  [ngClass]="{'position-edit-overlay': !isMobile(),'position-edit-mobile': isMobile()}" 
-  class="position-edit-overlay" 
   [position]="newPosition" 
   (savePosition)="savePosition($event)" 
   (cancelEdit)="closeAddPosition()">

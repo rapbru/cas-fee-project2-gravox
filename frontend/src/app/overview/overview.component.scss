@@ -7,6 +7,8 @@
     max-width: calc(var(--total-columns) * 800px);
     justify-content: center;
     margin: 12px auto;
+    position: relative;
+    z-index: 1;
     
     @media (min-width: 2000px) {
         grid-template-columns: repeat(min(var(--total-columns), 4), 1fr);
@@ -139,4 +141,24 @@ app-position {
 
 app-toolbar {
     margin-bottom: 12px;
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+app-add-position {
+  z-index: 1000;
+}
+
+@media (max-width: 767px) {
+  .overview-container {
+    &.blur {
+      filter: blur(2px);
+      pointer-events: none;
+    }
+  }
 }
