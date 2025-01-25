@@ -5,25 +5,27 @@
         *ngIf="shouldShowOverviewButton()"
         [disabled]="isOverviewActive() || enableEdit()"
         [class.inactive]="isOverviewActive() || enableEdit()"
+        [class.active]="isOverviewActive()"
         (click)="navigateTo('/overview')"
         tabindex="1"
         aria-label="Zur Übersicht navigieren"
         matTooltip="Zur Übersicht"
         matTooltipPosition="below">
         <mat-icon>view_list</mat-icon>
-        Übersicht
+        <span>Übersicht</span>
       </button>
       <button class="button" 
         *ngIf="shouldShowArticlesButton()"
         [disabled]="isArticlesActive() || enableEdit()"
         [class.inactive]="isArticlesActive() || enableEdit()"
+        [class.active]="isArticlesSection() && !isArticlesActive()"
         (click)="navigateTo('/articles')"
         tabindex="2"
         aria-label="Zu Artikeln navigieren"
         matTooltip="Zu Artikeln"
         matTooltipPosition="below">
         <mat-icon>deployed_code</mat-icon>
-        Artikel
+        <span>Artikel</span>
       </button>
     </div>
   </div>
@@ -37,7 +39,7 @@
       [matTooltip]="enableEdit() ? 'Bearbeitungsmodus deaktivieren' : 'Bearbeitungsmodus aktivieren'"
       matTooltipPosition="below">
       <mat-icon>{{ enableEdit() ? 'edit_off' : 'edit' }}</mat-icon>
-      Bearbeiten
+      <span [class.mobile-hidden]="deviceDetectionService.isMobileSignal()">{{ enableEdit() ? 'Bearbeitung beenden' : 'Bearbeiten' }}</span>
     </button>
     <button class="button"
       [disabled]="enableEdit()"

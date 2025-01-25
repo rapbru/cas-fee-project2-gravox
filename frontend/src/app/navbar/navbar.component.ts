@@ -62,11 +62,11 @@ export class NavbarComponent {
   }
 
   shouldShowOverviewButton(): boolean {
-    return !this.deviceDetectionService.isMobileSignal() || !this.currentRoute.includes('/overview');
+    return true;
   }
 
   shouldShowArticlesButton(): boolean {
-    return !this.deviceDetectionService.isMobileSignal() || this.currentRoute.includes('/overview');
+    return true;
   }
 
   shouldShowEditButton(): boolean {
@@ -114,5 +114,9 @@ export class NavbarComponent {
       this.authService.logout();
       this.router.navigate(['/login']);
     }
+  }
+
+  isArticlesSection(): boolean {
+    return this.router.url.includes('article');
   }
 }
