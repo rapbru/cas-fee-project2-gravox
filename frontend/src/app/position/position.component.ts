@@ -48,17 +48,21 @@ export class PositionComponent {
         select: {
           select: 'Position auswählen',
           deselect: 'Position abwählen'
-        }
+        },
+        timePreset: 'Zeit Voreinstellung'
       },
       tooltips: {
         dragHandle: 'Zum Verschieben ziehen',
         number: 'Positionsnummer bearbeiten',
         name: 'Positionsname bearbeiten',
-        time: 'Zeit in Minuten',
+        time: 'Zeit in Sekunden (max. 3 Ziffern)',
         temperature: {
           enable: 'Temperatur aktivieren',
           disable: 'Temperatur deaktivieren'
         }
+      },
+      units: {
+        time: 's'
       }
     }
   };

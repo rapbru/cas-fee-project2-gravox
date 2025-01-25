@@ -66,7 +66,8 @@ export class PositionSequenceComponent {
         },
         remove: 'Position entfernen',
         drag: 'Position verschieben',
-        add: 'Position hinzufügen'
+        add: 'Position hinzufügen',
+        timePreset: 'Zeit in Sekunden: {value}'
       },
       tooltips: {
         select: {
@@ -75,11 +76,15 @@ export class PositionSequenceComponent {
         },
         remove: 'Position entfernen',
         drag: 'Position verschieben',
-        add: 'Position hinzufügen'
+        add: 'Position hinzufügen',
+        timePreset: 'Zeit in Sekunden'
       },
       buttons: {
         remove: 'Entfernen',
         add: 'Hinzufügen'
+      },
+      units: {
+        time: 's'
       }
     }
   };

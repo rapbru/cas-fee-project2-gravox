@@ -108,7 +108,7 @@
             <ng-container *ngIf="!collapsed && !enableEdit(); else collapsedTime">
                 <div class="metric">
                     <mat-icon>timer</mat-icon>
-                    <span>min</span>
+                    <span>s</span>
                     <input #presetTime
                         type="text" 
                         inputmode="numeric"
@@ -120,7 +120,9 @@
                         (paste)="$event.preventDefault()"
                         (keydown.enter)="presetTime.blur()"
                         aria-label="Zeit Voreinstellung"
-                        matTooltip="Zeit in Minuten (max. 3 Ziffern)"
+                        i18n-aria-label="@@PositionTimePresetAriaLabel"
+                        matTooltip="Zeit in Sekunden (max. 3 Ziffern)"
+                        i18n-matTooltip="@@PositionTimePresetTooltip"
                         tabindex="0" />
                     <span>{{ position.time.actual }}</span>
                 </div>
@@ -241,10 +243,8 @@
                         <span>{{ position.voltage.actual }}</span>
                     </div>
                 </ng-container>
-                <ng-template #noVoltage>
-                    <div class="metric"></div>
-                </ng-template>  
             </ng-container>
+
             <ng-template #collapsedVoltage>
                 <ng-container *ngIf="enableEdit(); else noVoltage">
                     <div class="metric" *ngIf="!enableOrder() && !enableMultiSelect()">
@@ -259,9 +259,10 @@
                         </button>
                     </div>
                 </ng-container>
-                <ng-template #noVoltage>
-                    <div class="metric"></div>
-                </ng-template>            
+            </ng-template>
+
+            <ng-template #noVoltage>
+                <div class="metric"></div>
             </ng-template>
         </div>
     </div>
