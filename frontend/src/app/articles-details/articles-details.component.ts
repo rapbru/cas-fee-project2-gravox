@@ -54,7 +54,9 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
     private articleService: ArticleService,
     private positionService: PositionService,
     private logger: LoggerService
-  ) {}
+  ) {
+    this.headerService.setTitle('Artikeldetails');
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -78,7 +80,6 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
           this.logger.log('Article sequence:', article.sequence);
           this.article = article;
           await this.loadPositions();
-          this.updateHeader();
         },
         error: (error: Error) => {
           this.logger.error('Error loading article:', error);
@@ -152,12 +153,6 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private updateHeader() {
-    if (this.article) {
-      this.headerService.setTitle(this.article.title);
-    }
-  }
-
   public onLoad() {
     if (this.article?.id) {
       this.articleService.loadArticleToPlc(this.article.id);
@@ -194,7 +189,6 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
           error: (error: Error) => {
             this.logger.error('Error updating sequence order:', error);
             this.article = originalArticle;
-            this.updateHeader();
           }
         });
     }
