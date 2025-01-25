@@ -21,6 +21,7 @@ import { PositionSequenceComponent } from '../position/position-sequence/positio
 import { Sequence } from '../models/sequence.model';
 import { Sequence as ArticleSequence } from '../models/article.model';
 import { FooterComponent } from '../footer/footer.component';
+import { SnackbarService } from '../services/snackbar.service';
 
 @Component({
   selector: 'app-articles-details',
@@ -53,7 +54,8 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
     private headerService: HeaderService,
     private articleService: ArticleService,
     private positionService: PositionService,
-    private logger: LoggerService
+    private logger: LoggerService,
+    private snackbarService: SnackbarService
   ) {
     this.headerService.setTitle('Artikeldetails');
   }
@@ -160,37 +162,29 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
   }
 
   onDrop(event: CdkDragDrop<Position[]>) {
-    if (this.article?.sequence && this.positions.length > 0) {
-      const originalArticle = JSON.parse(JSON.stringify(this.article));
-      const articleId = this.article.id;
+    if (!this.article?.sequence || !this.positions.length) return;
 
-      moveItemInArray(
-        this.positions,
-        event.previousIndex,
-        event.currentIndex
-      );
+    moveItemInArray(this.positions, event.previousIndex, event.currentIndex);
 
-      this.article.sequence = this.positions.map((pos, index) => ({
-        positionId: pos.id.toString(),
-        orderNumber: index + 1,
-        timePreset: (pos.timePreset ?? 0).toString(),
-        currentPreset: (pos.currentPreset ?? 0).toString(),
-        voltagePreset: (pos.voltagePreset ?? 0).toString()
-      }));
+    const sequences: Sequence[] = this.positions.map((position, index) => ({
+      positionId: position.id.toString(),
+      orderNumber: index + 1,
+      timePreset: parseFloat(position.timePreset?.toString() || '0'),
+      currentPreset: parseFloat(position.currentPreset?.toString() || '0'),
+      voltagePreset: parseFloat(position.voltagePreset?.toString() || '0'),
+      positionName: position.name
+    }));
 
-      this.articleService.updateArticle(this.article)
-        .subscribe({
-          next: () => {
-            this.logger.log('Update successful');
-            if (articleId) {
-              this.getArticle(articleId.toString());
-            }
-          },
-          error: (error: Error) => {
-            this.logger.error('Error updating sequence order:', error);
-            this.article = originalArticle;
-          }
-        });
+    if (this.article.id) {
+      this.articleService.updateSequenceOrder(this.article, sequences).subscribe({
+        next: (updatedArticle) => {
+          this.article = updatedArticle;
+        },
+        error: (error) => {
+          moveItemInArray(this.positions, event.currentIndex, event.previousIndex);
+          this.snackbarService.showError('Fehler beim Speichern der Reihenfolge');
+        }
+      });
     }
   }
 

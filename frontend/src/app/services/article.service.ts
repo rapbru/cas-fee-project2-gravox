@@ -173,21 +173,44 @@ export class ArticleService {
       throw new Error('Article ID is required for update');
     }
 
-    const updatedSequences = sequences.map((sequence, index) => ({
-      positionId: sequence.positionId,
-      orderNumber: index + 1,
-      timePreset: sequence.timePreset?.toString() || '0',
-      currentPreset: sequence.currentPreset?.toString() || '0',
-      voltagePreset: sequence.voltagePreset?.toString() || '0',
-      positionName: sequence.positionName
+    this.logger.log('Input article:', article);
+    this.logger.log('Input sequences:', sequences);
+
+    const convertedSequences = sequences.map(seq => ({
+      positionId: parseInt(seq.positionId),
+      orderNumber: seq.orderNumber,
+      timePreset: parseFloat(seq.timePreset?.toString() || '0'),
+      currentPreset: parseFloat(seq.currentPreset?.toString() || '0'),
+      voltagePreset: parseFloat(seq.voltagePreset?.toString() || '0')
     }));
 
-    const updatedArticle: Article = {
-      ...article,
-      sequence: updatedSequences
+    const updateData = {
+      title: { value: article.title },
+      number: { value: article.number },
+      customer: { value: article.customer },
+      area: { value: article.area },
+      drainage: { value: article.drainage },
+      anodic: { value: article.anodic },
+      note: { value: article.note },
+      modifiedBy: { value: article.modifiedBy },
+      sequence: convertedSequences
     };
 
-    return this.updateArticle(updatedArticle);
+    this.logger.log('Request URL:', `${this.apiUrl}/${article.id}`);
+    this.logger.log('Request body:', JSON.stringify(updateData, null, 2));
+
+    return this.http.put<Article>(`${this.apiUrl}/${article.id}`, updateData, {
+      headers: this.getAuthHeaders()
+    }).pipe(
+      tap(response => {
+        this.logger.log('Update sequence response:', response);
+        this.loadArticles();
+      }),
+      catchError(error => {
+        this.logger.error('Error updating sequence:', error);
+        throw error;
+      })
+    );
   }
 
   private getAuthHeaders(): HttpHeaders {

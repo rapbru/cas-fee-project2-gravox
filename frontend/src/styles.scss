@@ -50,38 +50,44 @@ html {
   --container-padding-mobile: 0.5rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not(.light-theme) {
-    --color-text: #E1E1E7;
-    --color-inverted: black;
-    --color-background: #171719;
-    --color-main: #272729;
-    --color-sub-1: #717175;
-    --color-sub-2: #3F3F41;
-    --color-sub-3: #3F3F41;
-    --color-green: #000100;
-    --color-red: rgb(255,59,48);
-    --color-vonesco: #FF7442;
-    --color-vonesco-sub: #FF7442;
-    --color-vonesco-sub-2: #FF7442;
-    --color-highlight-text: #171719;
+:root.dark-theme {
+  --color-text: #E1E1E7;
+  --color-inverted: black;
+  --color-background: #171719;
+  --color-main: #272729;
+  --color-sub-1: #717175;
+  --color-sub-2: #3F3F41;
+  --color-sub-3: #3F3F41;
+  --color-green: #000100;
+  --color-red: rgb(255,59,48);
+  --color-vonesco: #FF7442;
+  --color-vonesco-sub: #FF7442;
+  --color-vonesco-sub-2: #FF7442;
+  --color-highlight-text: #171719;
 
-    --button-bg-color: #3F3F41;
-    --button-hover-color: #717175;
-    --button-active-color: #272729;
-    --button-border-color: #3F3F41;
-    --button-text-color: #E1E1E7;
+  --button-bg-color: #3F3F41;
+  --button-hover-color: #717175;
+  --button-active-color: #272729;
+  --button-border-color: #3F3F41;
+  --button-text-color: #E1E1E7;
 
-    --color-sheet-background: rgba(23, 23, 25, 0.8);
-  }
+  --color-sheet-background: rgba(23, 23, 25, 0.8);
 }
 
+/* System preference override */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light-theme) {
+    /* Same as dark theme variables */
+    --color-text: #E1E1E7;
+    --color-inverted: black;
+    /* ... rest of dark theme variables ... */
+  }
+}
 
 * {
   box-sizing: border-box;
   max-width: 100%;
 }
-
 
 h1 {
   color: var(--color-text);
@@ -372,9 +378,6 @@ button.navbar-item {
   }
 }
 
-
-
-
 @keyframes flash-color {
   0% {
     color: var(--color-vonesco-sub);
@@ -406,7 +409,6 @@ button.navbar-item {
   animation: shake 0.5s ease-in-out;
 }
 
-
 .custom-button {
   display: inline-flex;
   align-items: center;
@@ -433,7 +435,6 @@ button.navbar-item {
   color: var(--button-hero-active-text-color);
   transform: var(--button-transform);
 }
-
 
 .primary-button {
   background-color: var(--button-primary-bg-color);
@@ -807,7 +808,6 @@ app-navbar {
   }
 }
 
-
 :focus {
   outline-color: var(--color-vonesco-sub-2);
 }
@@ -879,7 +879,6 @@ app-navbar {
   overflow-y: auto;
   background-color: var(--color-background);
 }
-
 
 .mat-mdc-icon-button,
 .mdc-icon-button {

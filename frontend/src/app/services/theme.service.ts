@@ -11,64 +11,57 @@ export class ThemeService {
   private themePreference = signal<string | null>(localStorage.getItem(this.THEME_KEY));
 
   constructor(private logger: LoggerService) {
-    this.systemPrefersDark.addEventListener('change', this.handleSystemThemeChange.bind(this));
-    
-    if (!this.systemPrefersDark.matches && !this.themePreference()) {
-      document.documentElement.classList.add('light-theme');
-    }
-    
+    this.logger.log('ThemeService initialized', {
+      storedPreference: this.themePreference(),
+      systemDark: this.systemPrefersDark.matches
+    });
     this.applyTheme();
-  }
-
-  private handleSystemThemeChange(e: MediaQueryListEvent): void {
-    if (this.themePreference() === null) {
-      if (!e.matches) {
-        document.documentElement.classList.add('light-theme');
-      } else {
-        document.documentElement.classList.remove('light-theme');
-      }
-      this.applyTheme();
-    }
   }
 
   toggleTheme(): void {
     const currentTheme = this.getCurrentTheme();
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
     
+    this.logger.log('Toggling theme', {
+      from: currentTheme,
+      to: newTheme
+    });
+
     this.themePreference.set(newTheme);
     localStorage.setItem(this.THEME_KEY, newTheme);
-    
-    this.applyTheme();
+
+    const root = document.documentElement;
+    root.classList.remove('light-theme', 'dark-theme');
+    root.classList.add(`${newTheme}-theme`);
+
+    this.logger.log('Theme applied', {
+      theme: newTheme,
+      classList: root.classList.toString()
+    });
   }
 
   resetToSystemPreference(): void {
+    this.logger.log('Resetting theme to system preference');
     localStorage.removeItem(this.THEME_KEY);
     this.themePreference.set(null);
-    if (!this.systemPrefersDark.matches) {
-      document.documentElement.classList.add('light-theme');
-    } else {
-      document.documentElement.classList.remove('light-theme');
-    }
     this.applyTheme();
   }
 
   getCurrentTheme(): string {
     const userPreference = this.themePreference();
-    if (userPreference) {
-      return userPreference;
-    }
-    return this.systemPrefersDark.matches ? 'dark' : 'light';
+    return userPreference || (this.systemPrefersDark.matches ? 'dark' : 'light');
   }
 
   private applyTheme(): void {
-    const isDark = this.getCurrentTheme() === 'dark';
+    const theme = this.getCurrentTheme();
+    const root = document.documentElement;
     
-    if (isDark) {
-      document.documentElement.classList.remove('light-theme');
-    } else {
-      document.documentElement.classList.add('light-theme');
-    }
+    root.classList.remove('light-theme', 'dark-theme');
+    root.classList.add(`${theme}-theme`);
     
-    this.logger.log(`Theme changed to ${isDark ? 'dark' : 'light'} mode`);
+    this.logger.log('Theme applied', {
+      theme,
+      classList: root.classList.toString()
+    });
   }
 } 

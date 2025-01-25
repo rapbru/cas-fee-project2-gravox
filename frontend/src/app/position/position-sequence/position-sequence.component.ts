@@ -15,6 +15,7 @@ import { SectionHeaderComponent } from '../../header/section-header/section-head
 import { EmptyspaceComponent } from '../../emptyspace/emptyspace.component';
 import { ArticleService } from '../../services/article.service';
 import { SnackbarService } from '../../services/snackbar.service';
+import { Article } from '../../models/article.model';
 
 interface Sequence {
   positionId: string;
@@ -58,7 +59,7 @@ export class PositionSequenceComponent {
   private editingState: { position: Position | null, field: PresetField | null } = { position: null, field: null };
   public readonly editState = this.overviewStateService.enableEdit;
   isBottomSheet = false;
-  private article: any;
+  @Input() article!: Article;
 
   readonly translations = {
     position: {
@@ -167,30 +168,35 @@ export class PositionSequenceComponent {
   }
 
   onDrop(event: CdkDragDrop<Position[]>) {
+    this.logger.log('Drop event triggered', { 
+      previousIndex: event.previousIndex, 
+      currentIndex: event.currentIndex 
+    });
+
     if (!this.selectedPositions) {
-      this.selectedPositions = [];
       return;
     }
 
     moveItemInArray(this.selectedPositions, event.previousIndex, event.currentIndex);
 
-    const sequences: Sequence[] = this.selectedPositions.map((position, index) => ({
+    const sequences = this.selectedPositions.map((position, index) => ({
       positionId: position.id.toString(),
       orderNumber: index + 1,
-      timePreset: parseFloat(position.timePreset?.toString() || '0'),
-      currentPreset: parseFloat(position.currentPreset?.toString() || '0'),
-      voltagePreset: parseFloat(position.voltagePreset?.toString() || '0'),
-      positionName: position.name
+      timePreset: position.timePreset,
+      currentPreset: position.currentPreset,
+      voltagePreset: position.voltagePreset
     }));
 
-    if (this.article?.id) {
+    if (this.article) {
+      this.logger.log('Updating article sequence', { articleId: this.article.id });
       this.articleService.updateSequenceOrder(this.article, sequences).subscribe({
         next: (updatedArticle) => {
-          this.article = updatedArticle;
+          this.logger.log('Article sequence updated successfully', updatedArticle);
         },
         error: (error) => {
+          this.logger.error('Failed to update article sequence', error);
+          // Revert the visual change on error
           moveItemInArray(this.selectedPositions, event.currentIndex, event.previousIndex);
-          this.snackbarService.showError('Fehler beim Speichern der Reihenfolge');
         }
       });
     }
