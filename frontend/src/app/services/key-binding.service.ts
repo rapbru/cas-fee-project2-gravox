@@ -12,18 +12,25 @@ export class KeyBindingService implements OnDestroy {
   constructor(private overviewStateService: OverviewStateService) {
     this.keySubscription = fromEvent<KeyboardEvent>(document, 'keydown')
       .pipe(
-        filter(event => event.key === 'Escape')
+        filter(event => event.key === 'Escape' || event.key === 'Enter')
       )
       .subscribe((event) => {
         const activeElement = document.activeElement;
         
-        // If we're in an input field, blur it first
         if (activeElement instanceof HTMLInputElement || 
             activeElement instanceof HTMLTextAreaElement) {
-          activeElement.blur();
+          
+          if (event.key === 'Escape') {
+            activeElement.blur();
+          } else if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            activeElement.blur();
+            
+            const changeEvent = new Event('change', { bubbles: true });
+            activeElement.dispatchEvent(changeEvent);
+          }
         } 
-        // Otherwise, toggle edit mode if it's enabled
-        else if (this.overviewStateService.enableEdit()) {
+        else if (event.key === 'Escape' && this.overviewStateService.enableEdit()) {
           this.overviewStateService.toggleEdit();
         }
       });
