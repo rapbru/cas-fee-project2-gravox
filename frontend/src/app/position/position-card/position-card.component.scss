@@ -57,3 +57,14 @@
 .position-name {
   color: var(--color-text);
 }
+
+.button {
+  &[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    
+    &:hover {
+      background-color: inherit;
+    }
+  }
+}

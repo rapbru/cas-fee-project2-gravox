@@ -181,9 +181,10 @@
                   i18n="@@PositionName">{{ position.name }}</span>
             <button class="button button-label button-highlight-main" 
                     (click)="onAddPosition(position, $event)"
+                    [disabled]="isMaxPositionsReached()"
                     tabindex="0"
-                    aria-label="Position hinzufügen"
-                    matTooltip="Position hinzufügen"
+                    [attr.aria-label]="isMaxPositionsReached() ? 'Maximale Anzahl erreicht' : 'Position hinzufügen'"
+                    [matTooltip]="isMaxPositionsReached() ? 'Maximale Anzahl erreicht' : 'Position hinzufügen'"
                     i18n-aria-label="@@PositionAddAriaLabel"
                     i18n-matTooltip="@@PositionAddTooltip">
               <mat-icon>add</mat-icon>

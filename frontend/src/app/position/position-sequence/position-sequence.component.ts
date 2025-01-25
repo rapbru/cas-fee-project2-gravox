@@ -94,6 +94,8 @@ export class PositionSequenceComponent {
     }
   };
 
+  private readonly MAX_POSITIONS = 20;
+
   constructor(
     public positionService: PositionService,
     private logger: LoggerService,
@@ -113,6 +115,11 @@ export class PositionSequenceComponent {
   }
 
   onAddPosition(position: Position, event?: Event) {
+    if (this.isMaxPositionsReached()) {
+      this.snackbarService.showSuccess('Maximale Anzahl von 20 Positionen erreicht');
+      return;
+    }
+
     if (event) {
       event.preventDefault();
       event.stopPropagation();
@@ -338,5 +345,9 @@ export class PositionSequenceComponent {
 
   onShowChange(event: boolean) {
     this.showPositionSelector = event;
+  }
+
+  isMaxPositionsReached(): boolean {
+    return this.selectedPositions.length >= this.MAX_POSITIONS;
   }
 }

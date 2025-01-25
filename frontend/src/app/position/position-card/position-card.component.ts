@@ -22,4 +22,5 @@ export class PositionCardComponent {
   @Input() isEditable = false;
   @Input() showCheckbox = true;
   @Input() showHeader = true;
+  @Input() disabled = false;
 }

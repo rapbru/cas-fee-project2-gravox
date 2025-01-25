@@ -5,7 +5,8 @@
         <span class="position-number">{{ position.number }}</span>
         <span class="position-name">{{ position.name }}</span>
       </div>
-      <button class="button button-label button-highlight-main">
+      <button class="button button-label button-highlight-main"
+              [disabled]="disabled">
         <mat-icon>add</mat-icon>
         <span>Hinzufügen</span>
       </button>
