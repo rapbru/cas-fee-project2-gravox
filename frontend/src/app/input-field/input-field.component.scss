@@ -89,6 +89,10 @@
     animation: flash-input 1s ease-in-out;
   }
 
+  &:focus {
+    color: var(--color-vonesco);
+  }
+
   &.ng-untouched {
     color: var(--color-vonesco);
   }
