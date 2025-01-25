@@ -11,6 +11,7 @@ import { PositionService } from '../../services/position.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { OverviewStateService } from '../../services/overview-state.service';
+import { ColumnManagementService } from '../../services/column-management.service';
 
 interface PositionForm {
   number: string;
@@ -49,7 +50,8 @@ export class AddPositionComponent implements OnInit {
   constructor(
     private positionService: PositionService,
     private router: Router,
-    private overviewStateService: OverviewStateService
+    private overviewStateService: OverviewStateService,
+    private columnManagementService: ColumnManagementService
   ) {}
 
   ngOnInit() {
@@ -139,10 +141,19 @@ export class AddPositionComponent implements OnInit {
 
     this.positionService.createPosition(positionData).subscribe({
       next: () => {
-        if (this.overviewStateService.enableEdit()) {
-          this.overviewStateService.toggleEdit();
-        }
-        this.router.navigate(['/positions']);
+        this.columnManagementService.addPositionToLastColumn();
+        
+        this.columnManagementService.saveColumnSettings().subscribe({
+          next: () => {
+            if (this.overviewStateService.enableEdit()) {
+              this.overviewStateService.toggleEdit();
+            }
+            this.router.navigate(['/positions']);
+          },
+          error: (error: HttpErrorResponse) => {
+            console.error('Error saving column settings:', error);
+          }
+        });
       },
       error: (error: HttpErrorResponse) => {
         console.error('Error saving position:', error);
