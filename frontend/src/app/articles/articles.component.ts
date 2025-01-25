@@ -18,6 +18,7 @@ import { DialogService } from '../services/dialog.service';
 import { forkJoin } from 'rxjs';
 import { HeaderService } from '../services/header.service';
 import { FooterComponent } from '../footer/footer.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-articles',
@@ -43,6 +44,7 @@ export class ArticlesComponent implements OnInit {
   isEditMode = false;
   public readonly enableEdit = this.overviewStateService.enableEdit;
   selectedArticles: Set<Article> = new Set();
+  articles$: Observable<Article[]>;
 
   displayedColumns: string[] = [
     'select',
@@ -64,6 +66,7 @@ export class ArticlesComponent implements OnInit {
     private headerService: HeaderService
   ) {
     this.isEditMode = this.overviewStateService.enableEdit();
+    this.articles$ = this.articleService.getArticles();
 
     effect(() => {
       this.isEditMode = this.overviewStateService.enableEdit();
@@ -73,6 +76,7 @@ export class ArticlesComponent implements OnInit {
   ngOnInit() {
     this.headerService.setTitle('Artikel');
     this.loadArticles();
+    this.articleService.reloadArticles();
   }
 
   loadArticles() {

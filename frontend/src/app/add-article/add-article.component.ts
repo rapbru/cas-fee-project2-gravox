@@ -18,6 +18,9 @@ import { PositionSequenceComponent } from '../position/position-sequence/positio
 import { Sequence as PositionSequence } from '../models/sequence.model';
 import { SnackbarService } from '../services/snackbar.service';
 import { FooterComponent } from '../footer/footer.component';
+import { ArticleService } from '../services/article.service';
+import { catchError, tap } from 'rxjs';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-add-article',
@@ -67,7 +70,8 @@ export class AddArticleComponent implements OnInit {
     private loggerService: LoggerService,
     private headerService: HeaderService,
     public positionService: PositionService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private articleService: ArticleService
   ) {
     this.loggerService.log('AddArticleComponent constructed');
   }
@@ -132,29 +136,25 @@ export class AddArticleComponent implements OnInit {
 
     this.loggerService.log('Sending article data:', articleData);
 
-    this.http.post<Article>(`${environment.apiUrl}/article`, articleData)
-        .subscribe({
-            next: (response) => {
-                this.loggerService.log('Article saved successfully:', response);
-                this.snackbarService.showSuccess('Artikel erfolgreich gespeichert');
-                this.router.navigate(['/articles']);
-            },
-            error: (error) => {
-                this.loggerService.error('Error saving article:', {
-                    error,
-                    sentData: articleData,
-                    errorMessage: error.error?.error,
-                    status: error.status,
-                    statusText: error.statusText
-                });
-                const errorMessage = error.error?.error || 'Fehler beim Speichern des Artikels';
-                this.snackbarService.showError(errorMessage);
-                this.isSaving = false;
-            },
-            complete: () => {
-                this.isSaving = false;
-            }
+    this.articleService.saveArticle(articleData).pipe(
+      tap(() => {
+        this.articleService.reloadArticles();
+        this.router.navigate(['/articles']);
+      }),
+      catchError(error => {
+        this.loggerService.error('Error saving article:', {
+          error,
+          sentData: articleData,
+          errorMessage: error.error?.error,
+          status: error.status,
+          statusText: error.statusText
         });
+        const errorMessage = error.error?.error || 'Fehler beim Speichern des Artikels';
+        this.snackbarService.showError(errorMessage);
+        this.isSaving = false;
+        return of(null);
+      })
+    ).subscribe();
   }
 
   onEscapeKey() {
@@ -162,6 +162,6 @@ export class AddArticleComponent implements OnInit {
   }
 
   enableEdit(): boolean {
-    return true;  // Always enable edit mode in add-article
+    return true;
   }
 }

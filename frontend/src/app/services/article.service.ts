@@ -1,6 +1,6 @@
 import { Injectable, Signal, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, tap, Observable, of } from 'rxjs';
+import { catchError, tap, Observable, of, BehaviorSubject, map } from 'rxjs';
 import { AuthService } from '../authentication/auth.service';
 import { LoggerService } from './logger.service';
 import { ApiConfigService } from './api-config.service';
@@ -16,6 +16,7 @@ export class ArticleService {
   private modifiedArticles: Set<Article> = new Set();
   private currentArticle: Article | null = null;
   private isLoading = signal(false);
+  private articles$ = new BehaviorSubject<Article[]>([]);
 
   constructor(
     private http: HttpClient,
@@ -25,6 +26,37 @@ export class ArticleService {
     private snackbarService: SnackbarService
   ) {
     this.apiUrl = this.apiConfig.getUrl('article');
+    this.loadArticles();
+  }
+
+  saveArticle(article: Article): Observable<Article> {
+    const headers = this.getAuthHeaders();
+    return this.http.post<Article>(this.apiUrl, article, { headers }).pipe(
+      catchError(error => {
+        this.logger.error('Error saving article:', error);
+        throw error;
+      })
+    );
+  }
+
+  reloadArticles(): void {
+    this.loadArticles();
+  }
+
+  private loadArticles() {
+    const headers = this.getAuthHeaders();
+    this.http.get<Article[]>(this.apiUrl, { headers }).pipe(
+      map(articles => articles.map(article => ({
+        ...article,
+        createdDate: article.createdDate ? new Date(article.createdDate) : undefined,
+        modifiedDate: article.modifiedDate ? new Date(article.modifiedDate) : undefined
+      }))),
+      tap(articles => this.articles$.next(articles)),
+      catchError(error => {
+        this.logger.error('Error fetching articles:', error);
+        return of([]);
+      })
+    ).subscribe();
   }
 
   trackModification(article: Article): void {
@@ -54,12 +86,14 @@ export class ArticleService {
   }
 
   getArticles(): Observable<Article[]> {
-    const headers = this.getAuthHeaders();
-    return this.http.get<Article[]>(this.apiUrl, { headers }).pipe(
-      catchError(error => {
-        this.logger.error('Error fetching articles:', error);
-        return of([]);
-      })
+    return this.articles$.asObservable().pipe(
+      map(articles => 
+        [...articles].sort((a, b) => {
+          const dateA = a.createdDate?.getTime() ?? 0;
+          const dateB = b.createdDate?.getTime() ?? 0;
+          return dateB - dateA;
+        })
+      )
     );
   }
 
