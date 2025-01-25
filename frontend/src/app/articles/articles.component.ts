@@ -19,6 +19,8 @@ import { forkJoin } from 'rxjs';
 import { HeaderService } from '../services/header.service';
 import { FooterComponent } from '../footer/footer.component';
 import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-articles',
@@ -32,7 +34,9 @@ import { Observable } from 'rxjs';
     FormsModule,
     ToolbarComponent,
     ArticleCardComponent,
-    FooterComponent
+    FooterComponent,
+    AsyncPipe,
+    MatProgressSpinnerModule
   ],
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.scss']
@@ -45,6 +49,7 @@ export class ArticlesComponent implements OnInit {
   public readonly enableEdit = this.overviewStateService.enableEdit;
   selectedArticles: Set<Article> = new Set();
   articles$: Observable<Article[]>;
+  isUpdating = this.articleService.getIsUpdating();
 
   displayedColumns: string[] = [
     'select',
@@ -75,8 +80,10 @@ export class ArticlesComponent implements OnInit {
 
   ngOnInit() {
     this.headerService.setTitle('Artikel');
-    this.loadArticles();
-    this.articleService.reloadArticles();
+    if (!this.articleService.getIsUpdating()()) {
+      this.loadArticles();
+      this.articleService.reloadArticles();
+    }
   }
 
   loadArticles() {

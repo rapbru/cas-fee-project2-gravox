@@ -7,15 +7,20 @@
 </app-toolbar>
 
 <div class="content-container">
-  <div class="card-grid">
-    <app-article-card 
-      *ngFor="let article of articles"
-      [article]="article"
-      [isEditable]="isEditMode"
-      [showCheckbox]="isEditMode"
-      (cardClick)="navigateToDetails($event)"
-      (selectionChange)="onArticleSelection(article, $event)">
-    </app-article-card>
+  <div class="articles-container">
+    @if (isUpdating()) {
+      <mat-spinner></mat-spinner>
+    } @else {
+      @for (article of articles$ | async; track article.id) {
+        <app-article-card 
+          [article]="article"
+          [isEditable]="isEditMode"
+          [showCheckbox]="isEditMode"
+          (cardClick)="navigateToDetails($event)"
+          (selectionChange)="onArticleSelection(article, $event)">
+        </app-article-card>
+      }
+    }
   </div>
 </div>
 

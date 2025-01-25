@@ -1,6 +1,6 @@
 import { Injectable, Signal, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, tap, Observable, of, BehaviorSubject, map } from 'rxjs';
+import { catchError, tap, Observable, of, BehaviorSubject, map, finalize } from 'rxjs';
 import { AuthService } from '../authentication/auth.service';
 import { LoggerService } from './logger.service';
 import { ApiConfigService } from './api-config.service';
@@ -17,6 +17,7 @@ export class ArticleService {
   private currentArticle: Article | null = null;
   private isLoading = signal(false);
   private articles$ = new BehaviorSubject<Article[]>([]);
+  private isUpdating = signal(false);
 
   constructor(
     private http: HttpClient,
@@ -113,7 +114,9 @@ export class ArticleService {
       throw new Error('Article ID is required for update');
     }
 
+    this.isUpdating.set(true);
     const headers = this.getAuthHeaders();
+    
     return this.http.put<Article>(`${this.apiUrl}/${article.id}`, article, { headers }).pipe(
       tap(() => {
         const articles = this.articles$.value;
@@ -123,6 +126,8 @@ export class ArticleService {
           this.articles$.next([...articles]);
         }
       }),
+      tap(() => this.loadArticles()),
+      finalize(() => this.isUpdating.set(false)),
       catchError(error => {
         this.logger.error('Error updating article:', error);
         throw error;
@@ -156,6 +161,10 @@ export class ArticleService {
 
   getIsLoading(): Signal<boolean> {
     return this.isLoading.asReadonly();
+  }
+
+  getIsUpdating(): Signal<boolean> {
+    return this.isUpdating.asReadonly();
   }
 
   private getAuthHeaders(): HttpHeaders {
