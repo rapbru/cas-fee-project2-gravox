@@ -19,7 +19,6 @@ import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { PositionSequenceComponent } from '../position/position-sequence/position-sequence.component';
 import { Sequence } from '../models/sequence.model';
-import { Sequence as ArticleSequence } from '../models/article.model';
 import { FooterComponent } from '../footer/footer.component';
 import { SnackbarService } from '../services/snackbar.service';
 
@@ -104,7 +103,7 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
       
       this.article.sequence
         .sort((a, b) => a.orderNumber - b.orderNumber)
-        .forEach((seq: ArticleSequence) => {
+        .forEach((seq: Sequence) => {
           this.logger.log('Processing sequence:', seq);
           const position = allPositions.find(p => p.number === Number(seq.positionId));
           this.logger.log('Found position:', position);
@@ -191,16 +190,19 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
   onSequenceChange(sequences: Sequence[]) {
     if (!this.article) return;
     
-    const articleSequences = sequences.map(seq => ({
+    const updatedSequence: Sequence[] = sequences.map(seq => ({
       ...seq,
-      timePreset: seq.timePreset?.toString() ?? '0',
-      currentPreset: seq.currentPreset?.toString() ?? '0',
-      voltagePreset: seq.voltagePreset?.toString() ?? '0'
+      timePreset: Number(seq.timePreset),
+      currentPreset: Number(seq.currentPreset),
+      voltagePreset: Number(seq.voltagePreset),
+      positionId: seq.positionId,
+      orderNumber: seq.orderNumber,
+      positionName: seq.positionName
     }));
     
-    const updatedArticle = {
+    const updatedArticle: Article = {
       ...this.article,
-      sequence: articleSequences
+      sequence: updatedSequence
     };
     
     this.articleService.trackModification(updatedArticle);

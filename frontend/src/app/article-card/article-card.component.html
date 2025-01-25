@@ -93,11 +93,10 @@
             <app-input-field
               [alwaysOrange]="isInDetails"
               [name]="'number'"
-              [(ngModel)]="article.number"
+              [ngModel]="article.number"
+              (ngModelChange)="updateArticleInfo($event, 'number')"
               [maxLength]="maxLengthNumber"
               [numbersOnly]="true"
-              (blur)="updateArticleInfo(article.number, 'number')"
-              (ngModelChange)="updateArticleInfo($event, 'number')"
             ></app-input-field>
           </ng-template>
         </div>
@@ -129,11 +128,11 @@
             <app-input-field
               [alwaysOrange]="isInDetails"
               [name]="'area'"
-              [(ngModel)]="article.area"
+              [ngModel]="article.area"
+              (ngModelChange)="updateArticleInfo($event, 'area')"
               [maxLength]="maxLengthArea"
               [numbersOnly]="true"
               [unit]="'dm²'"
-              (ngModelChange)="updateArticleInfo($event, 'area')"
             ></app-input-field>
           </ng-template>
         </div>
@@ -148,11 +147,11 @@
             <app-input-field
               [alwaysOrange]="isInDetails"
               [name]="'drainage'"
-              [(ngModel)]="article.drainage"
+              [ngModel]="article.drainage"
+              (ngModelChange)="updateArticleInfo($event, 'drainage')"
               [maxLength]="maxLengthDrainage"
               [numbersOnly]="true"
               [unit]="'%'"
-              (ngModelChange)="updateArticleInfo($event, 'drainage')"
             ></app-input-field>
           </ng-template>
         </div>

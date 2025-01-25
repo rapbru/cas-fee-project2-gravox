@@ -1,11 +1,13 @@
+import { Sequence } from './sequence.model';
+
 export interface Article {
   id?: number;
   title: string;
-  number: string;
+  number: number;
   customer: string;
-  area: string;
-  drainage: string;
-  anodic: string;
+  area: number;
+  drainage: number;
+  anodic: number;
   note?: string;
   createdDate?: Date;
   createdBy?: string;
@@ -13,13 +15,4 @@ export interface Article {
   modifiedBy?: string;
   sequence?: Sequence[];
   selected?: boolean;
-}
-
-export interface Sequence {
-  positionId: string;
-  orderNumber: number;
-  timePreset: string;
-  currentPreset: string;
-  voltagePreset: string;
-  positionName?: string;
 }

@@ -1,30 +1,21 @@
-import { Component, ViewChild, ElementRef, HostBinding, EventEmitter, Output, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef, HostBinding, EventEmitter, Output, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CdkDragDrop, DragDropModule, CdkDrag, CdkDragHandle, CdkDropList } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, DragDropModule, CdkDrag, CdkDragHandle, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatButtonModule } from '@angular/material/button';
 import { Position } from '../../models/position.model';
+import { Article } from '../../models/article.model';
+import { Sequence } from '../../models/sequence.model';
 import { PositionService } from '../../services/position.service';
 import { LoggerService } from '../../services/logger.service';
 import { SidebarSheetComponent } from '../../sidebar-sheet/sidebar-sheet.component';
 import { PositionDragDropService } from '../../services/position-drag-drop.service';
 import { OverviewStateService } from '../../services/overview-state.service';
-import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { SectionHeaderComponent } from '../../header/section-header/section-header.component';
 import { EmptyspaceComponent } from '../../emptyspace/emptyspace.component';
 import { ArticleService } from '../../services/article.service';
 import { SnackbarService } from '../../services/snackbar.service';
-import { Article } from '../../models/article.model';
-
-interface Sequence {
-  positionId: string;
-  orderNumber: number;
-  timePreset: number;
-  currentPreset: number;
-  voltagePreset: number;
-  positionName: string;
-}
 
 type PresetField = 'timePreset' | 'currentPreset' | 'voltagePreset';
 
@@ -47,7 +38,7 @@ type PresetField = 'timePreset' | 'currentPreset' | 'voltagePreset';
   templateUrl: './position-sequence.component.html',
   styleUrls: ['./position-sequence.component.scss']
 })
-export class PositionSequenceComponent {
+export class PositionSequenceComponent implements OnInit {
   @ViewChild('selectedPositionsContainer') selectedPositionsContainer?: ElementRef;
   @HostBinding('class.show-sheet') get showSheetClass() { return this.showPositionSelector; }
   @HostBinding('class.edit-mode') get editModeClass() { return this.isEditEnabled(); }
@@ -186,12 +177,13 @@ export class PositionSequenceComponent {
 
     moveItemInArray(this.selectedPositions, event.previousIndex, event.currentIndex);
 
-    const sequences = this.selectedPositions.map((position, index) => ({
+    const sequences: Sequence[] = this.selectedPositions.map((position, index) => ({
       positionId: position.id.toString(),
       orderNumber: index + 1,
-      timePreset: position.timePreset,
-      currentPreset: position.currentPreset,
-      voltagePreset: position.voltagePreset
+      timePreset: position.timePreset ?? 0,
+      currentPreset: position.currentPreset ?? 0,
+      voltagePreset: position.voltagePreset ?? 0,
+      positionName: position.name
     }));
 
     if (this.article) {
@@ -202,7 +194,6 @@ export class PositionSequenceComponent {
         },
         error: (error) => {
           this.logger.error('Failed to update article sequence', error);
-          // Revert the visual change on error
           moveItemInArray(this.selectedPositions, event.currentIndex, event.previousIndex);
         }
       });
@@ -349,5 +340,16 @@ export class PositionSequenceComponent {
 
   isMaxPositionsReached(): boolean {
     return this.selectedPositions.length >= this.MAX_POSITIONS;
+  }
+
+  createSequence(positions: Position[]): Sequence[] {
+    return positions.map((position, index) => ({
+      positionId: position.id.toString(),
+      orderNumber: index + 1,
+      timePreset: 0,
+      currentPreset: 0,
+      voltagePreset: 0,
+      positionName: position.name
+    }));
   }
 }

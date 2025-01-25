@@ -122,12 +122,19 @@ export class ArticleCardComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateArticleInfo(value: string, field: keyof Article) {
-    if (!this.article || !this.article.id) return;
+  updateArticleInfo(value: any, field: keyof Article) {
+    if (!this.article) return;
+
+    if (field === 'number' || field === 'area' || field === 'drainage' || field === 'anodic') {
+      (this.article[field] as number) = Number(value);
+    } else {
+      (this.article[field] as any) = value;
+    }
+
+    if (!this.article.id) return;
 
     const updatedArticle: Article = { 
       ...this.article,
-      [field]: value,
       modifiedBy: 'system'
     };
 
@@ -166,8 +173,8 @@ export class ArticleCardComponent implements OnInit, OnDestroy {
     input.select();
   }
 
-  formatValue(value: string | undefined, field: string): string {
-    if (!value) return '';
+  formatValue(value: number | undefined, field: string): string {
+    if (value === undefined) return '';
     
     switch (field) {
       case 'area':
@@ -176,7 +183,7 @@ export class ArticleCardComponent implements OnInit, OnDestroy {
       case 'anodic':
         return `${value} %`;
       default:
-        return value;
+        return value.toString();
     }
   }
 

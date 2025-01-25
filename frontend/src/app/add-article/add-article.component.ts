@@ -6,7 +6,8 @@ import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { InputFieldComponent } from '../input-field/input-field.component';
-import { Article, Sequence } from '../models/article.model';
+import { Article } from '../models/article.model';
+import { Sequence } from '../models/sequence.model';
 import { Position } from '../models/position.model';
 import { LoggerService } from '../services/logger.service';
 import { environment } from '../../environments/environment';
@@ -149,11 +150,11 @@ export class AddArticleComponent implements OnInit {
     // Convert ArticleForm to Article before saving
     const articleToSave: Article = {
       title: articleData.name,
-      number: articleData.number,
+      number: Number(articleData.number),
       customer: articleData.customer,
-      area: articleData.surface,
-      drainage: articleData.dripOff,
-      anodic: '', // Add default value or get from form
+      area: Number(articleData.surface),
+      drainage: Number(articleData.dripOff),
+      anodic: 0,
       note: articleData.comment,
       sequence: articleData.sequence
     };
