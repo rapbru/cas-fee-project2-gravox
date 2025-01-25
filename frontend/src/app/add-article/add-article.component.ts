@@ -195,7 +195,8 @@ export class AddArticleComponent implements OnInit {
       this.article.number &&
       this.article.customer &&
       this.article.surface &&
-      this.article.dripOff
+      this.article.dripOff &&
+      this.sequences.length > 0
     );
   }
 }
