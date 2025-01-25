@@ -15,6 +15,7 @@
     i18n-aria-label="@@ButtonSaveAriaLabel"
     matTooltip="Speichern"
     i18n-matTooltip="@@ButtonSaveTooltip"
+    [disabled]="!isFormValid()"
     (click)="onSave()">
     <mat-icon>check</mat-icon>
     <span i18n="@@ButtonSave">Speichern</span>

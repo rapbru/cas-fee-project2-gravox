@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { InputFieldComponent } from '../input-field/input-field.component';
-import { Article, Sequence as ArticleSequence } from '../models/article.model';
+import { Article, Sequence } from '../models/article.model';
 import { Position } from '../models/position.model';
 import { LoggerService } from '../services/logger.service';
 import { environment } from '../../environments/environment';
@@ -15,12 +15,23 @@ import { MatInputModule } from '@angular/material/input';
 import { HeaderService } from '../services/header.service';
 import { PositionService } from '../services/position.service';
 import { PositionSequenceComponent } from '../position/position-sequence/position-sequence.component';
-import { Sequence as PositionSequence } from '../models/sequence.model';
 import { SnackbarService } from '../services/snackbar.service';
 import { FooterComponent } from '../footer/footer.component';
 import { ArticleService } from '../services/article.service';
 import { catchError, tap } from 'rxjs';
 import { of } from 'rxjs';
+import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
+import { ViewChild } from '@angular/core';
+
+interface ArticleForm {
+  name: string;
+  number: string;
+  customer: string;
+  surface: string;
+  dripOff: string;
+  comment?: string;
+  sequence?: Sequence[];
+}
 
 @Component({
   selector: 'app-add-article',
@@ -42,14 +53,16 @@ import { of } from 'rxjs';
 export class AddArticleComponent implements OnInit {
   private enableLogging = environment.enableLogging;
   
-  article = {
+  @ViewChild('articleForm') articleForm!: NgForm;
+
+  article: ArticleForm = {
     name: '',
     number: '',
     customer: '',
     surface: '',
     dripOff: '',
-    anodic: '',
-    comment: ''
+    comment: '',
+    sequence: []
   };
 
   maxLengthName = 50;
@@ -60,7 +73,7 @@ export class AddArticleComponent implements OnInit {
   maxLengthAnodic = 20;
   maxLengthComment = 100;
 
-  sequences: ArticleSequence[] = [];
+  sequences: Sequence[] = [];
 
   isSaving = false;
 
@@ -71,7 +84,8 @@ export class AddArticleComponent implements OnInit {
     private headerService: HeaderService,
     public positionService: PositionService,
     private snackbarService: SnackbarService,
-    private articleService: ArticleService
+    private articleService: ArticleService,
+    private fb: FormBuilder
   ) {
     this.loggerService.log('AddArticleComponent constructed');
   }
@@ -101,8 +115,8 @@ export class AddArticleComponent implements OnInit {
     }));
   }
 
-  private validateArticleData(articleData: Article): boolean {
-    if (!articleData.title.trim() || !articleData.number.trim() || !articleData.customer.trim()) {
+  private validateArticleData(articleData: ArticleForm): boolean {
+    if (!articleData.name.trim() || !articleData.number.trim() || !articleData.customer.trim()) {
         this.snackbarService.showError('Bitte füllen Sie alle Pflichtfelder aus');
         return false;
     }
@@ -117,26 +131,36 @@ export class AddArticleComponent implements OnInit {
     if (this.isSaving) return;
     
     this.isSaving = true;
-    const articleData: Article = {
-        title: this.article.name,
-        number: this.article.number,
-        customer: this.article.customer,
-        area: this.article.surface,
-        drainage: this.article.dripOff,
-        anodic: this.article.anodic,
-        note: this.article.comment,
-        createdBy: 'system',
-        sequence: this.sequences
+    const articleData: ArticleForm = {
+      name: this.article.name,
+      number: this.article.number,
+      customer: this.article.customer,
+      surface: this.article.surface,
+      dripOff: this.article.dripOff,
+      comment: this.article.comment,
+      sequence: this.sequences
     };
 
     if (!this.validateArticleData(articleData)) {
-        this.isSaving = false;
-        return;
+      this.isSaving = false;
+      return;
     }
 
-    this.loggerService.log('Sending article data:', articleData);
+    // Convert ArticleForm to Article before saving
+    const articleToSave: Article = {
+      title: articleData.name,
+      number: articleData.number,
+      customer: articleData.customer,
+      area: articleData.surface,
+      drainage: articleData.dripOff,
+      anodic: '', // Add default value or get from form
+      note: articleData.comment,
+      sequence: articleData.sequence
+    };
 
-    this.articleService.saveArticle(articleData).pipe(
+    this.loggerService.log('Sending article data:', articleToSave);
+
+    this.articleService.saveArticle(articleToSave).pipe(
       tap(() => {
         this.articleService.reloadArticles();
         this.router.navigate(['/articles']);
@@ -144,7 +168,7 @@ export class AddArticleComponent implements OnInit {
       catchError(error => {
         this.loggerService.error('Error saving article:', {
           error,
-          sentData: articleData,
+          sentData: articleToSave,
           errorMessage: error.error?.error,
           status: error.status,
           statusText: error.statusText
@@ -163,5 +187,15 @@ export class AddArticleComponent implements OnInit {
 
   enableEdit(): boolean {
     return true;
+  }
+
+  isFormValid(): boolean {
+    return !!(
+      this.article.name &&
+      this.article.number &&
+      this.article.customer &&
+      this.article.surface &&
+      this.article.dripOff
+    );
   }
 }
