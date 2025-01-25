@@ -7,6 +7,7 @@ import { ApiConfigService } from './api-config.service';
 import { Article } from '../models/article.model';
 import { environment } from '../../environments/environment';
 import { SnackbarService } from './snackbar.service';
+import { Sequence } from '../models/sequence.model';
 
 @Injectable({
   providedIn: 'root'
@@ -165,6 +166,28 @@ export class ArticleService {
 
   getIsUpdating(): Signal<boolean> {
     return this.isUpdating.asReadonly();
+  }
+
+  updateSequenceOrder(article: Article, sequences: Sequence[]): Observable<Article> {
+    if (!article.id) {
+      throw new Error('Article ID is required for update');
+    }
+
+    const updatedSequences = sequences.map((sequence, index) => ({
+      positionId: sequence.positionId,
+      orderNumber: index + 1,
+      timePreset: sequence.timePreset?.toString() || '0',
+      currentPreset: sequence.currentPreset?.toString() || '0',
+      voltagePreset: sequence.voltagePreset?.toString() || '0',
+      positionName: sequence.positionName
+    }));
+
+    const updatedArticle: Article = {
+      ...article,
+      sequence: updatedSequences
+    };
+
+    return this.updateArticle(updatedArticle);
   }
 
   private getAuthHeaders(): HttpHeaders {

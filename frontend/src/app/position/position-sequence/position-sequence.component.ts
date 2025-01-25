@@ -13,6 +13,8 @@ import { OverviewStateService } from '../../services/overview-state.service';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { SectionHeaderComponent } from '../../header/section-header/section-header.component';
 import { EmptyspaceComponent } from '../../emptyspace/emptyspace.component';
+import { ArticleService } from '../../services/article.service';
+import { SnackbarService } from '../../services/snackbar.service';
 
 interface Sequence {
   positionId: string;
@@ -20,6 +22,7 @@ interface Sequence {
   timePreset: number;
   currentPreset: number;
   voltagePreset: number;
+  positionName: string;
 }
 
 type PresetField = 'timePreset' | 'currentPreset' | 'voltagePreset';
@@ -55,6 +58,7 @@ export class PositionSequenceComponent {
   private editingState: { position: Position | null, field: PresetField | null } = { position: null, field: null };
   public readonly editState = this.overviewStateService.enableEdit;
   isBottomSheet = false;
+  private article: any;
 
   readonly translations = {
     position: {
@@ -93,7 +97,9 @@ export class PositionSequenceComponent {
     public positionService: PositionService,
     private logger: LoggerService,
     private positionDragDropService: PositionDragDropService,
-    private overviewStateService: OverviewStateService
+    private overviewStateService: OverviewStateService,
+    private articleService: ArticleService,
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit() {
@@ -163,23 +169,31 @@ export class PositionSequenceComponent {
   onDrop(event: CdkDragDrop<Position[]>) {
     if (!this.selectedPositions) {
       this.selectedPositions = [];
+      return;
     }
-    
-    moveItemInArray(
-      this.selectedPositions,
-      event.previousIndex,
-      event.currentIndex
-    );
-    
-    const sequences = this.selectedPositions.map((pos, index) => ({
-      positionId: pos.id.toString(),
+
+    moveItemInArray(this.selectedPositions, event.previousIndex, event.currentIndex);
+
+    const sequences: Sequence[] = this.selectedPositions.map((position, index) => ({
+      positionId: position.id.toString(),
       orderNumber: index + 1,
-      timePreset: pos.timePreset ?? 0,
-      currentPreset: pos.currentPreset ?? 0,
-      voltagePreset: pos.voltagePreset ?? 0
+      timePreset: parseFloat(position.timePreset?.toString() || '0'),
+      currentPreset: parseFloat(position.currentPreset?.toString() || '0'),
+      voltagePreset: parseFloat(position.voltagePreset?.toString() || '0'),
+      positionName: position.name
     }));
-    
-    this.selectedPositionsChange.emit(sequences);
+
+    if (this.article?.id) {
+      this.articleService.updateSequenceOrder(this.article, sequences).subscribe({
+        next: (updatedArticle) => {
+          this.article = updatedArticle;
+        },
+        error: (error) => {
+          moveItemInArray(this.selectedPositions, event.currentIndex, event.previousIndex);
+          this.snackbarService.showError('Fehler beim Speichern der Reihenfolge');
+        }
+      });
+    }
   }
 
   hasSelectedPositions(): boolean {
@@ -284,7 +298,8 @@ export class PositionSequenceComponent {
       orderNumber: index + 1,
       timePreset: pos.timePreset ?? 0,
       currentPreset: pos.currentPreset ?? 0,
-      voltagePreset: pos.voltagePreset ?? 0
+      voltagePreset: pos.voltagePreset ?? 0,
+      positionName: pos.name
     }));
   }
 

@@ -18,7 +18,7 @@
         cdkDropList
         class="positions-grid"
         [cdkDropListData]="selectedPositions"
-        (cdkDropListDropped)="drop($event)"
+        (cdkDropListDropped)="onDrop($event)"
         *ngIf="selectedPositions.length > 0">
         <div *ngFor="let position of selectedPositions; let i = index" 
              class="position-card"
