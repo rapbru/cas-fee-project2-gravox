@@ -14,8 +14,16 @@ export class KeyBindingService implements OnDestroy {
       .pipe(
         filter(event => event.key === 'Escape')
       )
-      .subscribe(() => {
-        if (this.overviewStateService.enableEdit()) {
+      .subscribe((event) => {
+        const activeElement = document.activeElement;
+        
+        // If we're in an input field, blur it first
+        if (activeElement instanceof HTMLInputElement || 
+            activeElement instanceof HTMLTextAreaElement) {
+          activeElement.blur();
+        } 
+        // Otherwise, toggle edit mode if it's enabled
+        else if (this.overviewStateService.enableEdit()) {
           this.overviewStateService.toggleEdit();
         }
       });
