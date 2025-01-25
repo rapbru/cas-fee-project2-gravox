@@ -58,7 +58,7 @@ export class NavbarComponent {
   }
 
   isArticlesActive(): boolean {
-    return this.currentRoute === '/articles';
+    return this.router.url === '/articles';
   }
 
   shouldShowOverviewButton(): boolean {
