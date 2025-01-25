@@ -77,7 +77,7 @@
 
   &.mobile-hidden {
     @container (width < 600px) {
-      display: none !important;
+      display: none;
     }
   }
 }

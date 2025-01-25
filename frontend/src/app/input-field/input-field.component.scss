@@ -98,12 +98,12 @@
   }
 
   &.always-orange {
-    color: var(--color-vonesco) !important;
+    color: var(--color-vonesco);
     
     &:focus,
     &.ng-touched,
     &.ng-dirty {
-      color: var(--color-vonesco) !important;
+      color: var(--color-vonesco);
     }
   }
 }

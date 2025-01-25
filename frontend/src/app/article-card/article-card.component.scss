@@ -44,7 +44,7 @@
 
     .article-grid {
       display: grid;
-      grid-template-columns: 1fr !important;
+      grid-template-columns: 1fr;
       gap: 8px;
       width: 100%;
     }

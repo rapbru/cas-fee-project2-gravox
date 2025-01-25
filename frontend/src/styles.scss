@@ -74,13 +74,10 @@ html {
   --color-sheet-background: rgba(23, 23, 25, 0.8);
 }
 
-/* System preference override */
 @media (prefers-color-scheme: dark) {
   :root:not(.light-theme) {
-    /* Same as dark theme variables */
     --color-text: #E1E1E7;
     --color-inverted: black;
-    /* ... rest of dark theme variables ... */
   }
 }
 
