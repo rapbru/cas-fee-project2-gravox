@@ -39,7 +39,7 @@
       [matTooltip]="enableEdit() ? 'Bearbeitungsmodus deaktivieren' : 'Bearbeitungsmodus aktivieren'"
       matTooltipPosition="below">
       <mat-icon>{{ enableEdit() ? 'edit_off' : 'edit' }}</mat-icon>
-      <span [class.mobile-hidden]="deviceDetectionService.isMobileSignal()">{{ enableEdit() ? 'Bearbeitung beenden' : 'Bearbeiten' }}</span>
+      <span [class.mobile-hidden]="deviceDetectionService.isMobileSignal()">{{ enableEdit() ? 'Bearbeiten' : 'Bearbeiten' }}</span>
     </button>
     <button class="button"
       [disabled]="enableEdit()"
