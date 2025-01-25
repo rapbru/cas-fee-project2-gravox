@@ -12,11 +12,21 @@ export class ThemeService {
 
   constructor(private logger: LoggerService) {
     this.systemPrefersDark.addEventListener('change', this.handleSystemThemeChange.bind(this));
+    
+    if (!this.systemPrefersDark.matches && !this.themePreference()) {
+      document.documentElement.classList.add('light-theme');
+    }
+    
     this.applyTheme();
   }
 
   private handleSystemThemeChange(e: MediaQueryListEvent): void {
     if (this.themePreference() === null) {
+      if (!e.matches) {
+        document.documentElement.classList.add('light-theme');
+      } else {
+        document.documentElement.classList.remove('light-theme');
+      }
       this.applyTheme();
     }
   }
@@ -34,6 +44,11 @@ export class ThemeService {
   resetToSystemPreference(): void {
     localStorage.removeItem(this.THEME_KEY);
     this.themePreference.set(null);
+    if (!this.systemPrefersDark.matches) {
+      document.documentElement.classList.add('light-theme');
+    } else {
+      document.documentElement.classList.remove('light-theme');
+    }
     this.applyTheme();
   }
 
@@ -48,9 +63,12 @@ export class ThemeService {
   private applyTheme(): void {
     const isDark = this.getCurrentTheme() === 'dark';
     
-    document.documentElement.classList.remove('dark-theme');
-    document.documentElement.classList.remove('light-theme');
-    document.documentElement.classList.add(isDark ? 'dark-theme' : 'light-theme');
-    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    if (isDark) {
+      document.documentElement.classList.remove('light-theme');
+    } else {
+      document.documentElement.classList.add('light-theme');
+    }
+    
+    this.logger.log(`Theme changed to ${isDark ? 'dark' : 'light'} mode`);
   }
 } 
