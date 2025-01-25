@@ -109,8 +109,20 @@ export class ArticleService {
   }
 
   updateArticle(article: Article): Observable<Article> {
+    if (!article.id) {
+      throw new Error('Article ID is required for update');
+    }
+
     const headers = this.getAuthHeaders();
     return this.http.put<Article>(`${this.apiUrl}/${article.id}`, article, { headers }).pipe(
+      tap(() => {
+        const articles = this.articles$.value;
+        const index = articles.findIndex(a => a.id === article.id);
+        if (index !== -1) {
+          articles[index] = { ...article };
+          this.articles$.next([...articles]);
+        }
+      }),
       catchError(error => {
         this.logger.error('Error updating article:', error);
         throw error;

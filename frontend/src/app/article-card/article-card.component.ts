@@ -17,6 +17,7 @@ import { SnackbarService } from '../services/snackbar.service';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { LoggerService } from '../services/logger.service';
 
 @Component({
   selector: 'app-article-card',
@@ -87,7 +88,8 @@ export class ArticleCardComponent implements OnInit, OnDestroy {
     private articleService: ArticleService,
     private headerService: HeaderService,
     private overviewStateService: OverviewStateService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private logger: LoggerService
   ) {}
 
   toggleSelection(event?: Event): void {
@@ -120,16 +122,26 @@ export class ArticleCardComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateArticleInfo(event: any, field: string) {
-    if (this.article) {
-      this.article = {
-        ...this.article,
-        [field]: event
-      };
-      
-      this.articleService.trackModification(this.article);
-      this.changes$.next();
-    }
+  updateArticleInfo(value: string, field: keyof Article) {
+    if (!this.article || !this.article.id) return;
+
+    const updatedArticle: Article = { 
+      ...this.article,
+      [field]: value,
+      modifiedBy: 'system'
+    };
+
+    this.articleService.updateArticle(updatedArticle).subscribe({
+      next: () => {
+        this.logger.log(`Updated article ${field}`);
+      },
+      error: (error) => {
+        this.logger.error(`Error updating article ${field}:`, error);
+        if (field in this.article) {
+          (this.article as any)[field] = (this.article as any)[field];
+        }
+      }
+    });
   }
 
   private async saveChanges() {

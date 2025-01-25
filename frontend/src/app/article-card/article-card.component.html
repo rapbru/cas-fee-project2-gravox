@@ -96,6 +96,7 @@
               [(ngModel)]="article.number"
               [maxLength]="maxLengthNumber"
               [numbersOnly]="true"
+              (blur)="updateArticleInfo(article.number, 'number')"
               (ngModelChange)="updateArticleInfo($event, 'number')"
             ></app-input-field>
           </ng-template>
