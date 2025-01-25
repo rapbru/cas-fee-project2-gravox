@@ -103,9 +103,14 @@
                     tabindex="0"
                     role="button"
                     (click)="isEditEnabled() && hasCurrentCapability(position) && startEditing(position, 'currentPreset')"
+                    (focus)="isEditEnabled() && hasCurrentCapability(position) && startEditing(position, 'currentPreset')"
                     (keydown.enter)="isEditEnabled() && hasCurrentCapability(position) && startEditing(position, 'currentPreset')"
                     (keydown.space)="isEditEnabled() && hasCurrentCapability(position) && startEditing(position, 'currentPreset')"
-                    *ngIf="!isEditing(position, 'currentPreset') && hasCurrentCapability(position)">
+                    *ngIf="!isEditing(position, 'currentPreset') && hasCurrentCapability(position)"
+                    [attr.aria-label]="'Strom in Ampere: ' + position.currentPreset"
+                    i18n-aria-label="@@PositionCurrentPresetAriaLabel"
+                    [matTooltip]="'Strom in Ampere'"
+                    i18n-matTooltip="@@PositionCurrentPresetTooltip">
                 {{ position.currentPreset | number:'1.2-2' }}<span class="unit" [class.disabled]="!hasCurrentCapability(position)">A</span>
               </span>
               <input #valueInput
@@ -128,9 +133,14 @@
                     tabindex="0"
                     role="button"
                     (click)="isEditEnabled() && hasVoltageCapability(position) && startEditing(position, 'voltagePreset')"
+                    (focus)="isEditEnabled() && hasVoltageCapability(position) && startEditing(position, 'voltagePreset')"
                     (keydown.enter)="isEditEnabled() && hasVoltageCapability(position) && startEditing(position, 'voltagePreset')"
                     (keydown.space)="isEditEnabled() && hasVoltageCapability(position) && startEditing(position, 'voltagePreset')"
-                    *ngIf="!isEditing(position, 'voltagePreset') && hasVoltageCapability(position)">
+                    *ngIf="!isEditing(position, 'voltagePreset') && hasVoltageCapability(position)"
+                    [attr.aria-label]="'Spannung in Volt: ' + position.voltagePreset"
+                    i18n-aria-label="@@PositionVoltagePresetAriaLabel"
+                    [matTooltip]="'Spannung in Volt'"
+                    i18n-matTooltip="@@PositionVoltagePresetTooltip">
                 {{ position.voltagePreset | number:'1.2-2' }}<span class="unit" [class.disabled]="!hasVoltageCapability(position)">V</span>
               </span>
               <input #valueInput
