@@ -111,17 +111,16 @@
                     <span>s</span>
                     <input #presetTime
                         type="text" 
-                        inputmode="numeric"
-                        maxlength="3"
+                        inputmode="decimal"
                         [value]="position.time.preset"
                         (focus)="selectInputContent($event)" 
                         (click)="selectInputContent($event)" 
-                        (input)="updatePresetValue($event, '.TIME.PRESET')" 
+                        (keydown)="validateNumericInput($event)" 
                         (paste)="$event.preventDefault()"
                         (keydown.enter)="presetTime.blur()"
                         aria-label="Zeit Voreinstellung"
                         i18n-aria-label="@@PositionTimePresetAriaLabel"
-                        matTooltip="Zeit in Sekunden (max. 3 Ziffern)"
+                        matTooltip="Zeit in Sekunden"
                         i18n-matTooltip="@@PositionTimePresetTooltip"
                         tabindex="0" />
                     <span>{{ position.time.actual }}</span>
@@ -141,16 +140,15 @@
                         <input 
                             #presetTemp
                             type="text" 
-                            inputmode="numeric"
-                            maxlength="3"
+                            inputmode="decimal"
                             [value]="position.temperature.preset"
                             (focus)="selectInputContent($event)" 
                             (click)="selectInputContent($event)" 
-                            (input)="updatePresetValue($event, '.TEMP.PRESET')" 
+                            (keydown)="validateNumericInput($event)" 
                             (paste)="$event.preventDefault()"
                             (keydown.enter)="presetTemp.blur()"
                             aria-label="Temperatur Voreinstellung"
-                            matTooltip="Temperatur in °C (max. 3 Ziffern)"
+                            matTooltip="Temperatur in °C"
                             tabindex="0" />
                         <span>{{ position.temperature.actual }}</span>
                     </div>
@@ -183,16 +181,15 @@
                         <input 
                             #presetCurrent
                             type="text" 
-                            inputmode="numeric"
-                            maxlength="3"
+                            inputmode="decimal"
                             [value]="position.current.preset" 
                             (focus)="selectInputContent($event)" 
                             (click)="selectInputContent($event)" 
-                            (input)="updatePresetValue($event, '.current.preset')" 
+                            (keydown)="validateNumericInput($event)" 
                             (paste)="$event.preventDefault()"
                             (keydown.enter)="presetCurrent.blur()"
                             aria-label="Strom Voreinstellung"
-                            matTooltip="Strom in Ampere (max. 3 Ziffern)"
+                            matTooltip="Strom in Ampere"
                             tabindex="0" />
                         <span>{{ position.current.actual }}</span>
                     </div>
@@ -229,16 +226,15 @@
                         <input
                             #presetVoltage
                             type="text" 
-                            inputmode="numeric"
-                            maxlength="3"
+                            inputmode="decimal"
                             [value]="position.voltage.preset" 
                             (focus)="selectInputContent($event)" 
                             (click)="selectInputContent($event)" 
-                            (input)="updatePresetValue($event, '.voltage.preset')" 
+                            (keydown)="validateNumericInput($event)" 
                             (paste)="$event.preventDefault()"
                             (keydown.enter)="presetVoltage.blur()"
                             aria-label="Spannung Voreinstellung"
-                            matTooltip="Spannung in Volt (max. 3 Ziffern)"
+                            matTooltip="Spannung in Volt"
                             tabindex="0" />
                         <span>{{ position.voltage.actual }}</span>
                     </div>

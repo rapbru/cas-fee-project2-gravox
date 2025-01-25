@@ -75,17 +75,49 @@ export class PositionComponent {
     private plcService: PlcService
   ) {}
 
-  onNumberInput(event: Event, maxLength: number = 3) {
+  validateNumericInput(event: KeyboardEvent): void {
     const input = event.target as HTMLInputElement;
-    let value = input.value;
+    const value = input.value;
+    const selectionStart = input.selectionStart || 0;
+    const selectionEnd = input.selectionEnd || 0;
+    const key = event.key;
+
+    if (['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(key)) {
+      return;
+    }
+
+    if (!/^\d$/.test(key) && key !== '.') {
+      event.preventDefault();
+      return;
+    }
+
+    const newValue = value.slice(0, selectionStart) + key + value.slice(selectionEnd);
+
+    if (key === '.') {
+      if (value.includes('.')) {
+        event.preventDefault();
+        return;
+      }
+      return;
+    }
+
+    const parts = newValue.split('.');
     
-    value = value.replace(/[^0-9]/g, '');
-    
-    value = value.slice(0, maxLength);
-    
-    input.value = value;
-    
-    return value;
+    if (parts[0].length > 3) {
+      event.preventDefault();
+      return;
+    }
+
+    if (parts[1] && parts[1].length > 2) {
+      event.preventDefault();
+      return;
+    }
+
+    const numValue = parseFloat(newValue);
+    if (!isNaN(numValue) && numValue > 999.99) {
+      event.preventDefault();
+      return;
+    }
   }
 
   onNameInput(event: Event, maxLength: number = 30) {
@@ -100,17 +132,17 @@ export class PositionComponent {
   }
 
   updatePresetValue(event: Event, field: string) {
-    const value = this.onNumberInput(event);
-    if (!value) return;
-
-    const numericValue = parseFloat(value);
-    if (isNaN(numericValue) || numericValue <= 0) return;
+    const input = event.target as HTMLInputElement;
+    const value = input.value;
+    
+    const numValue = parseFloat(value);
+    if (isNaN(numValue) || numValue < 0 || numValue > 999.99) return;
 
     const tagName = `POS[${this.position.number}]${field}`;
     
     const update = {
       tagName,
-      value: field.includes('TIME') ? numericValue * 60 : numericValue
+      value: field.includes('TIME') ? numValue * 60 : numValue
     };
 
     this.plcService.writeValues([update]).subscribe({
@@ -122,7 +154,7 @@ export class PositionComponent {
 
   updatePositionInfo(event: Event, field: string) {
     const inputElement = event.target as HTMLInputElement;
-    let newValue: string | number = inputElement.value;
+    let newValue: string = inputElement.value;
 
     switch (field) {
       case 'name':
@@ -130,8 +162,9 @@ export class PositionComponent {
         this.position.name = newValue;
         break;
       case 'number':
-        newValue = this.onNumberInput(event);
-        this.position.number = parseInt(newValue, 10);
+        newValue = newValue.replace(/[^0-9]/g, '').slice(0, 3);
+        inputElement.value = newValue;
+        this.position.number = parseInt(newValue, 10) || 0;
         break;
     }
     
