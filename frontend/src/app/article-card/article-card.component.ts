@@ -2,7 +2,6 @@ import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, effect } fro
 import { Router } from '@angular/router';
 import { Article } from '../models/article.model';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -161,7 +160,6 @@ export class ArticleCardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // Remove effect from here
   }
 
   ngOnDestroy() {

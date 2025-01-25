@@ -147,7 +147,6 @@ export class AddArticleComponent implements OnInit {
       return;
     }
 
-    // Convert ArticleForm to Article before saving
     const articleToSave: Article = {
       title: articleData.name,
       number: Number(articleData.number),

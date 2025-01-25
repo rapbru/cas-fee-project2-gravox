@@ -46,7 +46,6 @@ export class InputFieldComponent implements ControlValueAccessor {
   isAtLimit: boolean = false;
   showCounter: boolean = false;
   isFocused: boolean = false;
-  // flashLimit: boolean = false;  // Commented out as we're not using flash animation
 
   private onChange: any = () => {};
   private onTouched: any = () => {};

@@ -1,6 +1,5 @@
 import { Component, OnInit, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { LoggerService } from '../services/logger.service';
 import { environment } from '../../environments/environment';
