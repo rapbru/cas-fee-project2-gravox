@@ -131,7 +131,14 @@ export class ArticlesComponent implements OnInit {
   }
 
   async deleteSelectedArticles() {
-    if (this.selectedArticles.size === 0) return;
+    if (this.selectedArticles.size === 0) {
+      this.loggerService.log('No articles selected');
+      return;
+    }
+
+    this.loggerService.log('Selected articles before deletion:', 
+      Array.from(this.selectedArticles).map(a => ({ id: a.id, title: a.title }))
+    );
 
     const confirmed = await this.dialogService.showConfirmDialog({
       title: 'Artikel löschen',
@@ -143,17 +150,41 @@ export class ArticlesComponent implements OnInit {
       confirmClass: 'danger'
     });
 
-    if (!confirmed) return;
+    if (!confirmed) {
+      this.loggerService.log('Deletion cancelled by user');
+      return;
+    }
 
-    const deleteObservables = Array.from(this.selectedArticles)
-      .filter(article => article.id)
-      .map(article => this.articleService.deleteArticle(article.id!));
+    const articlesToDelete = Array.from(this.selectedArticles)
+      .filter(article => article.id);
+    
+    this.loggerService.log('Articles to be deleted:', 
+      articlesToDelete.map(a => ({ id: a.id, title: a.title }))
+    );
+
+    if (articlesToDelete.length === 0) {
+      this.loggerService.warn('No valid articles to delete');
+      return;
+    }
+
+    const deleteObservables = articlesToDelete
+      .map(article => {
+        this.loggerService.log(`Creating delete observable for article ID: ${article.id}`);
+        return this.articleService.deleteArticle(article.id!);
+      });
 
     forkJoin(deleteObservables).subscribe({
       next: () => {
         this.loggerService.log('Articles deleted successfully');
         this.selectedArticles.clear();
-        this.loadArticles();
+        
+        this.articleService.reloadArticles();
+        
+        if (this.articles) {
+          this.articles = this.articles.filter(article => 
+            !articlesToDelete.some(deleteArticle => deleteArticle.id === article.id)
+          );
+        }
       },
       error: (error) => {
         this.loggerService.error('Error deleting articles:', error);
