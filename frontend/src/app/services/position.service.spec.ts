@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { PositionService } from './position.service';
-import { ErrorHandlingService } from './snackbar.service';
+import { SnackbarService } from './snackbar.service';
 import { ApiConfigService } from './api-config.service';
 import { OverviewStateService } from './overview-state.service';
 import { ColumnManagementService } from './column-management.service';
@@ -13,7 +13,7 @@ import { of } from 'rxjs';
 describe('PositionService', () => {
   let service: PositionService;
   let httpMock: HttpTestingController;
-  let errorHandlingServiceSpy: jasmine.SpyObj<ErrorHandlingService>;
+  let errorHandlingServiceSpy: jasmine.SpyObj<SnackbarService>;
   let columnManagementServiceSpy: jasmine.SpyObj<ColumnManagementService>;
   let positionOrderServiceSpy: jasmine.SpyObj<PositionOrderService>;
 
@@ -47,7 +47,7 @@ describe('PositionService', () => {
   };
 
   beforeEach(async () => {
-    const errorHandlingMock = jasmine.createSpyObj('ErrorHandlingService', ['showSuccess', 'showError']);
+    const errorHandlingMock = jasmine.createSpyObj('SnackbarService', ['showSuccess', 'showError']);
     const apiConfigMock = jasmine.createSpyObj('ApiConfigService', ['getUrl']);
     const overviewStateMock = jasmine.createSpyObj('OverviewStateService', [''], {
       selectedPosition: { value: null }
@@ -64,7 +64,7 @@ describe('PositionService', () => {
         PositionService,
         provideHttpClient(),
         provideHttpClientTesting(),
-        { provide: ErrorHandlingService, useValue: errorHandlingMock },
+        { provide: SnackbarService, useValue: errorHandlingMock },
         { provide: ApiConfigService, useValue: apiConfigMock },
         { provide: OverviewStateService, useValue: overviewStateMock },
         { provide: ColumnManagementService, useValue: columnManagementMock },
@@ -74,7 +74,7 @@ describe('PositionService', () => {
 
     service = TestBed.inject(PositionService);
     httpMock = TestBed.inject(HttpTestingController);
-    errorHandlingServiceSpy = TestBed.inject(ErrorHandlingService) as jasmine.SpyObj<ErrorHandlingService>;
+    errorHandlingServiceSpy = TestBed.inject(SnackbarService) as jasmine.SpyObj<SnackbarService>;
     columnManagementServiceSpy = TestBed.inject(ColumnManagementService) as jasmine.SpyObj<ColumnManagementService>;
     positionOrderServiceSpy = TestBed.inject(PositionOrderService) as jasmine.SpyObj<PositionOrderService>;
   });

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { PositionOrderService } from './position-order.service';
-import { ErrorHandlingService } from './snackbar.service';
+import { SnackbarService } from './snackbar.service';
 import { ApiConfigService } from './api-config.service';
 import { Position } from '../models/position.model';
 import { PositionOrder } from '../models/position-order.model';
@@ -10,7 +10,7 @@ import { provideHttpClient } from '@angular/common/http';
 describe('PositionOrderService', () => {
   let service: PositionOrderService;
   let httpMock: HttpTestingController;
-  let errorHandlingServiceSpy: jasmine.SpyObj<ErrorHandlingService>;
+  let errorHandlingServiceSpy: jasmine.SpyObj<SnackbarService>;
 
   const mockApiUrl = 'http://mock-api/settings/position-order';
 
@@ -63,14 +63,14 @@ describe('PositionOrderService', () => {
         provideHttpClient(),
         provideHttpClientTesting(),
         PositionOrderService,
-        { provide: ErrorHandlingService, useValue: errorHandlingMock },
+        { provide: SnackbarService, useValue: errorHandlingMock },
         { provide: ApiConfigService, useValue: apiConfigMock },
       ],
     }).compileComponents();
 
     service = TestBed.inject(PositionOrderService);
     httpMock = TestBed.inject(HttpTestingController);
-    errorHandlingServiceSpy = TestBed.inject(ErrorHandlingService) as jasmine.SpyObj<ErrorHandlingService>;
+    errorHandlingServiceSpy = TestBed.inject(SnackbarService) as jasmine.SpyObj<SnackbarService>;
   });
 
   afterEach(() => {
