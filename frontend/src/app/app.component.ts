@@ -7,6 +7,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HeaderService } from './services/header.service';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { KeyBindingService } from './services/key-binding.service';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +29,8 @@ export class AppComponent implements OnInit {
   constructor(
     public authService: AuthService, 
     private matIconReg: MatIconRegistry,
-    public headerService: HeaderService
+    public headerService: HeaderService,
+    private keyBindingService: KeyBindingService
   ) {}
 
   ngOnInit(): void {
