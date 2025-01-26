@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { OverviewStateService } from '../../services/overview-state.service';
 import { ColumnManagementService } from '../../services/column-management.service';
+import { LoggerService } from '../../services/logger.service';
 
 interface PositionForm {
   number: string;
@@ -51,7 +52,8 @@ export class AddPositionComponent implements OnInit {
     private positionService: PositionService,
     private router: Router,
     private overviewStateService: OverviewStateService,
-    private columnManagementService: ColumnManagementService
+    private columnManagementService: ColumnManagementService,
+    private logger: LoggerService
   ) {}
 
   ngOnInit() {
@@ -151,12 +153,12 @@ export class AddPositionComponent implements OnInit {
             this.router.navigate(['/positions']);
           },
           error: (error: HttpErrorResponse) => {
-            console.error('Error saving column settings:', error);
+            this.logger.error('Error saving column settings:', error);
           }
         });
       },
       error: (error: HttpErrorResponse) => {
-        console.error('Error saving position:', error);
+        this.logger.error('Error saving position:', error);
       }
     });
   }

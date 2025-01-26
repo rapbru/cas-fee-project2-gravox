@@ -89,7 +89,6 @@ export class PositionComponent {
   updatePresetValue(event: Event, field: string) {
     const input = event.target as HTMLInputElement;
     const value = input.value;
-    console.log(value);
     const numValue = parseFloat(value);
     if (isNaN(numValue) || numValue < 0 || numValue > 999.99) {
       input.value = '0';
@@ -102,7 +101,6 @@ export class PositionComponent {
       tagName,
       value: field.includes('TIME') ? numValue * 60 : numValue
     };
-    console.log(update);
 
     this.plcService.writeValues([update]).subscribe({
       error: (error) => {
