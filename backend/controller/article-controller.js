@@ -1,19 +1,30 @@
 import ArticleService from '../services/article-service.js';
+import ArticleMockService from '../mock/article-mock-service.js';
 import logger from '../utils/logger.js';
 
 class ArticleController {
-    static getAllArticles = async (req, res) => {
+
+    constructor() {
+        if (process.env.NODE_ENV === "production") {
+            this.articleService = ArticleService;
+        } else {
+            this.articleService = ArticleMockService;
+        }
+    }
+
+    getAllArticles = async (req, res) => {
         try {
-            const articles = await ArticleService.getArticles();
+            const articles = await this.articleService.getArticles();
             return res.status(200).json(articles);
         } catch (err) {
-            return res.status(500).json({ error: 'Internal Server Error' });
+            logger.error('Error getting articles:', err);
+            return res.status(500).json({ error: err.message || 'Internal Server Error' });
         }
     };
 
-    static getArticleById = async (req, res) => {
+    getArticleById = async (req, res) => {
         try {
-            const article = await ArticleService.getArticleById(req.params.id);
+            const article = await this.articleService.getArticleById(req.params.id);
             if (!article) {
                 return res.status(404).json({ error: 'Article not found' });
             }
@@ -23,7 +34,7 @@ class ArticleController {
         }
     };
 
-    static createArticle = async (req, res) => {
+    createArticle = async (req, res) => {
         try {
             const articleData = req.body;
             logger.info('Received article data:', articleData);
@@ -59,7 +70,7 @@ class ArticleController {
                 }
             }
 
-            const newArticle = await ArticleService.createArticle(articleData);
+            const newArticle = await this.articleService.createArticle(articleData);
             return res.status(201).json(newArticle);
         } catch (err) {
             logger.error('Error in createArticle:', err);
@@ -70,21 +81,21 @@ class ArticleController {
         }
     };
 
-    static updateArticle = async (req, res) => {
+    updateArticle = async (req, res) => {
         try {
             const articleId = req.params.id;
             const articleData = req.body;
-            await ArticleService.updateArticle(articleId, articleData);
+            await this.articleService.updateArticle(articleId, articleData);
             return res.status(200).json({ message: 'Article updated successfully' });
         } catch (error) {
             return res.status(500).json({ error: error.message });
         }
     };
 
-    static deleteArticle = async (req, res) => {
+    deleteArticle = async (req, res) => {
         try {
             const articleId = req.params.id;
-            await ArticleService.deleteArticle(articleId);
+            await this.articleService.deleteArticle(articleId);
             return res.status(200).json({ message: 'Article successfully deleted' });
         } catch (error) {
             return res.status(500).json({ error: error.message });

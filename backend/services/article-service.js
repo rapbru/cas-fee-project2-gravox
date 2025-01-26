@@ -4,6 +4,7 @@ import logger from '../utils/logger.js';
 class ArticleService {
     static async getArticles() {
         try {
+            logger.info('Querying database for articles');
             const query = `
                 SELECT 
                     a.*,
@@ -25,7 +26,7 @@ class ArticleService {
             const result = await pool.query(query);
             return ArticleService.transformArticleData(result.rows);
         } catch (error) {
-            logger.error('Error fetching articles:', error);
+            logger.error('Database error:', error);
             throw error;
         }
     }
