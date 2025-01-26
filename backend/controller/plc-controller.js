@@ -4,6 +4,7 @@ import PLCConnection from '../plc/plc-connection.js'
 import ArticleService from '../services/article-service.js';
 import ArticleLoadingService from '../services/article-loading-service.js';
 import ArticleLoadingMock from '../data/article-loading-mock.js';
+import ArticleMockService from '../mock/article-mock-service.js';
 
 export class PLCController {
     constructor() {
@@ -12,9 +13,11 @@ export class PLCController {
         if (process.env.NODE_ENV === "production") {
             this.plcService = PLCService.getInstance(this.plcConnection);
             this.articleLoadingService = new ArticleLoadingService(this.plcService);
+            this.articleService = ArticleService;
         } else {
             this.plcService = new PLCMockData();
             this.articleLoadingService = new ArticleLoadingMock();
+            this.articleService = ArticleMockService;
         }
     }
 
@@ -84,7 +87,7 @@ export class PLCController {
                 return res.status(400).json({ error: 'Valid article ID is required' });
             }
 
-            const article = await ArticleService.getArticleById(articleId);
+            const article = await this.articleService.getArticleById(articleId);
             if (!article) {
                 return res.status(404).json({ error: 'Article not found' });
             }
