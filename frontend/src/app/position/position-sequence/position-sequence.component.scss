@@ -169,7 +169,7 @@
 
 @media (max-width: 767px) {
   .position-selector {
-    padding-bottom: 80px; // Space for bottom navigation
+    padding-bottom: 80px;
   }
 }
 
@@ -218,21 +218,64 @@
   }
 }
 
+.position-card {
+  position: relative;
+  z-index: 1;
+  transform: translateZ(0);
+  will-change: transform;
+  contain: content;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  
+  &:not(.cdk-drag-preview) {
+    transition: none !important;
+  }
+}
+
+.cdk-drag {
+  transition: none !important;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  -webkit-font-smoothing: antialiased;
+  cursor: move;
+  will-change: transform;
+}
+
 .cdk-drag-preview {
-  background-color: var(--color-sheet-background);
-  border-radius: var(--button-border-radius);
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform;
+  contain: content;
+  z-index: 1000;
+  
+  .position-card {
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    contain: content;
+  }
 }
 
-.cdk-drag-placeholder {
-  opacity: 0;
+.drag-placeholder {
+  min-height: 52px;
+  background: var(--color-background);
+  border: 2px dashed var(--color-border);
+  opacity: 0.3;
 }
 
-.cdk-drag-animating {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+.no-transitions * {
+  transition: none;
 }
 
 .positions-grid.cdk-drop-list-dragging .position-card:not(.cdk-drag-placeholder) {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  transition: none;
 }
 
 ::ng-deep .mat-mdc-checkbox {
