@@ -186,10 +186,16 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
   }
 
   onSequenceChange(sequences: Sequence[]) {
-    if (!this.article) return;
+    if (!this.article?.id) {
+      this.logger.warn('Versuch Sequenz ohne Artikel-ID zu aktualisieren');
+      return;
+    }
+    
+    const articleId = this.article.id;
     
     const updatedSequence: Sequence[] = sequences.map(seq => ({
       ...seq,
+      articleId,
       timePreset: Number(seq.timePreset),
       currentPreset: Number(seq.currentPreset),
       voltagePreset: Number(seq.voltagePreset),
@@ -200,21 +206,21 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
     
     const updatedArticle: Article = {
       ...this.article,
+      id: articleId,
       sequence: updatedSequence
     };
+
+    this.articleService.trackModification(updatedArticle);
     
     this.articleService.updateSequenceOrder(updatedArticle, updatedSequence).subscribe({
       next: (response) => {
-        this.article = response;
-        this.articleService.trackModification(updatedArticle);
-        this.logger.log('Successfully updated sequence order');
+        this.article = {
+          ...response,
+          id: articleId
+        };
       },
       error: (error) => {
-        this.logger.error('Failed to update sequence order:', error);
-        this.snackbarService.showError('Fehler beim Speichern der Reihenfolge');
-        if (this.article?.id) {
-          this.getArticle(this.article.id.toString());
-        }
+        this.snackbarService.showError('Fehler beim Speichern der Sequenz');
       }
     });
   }

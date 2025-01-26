@@ -169,8 +169,8 @@ export class PositionSequenceComponent implements OnInit {
     if (event.previousContainer === event.container) {
       moveItemInArray(this.selectedPositions, event.previousIndex, event.currentIndex);
       
-      // Create and emit the updated sequence array
       const sequences = this.selectedPositions.map((position, index) => ({
+        id: position.id,
         positionId: position.id.toString(),
         orderNumber: index + 1,
         timePreset: position.timePreset ?? 0,
