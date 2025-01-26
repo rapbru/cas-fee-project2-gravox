@@ -75,51 +75,6 @@ export class PositionComponent {
     private plcService: PlcService
   ) {}
 
-  validateNumericInput(event: KeyboardEvent): void {
-    const input = event.target as HTMLInputElement;
-    const value = input.value;
-    const selectionStart = input.selectionStart || 0;
-    const selectionEnd = input.selectionEnd || 0;
-    const key = event.key;
-
-    if (['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(key)) {
-      return;
-    }
-
-    if (!/^\d$/.test(key) && key !== '.') {
-      event.preventDefault();
-      return;
-    }
-
-    const newValue = value.slice(0, selectionStart) + key + value.slice(selectionEnd);
-
-    if (key === '.') {
-      if (value.includes('.')) {
-        event.preventDefault();
-        return;
-      }
-      return;
-    }
-
-    const parts = newValue.split('.');
-    
-    if (parts[0].length > 3) {
-      event.preventDefault();
-      return;
-    }
-
-    if (parts[1] && parts[1].length > 2) {
-      event.preventDefault();
-      return;
-    }
-
-    const numValue = parseFloat(newValue);
-    if (!isNaN(numValue) && numValue > 999.99) {
-      event.preventDefault();
-      return;
-    }
-  }
-
   onNameInput(event: Event, maxLength: number = 30) {
     const input = event.target as HTMLInputElement;
     let value = input.value;
@@ -134,7 +89,7 @@ export class PositionComponent {
   updatePresetValue(event: Event, field: string) {
     const input = event.target as HTMLInputElement;
     const value = input.value;
-    
+    console.log(value);
     const numValue = parseFloat(value);
     if (isNaN(numValue) || numValue < 0 || numValue > 999.99) return;
 
@@ -144,6 +99,7 @@ export class PositionComponent {
       tagName,
       value: field.includes('TIME') ? numValue * 60 : numValue
     };
+    console.log(update);
 
     this.plcService.writeValues([update]).subscribe({
       error: (error) => {
