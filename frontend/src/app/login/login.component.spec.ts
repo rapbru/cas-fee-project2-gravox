@@ -5,6 +5,7 @@ import { of, throwError } from 'rxjs';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { AuthService } from '../authentication/auth.service';
 import { LoginComponent } from './login.component';
+import { signal } from '@angular/core';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -13,7 +14,9 @@ describe('LoginComponent', () => {
   let routerSpy: jasmine.SpyObj<Router>;
 
   beforeEach(async () => {
-    const authServiceMock = jasmine.createSpyObj('AuthService', ['login', 'saveToken']);
+    const authServiceMock = jasmine.createSpyObj('AuthService', ['login', 'saveToken'], {
+      isLoggedIn: signal(false)
+    });
     const routerMock = jasmine.createSpyObj('Router', ['navigate']);
 
     await TestBed.configureTestingModule({

@@ -126,9 +126,8 @@ describe('PositionService', () => {
       setTimeout(() => {
         expect(columnManagementServiceSpy.saveColumnSettings).toHaveBeenCalled();
         expect(positionOrderServiceSpy.savePositionOrder).toHaveBeenCalled();
-        expect(errorHandlingServiceSpy.showSuccess).toHaveBeenCalledWith('Alle Änderungen erfolgreich gespeichert');
+        expect(errorHandlingServiceSpy.showSuccess).toHaveBeenCalledWith('Änderungen gespeichert');
         expect(service.fetchPositions).toHaveBeenCalled();
-
         done();
       });
     });
