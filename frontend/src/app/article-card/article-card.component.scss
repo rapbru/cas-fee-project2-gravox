@@ -22,20 +22,19 @@
 
   &.in-details {
     cursor: default;
-  }
+    pointer-events: none;
+    
+    .article-details,
+    input,
+    button,
+    app-input-field {
+      pointer-events: auto;
+    }
 
-  &:focus {
-    outline: none;
-  }
-
-  &:active {
-    background-color: var(--color-sub-3);
-  }
-
-  &[isInDetails="true"] {
-    width: 100%;
-    margin: 0;
-    cursor: default;
+    &:hover,
+    &:active {
+      background-color: var(--color-main);
+    }
 
     .detail-row {
       grid-template-columns: 24px 120px 1fr;
@@ -57,11 +56,14 @@
         color: var(--color-vonesco);
       }
     }
+  }
 
-    &:hover {
-      transform: none;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
+  &:focus {
+    outline: none;
+  }
+
+  &:active {
+    background-color: var(--color-sub-3);
   }
 
   .article-header {
