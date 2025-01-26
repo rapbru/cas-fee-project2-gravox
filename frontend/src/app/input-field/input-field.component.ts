@@ -40,6 +40,7 @@ export class InputFieldComponent implements ControlValueAccessor {
   @Input() fieldId: string = '';
   @Input() ariaLabel: string = '';
   @Input() alwaysOrange: boolean = false;
+  @Input() autocomplete: string = 'off';
 
   value: string = '';
   displayValue: string = '';
