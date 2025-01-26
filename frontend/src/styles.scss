@@ -78,6 +78,11 @@ html {
   :root:not(.light-theme) {
     --color-text: #E1E1E7;
     --color-inverted: black;
+    --color-background: #171719;
+    --color-main: #272729;
+    --color-sub-1: #717175;
+    --color-sub-2: #3F3F41;
+    --color-sub-3: #3F3F41;
   }
 }
 
@@ -107,6 +112,11 @@ background-color: var(--color-main);
 input {
   color: var(--color-text);
   background-color: var(--color-main);
+  
+  &::placeholder {
+    color: var(--color-sub-1);
+    opacity: 1;
+  }
 }
 
 .navbar {
@@ -1364,5 +1374,9 @@ app-add-article {
       }
     }
   }
+}
+
+h1, h2, h3, h4, h5, h6, p, span, div {
+  color: var(--color-text);
 }
 
