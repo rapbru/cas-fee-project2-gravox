@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from './authentication/auth.service';
 import { NavbarComponent } from "./navbar/navbar.component";
@@ -25,6 +25,8 @@ import { KeyBindingService } from './services/key-binding.service';
 export class AppComponent implements OnInit {
   title = 'gravox';
   showToolbar = false;
+
+  @HostBinding('attr.aria-hidden') ariaHidden = null;
 
   constructor(
     public authService: AuthService, 
