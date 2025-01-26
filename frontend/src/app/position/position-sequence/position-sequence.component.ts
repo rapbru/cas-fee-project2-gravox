@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, HostBinding, EventEmitter, Output, Input, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, HostBinding, EventEmitter, Output, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -36,7 +36,8 @@ type PresetField = 'timePreset' | 'currentPreset' | 'voltagePreset';
     EmptyspaceComponent
   ],
   templateUrl: './position-sequence.component.html',
-  styleUrls: ['./position-sequence.component.scss']
+  styleUrls: ['./position-sequence.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PositionSequenceComponent implements OnInit {
   @ViewChild('selectedPositionsContainer') selectedPositionsContainer?: ElementRef;
@@ -165,23 +166,22 @@ export class PositionSequenceComponent implements OnInit {
   }
 
   onDrop(event: CdkDragDrop<Position[]>) {
-    this.logger.log('Drop event triggered', { 
-      previousIndex: event.previousIndex, 
-      currentIndex: event.currentIndex 
-    });
+    if (event.previousContainer === event.container) {
+      moveItemInArray(this.selectedPositions, event.previousIndex, event.currentIndex);
+      
+      // Create and emit the updated sequence array
+      const sequences = this.selectedPositions.map((position, index) => ({
+        positionId: position.id.toString(),
+        orderNumber: index + 1,
+        timePreset: position.timePreset ?? 0,
+        currentPreset: position.currentPreset ?? 0,
+        voltagePreset: position.voltagePreset ?? 0,
+        positionName: position.name,
+        articleId: this.article?.id // Add the article ID
+      }));
 
-    if (!this.selectedPositions) {
-      return;
+      this.selectedPositionsChange.emit(sequences);
     }
-
-    const updatedPositions = [...this.selectedPositions];
-    moveItemInArray(updatedPositions, event.previousIndex, event.currentIndex);
-    this.selectedPositions = updatedPositions;
-
-    const sequences = this.createSequenceArray();
-    this.selectedPositionsChange.emit(sequences);
-
-    this.logger.log('Emitted updated sequence:', sequences);
   }
 
   hasSelectedPositions(): boolean {
@@ -281,13 +281,16 @@ export class PositionSequenceComponent implements OnInit {
   }
 
   private createSequenceArray(): Sequence[] {
+    if (!this.selectedPositions) return [];
+    
     return this.selectedPositions.map((pos, index) => ({
       positionId: pos.id.toString(),
       orderNumber: index + 1,
       timePreset: pos.timePreset ?? 0,
       currentPreset: pos.currentPreset ?? 0,
       voltagePreset: pos.voltagePreset ?? 0,
-      positionName: pos.name
+      positionName: pos.name,
+      articleId: this.article.id
     }));
   }
 

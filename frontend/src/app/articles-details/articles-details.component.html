@@ -13,6 +13,7 @@
         <app-position-sequence
           [selectedPositions]="positions"
           [enableEdit]="isEditEnabled()"
+          [article]="article"
           (selectedPositionsChange)="onSequenceChange($event)"
           #positionSequence>
         </app-position-sequence>
