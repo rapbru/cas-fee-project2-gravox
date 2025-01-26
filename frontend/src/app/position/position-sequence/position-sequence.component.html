@@ -78,11 +78,11 @@
                     (keydown.enter)="isEditEnabled() && startEditing(position, 'timePreset')"
                     (keydown.space)="isEditEnabled() && startEditing(position, 'timePreset')"
                     *ngIf="!isEditing(position, 'timePreset')"
-                    [attr.aria-label]="'Zeit in Sekunden: ' + position.timePreset"
+                    [attr.aria-label]="'Zeit in Minuten: ' + position.timePreset"
                     i18n-aria-label="@@PositionTimePresetAriaLabel"
-                    [matTooltip]="'Zeit in Sekunden'"
+                    [matTooltip]="'Zeit in Minuten'"
                     i18n-matTooltip="@@PositionTimePresetTooltip">
-                {{ position.timePreset | number:'1.2-2' }}<span class="unit" [class.disabled]="position.timePreset === 0">s</span>
+                {{ position.timePreset | number:'1.2-2' }}<span class="unit" [class.disabled]="position.timePreset === 0">min</span>
               </span>
               <input #valueInput
                      class="value-input" 

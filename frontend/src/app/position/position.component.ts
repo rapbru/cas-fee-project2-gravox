@@ -55,14 +55,14 @@ export class PositionComponent {
         dragHandle: 'Zum Verschieben ziehen',
         number: 'Positionsnummer bearbeiten',
         name: 'Positionsname bearbeiten',
-        time: 'Zeit in Sekunden (max. 3 Ziffern)',
+        time: 'Zeit in Minuten (max. 3 Ziffern)',
         temperature: {
           enable: 'Temperatur aktivieren',
           disable: 'Temperatur deaktivieren'
         }
       },
       units: {
-        time: 's'
+        time: 'min'
       }
     }
   };

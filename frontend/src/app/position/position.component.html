@@ -108,7 +108,7 @@
             <ng-container *ngIf="!collapsed && !enableEdit(); else collapsedTime">
                 <div class="metric">
                     <mat-icon>timer</mat-icon>
-                    <span>s</span>
+                    <span>min</span>
                     <input #presetTime
                         type="text" 
                         inputmode="decimal"
@@ -120,7 +120,7 @@
                         (keydown.enter)="presetTime.blur()"
                         aria-label="Zeit Voreinstellung"
                         i18n-aria-label="@@PositionTimePresetAriaLabel"
-                        matTooltip="Zeit in Sekunden"
+                        matTooltip="Zeit in Minuten"
                         i18n-matTooltip="@@PositionTimePresetTooltip"
                         tabindex="0" />
                     <span>{{ position.time.actual }}</span>
