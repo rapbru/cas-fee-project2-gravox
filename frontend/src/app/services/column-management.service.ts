@@ -3,10 +3,11 @@ import { ColumnSettings, ColumnSettingsDTO } from '../models/column-settings.mod
 import { Position } from '../models/position.model';
 import { HttpClient } from '@angular/common/http';
 import { SnackbarService } from './snackbar.service';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { tap, catchError, map } from 'rxjs/operators';
 import { PositionIndex } from '../models/position-index.model';
 import { ApiConfigService } from '../services/api-config.service';
+import { LoggerService } from '../services/logger.service';
 
 @Injectable({
   providedIn: 'root'
@@ -28,11 +29,13 @@ export class ColumnManagementService {
   private columnDistribution: number[] = [];
   private positionIndices: PositionIndex[] = [];
   public columnsChanged = new EventEmitter<void>();
+  private isDirty = false;
 
   constructor(
     private http: HttpClient,
     private snackbarService: SnackbarService,
-    private apiConfig: ApiConfigService
+    private apiConfig: ApiConfigService,
+    private logger: LoggerService
   ) {
     this.apiUrl = this.apiConfig.getUrl('settings/columns');
   }
@@ -54,6 +57,7 @@ export class ColumnManagementService {
         this.columnCount = settings.columnCount;
         this.positionsPerColumn = [...settings.positionsPerColumn];
         this.updateColumnDistribution();
+        this.isDirty = false;
       }),
       catchError(error => {
         this.snackbarService.showError('Fehler beim Laden der Spalteneinstellungen', error);
@@ -130,6 +134,7 @@ export class ColumnManagementService {
 
   private updateColumnDistribution(): void {   
     this.columnDistribution = [...this.positionsPerColumn];
+    this.isDirty = true;
   }
 
   public getColumnCount(): number {
@@ -154,6 +159,13 @@ export class ColumnManagementService {
   }
 
   public saveColumnSettings(): Observable<ColumnSettings> {
+    if (!this.isDirty) {
+      return of(this.originalSettings ?? {
+        columnCount: this.columnCount,
+        positionsPerColumn: [...this.positionsPerColumn]
+      });
+    }
+
     const settingsToSave = {
       columnCount: this.columnCount,
       positionsPerColumn: this.positionsPerColumn
