@@ -51,7 +51,7 @@ export class PositionSequenceComponent implements OnInit {
   private editingState: { position: Position | null, field: PresetField | null } = { position: null, field: null };
   public readonly editState = this.overviewStateService.enableEdit;
   isBottomSheet = false;
-  @Input() article!: Article;
+  @Input() article?: Article;
 
   readonly translations = {
     position: {
@@ -177,7 +177,7 @@ export class PositionSequenceComponent implements OnInit {
         currentPreset: position.currentPreset ?? 0,
         voltagePreset: position.voltagePreset ?? 0,
         positionName: position.name,
-        articleId: this.article?.id // Add the article ID
+        articleId: this.article?.id
       }));
 
       this.selectedPositionsChange.emit(sequences);
@@ -290,7 +290,7 @@ export class PositionSequenceComponent implements OnInit {
       currentPreset: pos.currentPreset ?? 0,
       voltagePreset: pos.voltagePreset ?? 0,
       positionName: pos.name,
-      articleId: this.article.id
+      articleId: this.article?.id
     }));
   }
 

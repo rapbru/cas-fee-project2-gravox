@@ -105,14 +105,15 @@ export class AddArticleComponent implements OnInit {
   ngOnDestroy() {
   }
 
-  onSequenceChange(sequences: any[]) {
+  onSequenceChange(sequences: Sequence[]) {
     this.loggerService.log('Sequence changed:', sequences);
     this.sequences = sequences.map(seq => ({
-        positionId: seq.positionId.toString(),
-        orderNumber: seq.orderNumber,
-        timePreset: seq.timePreset,
-        currentPreset: seq.currentPreset,
-        voltagePreset: seq.voltagePreset
+      positionId: seq.positionId.toString(),
+      orderNumber: seq.orderNumber,
+      timePreset: seq.timePreset ?? 0,
+      currentPreset: seq.currentPreset ?? 0,
+      voltagePreset: seq.voltagePreset ?? 0,
+      positionName: seq.positionName
     }));
   }
 
