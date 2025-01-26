@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, HostBinding, EventEmitter, Output, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ViewChild, ElementRef, HostBinding, EventEmitter, Output, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -36,8 +36,7 @@ type PresetField = 'timePreset' | 'currentPreset' | 'voltagePreset';
     EmptyspaceComponent
   ],
   templateUrl: './position-sequence.component.html',
-  styleUrls: ['./position-sequence.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./position-sequence.component.scss']
 })
 export class PositionSequenceComponent implements OnInit {
   @ViewChild('selectedPositionsContainer') selectedPositionsContainer?: ElementRef;
@@ -166,18 +165,23 @@ export class PositionSequenceComponent implements OnInit {
   }
 
   onDrop(event: CdkDragDrop<Position[]>) {
-    if (!this.selectedPositions) return;
-    
-    const container = event.container.element.nativeElement;
-    container.classList.add('no-transitions');
-    
-    moveItemInArray(this.selectedPositions, event.previousIndex, event.currentIndex);
-    const sequences = this.createSequenceArray();
-    
-    requestAnimationFrame(() => {
-      container.classList.remove('no-transitions');
-      this.selectedPositionsChange.emit(sequences);
+    this.logger.log('Drop event triggered', { 
+      previousIndex: event.previousIndex, 
+      currentIndex: event.currentIndex 
     });
+
+    if (!this.selectedPositions) {
+      return;
+    }
+
+    const updatedPositions = [...this.selectedPositions];
+    moveItemInArray(updatedPositions, event.previousIndex, event.currentIndex);
+    this.selectedPositions = updatedPositions;
+
+    const sequences = this.createSequenceArray();
+    this.selectedPositionsChange.emit(sequences);
+
+    this.logger.log('Emitted updated sequence:', sequences);
   }
 
   hasSelectedPositions(): boolean {
