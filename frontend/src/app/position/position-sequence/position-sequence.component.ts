@@ -63,7 +63,7 @@ export class PositionSequenceComponent implements OnInit {
         remove: 'Position entfernen',
         drag: 'Position verschieben',
         add: 'Position hinzufügen',
-        timePreset: 'Zeit in Sekunden: {value}'
+        timePreset: 'Zeit in Minuten: {value}'
       },
       tooltips: {
         select: {
@@ -73,14 +73,14 @@ export class PositionSequenceComponent implements OnInit {
         remove: 'Position entfernen',
         drag: 'Position verschieben',
         add: 'Position hinzufügen',
-        timePreset: 'Zeit in Sekunden'
+        timePreset: 'Zeit in Minuten'
       },
       buttons: {
         remove: 'Entfernen',
         add: 'Hinzufügen'
       },
       units: {
-        time: 's'
+        time: 'min'
       }
     }
   };
