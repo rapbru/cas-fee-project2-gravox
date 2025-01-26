@@ -60,6 +60,8 @@ export class ArticleCardComponent implements OnInit, OnDestroy {
   private changes$ = new Subject<void>();
   isSelected = false;
 
+  private _articleCopy?: Article;
+
   readonly translations = {
     article: {
       aria: {
@@ -160,6 +162,7 @@ export class ArticleCardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this._articleCopy = JSON.parse(JSON.stringify(this.article));
   }
 
   ngOnDestroy() {
@@ -193,5 +196,15 @@ export class ArticleCardComponent implements OnInit, OnDestroy {
       month: '2-digit',
       year: 'numeric'
     });
+  }
+
+  getArticleValue(field: keyof Article): any {
+    if (this.article && this.article[field] !== undefined) {
+      return this.article[field];
+    }
+    if (this._articleCopy && this._articleCopy[field] !== undefined) {
+      return this._articleCopy[field];
+    }
+    return '';
   }
 }

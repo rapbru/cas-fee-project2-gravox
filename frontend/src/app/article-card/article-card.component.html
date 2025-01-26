@@ -5,7 +5,7 @@
      (click)="onCardClick()"
      (keydown.enter)="onCardClick()"
      (keydown.space)="onCardClick(); $event.preventDefault()"
-     [attr.aria-label]="'Artikel ' + article.title + ': Details anzeigen'"
+     [attr.aria-label]="'Artikel ' + getArticleValue('title') + ': Details anzeigen'"
      matTooltip="Artikel Details anzeigen"
      matTooltipPosition="above">
   <div class="article-header">
@@ -21,21 +21,21 @@
             {{ isSelected ? 'check_circle' : 'radio_button_unchecked' }}
           </mat-icon>
         </button>
-        <h2>{{ article.title }}</h2>
+        <h2>{{ getArticleValue('title') }}</h2>
       </div>
 
       <div class="header-content" *ngSwitchCase="isEditable && !showCheckbox && isInDetails">
-        <h2>{{ article.title }}</h2>
+        <h2>{{ getArticleValue('title') }}</h2>
       </div>
 
       <div class="header-wrapper" *ngSwitchDefault>
         <div class="header-content">
-          <h2>{{ article.title }}</h2>
+          <h2>{{ getArticleValue('title') }}</h2>
         </div>
         <button class="button vonesco card-button"
                 [disabled]="isLoading()"
                 (click)="onLoad(); $event.stopPropagation()"
-                [attr.aria-label]="'Artikel ' + article.title + ' laden'"
+                [attr.aria-label]="'Artikel ' + getArticleValue('title') + ' laden'"
                 matTooltip="Artikel laden"
                 tabindex="0">
           @if (isLoading()) {
@@ -54,13 +54,13 @@
       <mat-icon>deployed_code</mat-icon>
       <span class="label">Name</span>
       <ng-container *ngIf="!isEditable || !isInDetails; else editTitle">
-        <span class="value">{{ article.title }}</span>
+        <span class="value">{{ getArticleValue('title') }}</span>
       </ng-container>
       <ng-template #editTitle>
         <app-input-field
           [alwaysOrange]="isInDetails"
           [name]="'title'"
-          [(ngModel)]="article.title"
+          [ngModel]="getArticleValue('title')"
           [maxLength]="maxLengthName"
           (ngModelChange)="updateArticleInfo($event, 'title')"
         ></app-input-field>
@@ -71,13 +71,13 @@
       <div class="detail-row">
         <mat-icon>calendar_today</mat-icon>
         <span class="label">Erstellt</span>
-        <span class="value">{{ formatDate(article.createdDate) }}</span>
+        <span class="value">{{ formatDate(getArticleValue('createdDate')) }}</span>
       </div>
       
       <div class="detail-row">
         <mat-icon>calendar_today</mat-icon>
         <span class="label">Geändert</span>
-        <span class="value">{{ formatDate(article.modifiedDate) }}</span>
+        <span class="value">{{ formatDate(getArticleValue('modifiedDate')) }}</span>
       </div>
     </div>
 
@@ -87,13 +87,13 @@
           <mat-icon>tag</mat-icon>
           <span class="label">Nummer</span>
           <ng-container *ngIf="!isEditable || !isInDetails; else editNumber">
-            <span class="value">{{ article.number }}</span>
+            <span class="value">{{ getArticleValue('number') }}</span>
           </ng-container>
           <ng-template #editNumber>
             <app-input-field
               [alwaysOrange]="isInDetails"
               [name]="'number'"
-              [ngModel]="article.number"
+              [ngModel]="getArticleValue('number')"
               (ngModelChange)="updateArticleInfo($event, 'number')"
               [maxLength]="maxLengthNumber"
               [numbersOnly]="true"
@@ -105,13 +105,13 @@
           <mat-icon>business</mat-icon>
           <span class="label">Kunde</span>
           <ng-container *ngIf="!isEditable || !isInDetails; else editCustomer">
-            <span class="value">{{ article.customer }}</span>
+            <span class="value">{{ getArticleValue('customer') }}</span>
           </ng-container>
           <ng-template #editCustomer>
             <app-input-field
               [alwaysOrange]="isInDetails"
               [name]="'customer'"
-              [(ngModel)]="article.customer"
+              [ngModel]="getArticleValue('customer')"
               [maxLength]="maxLengthCustomer"
               (ngModelChange)="updateArticleInfo($event, 'customer')"
             ></app-input-field>
@@ -122,13 +122,13 @@
           <mat-icon>square_foot</mat-icon>
           <span class="label">Fläche</span>
           <ng-container *ngIf="!isEditable || !isInDetails; else editArea">
-            <span class="value">{{ formatValue(article.area, 'area') }}</span>
+            <span class="value">{{ formatValue(getArticleValue('area'), 'area') }}</span>
           </ng-container>
           <ng-template #editArea>
             <app-input-field
               [alwaysOrange]="isInDetails"
               [name]="'area'"
-              [ngModel]="article.area"
+              [ngModel]="getArticleValue('area')"
               (ngModelChange)="updateArticleInfo($event, 'area')"
               [maxLength]="maxLengthArea"
               [numbersOnly]="true"
@@ -141,13 +141,13 @@
           <mat-icon>water_drop</mat-icon>
           <span class="label">Abtropfen</span>
           <ng-container *ngIf="!isEditable || !isInDetails; else editDrainage">
-            <span class="value">{{ formatValue(article.drainage, 'drainage') }}</span>
+            <span class="value">{{ formatValue(getArticleValue('drainage'), 'drainage') }}</span>
           </ng-container>
           <ng-template #editDrainage>
             <app-input-field
               [alwaysOrange]="isInDetails"
               [name]="'drainage'"
-              [ngModel]="article.drainage"
+              [ngModel]="getArticleValue('drainage')"
               (ngModelChange)="updateArticleInfo($event, 'drainage')"
               [maxLength]="maxLengthDrainage"
               [numbersOnly]="true"
@@ -160,13 +160,13 @@
           <mat-icon>note</mat-icon>
           <span class="label">Bemerkung</span>
           <ng-container *ngIf="!isEditable || !isInDetails; else editNote">
-            <span class="value">{{ article.note }}</span>
+            <span class="value">{{ getArticleValue('note') }}</span>
           </ng-container>
           <ng-template #editNote>
             <app-input-field
               [alwaysOrange]="isInDetails"
               [name]="'note'"
-              [(ngModel)]="article.note"
+              [ngModel]="getArticleValue('note')"
               [maxLength]="maxLengthNote"
               (ngModelChange)="updateArticleInfo($event, 'note')"
             ></app-input-field>
