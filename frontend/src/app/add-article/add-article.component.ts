@@ -23,6 +23,7 @@ import { catchError, tap } from 'rxjs';
 import { of } from 'rxjs';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import { ViewChild } from '@angular/core';
+import { SidebarSheetComponent } from '../sidebar-sheet/sidebar-sheet.component';
 
 interface ArticleForm {
   name: string;
@@ -46,7 +47,8 @@ interface ArticleForm {
     MatFormFieldModule,
     MatInputModule,
     PositionSequenceComponent,
-    FooterComponent
+    FooterComponent,
+    SidebarSheetComponent
   ],
   templateUrl: './add-article.component.html',
   styleUrls: ['./add-article.component.scss']
@@ -77,6 +79,8 @@ export class AddArticleComponent implements OnInit {
   sequences: Sequence[] = [];
 
   isSaving = false;
+
+  showPositionSelector = false;
 
   constructor(
     private http: HttpClient,
@@ -199,5 +203,9 @@ export class AddArticleComponent implements OnInit {
       this.article.dripOff &&
       this.sequences.length > 0
     );
+  }
+
+  onSidebarOpened() {
+    this.fetchPositionsOnce();
   }
 }

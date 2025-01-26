@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, HostListener, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, HostListener, OnInit, AfterContentInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -9,20 +9,43 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './sidebar-sheet.component.html',
   styleUrls: ['./sidebar-sheet.component.scss']
 })
-export class SidebarSheetComponent implements OnInit {
+export class SidebarSheetComponent implements OnInit, AfterContentInit {
   @Input() title: string = '';
-  @Input() show: boolean = false;
+  @Input() set show(value: boolean) {
+    if (value !== this._show) {
+      this._show = value;
+      if (value) {
+        setTimeout(() => {
+          this.opened.emit();
+          this.cdr.detectChanges();
+        }, 300); 
+      }
+    }
+  }
+  get show(): boolean {
+    return this._show;
+  }
+  private _show = false;
+  
   @Output() showChange = new EventEmitter<boolean>();
+  @Output() opened = new EventEmitter<void>();
   @Input() enableBackdrop: boolean = true;
   
   isMobile: boolean = window.innerWidth < 768;
   enableTransitions: boolean = false;
 
+  constructor(private cdr: ChangeDetectorRef) {}
+
   ngOnInit() {
+    this.checkScreenSize();
     setTimeout(() => {
       this.enableTransitions = true;
+      this.cdr.detectChanges();
     }, 100);
-    this.checkScreenSize();
+  }
+
+  ngAfterContentInit() {
+    this.cdr.detectChanges();
   }
 
   @HostListener('window:resize')

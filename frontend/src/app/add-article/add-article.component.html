@@ -98,3 +98,9 @@
 
 <app-footer></app-footer>
 
+<app-sidebar-sheet 
+  [(show)]="showPositionSelector"
+  [title]="'Positionen auswählen'"
+  (opened)="onSidebarOpened()">
+</app-sidebar-sheet>
+
