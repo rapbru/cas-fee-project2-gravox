@@ -90,7 +90,6 @@ export class PositionSequenceComponent implements OnInit {
   constructor(
     public positionService: PositionService,
     private logger: LoggerService,
-    private positionDragDropService: PositionDragDropService,
     private overviewStateService: OverviewStateService,
     private articleService: ArticleService,
     private snackbarService: SnackbarService

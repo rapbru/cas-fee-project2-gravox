@@ -254,7 +254,6 @@ export class PositionService {
         },
         error: (error) => {
             this.snackbarService.showError('Speichern fehlgeschlagen', error);
-            // Optionally revert changes here if needed
             this.cancelAllChanges();
         }
     });
