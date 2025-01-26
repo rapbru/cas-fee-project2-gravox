@@ -91,7 +91,10 @@ export class PositionComponent {
     const value = input.value;
     console.log(value);
     const numValue = parseFloat(value);
-    if (isNaN(numValue) || numValue < 0 || numValue > 999.99) return;
+    if (isNaN(numValue) || numValue < 0 || numValue > 999.99) {
+      input.value = '0';
+      return;
+    }
 
     const tagName = `POS[${this.position.number}]${field}`;
     
