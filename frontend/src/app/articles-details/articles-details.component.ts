@@ -203,8 +203,20 @@ export class ArticlesDetailsComponent implements OnInit, OnDestroy {
       sequence: updatedSequence
     };
     
-    this.articleService.trackModification(updatedArticle);
-    this.article = updatedArticle;
+    this.articleService.updateSequenceOrder(updatedArticle, updatedSequence).subscribe({
+      next: (response) => {
+        this.article = response;
+        this.articleService.trackModification(updatedArticle);
+        this.logger.log('Successfully updated sequence order');
+      },
+      error: (error) => {
+        this.logger.error('Failed to update sequence order:', error);
+        this.snackbarService.showError('Fehler beim Speichern der Reihenfolge');
+        if (this.article?.id) {
+          this.getArticle(this.article.id.toString());
+        }
+      }
+    });
   }
 
   openPositionSelector() {

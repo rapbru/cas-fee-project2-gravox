@@ -175,29 +175,14 @@ export class PositionSequenceComponent implements OnInit {
       return;
     }
 
-    moveItemInArray(this.selectedPositions, event.previousIndex, event.currentIndex);
+    const updatedPositions = [...this.selectedPositions];
+    moveItemInArray(updatedPositions, event.previousIndex, event.currentIndex);
+    this.selectedPositions = updatedPositions;
 
-    const sequences: Sequence[] = this.selectedPositions.map((position, index) => ({
-      positionId: position.id.toString(),
-      orderNumber: index + 1,
-      timePreset: position.timePreset ?? 0,
-      currentPreset: position.currentPreset ?? 0,
-      voltagePreset: position.voltagePreset ?? 0,
-      positionName: position.name
-    }));
+    const sequences = this.createSequenceArray();
+    this.selectedPositionsChange.emit(sequences);
 
-    if (this.article) {
-      this.logger.log('Updating article sequence', { articleId: this.article.id });
-      this.articleService.updateSequenceOrder(this.article, sequences).subscribe({
-        next: (updatedArticle) => {
-          this.logger.log('Article sequence updated successfully', updatedArticle);
-        },
-        error: (error) => {
-          this.logger.error('Failed to update article sequence', error);
-          moveItemInArray(this.selectedPositions, event.currentIndex, event.previousIndex);
-        }
-      });
-    }
+    this.logger.log('Emitted updated sequence:', sequences);
   }
 
   hasSelectedPositions(): boolean {
